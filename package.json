@@ -1,0 +1,25 @@
+{
+  "name": "hexandria",
+  "version": "1.0.0",
+  "description": "Hexandria: strategy game",
+  "main": "server.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frontend-park-mail-ru/2017_1_Hexandria.git"
+  },
+  "keywords": [
+    "hexandria",
+    "strategy",
+    "game"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2017_1_Hexandria/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2017_1_Hexandria#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
