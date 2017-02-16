@@ -2,13 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>Singleplayer</title>
 </head>
 <body>
-    <div class="info">
-        <h1>I'm singleplayer</h1>
-        <a href="/">Back</a>
-    </div>
+        <div id="info">
+            <h1>Hexandria: singleplayer</h1>
+            <div id="info_menu">
+                <a href="/">Back</a>
+            </div>
+        </div>
+        <div id="container"><br><br/><br/><br/><br/><br/><br/>Loading...</div>
+
+        <script src="js/three.js"></script>
+        <script src="js/controls/OrbitControls.js"></script>
+        <script src="js/libs/stats.min.js"></script>
+
+        <script src="hexandria.js"></script>
+        <script src="client.js"></script>
 </body>
 </html>

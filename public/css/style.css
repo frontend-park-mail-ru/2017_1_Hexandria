@@ -1,18 +1,32 @@
 body {
-    background-color: #efe;
+    font-family: Helvetica, Arial;
+    font-size: 1.0em;
+    text-align:center;
+    margin: 0em;
+    overflow: hidden;
+    color: #dd1503;
+    background-color: #ffffff;
     text-align: center;
 }
 
-.info h1 {
-    color: #151;
+#info {
+    position: absolute;
+    top: 0px; width: 100%;
 }
 
-.info a {
+#info h1 {
+    font-size: 2.0em;
+    margin: 0em;
+    color: #777777;
+    /*background-color: #eeeeee;*/
+}
+
+#info a {
     text-decoration: none;
     padding: 0.25em;
     background: #70f070;
 }
-.info a:hover {
+#info a:hover {
     padding: 0.25em;
     background: #70d070;
 }
