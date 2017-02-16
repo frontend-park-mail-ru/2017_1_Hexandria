@@ -12,6 +12,8 @@ app.use(function(req, res, next){
 });
 
 app.use(express.static(staticPath));
+app.use('/lib', express.static('node_modules'));
+
 
 app.get('/', function(req, res){
     res.sendFile('index.html', {root: staticPath});
