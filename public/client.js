@@ -83,6 +83,10 @@ function initGraphics() {
 
     mouse = new THREE.Vector2();
     raycaster = new THREE.Raycaster();
+    /*document.addEventListener('mousemove', onDocumentMouseMove, false);
+     document.addEventListener('mousedown', onDocumentMouseDown, false);
+     document.addEventListener('keydown', onDocumentKeyDown, false);
+     document.addEventListener('keyup', onDocumentKeyUp, false);*/
 
     document.addEventListener('mousemove', onDocumentMouseMove, false);
     document.addEventListener('mousedown', onDocumentMouseDown, false);
@@ -106,7 +110,7 @@ function createObjects() {
         texture.repeat.set(40, 40);
         ground.material.map = texture;
         ground.material.needsUpdate = true;
-   });
+    });
     scene.add(ground);
 
     // Axis
@@ -116,9 +120,19 @@ function createObjects() {
     scene.add(axisHelper);
 
 
+    /*let geometry = new THREE.BoxGeometry(2, 2, 2);
+     for (let i = 0; i < 100; i ++) {
+     let object = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff }));
+     object.position.x = Math.random() * 100 - 50;
+     object.position.y = Math.random() * 100 - 50;
+     object.position.z = Math.random() * 100 - 50;
+     scene.add(object);
+     }*/
+
+
+
     game = new Hexandria(scene);
     game.setMap(5, 10);
-    game.setTestColor();
 }
 
 function createParalellepiped(sx, sy, sz, mass, pos, quat, material) {
@@ -142,18 +156,18 @@ function initInput() {
             // Q
             case 81:
                 keyQ = true;
-            break;
-       }
-   }, false);
+                break;
+        }
+    }, false);
 
     window.addEventListener('keyup', function(event) {
         switch (event.keyCode) {
             // Q
             case 81:
                 keyQ = false;
-            break;
-       }
-   }, false);
+                break;
+        }
+    }, false);
 }
 
 function onDocumentMouseMove(event) {
@@ -165,6 +179,22 @@ function onDocumentMouseMove(event) {
     raycaster.setFromCamera(mouse, camera);
     let intersects = raycaster.intersectObjects(scene.children);
 
+    /*if (intersects.length > 0) {
+     if (INTERSECTED != intersects[0].object) {
+     if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+
+     if (intersects[0].object.material.emissive) {
+     INTERSECTED = intersects[0].object;
+     INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+     INTERSECTED.material.emissive.setHex(0xff0000);
+     }
+     }
+     } else {
+     if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+     INTERSECTED = null;
+     }*/
+
+    // game.handleIntersects(intersects);
     game.handleHighlight(intersects);
 }
 
@@ -199,7 +229,29 @@ function animate() {
 function render() {
     let deltaTime = clock.getDelta();
 
+    game.setRandomColor();
+
     controls.update(deltaTime);
+
+
+    /*raycaster.setFromCamera(mouse, camera);
+     let intersects = raycaster.intersectObjects(scene.children);
+     if (intersects.length > 0) {
+     if (INTERSECTED != intersects[0].object) {
+     if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+
+     if (intersects[0].object.material.emissive) {
+     INTERSECTED = intersects[0].object;
+     INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+     INTERSECTED.material.emissive.setHex(0xff0000);
+     }
+     }
+     } else {
+     if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+     INTERSECTED = null;
+     }*/
+
+
 
     renderer.render(scene, camera);
 
