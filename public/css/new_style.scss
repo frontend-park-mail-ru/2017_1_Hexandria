@@ -34,46 +34,48 @@ body .buttons {
   padding: 10px;
   text-align: center;
   border: 10px solid #CC7722;
-}
 
-.buttons__main-button {
-  text-align: center;
-  padding: 10px;
-}
+  .buttons__main-button {
+    text-align: center;
+    padding: 10px;
 
-.buttons__main-button a:link, a:visited {
-  color: white;
-  padding: 14px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  background-color: #CC7722;
-}
+    a:link, a:visited {
+      color: white;
+      padding: 14px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      background-color: #CC7722;
+    }
 
-.buttons__main-button a:hover, a:active {
+    a:hover, a:active {
 
-}
+    }
+  }
 
-.buttons__minor-button {
-  display: inline-block;
-}
+  .buttons__minor-button {
+    display: inline-block;
 
-.buttons__minor-button a:link, a:visited {
-  background-color: #CC7722;
-  color: white;
-  padding: 14px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-}
+    a:link, a:visited {
+      background-color: #CC7722;
+      color: white;
+      padding: 14px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
 
-.buttons__minor-button a:hover, a:active {
+    a:hover, a:active {
 
-}
+    }
+  }
 
-.buttons__minor-buttons {
-  text-align: center;
-  padding: 10px;
+  .buttons__minor-buttons {
+    text-align: center;
+    padding: 10px;
+  }
+
+
 }
 
 .fullscreen-bg {
@@ -84,14 +86,14 @@ body .buttons {
   left: 0;
   overflow: hidden;
   z-index: -100;
-}
 
-.fullscreen-bg__video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
+  .fullscreen-bg__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
 }
 
 .header {
@@ -99,38 +101,22 @@ body .buttons {
   padding: 10px;
   text-align: left;
   border: 10px solid #CC7722;
-}
 
-.header__board {
-  background-color: #FAF0BE;
-  padding: 10px;
-  text-align: left;
-  border: 10px solid #CC7722;
-}
+  .header__logo {
+    display: inline-block;
+    margin: 0 0 0 10px;
+  }
 
-.header__logo {
-  display: inline-block;
-  margin: 0 0 0 10px;
-}
-
-.header__title {
-  display: inline-block;
-  height: 100px;
-  position: absolute;
-  top: 50%;
-  margin: -20px 0 0 100px;
-  color: #CC7722;
-  font-size: xx-large;
-  font-weight: bold;
-}
-
-.registration a:link, a:visited {
-  color: white;
-  padding: 14px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  background-color: #CC7722;
+  .header__title {
+    display: inline-block;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    margin: -20px 0 0 100px;
+    color: #CC7722;
+    font-size: xx-large;
+    font-weight: bold;
+  }
 }
 
 .registration {
@@ -140,4 +126,13 @@ body .buttons {
   text-align: center;
   position: relative;
   border: 10px solid #CC7722;
+
+  a:link, a:visited {
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #CC7722;
+  }
 }
