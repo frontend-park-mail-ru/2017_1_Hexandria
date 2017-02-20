@@ -1,0 +1,17 @@
+.buttons__main-button {
+    text-align: center;
+    padding: 10px;
+}
+
+.buttons__main-button a:link, a:visited {
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #CC7722;
+}
+
+.buttons__main-button a:hover, a:active {
+
+}

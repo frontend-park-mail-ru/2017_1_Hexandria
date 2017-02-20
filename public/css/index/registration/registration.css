@@ -1,0 +1,17 @@
+.registration a:link, a:visited {
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #CC7722;
+}
+
+.registration {
+    width: 50%;
+    background-color: #FAF0BE;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    border: 10px solid #CC7722;
+}
