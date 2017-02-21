@@ -4,28 +4,11 @@ body {
   background-color: #000000;
 }
 
-.button {
-  text-align: center;
-  padding: 10px;
-
-  a:link, a:visited {
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    background-color: #CC7722;
-  }
-  a:hover, a:active {
-
-  }
-}
-
 body .registration {
-  position: relative;
-  margin-left: auto;
-  margin-right: 10px;
-  margin-top: 10px;
+  position: absolute;
+  margin-left: 70%;
+  margin-right: auto;
+  margin-top: 3%;
   width: 25%;
 }
 
@@ -33,7 +16,7 @@ body .hex {
   position: absolute;
   margin-left: 5%;
   margin-right: auto;
-  margin-top: 3%;
+  margin-top: 8%;
 }
 
 @mixin createHex($height, $color, $z-index) {
@@ -103,8 +86,44 @@ body .hex {
     position: relative;
 
     @include createHexInside(888px, #000, 1);
+
+    .hex__title {
+      padding-top: 70px;
+      position: relative;
+      text-align: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 300%;
+    }
+
+    .hex__motto {
+      padding-top: 20px;
+      position: relative;
+      text-align: center;
+      color: #fff;
+      font-weight: 400;
+      font-size: 100%;
+    }
   }
 
+}
+
+.button {
+  text-align: center;
+  padding: 10px;
+
+  a:link, a:visited {
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #000;
+    border: 4px solid #fff;
+  }
+  a:hover, a:active {
+
+  }
 }
 
 body .buttons {
@@ -117,30 +136,12 @@ body .buttons {
 
 .buttons {
   margin: auto;
-  background-color: #FAF0BE;
+  background-color: #000;
   padding: 10px;
   text-align: center;
-  border: 10px solid #CC7722;
 
-  .buttons__main-button {
+  .buttons__main-buttons {
     @extend .button
-  }
-
-  .buttons__minor-button {
-    display: inline-block;
-
-    a:link, a:visited {
-      background-color: #CC7722;
-      color: white;
-      padding: 14px 25px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    a:hover, a:active {
-
-    }
   }
 
   .buttons__minor-buttons {
@@ -169,18 +170,20 @@ body .buttons {
 }
 
 .registration {
-  width: 50%;
-  background-color: #FAF0BE;
-  padding: 10px;
-  text-align: center;
-  position: relative;
+  //width: 50%;
+  //background-color: #FAF0BE;
+  //padding: 10px;
+  //text-align: center;
+  //position: relative;
+  //
+  //a:link, a:visited {
+  //  color: white;
+  //  padding: 14px 25px;
+  //  text-align: center;
+  //  text-decoration: none;
+  //  display: inline-block;
+  //  background-color: #CC7722;
+  //}
 
-  a:link, a:visited {
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    background-color: #CC7722;
-  }
+  @extend .button
 }
