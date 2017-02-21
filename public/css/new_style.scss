@@ -93,7 +93,7 @@ body .hex {
       text-align: center;
       color: #fff;
       font-weight: 900;
-      font-size: 300%;
+      font-size: 400%;
     }
 
     .hex__motto {
@@ -102,15 +102,15 @@ body .hex {
       text-align: center;
       color: #fff;
       font-weight: 400;
-      font-size: 100%;
+      font-size: 200%;
     }
   }
-
 }
 
 .button {
   text-align: center;
   padding: 10px;
+  font-size: 120%;
 
   a:link, a:visited {
     color: white;
@@ -170,20 +170,5 @@ body .buttons {
 }
 
 .registration {
-  //width: 50%;
-  //background-color: #FAF0BE;
-  //padding: 10px;
-  //text-align: center;
-  //position: relative;
-  //
-  //a:link, a:visited {
-  //  color: white;
-  //  padding: 14px 25px;
-  //  text-align: center;
-  //  text-decoration: none;
-  //  display: inline-block;
-  //  background-color: #CC7722;
-  //}
-
   @extend .button
 }

@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <script src="js/animation.js"></script>
     <link rel="stylesheet" href="css/new_style.css">
     <title>Hexandria</title>
 </head>
 <body>
 
-    <!--<audio controls autoplay hidden="true" loop="true">-->
-        <!--<source src="audio/seven_nation_army.mp3" type="audio/mp3">-->
-        <!--Your browser does not support the audio element.-->
-    <!--</audio>-->
+    <audio controls autoplay hidden="true" loop="true">
+        <source src="audio/seven_nation_army.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 
     <!--<div class="fullscreen-bg">-->
         <!--<video loop muted autoplay poster="img/background.jpg" class="fullscreen-bg__video">-->
@@ -19,21 +20,21 @@
         <!--</video>-->
     <!--</div>-->
 
-    <div class="registration">
+    <div class="registration" id="registration" hidden="true">
         <a href="/login">Log In</a>
         <a href="/signup">Sign Up</a>
     </div>
 
-    <div class="hex">
-        <div class="hex__minor_hex">
-            <div class="hex__title">
+    <div class="hex" hidden="true" id="hex">
+        <div class="hex__minor_hex" id="hex__minor_hex">
+            <div class="hex__title" id="hex__title" hidden="true">
                 HEXANDRIA
             </div>
-            <div class="hex__motto">
+            <div class="hex__motto" hidden="true" id="hex__motto">
                 You are the ruler.
             </div>
 
-            <div class="buttons">
+            <div class="buttons" hidden="true" id="buttons" hidden="true">
 
                 <div class="buttons__main-buttons">
                     <a href="/singleplayer">Singleplayer</a>
