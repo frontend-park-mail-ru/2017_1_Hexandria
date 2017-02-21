@@ -28,15 +28,16 @@ body .hex {
   margin-top: 3%; }
 
 .hex {
-  background-color: #6C6;
   position: relative;
+  background-color: #fff;
   height: 450px;
-  width: 779.4px; }
+  width: 779.4px;
+  z-index: 0; }
   .hex::before {
     content: " ";
     width: 0;
     height: 0;
-    border-bottom: 225px solid #6C6;
+    border-bottom: 225px solid #fff;
     border-left: 389.7px solid transparent;
     border-right: 390.7px solid transparent;
     position: absolute;
@@ -44,11 +45,36 @@ body .hex {
   .hex::after {
     content: "";
     width: 0;
-    position: absolute;
-    bottom: -225px;
-    border-top: 225px solid #6C6;
+    border-top: 225px solid #fff;
     border-left: 389.7px solid transparent;
-    border-right: 390.7px solid transparent; }
+    border-right: 390.7px solid transparent;
+    position: absolute;
+    bottom: -225px; }
+  .hex .hex__minor_hex {
+    margin-left: 6px;
+    margin-top: 3px;
+    position: relative;
+    background-color: #000;
+    height: 444px;
+    width: 768.008px;
+    z-index: 1; }
+    .hex .hex__minor_hex::before {
+      content: " ";
+      width: 0;
+      height: 0;
+      border-bottom: 222px solid #000;
+      border-left: 384.504px solid transparent;
+      border-right: 384.504px solid transparent;
+      position: absolute;
+      top: -222px; }
+    .hex .hex__minor_hex::after {
+      content: "";
+      width: 0;
+      border-top: 222px solid #000;
+      border-left: 384.504px solid transparent;
+      border-right: 384.504px solid transparent;
+      position: absolute;
+      bottom: -222px; }
 
 body .buttons {
   position: relative;

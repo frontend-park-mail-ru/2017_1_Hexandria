@@ -36,37 +36,74 @@ body .hex {
   margin-top: 3%;
 }
 
-@mixin createHex($height) {
+@mixin createHex($height, $color, $z-index) {
 
+  background-color: $color;
   height: $height / 2;
   width: $height * 0.866;
+  z-index: $z-index;
 
   &::before {
     content: " ";
-      width: 0; height: 0;
-      border-bottom: ($height / 4) solid #6C6;
-      border-left: ($height * 0.433) solid transparent;
-      border-right: ($height * 0.433) + 1px solid transparent;
-      position: absolute;
-      top: -($height / 4);
+    width: 0; height: 0;
+    border-bottom: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) + 1px solid transparent;
+    position: absolute;
+    top: -($height / 4);
   }
 
   &::after {
     content: "";
-      width: 0;
-      position: absolute;
-      bottom: -($height / 4);
-      border-top: ($height / 4) solid #6C6;
-      border-left: ($height * 0.433) solid transparent;
-      border-right: ($height * 0.433) + 1px solid transparent;
+    width: 0;
+    border-top: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) + 1px solid transparent;
+    position: absolute;
+    bottom: -($height / 4);
+  }
+}
+
+@mixin createHexInside($height, $color, $z-index) {
+
+  background-color: $color;
+  height: $height / 2;
+  width: $height * 0.866 - 1px;
+  z-index: $z-index;
+
+  &::before {
+    content: " ";
+    width: 0; height: 0;
+    border-bottom: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) solid transparent;
+    position: absolute;
+    top: -($height / 4);
+  }
+
+  &::after {
+    content: "";
+    width: 0;
+    border-top: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) solid transparent;
+    position: absolute;
+    bottom: -($height / 4);
   }
 }
 
 .hex {
-  background-color: #6C6;
   position: relative;
 
-  @include createHex(900px);
+  @include createHex(900px, #fff, 0);
+
+  .hex__minor_hex {
+    margin-left: 6px;
+    margin-top: 3px;
+    position: relative;
+
+    @include createHexInside(888px, #000, 1);
+  }
 
 }
 
