@@ -4,6 +4,23 @@ body {
   background-color: #000000;
 }
 
+.button {
+  text-align: center;
+  padding: 10px;
+
+  a:link, a:visited {
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #CC7722;
+  }
+  a:hover, a:active {
+
+  }
+}
+
 body .registration {
   position: relative;
   margin-left: auto;
@@ -36,21 +53,7 @@ body .buttons {
   border: 10px solid #CC7722;
 
   .buttons__main-button {
-    text-align: center;
-    padding: 10px;
-
-    a:link, a:visited {
-      color: white;
-      padding: 14px 25px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      background-color: #CC7722;
-    }
-
-    a:hover, a:active {
-
-    }
+    @extend .button
   }
 
   .buttons__minor-button {
@@ -71,8 +74,7 @@ body .buttons {
   }
 
   .buttons__minor-buttons {
-    text-align: center;
-    padding: 10px;
+    @extend .button
   }
 
 

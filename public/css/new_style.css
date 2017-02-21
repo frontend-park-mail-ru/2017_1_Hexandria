@@ -3,6 +3,17 @@ body {
   font-family: 'Lato', sans-serif;
   background-color: #000000; }
 
+.button, .buttons .buttons__main-button, .buttons .buttons__minor-buttons {
+  text-align: center;
+  padding: 10px; }
+  .button a:link, .buttons .buttons__main-button a:link, .buttons .buttons__minor-buttons a:link, .button a:visited, .buttons .buttons__main-button a:visited, .buttons .buttons__minor-buttons a:visited {
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #CC7722; }
+
 body .registration {
   position: relative;
   margin-left: auto;
@@ -30,16 +41,6 @@ body .buttons {
   padding: 10px;
   text-align: center;
   border: 10px solid #CC7722; }
-  .buttons .buttons__main-button {
-    text-align: center;
-    padding: 10px; }
-    .buttons .buttons__main-button a:link, .buttons .buttons__main-button a:visited {
-      color: white;
-      padding: 14px 25px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      background-color: #CC7722; }
   .buttons .buttons__minor-button {
     display: inline-block; }
     .buttons .buttons__minor-button a:link, .buttons .buttons__minor-button a:visited {
@@ -49,9 +50,6 @@ body .buttons {
       text-align: center;
       text-decoration: none;
       display: inline-block; }
-  .buttons .buttons__minor-buttons {
-    text-align: center;
-    padding: 10px; }
 
 .fullscreen-bg {
   position: fixed;
