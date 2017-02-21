@@ -21,12 +21,34 @@ body .registration {
   margin-top: 10px;
   width: 25%; }
 
-body .header {
-  position: relative;
-  margin-left: auto;
+body .hex {
+  position: absolute;
+  margin-left: 5%;
   margin-right: auto;
-  margin-top: 30px;
-  width: 50%; }
+  margin-top: 3%; }
+
+.hex {
+  background-color: #6C6;
+  position: relative;
+  height: 450px;
+  width: 779.4px; }
+  .hex::before {
+    content: " ";
+    width: 0;
+    height: 0;
+    border-bottom: 225px solid #6C6;
+    border-left: 389.7px solid transparent;
+    border-right: 390.7px solid transparent;
+    position: absolute;
+    top: -225px; }
+  .hex::after {
+    content: "";
+    width: 0;
+    position: absolute;
+    bottom: -225px;
+    border-top: 225px solid #6C6;
+    border-left: 389.7px solid transparent;
+    border-right: 390.7px solid transparent; }
 
 body .buttons {
   position: relative;
@@ -66,31 +88,12 @@ body .buttons {
     width: 100%;
     height: auto; }
 
-.header {
-  background-color: #FAF0BE;
-  padding: 10px;
-  text-align: left;
-  border: 10px solid #CC7722; }
-  .header .header__logo {
-    display: inline-block;
-    margin: 0 0 0 10px; }
-  .header .header__title {
-    display: inline-block;
-    height: 100px;
-    position: absolute;
-    top: 50%;
-    margin: -20px 0 0 100px;
-    color: #CC7722;
-    font-size: xx-large;
-    font-weight: bold; }
-
 .registration {
   width: 50%;
   background-color: #FAF0BE;
   padding: 10px;
   text-align: center;
-  position: relative;
-  border: 10px solid #CC7722; }
+  position: relative; }
   .registration a:link, .registration a:visited {
     color: white;
     padding: 14px 25px;

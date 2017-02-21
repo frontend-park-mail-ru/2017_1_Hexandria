@@ -29,12 +29,45 @@ body .registration {
   width: 25%;
 }
 
-body .header {
-  position: relative;
-  margin-left: auto;
+body .hex {
+  position: absolute;
+  margin-left: 5%;
   margin-right: auto;
-  margin-top: 30px;
-  width: 50%;
+  margin-top: 3%;
+}
+
+@mixin createHex($height) {
+
+  height: $height / 2;
+  width: $height * 0.866;
+
+  &::before {
+    content: " ";
+      width: 0; height: 0;
+      border-bottom: ($height / 4) solid #6C6;
+      border-left: ($height * 0.433) solid transparent;
+      border-right: ($height * 0.433) + 1px solid transparent;
+      position: absolute;
+      top: -($height / 4);
+  }
+
+  &::after {
+    content: "";
+      width: 0;
+      position: absolute;
+      bottom: -($height / 4);
+      border-top: ($height / 4) solid #6C6;
+      border-left: ($height * 0.433) solid transparent;
+      border-right: ($height * 0.433) + 1px solid transparent;
+  }
+}
+
+.hex {
+  background-color: #6C6;
+  position: relative;
+
+  @include createHex(900px);
+
 }
 
 body .buttons {
@@ -98,36 +131,12 @@ body .buttons {
   }
 }
 
-.header {
-  background-color: #FAF0BE;
-  padding: 10px;
-  text-align: left;
-  border: 10px solid #CC7722;
-
-  .header__logo {
-    display: inline-block;
-    margin: 0 0 0 10px;
-  }
-
-  .header__title {
-    display: inline-block;
-    height: 100px;
-    position: absolute;
-    top: 50%;
-    margin: -20px 0 0 100px;
-    color: #CC7722;
-    font-size: xx-large;
-    font-weight: bold;
-  }
-}
-
 .registration {
   width: 50%;
   background-color: #FAF0BE;
   padding: 10px;
   text-align: center;
   position: relative;
-  border: 10px solid #CC7722;
 
   a:link, a:visited {
     color: white;
