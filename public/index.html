@@ -61,6 +61,50 @@
         <button id="button_back_from_scoreboard">Back</button>
     </div>
 
+    <div id="page_singleplayer" hidden="true">
+        <h1>Hexandria: singleplayer</h1>
+        <div id="info_menu">
+            <button id="button_back_from_singleplayer">Back</button>
+        </div>
+        <div id="container"><br><br/><br/><br/><br/><br/><br/>Loading...</div>
+
+        <script src="lib/three/build/three.js"></script>
+        <script src="lib/three/examples/js/controls/OrbitControls.js"></script>
+        <script src="lib/three/examples/js/libs/stats.min.js"></script>
+
+        <script src="js/hexandria.js"></script>
+        <script src="js/client.js"></script>
+    </div>
+
+    <div id="page_multiplayer" hidden="true">
+        <h1>Hexandria: multiplayer</h1>
+        <button id="button_back_from_multiplayer">Back</button>
+    </div>
+
+    <div id="page_login" hidden="true">
+        <h1>Login</h1>
+
+        <form>
+            <div class="container">
+                <label>Username</label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+
+                <label>Password</label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+
+                <button type="submit">Login</button>
+                <input type="checkbox" checked="checked"> Remember me
+            </div>
+        </form>
+
+        <button id="button_back_from_login">Back</button>
+    </div>
+
+    <div id="page_signup" hidden="true">
+        <h1>Signup</h1>
+        <button id="button_back_from_signup">Back</button>
+    </div>
+
     <script src="js/animation.js"></script>
 </body>
 </html>
