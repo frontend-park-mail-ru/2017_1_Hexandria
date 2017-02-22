@@ -47,7 +47,7 @@ function sleep(ms) {
 
 async function main_animation() {
 
-    await sleep(4100);
+    // await sleep(4100);
 
     main_hex.style.opacity = "0";
     logo.style.opacity = "0";
@@ -68,13 +68,13 @@ async function main_animation() {
         logo.style.opacity = i.toString();
     }
 
-    await sleep(1350);
+    // await sleep(1350);
     for(let i = 0; i < 1; i += 0.01) {
         await sleep(25);
         motto.style.opacity = i.toString();
     }
 
-    await sleep(1350);
+    // await sleep(1350);
     for(let i = 0; i < 1; i += 0.01) {
         await sleep(25);
         registration.style.opacity = i.toString();
