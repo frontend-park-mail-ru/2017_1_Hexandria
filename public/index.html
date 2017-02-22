@@ -2,52 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <script src="js/animation.js"></script>
     <link rel="stylesheet" href="css/new_style.css">
     <title>Hexandria</title>
 </head>
 <body>
 
-    <audio controls autoplay hidden="true" loop="true">
-        <source src="audio/seven_nation_army.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
+    <div id="page_index">
+        <audio controls autoplay hidden="true" loop="true">
+            <source src="audio/seven_nation_army.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
 
-    <!--<div class="fullscreen-bg">-->
-        <!--<video loop muted autoplay poster="img/background.jpg" class="fullscreen-bg__video">-->
-            <!--<source src="./video/background.webm" type="video/webm">-->
-            <!--<source src="./video/background.mp4" type="video/mp4">-->
-        <!--</video>-->
-    <!--</div>-->
+        <!--<div class="fullscreen-bg">-->
+            <!--<video loop muted autoplay poster="img/background.jpg" class="fullscreen-bg__video">-->
+                <!--<source src="./video/background.webm" type="video/webm">-->
+                <!--<source src="./video/background.mp4" type="video/mp4">-->
+            <!--</video>-->
+        <!--</div>-->
 
-    <div class="registration" id="registration" hidden="true">
-        <a href="/login">Log In</a>
-        <a href="/signup">Sign Up</a>
-    </div>
+        <div class="registration" id="registration" hidden="true">
+            <button id="button_login">Log In</button>
+            <button id="button_signup">Sign Up</button>
+        </div>
 
-    <div class="hex" hidden="true" id="hex">
-        <div class="hex__minor_hex" id="hex__minor_hex">
-            <div class="hex__title" id="hex__title" hidden="true">
-                HEXANDRIA
-            </div>
-            <div class="hex__motto" hidden="true" id="hex__motto">
-                You are the ruler.
-            </div>
-
-            <div class="buttons" hidden="true" id="buttons" hidden="true">
-
-                <div class="buttons__main-buttons">
-                    <a href="/singleplayer">Singleplayer</a>
-                    <a href="/multiplayer">Multiplayer</a>
+        <div class="hex" hidden="true" id="hex">
+            <div class="hex__minor_hex" id="hex__minor_hex">
+                <div class="hex__title" id="hex__title" hidden="true">
+                    HEXANDRIA
+                </div>
+                <div class="hex__motto" hidden="true" id="hex__motto">
+                    You are the ruler.
                 </div>
 
+                <div class="buttons" hidden="true" id="buttons" hidden="true">
 
-                <div class="buttons__minor-buttons">
-                    <a href="/scoreboard">Scoreboard</a>
-                    <a href="/about">About</a>
+                    <div class="buttons__main-buttons">
+                        <button id="button_singleplayer">Singleplayer</button>
+                        <button id="button_multiplayer">Multiplayer</button>
+                    </div>
+
+
+                    <div class="buttons__minor-buttons">
+                        <button id="button_scoreboard">Scoreboard</button>
+                        <button id="button_about">About</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="page_about" hidden="true">
+        <h1>About</h1>
+        <button id="button_back_from_about">Back</button>
+    </div>
+
+    <div id="page_scoreboard" hidden="true">
+        <h1>Scoreboard</h1>
+        <button id="button_back_from_scoreboard">Back</button>
+    </div>
+
+    <script src="js/animation.js"></script>
 </body>
 </html>

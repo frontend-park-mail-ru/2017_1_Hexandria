@@ -83,7 +83,7 @@ body .hex {
   text-align: center;
   padding: 10px;
   font-size: 120%; }
-  .button a:link, .buttons .buttons__main-buttons a:link, .buttons .buttons__minor-buttons a:link, .registration a:link, .button a:visited, .buttons .buttons__main-buttons a:visited, .buttons .buttons__minor-buttons a:visited, .registration a:visited {
+  .button button, .buttons .buttons__main-buttons button, .buttons .buttons__minor-buttons button, .registration button {
     color: white;
     padding: 14px 25px;
     text-align: center;
