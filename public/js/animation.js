@@ -11,7 +11,7 @@ const page_signup = document.getElementById('page_signup');
 
 // Элементы страницы page_index
 const main_hex = document.getElementById('hex');
-const minor_hex = document.getElementById('hex__minor_hex');
+const minor_hex = document.getElementById('minor_hex');
 const logo = document.getElementById('hex__title');
 const motto = document.getElementById('hex__motto');
 const buttons = document.getElementById('buttons');
@@ -56,7 +56,6 @@ async function main_animation() {
     registration.style.opacity = "0";
 
     hex.hidden = false;
-    minor_hex.hidden = false;
     logo.hidden = false;
     motto.hidden = false;
     buttons.hidden = false;

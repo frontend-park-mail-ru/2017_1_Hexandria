@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 body {
   font-family: 'Lato', sans-serif;
-  background-color: #000000;
+  background-color: #000;
 }
 
 body .registration {
@@ -15,12 +15,10 @@ body .hex {
 }
 
 @mixin createHex($height, $color, $z-index) {
-
   background-color: $color;
   height: $height / 2;
   width: $height * 0.866;
   z-index: $z-index;
-
   &::before {
     content: " ";
     width: 0; height: 0;
@@ -30,7 +28,6 @@ body .hex {
     position: absolute;
     top: -($height / 4);
   }
-
   &::after {
     content: "";
     width: 0;
@@ -43,12 +40,10 @@ body .hex {
 }
 
 @mixin createHexInside($height, $color, $z-index) {
-
   background-color: $color;
   height: $height / 2;
   width: $height * 0.866 - 1px;
   z-index: $z-index;
-
   &::before {
     content: " ";
     width: 0; height: 0;
@@ -58,7 +53,6 @@ body .hex {
     position: absolute;
     top: -($height / 4);
   }
-
   &::after {
     content: "";
     width: 0;
@@ -72,15 +66,12 @@ body .hex {
 
 .hex {
   position: relative;
-
   @include createHex(900px, #fff, 0);
-
   &__minor_hex {
-    margin: 3px 0 0 6px;
+    margin: 2px 0 0 4px;
     position: relative;
-    @include createHexInside(888px, #000, 1);
+    @include createHexInside(892px, #000, 1);
   }
-
   &__title {
     padding-top: 70px;
     position: relative;
@@ -89,7 +80,6 @@ body .hex {
     font-weight: 900;
     font-size: 400%;
   }
-
   &__motto {
     padding-top: 20px;
     position: relative;
@@ -98,7 +88,6 @@ body .hex {
     font-weight: 400;
     font-size: 200%;
   }
-
   &__buttons {
     position: relative;
     margin: 50px auto 0 auto;
@@ -107,13 +96,10 @@ body .hex {
     padding: 10px;
     text-align: center;
   }
-
   &__main-buttons {
   }
-
   &__minor-buttons {
   }
-
   &__singleplayer, &__multiplayer {
     @extend .button;
     width: 200px;
@@ -134,7 +120,12 @@ body .hex {
   text-decoration: none;
   display: inline-block;
   background-color: #000;
-  border: 4px solid #fff;
+  border: 1px solid #fff;
+  &:hover {
+    border: 4px solid #fff;
+    padding: 7px;
+    cursor: pointer;
+  }
 }
 
 .fullscreen-bg {
@@ -180,6 +171,10 @@ body .hex {
     bottom: 10px;
     right: 10px;
   }
+  &__button {
+    @extend .button;
+    margin: 8px 0;
+  }
   &__game {
     position: absolute;
     top: 0;
@@ -190,17 +185,12 @@ body .hex {
     min-width: 300px;
   }
   &__input {
-    border: 4px solid #fff;
+    border: 1px solid #fff;
     background-color: #000;
     color: #fff;
+    width: 100%;
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 8px 0;
   }
-}
-
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
 }
