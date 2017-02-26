@@ -23,24 +23,6 @@ const button_multiplayer = document.getElementById('button_multiplayer');
 const button_login = document.getElementById('button_login');
 const button_signup = document.getElementById('button_signup');
 
-// Элементы страницы page_about
-const button_back_from_about = document.getElementById('button_back_from_about');
-
-// Элементы страницы page_scoreboard
-const button_back_from_scoreboard = document.getElementById('button_back_from_scoreboard');
-
-// Элементы страницы page_singleplayer
-const button_back_from_singleplayer = document.getElementById('button_back_from_singleplayer');
-
-// Элементы страницы page_multiplayer
-const button_back_from_multiplayer = document.getElementById('button_back_from_multiplayer');
-
-// Элементы страницы page_login
-const button_back_from_login = document.getElementById('button_back_from_login');
-
-// Элементы страницы page_signup
-const button_back_from_signup = document.getElementById('button_back_from_signup');
-
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -125,13 +107,23 @@ button_signup.addEventListener('click', function (event) {
 });
 
 // Добавляем обработчик события на кнопки "back"
-let handlerBack = function() {
-    page_index.hidden = false;
-    this.parentElement.hidden = true;
-};
-button_back_from_about.addEventListener('click', handlerBack);
-button_back_from_scoreboard.addEventListener('click', handlerBack);
-button_back_from_singleplayer.addEventListener('click', handlerBack);
-button_back_from_multiplayer.addEventListener('click', handlerBack);
-button_back_from_login.addEventListener('click', handlerBack);
-button_back_from_signup.addEventListener('click', handlerBack);
+let buttons_back = document.getElementsByName('button_back');
+for(let i = 0; i < buttons_back.length; i++) {
+    buttons_back[i].addEventListener('click', function() {
+        page_index.hidden = false;
+        this.parentElement.hidden = true;
+    });
+}
+
+// Валидация инпутов
+document.forms["login"]["username"].addEventListener('blur', function() {
+    if (!this.value || this.value === null) {
+        alert('Enter something into username field!');
+    }
+});
+
+document.forms["login"]["password"].addEventListener('blur', function() {
+    if (!this.value || this.value === null) {
+        alert('Enter something into password field!');
+    }
+});
