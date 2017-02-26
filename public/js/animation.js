@@ -49,11 +49,11 @@ async function main_animation() {
 
     // await sleep(4100);
 
-    main_hex.style.opacity = "0";
-    logo.style.opacity = "0";
-    motto.style.opacity = "0";
-    buttons.style.opacity = "0";
-    registration.style.opacity = "0";
+    // main_hex.style.opacity = "0";
+    // logo.style.opacity = "0";
+    // motto.style.opacity = "0";
+    // buttons.style.opacity = "0";
+    // registration.style.opacity = "0";
 
     hex.hidden = false;
     logo.hidden = false;
@@ -61,24 +61,26 @@ async function main_animation() {
     buttons.hidden = false;
     registration.hidden = false;
 
-    for(let i = 0; i < 1; i += 0.01) {
-        await sleep(25);
-        main_hex.style.opacity = i.toString();
-        logo.style.opacity = i.toString();
-    }
 
-    // await sleep(1350);
-    for(let i = 0; i < 1; i += 0.01) {
-        await sleep(25);
-        motto.style.opacity = i.toString();
-    }
 
-    // await sleep(1350);
-    for(let i = 0; i < 1; i += 0.01) {
-        await sleep(25);
-        registration.style.opacity = i.toString();
-        buttons.style.opacity = i.toString();
-    }
+    // for(let i = 0; i < 1; i += 0.01) {
+    //     await sleep(25);
+    //     main_hex.style.opacity = i.toString();
+    //     logo.style.opacity = i.toString();
+    // }
+    //
+    // // await sleep(1350);
+    // for(let i = 0; i < 1; i += 0.01) {
+    //     await sleep(25);
+    //     motto.style.opacity = i.toString();
+    // }
+    //
+    // // await sleep(1350);
+    // for(let i = 0; i < 1; i += 0.01) {
+    //     await sleep(25);
+    //     registration.style.opacity = i.toString();
+    //     buttons.style.opacity = i.toString();
+    // }
 }
 
 window.onload = function() {
@@ -90,86 +92,46 @@ window.onload = function() {
     main_animation();
 };
 
-// Добавляем обработчик события на кнопку "about"
+// Обработчики событий на кнопки главного меню
 button_about.addEventListener('click', function (event) {
-    // Переключаем страницы
     page_index.hidden = true;
     page_about.hidden = false;
 });
 
-// Добавляем обработчик события на кнопку "scoreboard"
-button_scoreboard.addEventListener('click', function (event) {
-    // Переключаем страницы
+button_scoreboard.addEventListener('click', function() {
     page_index.hidden = true;
     page_scoreboard.hidden = false;
 });
 
-// Добавляем обработчик события на кнопку "singleplayer"
-button_singleplayer.addEventListener('click', function (event) {
-    // Переключаем страницы
+button_singleplayer.addEventListener('click', function() {
     page_index.hidden = true;
     page_singleplayer.hidden = false;
+    game();
 });
 
-// Добавляем обработчик события на кнопку "multiplayer"
-button_multiplayer.addEventListener('click', function (event) {
-    // Переключаем страницы
+button_multiplayer.addEventListener('click', function() {
     page_index.hidden = true;
     page_multiplayer.hidden = false;
 });
 
-// Добавляем обработчик события на кнопку "login"
-button_login.addEventListener('click', function (event) {
-    // Переключаем страницы
+button_login.addEventListener('click', function() {
     page_index.hidden = true;
     page_login.hidden = false;
 });
 
-// Добавляем обработчик события на кнопку "signup"
 button_signup.addEventListener('click', function (event) {
-    // Переключаем страницы
     page_index.hidden = true;
     page_signup.hidden = false;
 });
 
-// Добавляем обработчик события на кнопку "back"
-button_back_from_about.addEventListener('click', function (event) {
-    // Переключаем страницы
+// Добавляем обработчик события на кнопки "back"
+let handlerBack = function() {
     page_index.hidden = false;
-    page_about.hidden = true;
-});
-
-// Добавляем обработчик события на кнопку "back"
-button_back_from_scoreboard.addEventListener('click', function (event) {
-    // Переключаем страницы
-    page_index.hidden = false;
-    page_scoreboard.hidden = true;
-});
-
-// Добавляем обработчик события на кнопку "back"
-button_back_from_singleplayer.addEventListener('click', function (event) {
-    // Переключаем страницы
-    page_index.hidden = false;
-    page_singleplayer.hidden = true;
-});
-
-// Добавляем обработчик события на кнопку "back"
-button_back_from_multiplayer.addEventListener('click', function (event) {
-    // Переключаем страницы
-    page_index.hidden = false;
-    page_multiplayer.hidden = true;
-});
-
-// Добавляем обработчик события на кнопку "back"
-button_back_from_login.addEventListener('click', function (event) {
-    // Переключаем страницы
-    page_index.hidden = false;
-    page_login.hidden = true;
-});
-
-// Добавляем обработчик события на кнопку "back"
-button_back_from_signup.addEventListener('click', function (event) {
-    // Переключаем страницы
-    page_index.hidden = false;
-    page_signup.hidden = true;
-});
+    this.parentElement.hidden = true;
+};
+button_back_from_about.addEventListener('click', handlerBack);
+button_back_from_scoreboard.addEventListener('click', handlerBack);
+button_back_from_singleplayer.addEventListener('click', handlerBack);
+button_back_from_multiplayer.addEventListener('click', handlerBack);
+button_back_from_login.addEventListener('click', handlerBack);
+button_back_from_signup.addEventListener('click', handlerBack);

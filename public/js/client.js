@@ -1,259 +1,259 @@
 'use strict';
 
-// Graphics variables
-let container, stats;
-let camera, controls, scene, renderer;
-let textureLoader;
-let clock = new THREE.Clock();
-let game;
-let mouse, raycaster;
-let intersects, INTERSECTED;
+function game() {
+    // Graphics variables
+    let container, stats;
+    let camera, controls, scene, renderer;
+    let textureLoader;
+    let clock = new THREE.Clock();
+    let game;
+    let mouse, raycaster;
+    let intersects, INTERSECTED;
 
-let time = 0;
-let keyQ = false;
+    let time = 0;
+    let keyQ = false;
 
-// - Main code -
+    // - Main code -
 
-init();
-animate();
-
-
-// - Functions -
-
-function init() {
-    initGraphics();
-
-    createObjects();
-
-    initInput();
-}
-
-function initGraphics() {
-
-    container = document.getElementById('container');
-
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
-
-    scene = new THREE.Scene();
-
-    camera.position.x = -7;
-    camera.position.y = 5;
-    camera.position.z =  8;
-    camera.up.set(0, 0, 1);
-
-    controls = new THREE.OrbitControls(camera);
-    controls.target.y = 2;
-
-    renderer = new THREE.WebGLRenderer();
-    // renderer.setClearColor(0xbfd1e5);
-    renderer.setClearColor(0xffffff);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.shadowMap.enabled = true;
-
-    textureLoader = new THREE.TextureLoader();
-
-    let ambientLight = new THREE.AmbientLight(0x404040);
-    scene.add(ambientLight);
-
-    let light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(-10, 10, 10);
-    light.castShadow = true;
-    let d = 10;
-    light.shadow.camera.left = -d;
-    light.shadow.camera.right = d;
-    light.shadow.camera.top = d;
-    light.shadow.camera.bottom = -d;
-    light.shadow.camera.near = 2;
-    light.shadow.camera.far = 50;
-    light.shadow.mapSize.x = 1024;
-    light.shadow.mapSize.y = 1024;
-    scene.add(light);
+    init();
+    animate();
 
 
-    container.innerHTML = "";
+    // - Functions -
 
-    container.appendChild(renderer.domElement);
+    function init() {
+        initGraphics();
 
-    stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    container.appendChild(stats.domElement);
+        createObjects();
 
+        initInput();
+    }
 
-    mouse = new THREE.Vector2();
-    raycaster = new THREE.Raycaster();
-    /*document.addEventListener('mousemove', onDocumentMouseMove, false);
-     document.addEventListener('mousedown', onDocumentMouseDown, false);
-     document.addEventListener('keydown', onDocumentKeyDown, false);
-     document.addEventListener('keyup', onDocumentKeyUp, false);*/
+    function initGraphics() {
 
-    document.addEventListener('mousemove', onDocumentMouseMove, false);
-    document.addEventListener('mousedown', onDocumentMouseDown, false);
+        container = document.getElementById('container');
 
-    window.addEventListener('resize', onWindowResize, false);
-}
+        camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
 
-function createObjects() {
-    let pos = new THREE.Vector3();
-    let quat = new THREE.Quaternion();
+        scene = new THREE.Scene();
 
-    // Ground
-    pos.set(0, 0, -0.5);
-    quat.set(0, 0, 0, 1);
-    let ground = createParalellepiped(40, 40, 1, 0, pos, quat, new THREE.MeshPhongMaterial({color: 0xFFFFFF}));
-    ground.castShadow = true;
-    ground.receiveShadow = true;
-    textureLoader.load("textures/grid.png", function(texture) {
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(40, 40);
-        ground.material.map = texture;
-        ground.material.needsUpdate = true;
-    });
-    scene.add(ground);
+        camera.position.x = -7;
+        camera.position.y = 5;
+        camera.position.z = 8;
+        camera.up.set(0, 0, 1);
 
-    // Axis
-    let axisHelper = new THREE.AxisHelper(1);
-    pos.set(0.0, 0.0, 0.01);
-    axisHelper.position.copy(pos);
-    scene.add(axisHelper);
+        controls = new THREE.OrbitControls(camera);
+        controls.target.y = 2;
 
+        renderer = new THREE.WebGLRenderer();
+        // renderer.setClearColor(0xbfd1e5);
+        renderer.setClearColor(0xffffff);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
 
-    /*let geometry = new THREE.BoxGeometry(2, 2, 2);
-     for (let i = 0; i < 100; i ++) {
-     let object = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff }));
-     object.position.x = Math.random() * 100 - 50;
-     object.position.y = Math.random() * 100 - 50;
-     object.position.z = Math.random() * 100 - 50;
-     scene.add(object);
-     }*/
+        textureLoader = new THREE.TextureLoader();
+
+        let ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+
+        let light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(-10, 10, 10);
+        light.castShadow = true;
+        let d = 10;
+        light.shadow.camera.left = -d;
+        light.shadow.camera.right = d;
+        light.shadow.camera.top = d;
+        light.shadow.camera.bottom = -d;
+        light.shadow.camera.near = 2;
+        light.shadow.camera.far = 50;
+        light.shadow.mapSize.x = 1024;
+        light.shadow.mapSize.y = 1024;
+        scene.add(light);
 
 
+        container.innerHTML = "";
 
-    game = new Hexandria(scene);
-    game.setMap(5, 10);
-}
+        container.appendChild(renderer.domElement);
 
-function createParalellepiped(sx, sy, sz, mass, pos, quat, material) {
-    let threeObject = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz, 1, 1, 1), material);
-
-    createRigidBody(threeObject, mass, pos, quat);
-
-    return threeObject;
-}
-
-function createRigidBody(threeObject, mass, pos, quat) {
-    threeObject.position.copy(pos);
-    threeObject.quaternion.copy(quat);
-
-    scene.add(threeObject);
-}
-
-function initInput() {
-    window.addEventListener('keydown', function(event) {
-        switch (event.keyCode) {
-            // Q
-            case 81:
-                keyQ = true;
-                break;
-        }
-    }, false);
-
-    window.addEventListener('keyup', function(event) {
-        switch (event.keyCode) {
-            // Q
-            case 81:
-                keyQ = false;
-                break;
-        }
-    }, false);
-}
-
-function onDocumentMouseMove(event) {
-    event.preventDefault();
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        stats = new Stats();
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.top = '0px';
+        container.appendChild(stats.domElement);
 
 
-    raycaster.setFromCamera(mouse, camera);
-    let intersects = raycaster.intersectObjects(scene.children);
+        mouse = new THREE.Vector2();
+        raycaster = new THREE.Raycaster();
+        /*document.addEventListener('mousemove', onDocumentMouseMove, false);
+         document.addEventListener('mousedown', onDocumentMouseDown, false);
+         document.addEventListener('keydown', onDocumentKeyDown, false);
+         document.addEventListener('keyup', onDocumentKeyUp, false);*/
 
-    /*if (intersects.length > 0) {
-     if (INTERSECTED != intersects[0].object) {
-     if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+        document.addEventListener('mousemove', onDocumentMouseMove, false);
+        document.addEventListener('mousedown', onDocumentMouseDown, false);
 
-     if (intersects[0].object.material.emissive) {
-     INTERSECTED = intersects[0].object;
-     INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-     INTERSECTED.material.emissive.setHex(0xff0000);
-     }
-     }
-     } else {
-     if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-     INTERSECTED = null;
-     }*/
+        window.addEventListener('resize', onWindowResize, false);
+    }
 
-    // game.handleIntersects(intersects);
-    game.handleHighlight(intersects);
-}
+    function createObjects() {
+        let pos = new THREE.Vector3();
+        let quat = new THREE.Quaternion();
 
-function onDocumentMouseDown(event) {
-    event.preventDefault();
+        // Ground
+        pos.set(0, 0, -0.5);
+        quat.set(0, 0, 0, 1);
+        let ground = createParalellepiped(40, 40, 1, 0, pos, quat, new THREE.MeshPhongMaterial({color: 0xFFFFFF}));
+        ground.castShadow = true;
+        ground.receiveShadow = true;
+        textureLoader.load("textures/grid.png", function (texture) {
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(40, 40);
+            ground.material.map = texture;
+            ground.material.needsUpdate = true;
+        });
+        scene.add(ground);
 
-    if (event.buttons == 1) {
+        // Axis
+        let axisHelper = new THREE.AxisHelper(1);
+        pos.set(0.0, 0.0, 0.01);
+        axisHelper.position.copy(pos);
+        scene.add(axisHelper);
+
+
+        /*let geometry = new THREE.BoxGeometry(2, 2, 2);
+         for (let i = 0; i < 100; i ++) {
+         let object = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff }));
+         object.position.x = Math.random() * 100 - 50;
+         object.position.y = Math.random() * 100 - 50;
+         object.position.z = Math.random() * 100 - 50;
+         scene.add(object);
+         }*/
+
+
+        game = new Hexandria(scene);
+        game.setMap(5, 10);
+    }
+
+    function createParalellepiped(sx, sy, sz, mass, pos, quat, material) {
+        let threeObject = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz, 1, 1, 1), material);
+
+        createRigidBody(threeObject, mass, pos, quat);
+
+        return threeObject;
+    }
+
+    function createRigidBody(threeObject, mass, pos, quat) {
+        threeObject.position.copy(pos);
+        threeObject.quaternion.copy(quat);
+
+        scene.add(threeObject);
+    }
+
+    function initInput() {
+        window.addEventListener('keydown', function (event) {
+            switch (event.keyCode) {
+                // Q
+                case 81:
+                    keyQ = true;
+                    break;
+            }
+        }, false);
+
+        window.addEventListener('keyup', function (event) {
+            switch (event.keyCode) {
+                // Q
+                case 81:
+                    keyQ = false;
+                    break;
+            }
+        }, false);
+    }
+
+    function onDocumentMouseMove(event) {
+        event.preventDefault();
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
 
         raycaster.setFromCamera(mouse, camera);
         let intersects = raycaster.intersectObjects(scene.children);
 
-        game.handleSelect(intersects);
+        /*if (intersects.length > 0) {
+         if (INTERSECTED != intersects[0].object) {
+         if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+
+         if (intersects[0].object.material.emissive) {
+         INTERSECTED = intersects[0].object;
+         INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+         INTERSECTED.material.emissive.setHex(0xff0000);
+         }
+         }
+         } else {
+         if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+         INTERSECTED = null;
+         }*/
+
+        // game.handleIntersects(intersects);
+        game.handleHighlight(intersects);
     }
-}
 
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    function onDocumentMouseDown(event) {
+        event.preventDefault();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
+        if (event.buttons == 1) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-function animate() {
-    requestAnimationFrame(animate);
+            raycaster.setFromCamera(mouse, camera);
+            let intersects = raycaster.intersectObjects(scene.children);
 
-    render();
-    stats.update();
-}
+            game.handleSelect(intersects);
+        }
+    }
 
-function render() {
-    let deltaTime = clock.getDelta();
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
 
-    game.setRandomColor();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
 
-    controls.update(deltaTime);
+    function animate() {
+        requestAnimationFrame(animate);
 
+        render();
+        stats.update();
+    }
 
-    /*raycaster.setFromCamera(mouse, camera);
-     let intersects = raycaster.intersectObjects(scene.children);
-     if (intersects.length > 0) {
-     if (INTERSECTED != intersects[0].object) {
-     if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+    function render() {
+        let deltaTime = clock.getDelta();
 
-     if (intersects[0].object.material.emissive) {
-     INTERSECTED = intersects[0].object;
-     INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-     INTERSECTED.material.emissive.setHex(0xff0000);
-     }
-     }
-     } else {
-     if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-     INTERSECTED = null;
-     }*/
+        game.setRandomColor();
+
+        controls.update(deltaTime);
 
 
+        /*raycaster.setFromCamera(mouse, camera);
+         let intersects = raycaster.intersectObjects(scene.children);
+         if (intersects.length > 0) {
+         if (INTERSECTED != intersects[0].object) {
+         if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
 
-    renderer.render(scene, camera);
+         if (intersects[0].object.material.emissive) {
+         INTERSECTED = intersects[0].object;
+         INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+         INTERSECTED.material.emissive.setHex(0xff0000);
+         }
+         }
+         } else {
+         if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+         INTERSECTED = null;
+         }*/
 
-    time += deltaTime;
+
+        renderer.render(scene, camera);
+
+        time += deltaTime;
+    }
 }
