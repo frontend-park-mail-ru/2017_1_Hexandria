@@ -20,8 +20,14 @@
     <div class="container" id="page_index">
 
         <div class="registration" id="registration" hidden="true">
-            <button class="registration__login" id="button_login" hidden="true">Log In</button>
-            <button class="registration__signup" id="button_signup" hidden="true">Sign Up</button>
+            <div id="unregistered">
+                <button class="registration__login" id="button_login" hidden="true">Log In</button>
+                <button class="registration__signup" id="button_signup" hidden="true">Sign Up</button>
+            </div>
+            <div id="registered" class="registration__registered">
+                <div class="registration__username">Dolan</div>
+                <img class="registration__avatar" src="img/our_typical_user.jpeg">
+            </div>
         </div>
         <div class="hex" hidden="true" id="hex">
             <div class="hex__minor_hex" id="minor_hex">
@@ -77,7 +83,7 @@
                 <input class="page__input" type="text" placeholder="Enter Username" name="username">
                 <label>Password</label>
                 <input class="page__input" type="password" placeholder="Enter Password" name="password">
-                <button type="submit" class="page__button">Login</button>
+                <button type="button" class="page__button" id="login">Login</button>
             </form>
             <button class="page__back" name="button_back">Back</button>
         </div>

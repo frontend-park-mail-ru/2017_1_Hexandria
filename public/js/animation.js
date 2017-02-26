@@ -28,6 +28,7 @@ function sleep(ms) {
 }
 
 function main_animation() {
+    console.log('tuduuuu');
 
     // await sleep(4100);
 
@@ -42,6 +43,7 @@ function main_animation() {
     motto.hidden = false;
     buttons.hidden = false;
     registration.hidden = false;
+    document.getElementById('registered').hidden = true;
 
 
 
@@ -118,12 +120,20 @@ for(let i = 0; i < buttons_back.length; i++) {
 // Валидация инпутов
 document.forms["login"]["username"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
-        alert('Enter something into username field!');
+        // alert
     }
 });
 
 document.forms["login"]["password"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
-        alert('Enter something into password field!');
+        // alert
     }
+});
+
+// Dolan is here
+document.getElementById('login').addEventListener('click', function() {
+    page_index.hidden = false;
+    page_login.hidden = true;
+    document.getElementById('unregistered').hidden = true;
+    document.getElementById('registered').hidden = false;
 });

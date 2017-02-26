@@ -5,8 +5,12 @@ body {
 }
 
 body .registration {
+  top: 10px;
+  left: 10px;
+  height: 10%;
+  width: 20%;
+  margin: 2% 5% 0 75%;
   position: absolute;
-  margin: 2% auto 0 80%;
 }
 
 body .hex {
@@ -168,8 +172,46 @@ body .hex {
 }
 
 .registration {
+  position: relative;
+  display: inline-block;
+
   &__login, &__signup {
     @extend .button;
+  }
+
+  &__registered {
+    width: 100%;
+    height: 100%;
+
+    &:before {
+      content: ' ';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+  }
+
+  &__username {
+    color: #fff;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px;
+
+    &:before {
+      content: '';
+      color: #fff;
+      display: inline-block;
+      vertical-align: middle;
+      width: 120px;
+    }
+  }
+
+  &__avatar {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 5px;
   }
 }
 
