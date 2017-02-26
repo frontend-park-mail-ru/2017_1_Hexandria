@@ -221,12 +221,13 @@ body .hex {
   bottom:0;
   left:0;
   right:0;
+
   &__title {
     text-align: center;
     color: #fff;
     font-size: 200%;
     font-weight: 900;
-    margin: 5% auto 0 auto;
+    margin: 5% auto 5% auto;
   }
   &__back {
     @extend .button;
@@ -238,7 +239,7 @@ body .hex {
     @extend .button;
     position: relative;
     width: 30%;
-    margin: 0 auto 0;
+    margin: 2% 50% 5% 20%;
     display: block;
   }
   &__game {
@@ -247,8 +248,14 @@ body .hex {
     z-index: -1;
   }
   &__container {
-    margin: 0 25% 0 25%;
+    margin: 0 5% 0 25%;
     min-width: 300px;
+  }
+
+  &__error {
+    width: 28%;
+    color: #fff;
+    display: inline;
   }
 
   &__input {
@@ -256,11 +263,11 @@ body .hex {
     background-color: #000;
     color: #fff;
 
-    display: block;
-    width: 80%;
+    display: inline-block;
+    width: 62%;
     min-height: 40px;
     padding: 12px;
-    margin: 0 auto 20px;
+    margin: 20px 5% 20px 5%;
     box-sizing: border-box;
     outline: none;
 

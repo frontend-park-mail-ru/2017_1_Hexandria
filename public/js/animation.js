@@ -120,14 +120,37 @@ for(let i = 0; i < buttons_back.length; i++) {
 // Валидация инпутов
 document.forms["login"]["username"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
-        // alert
+        document.getElementById('error_username').textContent = 'Enter something!';
+        return;
+    }
+    if (!this.value.match(/^[a-zA-Z0-9]{1,10}$/)) {
+        document.getElementById('error_username').textContent = 'Only latin letters and numerals!';
     }
 });
 
 document.forms["login"]["password"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
-        // alert
+        document.getElementById('error_password').textContent = 'Enter something!';
+        return;
     }
+    if (!this.value.match(/^[a-zA-Z0-9]{1,10}$/)) {
+        document.getElementById('error_password').textContent = 'Only latin letters and numerals!';
+        return;
+    }
+    if(this.value.length < 5) {
+        document.getElementById('error_password').textContent = 'Enter more than 4 symbols!';
+    }
+});
+
+// Erase error
+document.forms["login"]["username"].addEventListener('focus', function() {
+    let errorField = document.getElementById('error_username');
+    errorField.textContent = '';
+});
+
+document.forms["login"]["password"].addEventListener('focus', function() {
+    let errorField = document.getElementById('error_password');
+    errorField.textContent = '';
 });
 
 // Dolan is here

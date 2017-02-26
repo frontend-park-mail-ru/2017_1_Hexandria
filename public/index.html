@@ -79,10 +79,10 @@
         <div class="page">
             <h1 class="page__title">Login</h1>
             <form class="page__container" name="login">
-                <label>Username</label>
                 <input class="page__input" type="text" placeholder="Enter Username" name="username">
-                <label>Password</label>
+                <div class="page__error" id="error_username"></div>
                 <input class="page__input" type="password" placeholder="Enter Password" name="password">
+                <div class="page__error" id="error_password">More than 4 symbols!</div>
                 <button type="button" class="page__button" id="login">Login</button>
             </form>
             <button class="page__back" name="button_back">Back</button>
