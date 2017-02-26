@@ -73,6 +73,7 @@ body .hex {
     @include createHexInside(892px, #000, 1);
   }
   &__title {
+    text-transform: uppercase;
     padding-top: 70px;
     position: relative;
     text-align: center;
@@ -118,12 +119,32 @@ body .hex {
   color: white;
   padding: 10px;
   text-decoration: none;
-  display: inline-block;
   background-color: #000;
   border: 1px solid #fff;
-  &:hover {
-    border: 4px solid #fff;
-    padding: 7px;
+
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    border: #eb9300 solid 1px;
+    top: 1px;
+    left: 1px;
+    right: 1px;
+    bottom: 1px;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease-in-out;
+    -o-transition: opacity 0.3s ease-in-out;
+    -moz-transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  &:hover:before, &:focus:before, &:active:before {
+    opacity: 1;
     cursor: pointer;
   }
 }
@@ -173,7 +194,10 @@ body .hex {
   }
   &__button {
     @extend .button;
-    margin: 8px 0;
+    position: relative;
+    width: 30%;
+    margin: 0 auto 0;
+    display: block;
   }
   &__game {
     position: absolute;
@@ -184,13 +208,64 @@ body .hex {
     margin: 0 25% 0 25%;
     min-width: 300px;
   }
+
   &__input {
     border: 1px solid #fff;
     background-color: #000;
     color: #fff;
-    width: 100%;
-    display: inline-block;
-    padding: 12px 20px;
-    margin: 8px 0;
+
+    display: block;
+    width: 80%;
+    min-height: 40px;
+    padding: 12px;
+    margin: 0 auto 20px;
+    box-sizing: border-box;
+    outline: none;
+
+    &:focus {
+      border: 1px solid #eb9300;
+    }
+  }
+
+  ::-webkit-input-placeholder {
+    color: #ccc;
+    text-indent: 0;
+    -webkit-transition: opacity .75s;
+    transition: opacity .75s;
+  }
+
+  ::-moz-placeholder {
+    color: #ccc;
+    text-indent: 0;
+    -webkit-transition: opacity .75s;
+    transition: opacity .75s;
+  }
+
+  :-ms-input-placeholder {
+    color: #ccc;
+    text-indent: 0;
+    -webkit-transition: opacity .75s;
+    transition: opacity .75s;
+  }
+
+  :focus::-webkit-input-placeholder {
+    text-indent: 100%;
+    opacity: 0;
+    -webkit-transition: opacity .5s, text-indent 1s;
+    transition: opacity .5s, text-indent 1s;
+  }
+
+  :focus::-moz-placeholder {
+    text-indent: 100%;
+    opacity: 0;
+    -webkit-transition: opacity .5s, text-indent 1s;
+    transition: opacity .5s, text-indent 1s;
+  }
+
+  :focus:-ms-input-placeholder {
+    text-indent: 100%;
+    opacity: 0;
+    -webkit-transition: opacity .5s, text-indent 1s;
+    transition: opacity .5s, text-indent 1s;
   }
 }

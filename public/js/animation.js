@@ -45,7 +45,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function main_animation() {
+function main_animation() {
 
     // await sleep(4100);
 

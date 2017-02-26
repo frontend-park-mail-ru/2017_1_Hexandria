@@ -7,11 +7,18 @@
 </head>
 <body>
 
+    <!--<div class="fullscreen-bg">-->
+        <!--<video loop muted autoplay poster="img/background.jpg" class="fullscreen-bg__video">-->
+            <!--<source src="./video/background.mp4" type="video/mp4">-->
+        <!--</video>-->
+    <!--</div>-->
+    <!--<audio controls autoplay hidden="true" loop="true">-->
+        <!--<source src="audio/seven_nation_army.mp3" type="audio/mp3">-->
+        <!--Your browser does not support the audio element.-->
+    <!--</audio>-->
+
     <div class="container" id="page_index">
-        <!--<audio controls autoplay hidden="true" loop="true">-->
-            <!--<source src="audio/seven_nation_army.mp3" type="audio/mp3">-->
-            <!--Your browser does not support the audio element.-->
-        <!--</audio>-->
+
         <div class="registration" id="registration" hidden="true">
             <button class="registration__login" id="button_login" hidden="true">Log In</button>
             <button class="registration__signup" id="button_signup" hidden="true">Sign Up</button>
@@ -19,7 +26,7 @@
         <div class="hex" hidden="true" id="hex">
             <div class="hex__minor_hex" id="minor_hex">
                 <div class="hex__title" id="hex__title" hidden="true">
-                    HEXANDRIA
+                    hexandria
                 </div>
                 <div class="hex__motto" hidden="true" id="hex__motto">
                     You are the ruler.
@@ -67,11 +74,10 @@
             <h1 class="page__title">Login</h1>
             <form class="page__container">
                 <label>Username</label>
-                <input class="page__input" type="text" placeholder="Enter Username" name="uname" required>
+                <input class="page__input" type="text" placeholder="Enter Username">
                 <label>Password</label>
-                <input class="page__input" type="password" placeholder="Enter Password" name="psw" required>
+                <input class="page__input" type="password" placeholder="Enter Password">
                 <button type="submit" class="page__button">Login</button>
-                <input type="checkbox" checked="checked"> Remember me
             </form>
             <button class="page__back" id="button_back_from_login">Back</button>
         </div>
