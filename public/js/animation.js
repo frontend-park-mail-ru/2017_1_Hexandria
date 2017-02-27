@@ -1,21 +1,15 @@
 'use strict';
 
-// Получаем ссылки на элементы страницы
+// Pages
 const page_index = document.getElementById('page_index');
 const page_about = document.getElementById('page_about');
 const page_scoreboard = document.getElementById('page_scoreboard');
 const page_singleplayer = document.getElementById('page_singleplayer');
 const page_multiplayer = document.getElementById('page_multiplayer');
-let page_login = document.getElementById('page_login');
+const page_login = document.getElementById('page_login');
 const page_signup = document.getElementById('page_signup');
 
-// Элементы страницы page_index
-const main_hex = document.getElementById('hex');
-const minor_hex = document.getElementById('minor_hex');
-const logo = document.getElementById('hex__title');
-const motto = document.getElementById('hex__motto');
-const buttons = document.getElementById('buttons');
-const registration = document.getElementById('registration');
+// Main menu buttons
 const button_about = document.getElementById('button_about');
 const button_scoreboard = document.getElementById('button_scoreboard');
 const button_singleplayer = document.getElementById('button_singleplayer');
@@ -23,9 +17,9 @@ const button_multiplayer = document.getElementById('button_multiplayer');
 const button_login = document.getElementById('button_login');
 const button_signup = document.getElementById('button_signup');
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+//     return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 window.onload = function() {
     page_about.style.visibility = "hidden";
@@ -36,8 +30,6 @@ window.onload = function() {
     page_signup.style.visibility = "hidden";
     document.body.style.visibility = "visible";
 
-    console.log('tuduuuu');
-
     // await sleep(4100);
 
     // main_hex.style.opacity = "0";
@@ -45,12 +37,6 @@ window.onload = function() {
     // motto.style.opacity = "0";
     // buttons.style.opacity = "0";
     // registration.style.opacity = "0";
-
-    hex.style.visibility = "inherit";
-    logo.style.visibility = "inherit";
-    motto.style.visibility = "inherit";
-    buttons.style.visibility = "inherit";
-    registration.style.visibility = "inherit";
     document.getElementById('registered').style.visibility = "hidden";
 
 
@@ -75,8 +61,8 @@ window.onload = function() {
     // }
 };
 
-// Обработчики событий на кнопки главного меню
-button_about.addEventListener('click', function (event) {
+// Main menu buttons events
+button_about.addEventListener('click', function() {
     page_index.style.visibility = "hidden";
     page_about.style.visibility = "visible";
 });
@@ -102,12 +88,12 @@ button_login.addEventListener('click', function() {
     page_login.style.visibility = "visible";
 });
 
-button_signup.addEventListener('click', function (event) {
+button_signup.addEventListener('click', function() {
     page_index.style.visibility = "hidden";
     page_signup.style.visibility = "visible";
 });
 
-// Добавляем обработчик события на кнопки "back"
+// Back to index with 'back' buttons
 let buttons_back = document.getElementsByName('button_back');
 for(let i = 0; i < buttons_back.length; i++) {
     buttons_back[i].addEventListener('click', function() {
@@ -116,7 +102,7 @@ for(let i = 0; i < buttons_back.length; i++) {
     });
 }
 
-// Валидация инпутов
+// Input validation
 let highlihght = function(input) {
     input.style.border = "1px solid red";
 };
