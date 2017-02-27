@@ -6,7 +6,7 @@ const page_about = document.getElementById('page_about');
 const page_scoreboard = document.getElementById('page_scoreboard');
 const page_singleplayer = document.getElementById('page_singleplayer');
 const page_multiplayer = document.getElementById('page_multiplayer');
-const page_login = document.getElementById('page_login');
+let page_login = document.getElementById('page_login');
 const page_signup = document.getElementById('page_signup');
 
 // Элементы страницы page_index
@@ -27,7 +27,15 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function main_animation() {
+window.onload = function() {
+    page_about.style.visibility = "hidden";
+    page_scoreboard.style.visibility = "hidden";
+    page_singleplayer.style.visibility = "hidden";
+    page_multiplayer.style.visibility = "hidden";
+    page_login.style.visibility = "hidden";
+    page_signup.style.visibility = "hidden";
+    document.body.style.visibility = "visible";
+
     console.log('tuduuuu');
 
     // await sleep(4100);
@@ -38,12 +46,12 @@ function main_animation() {
     // buttons.style.opacity = "0";
     // registration.style.opacity = "0";
 
-    hex.hidden = false;
-    logo.hidden = false;
-    motto.hidden = false;
-    buttons.hidden = false;
-    registration.hidden = false;
-    document.getElementById('registered').hidden = true;
+    hex.style.visibility = "inherit";
+    logo.style.visibility = "inherit";
+    motto.style.visibility = "inherit";
+    buttons.style.visibility = "inherit";
+    registration.style.visibility = "inherit";
+    document.getElementById('registered').style.visibility = "hidden";
 
 
 
@@ -65,59 +73,54 @@ function main_animation() {
     //     registration.style.opacity = i.toString();
     //     buttons.style.opacity = i.toString();
     // }
-}
-
-window.onload = function() {
-
-    // Скрываем все страницы, кроме главной
-    page_about.hidden = true;
-    page_scoreboard.hidden = true;
-
-    main_animation();
 };
 
 // Обработчики событий на кнопки главного меню
 button_about.addEventListener('click', function (event) {
-    page_index.hidden = true;
-    page_about.hidden = false;
+    page_index.style.visibility = "hidden";
+    page_about.style.visibility = "visible";
 });
 
 button_scoreboard.addEventListener('click', function() {
-    page_index.hidden = true;
-    page_scoreboard.hidden = false;
+    page_index.style.visibility = "hidden";
+    page_scoreboard.style.visibility = "visible";
 });
 
 button_singleplayer.addEventListener('click', function() {
-    page_index.hidden = true;
-    page_singleplayer.hidden = false;
+    page_index.style.visibility = "hidden";
+    page_singleplayer.style.visibility = "visible";
     game();
 });
 
 button_multiplayer.addEventListener('click', function() {
-    page_index.hidden = true;
-    page_multiplayer.hidden = false;
+    page_index.style.visibility = "hidden";
+    page_multiplayer.style.visibility = "visible";
 });
 
 button_login.addEventListener('click', function() {
-    page_index.hidden = true;
-    page_login.hidden = false;
+    page_index.style.visibility = "hidden";
+    page_login.style.visibility = "visible";
 });
 
 button_signup.addEventListener('click', function (event) {
-    page_index.hidden = true;
-    page_signup.hidden = false;
+    page_index.style.visibility = "hidden";
+    page_signup.style.visibility = "visible";
 });
 
 // Добавляем обработчик события на кнопки "back"
 let buttons_back = document.getElementsByName('button_back');
 for(let i = 0; i < buttons_back.length; i++) {
     buttons_back[i].addEventListener('click', function() {
-        page_index.hidden = false;
-        this.parentElement.hidden = true;
+        page_index.style.visibility = "visible";
+        this.parentElement.style.visibility = "hidden";
     });
 }
 
 // Валидация инпутов
+let highlihght = function(input) {
+    input.style.border = "1px solid red";
+};
+
 document.forms["login"]["username"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
         document.getElementById('error_username').textContent = 'Enter something!';
@@ -139,24 +142,22 @@ document.forms["login"]["password"].addEventListener('blur', function() {
     }
     if(this.value.length < 5) {
         document.getElementById('error_password').textContent = 'Enter more than 4 symbols!';
+        highlihght(this);
     }
 });
 
 // Erase error
-document.forms["login"]["username"].addEventListener('focus', function() {
-    let errorField = document.getElementById('error_username');
-    errorField.textContent = '';
-});
-
-document.forms["login"]["password"].addEventListener('focus', function() {
-    let errorField = document.getElementById('error_password');
-    errorField.textContent = '';
-});
+let inputs = document.forms["login"];
+for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener('focus', function() {
+        this.nextSibling.nextSibling.textContent = '';
+    });
+}
 
 // Dolan is here
 document.getElementById('login').addEventListener('click', function() {
-    page_index.hidden = false;
-    page_login.hidden = true;
-    document.getElementById('unregistered').hidden = true;
-    document.getElementById('registered').hidden = false;
+    page_index.style.visibility = "inherit";
+    page_login.style.visibility = "hidden";
+    document.getElementById('unregistered').style.visibility = "hidden";
+    document.getElementById('registered').style.visibility = "inherit";
 });

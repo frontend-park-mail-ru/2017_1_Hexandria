@@ -1,104 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/new_style.css">
-    <title>Hexandria</title>
-</head>
-<body>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/new_style.css">
+        <title>Hexandria</title>
+    </head>
+    <body>
 
-    <!--<div class="fullscreen-bg">-->
+        <!--<div class="fullscreen-bg">-->
         <!--<video loop muted autoplay poster="img/background.jpg" class="fullscreen-bg__video">-->
-            <!--<source src="./video/background.mp4" type="video/mp4">-->
+        <!--<source src="./video/background.mp4" type="video/mp4">-->
         <!--</video>-->
-    <!--</div>-->
-    <!--<audio controls autoplay hidden="true" loop="true">-->
-        <!--<source src="audio/seven_nation_army.mp3" type="audio/mp3">-->
-        <!--Your browser does not support the audio element.-->
-    <!--</audio>-->
+        <!--</div>-->
+        <!--<audio controls autoplay hidden loop>-->
+            <!--<source src="audio/seven_nation_army.mp3" type="audio/mp3">-->
+            <!--Your browser does not support the audio element.-->
+        <!--</audio>-->
 
-    <div class="container" id="page_index">
+        <div class="container" id="page_index">
 
-        <div class="registration" id="registration" hidden="true">
-            <div id="unregistered">
-                <button class="registration__login" id="button_login" hidden="true">Log In</button>
-                <button class="registration__signup" id="button_signup" hidden="true">Sign Up</button>
-            </div>
-            <div id="registered" class="registration__registered">
-                <div class="registration__username">Dolan</div>
-                <img class="registration__avatar" src="img/our_typical_user.jpeg">
-            </div>
-        </div>
-        <div class="hex" hidden="true" id="hex">
-            <div class="hex__minor_hex" id="minor_hex">
-                <div class="hex__title" id="hex__title" hidden="true">
-                    hexandria
+            <div class="registration" id="registration">
+                <div id="unregistered">
+                    <button class="registration__login" id="button_login">Log In</button>
+                    <button class="registration__signup" id="button_signup">Sign Up</button>
                 </div>
-                <div class="hex__motto" hidden="true" id="hex__motto">
-                    You are the ruler.
+                <div id="registered" class="registration__registered">
+                    <div class="registration__username">Dolan</div>
+                    <img class="registration__avatar" src="img/our_typical_user.jpeg">
                 </div>
-                <div class="hex__buttons" id="buttons" hidden="true">
-                    <div class="hex__main_buttons">
-                        <button class="hex__singleplayer" id="button_singleplayer">Singleplayer</button>
-                        <button class="hex__multiplayer" id="button_multiplayer">Multiplayer</button>
+            </div>
+            <div class="hex" id="hex">
+                <div class="hex__minor_hex" id="minor_hex">
+                    <div class="hex__title" id="hex__title">
+                        hexandria
                     </div>
-                    <div class="hex__minor_buttons">
-                        <button class="hex__scoreboard" id="button_scoreboard">Scoreboard</button>
-                        <button class="hex__about" id="button_about">About</button>
+                    <div class="hex__motto" id="hex__motto">
+                        You are the ruler.
+                    </div>
+                    <div class="hex__buttons" id="buttons">
+                        <div class="hex__main_buttons">
+                            <button class="hex__singleplayer" id="button_singleplayer">Singleplayer</button>
+                            <button class="hex__multiplayer" id="button_multiplayer">Multiplayer</button>
+                        </div>
+                        <div class="hex__minor_buttons">
+                            <button class="hex__scoreboard" id="button_scoreboard">Scoreboard</button>
+                            <button class="hex__about" id="button_about">About</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container" id="page_about" hidden="true">
-        <div class="page">
-            <div class="page__title">About</div>
-            <button class="page__back" name="button_back">Back</button>
+        <div class="container" id="page_about">
+            <div class="page">
+                <div class="page__title">About</div>
+                <button class="page__back" name="button_back">Back</button>
+            </div>
         </div>
-    </div>
-    <div class="container" id="page_scoreboard" hidden="true">
-        <div class="page">
-            <div class="page__title">Scoreboard</div>
-            <button class="page__back" name="button_back">Back</button>
+        <div class="container" id="page_scoreboard">
+            <div class="page">
+                <div class="page__title">Scoreboard</div>
+                <button class="page__back" name="button_back">Back</button>
+            </div>
         </div>
-    </div>
-    <div class="container" id="page_singleplayer" hidden="true">
-        <div class="page">
-            <h1 class="page__title">Singleplayer</h1>
-            <button class="page__back" name="button_back">Back</button>
-            <div class="page__game" id="container"><br><br/><br/><br/><br/><br/><br/>Loading...</div>
+        <div class="container" id="page_singleplayer">
+            <div class="page">
+                <h1 class="page__title">Singleplayer</h1>
+                <button class="page__back" name="button_back">Back</button>
+                <div class="page__game" id="container"><br><br/><br/><br/><br/><br/><br/>Loading...</div>
+            </div>
         </div>
-    </div>
-    <div class="container" id="page_multiplayer" hidden="true">
-        <div class="page">
-            <div class="page__title">Multiplayer</div>
-            <button class="page__back" name="button_back">Back</button>
+        <div class="container" id="page_multiplayer">
+            <div class="page">
+                <div class="page__title">Multiplayer</div>
+                <button class="page__back" name="button_back">Back</button>
+            </div>
         </div>
-    </div>
-    <div class="container" id="page_login" hidden="true">
-        <div class="page">
-            <h1 class="page__title">Login</h1>
-            <form class="page__container" name="login">
-                <input class="page__input" type="text" placeholder="Enter Username" name="username">
-                <div class="page__error" id="error_username"></div>
-                <input class="page__input" type="password" placeholder="Enter Password" name="password">
-                <div class="page__error" id="error_password">More than 4 symbols!</div>
-                <button type="button" class="page__button" id="login">Login</button>
-            </form>
-            <button class="page__back" name="button_back">Back</button>
+        <div class="container" id="page_login">
+            <div class="page">
+                <h1 class="page__title">Login</h1>
+                <form class="page__container" name="login">
+                    <input class="page__input" type="text" placeholder="Enter Username" name="username">
+                    <div class="page__error" id="error_username"></div>
+                    <input class="page__input" type="password" placeholder="Enter Password" name="password">
+                    <div class="page__error" id="error_password">More than 4 symbols!</div>
+                    <button type="button" class="page__button" id="login">Login</button>
+                </form>
+                <button class="page__back" name="button_back">Back</button>
+            </div>
         </div>
-    </div>
-    <div class="container" id="page_signup" hidden="true">
-        <div class="page">
-            <div class="page__title">Signup</div>
-            <button class="page__back" name="button_back">Back</button>
+        <div class="container" id="page_signup">
+            <div class="page">
+                <div class="page__title">Signup</div>
+                <button class="page__back" name="button_back">Back</button>
+            </div>
         </div>
-    </div>
-    <script src="lib/three/build/three.js"></script>
-    <script src="lib/three/examples/js/controls/OrbitControls.js"></script>
-    <script src="lib/three/examples/js/libs/stats.min.js"></script>
-    <script src="js/hexandria.js"></script>
-    <script src="js/client.js"></script>
-    <script src="js/animation.js"></script>
-</body>
+        <script src="lib/three/build/three.js"></script>
+        <script src="lib/three/examples/js/controls/OrbitControls.js"></script>
+        <script src="lib/three/examples/js/libs/stats.min.js"></script>
+        <script src="js/hexandria.js"></script>
+        <script src="js/client.js"></script>
+        <script src="js/animation.js"></script>
+    </body>
 </html>
