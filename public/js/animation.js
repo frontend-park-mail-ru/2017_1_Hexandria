@@ -60,35 +60,23 @@ window.onload = function() {
 };
 
 // Main menu buttons events
-button_about.addEventListener('click', function() {
-    page_index.style.visibility = "hidden";
-    page_about.style.visibility = "visible";
-});
 
-button_scoreboard.addEventListener('click', function() {
-    page_index.style.visibility = "hidden";
-    page_scoreboard.style.visibility = "visible";
-});
+function clickDecorator(object) {
+    return function() {
+        page_index.style.visibility = "hidden";
+        object.style.visibility = "visible";
+    }
+}
 
+button_about.addEventListener('click', clickDecorator(page_about));
+button_scoreboard.addEventListener('click', clickDecorator(page_scoreboard));
+button_multiplayer.addEventListener('click', clickDecorator(page_multiplayer));
+button_login.addEventListener('click', clickDecorator(page_login));
+button_signup.addEventListener('click', clickDecorator(page_signup));
 button_singleplayer.addEventListener('click', function() {
     page_index.style.visibility = "hidden";
     page_singleplayer.style.visibility = "visible";
     game();
-});
-
-button_multiplayer.addEventListener('click', function() {
-    page_index.style.visibility = "hidden";
-    page_multiplayer.style.visibility = "visible";
-});
-
-button_login.addEventListener('click', function() {
-    page_index.style.visibility = "hidden";
-    page_login.style.visibility = "visible";
-});
-
-button_signup.addEventListener('click', function() {
-    page_index.style.visibility = "hidden";
-    page_signup.style.visibility = "visible";
 });
 
 // Back to index with 'back' buttons
