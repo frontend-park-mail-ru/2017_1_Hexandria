@@ -263,7 +263,6 @@ body .hex {
     border: 1px solid #fff;
     background-color: #000;
     color: #fff;
-
     display: inline-block;
     width: 62%;
     min-height: 40px;
@@ -271,10 +270,7 @@ body .hex {
     margin: 20px 5% 20px 5%;
     box-sizing: border-box;
     outline: none;
-
-    &:focus {
-      border: 1px solid #eb9300;
-    }
+    transition: border 0.2s ease-in-out;
   }
 
   ::-webkit-input-placeholder {

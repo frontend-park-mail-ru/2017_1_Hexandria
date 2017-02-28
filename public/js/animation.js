@@ -39,8 +39,6 @@ window.onload = function() {
     // registration.style.opacity = "0";
     document.getElementById('registered').style.visibility = "hidden";
 
-
-
     // for(let i = 0; i < 1; i += 0.01) {
     //     await sleep(25);
     //     main_hex.style.opacity = i.toString();
@@ -103,40 +101,50 @@ for(let i = 0; i < buttons_back.length; i++) {
 }
 
 // Input validation
-let highlihght = function(input) {
+let highlight = function(input) {
     input.style.border = "1px solid red";
 };
 
 document.forms["login"]["username"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
         document.getElementById('error_username').textContent = 'Enter something!';
+        highlight(this);
         return;
     }
     if (!this.value.match(/^[a-zA-Z0-9]{1,10}$/)) {
         document.getElementById('error_username').textContent = 'Only latin letters and numerals!';
+        highlight(this);
+        return;
     }
+    this.style.border = "1px solid #fff";
 });
 
 document.forms["login"]["password"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
         document.getElementById('error_password').textContent = 'Enter something!';
+        highlight(this);
         return;
     }
     if (!this.value.match(/^[a-zA-Z0-9]{1,10}$/)) {
         document.getElementById('error_password').textContent = 'Only latin letters and numerals!';
+        highlight(this);
         return;
     }
     if(this.value.length < 5) {
         document.getElementById('error_password').textContent = 'Enter more than 4 symbols!';
-        highlihght(this);
+        highlight(this);
+        return;
     }
+    this.style.border = "1px solid #fff";
 });
 
 // Erase error
 let inputs = document.forms["login"];
 for (let i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener('focus', function() {
+        console.log(this.nextSibling.nextSibling);
         this.nextSibling.nextSibling.textContent = '';
+        this.style.border = "1px solid #eb9300";
     });
 }
 
