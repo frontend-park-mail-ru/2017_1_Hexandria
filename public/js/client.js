@@ -30,12 +30,24 @@ function game() {
     }
 
     function initGraphics() {
+        container = document.getElementById('game_container');
+        container.innerHTML = "";
+        document.body.appendChild( container );
 
-        container = document.getElementById('container');
+        renderer = new THREE.WebGLRenderer();
+        // renderer.setClearColor(0xbfd1e5);
+        renderer.setClearColor(0xffffff);
+        renderer.setPixelRatio(container.devicePixelRatio);
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        //renderer.setSize(200, 200);
+        renderer.shadowMap.enabled = true;
 
-        camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
+        container.appendChild(renderer.domElement);
 
         scene = new THREE.Scene();
+
+        camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
+        camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.2, 2000);
 
         camera.position.x = -7;
         camera.position.y = 5;
@@ -44,13 +56,6 @@ function game() {
 
         controls = new THREE.OrbitControls(camera);
         controls.target.y = 2;
-
-        renderer = new THREE.WebGLRenderer();
-        // renderer.setClearColor(0xbfd1e5);
-        renderer.setClearColor(0xffffff);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
 
         textureLoader = new THREE.TextureLoader();
 
@@ -84,25 +89,21 @@ function game() {
 
         mouse = new THREE.Vector2();
         raycaster = new THREE.Raycaster();
-        /*document.addEventListener('mousemove', onDocumentMouseMove, false);
-         document.addEventListener('mousedown', onDocumentMouseDown, false);
-         document.addEventListener('keydown', onDocumentKeyDown, false);
-         document.addEventListener('keyup', onDocumentKeyUp, false);*/
 
         document.addEventListener('mousemove', onDocumentMouseMove, false);
         document.addEventListener('mousedown', onDocumentMouseDown, false);
 
-        window.addEventListener('resize', onWindowResize, false);
+        document.addEventListener('resize', onWindowResize, false);
     }
 
     function createObjects() {
         let pos = new THREE.Vector3();
         let quat = new THREE.Quaternion();
 
-        // Ground
         pos.set(0, 0, -0.5);
         quat.set(0, 0, 0, 1);
-        let ground = createParalellepiped(40, 40, 1, 0, pos, quat, new THREE.MeshPhongMaterial({color: 0xFFFFFF}));
+        let ground = createParalellepiped(40, 40, 1, 0, pos, quat,
+            new THREE.MeshPhongMaterial({color: 0xFFFFFF}));
         ground.castShadow = true;
         ground.receiveShadow = true;
         textureLoader.load("textures/grid.png", function (texture) {
@@ -114,22 +115,10 @@ function game() {
         });
         scene.add(ground);
 
-        // Axis
-        let axisHelper = new THREE.AxisHelper(1);
-        pos.set(0.0, 0.0, 0.01);
-        axisHelper.position.copy(pos);
-        scene.add(axisHelper);
-
-
-        /*let geometry = new THREE.BoxGeometry(2, 2, 2);
-         for (let i = 0; i < 100; i ++) {
-         let object = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff }));
-         object.position.x = Math.random() * 100 - 50;
-         object.position.y = Math.random() * 100 - 50;
-         object.position.z = Math.random() * 100 - 50;
-         scene.add(object);
-         }*/
-
+        // let axisHelper = new THREE.AxisHelper(1);
+        // pos.set(0.0, 0.0, 0.01);
+        // axisHelper.position.copy(pos);
+        // scene.add(axisHelper);
 
         game = new Hexandria(scene);
         game.setMap(5, 10);
@@ -170,31 +159,21 @@ function game() {
         }, false);
     }
 
+    function mouseCoordinates() {
+        // mouse.x = (event.clientX / container.clientWidth) * 2 - 1;
+        // mouse.y = -(event.clientY / container.clientHeight) * 2 + 1;
+        mouse.x = ((event.clientX - renderer.domElement.offsetLeft) / renderer.domElement.width) * 2 - 1;
+        mouse.y = -((event.clientY - renderer.domElement.offsetTop) / renderer.domElement.height) * 2 + 1;
+    }
+
     function onDocumentMouseMove(event) {
         event.preventDefault();
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
+        mouseCoordinates();
 
         raycaster.setFromCamera(mouse, camera);
         let intersects = raycaster.intersectObjects(scene.children);
 
-        /*if (intersects.length > 0) {
-         if (INTERSECTED != intersects[0].object) {
-         if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-
-         if (intersects[0].object.material.emissive) {
-         INTERSECTED = intersects[0].object;
-         INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-         INTERSECTED.material.emissive.setHex(0xff0000);
-         }
-         }
-         } else {
-         if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-         INTERSECTED = null;
-         }*/
-
-        // game.handleIntersects(intersects);
         game.handleHighlight(intersects);
     }
 
@@ -202,8 +181,7 @@ function game() {
         event.preventDefault();
 
         if (event.buttons == 1) {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            mouseCoordinates();
 
             raycaster.setFromCamera(mouse, camera);
             let intersects = raycaster.intersectObjects(scene.children);
@@ -213,10 +191,10 @@ function game() {
     }
 
     function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(container.clientWidth, container.clientHeight);
     }
 
     function animate() {
@@ -232,25 +210,6 @@ function game() {
         game.setRandomColor();
 
         controls.update(deltaTime);
-
-
-        /*raycaster.setFromCamera(mouse, camera);
-         let intersects = raycaster.intersectObjects(scene.children);
-         if (intersects.length > 0) {
-         if (INTERSECTED != intersects[0].object) {
-         if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-
-         if (intersects[0].object.material.emissive) {
-         INTERSECTED = intersects[0].object;
-         INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-         INTERSECTED.material.emissive.setHex(0xff0000);
-         }
-         }
-         } else {
-         if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-         INTERSECTED = null;
-         }*/
-
 
         renderer.render(scene, camera);
 

@@ -19,6 +19,23 @@ body .hex {
   margin: 8% auto 0 5%;
 }
 
+#game_container {
+    /*background: #f00;*/
+    border: 2px solid #f00;
+    /*width: 800px;*/
+    height: 400px;
+
+    /*fixed or static*/
+    /*position: fixed;
+    top: 100px;
+    left: 100px;*/
+}
+#canvas {
+    position: fixed;
+    top: 100px;
+    left: 100px;
+}
+
 @mixin createHex($height, $color, $z-index) {
   background-color: $color;
   height: $height / 2;
