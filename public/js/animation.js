@@ -72,11 +72,7 @@ button_multiplayer.addEventListener('click', clickDecorator(page_multiplayer));
 button_login.addEventListener('click', clickDecorator(page_login));
 button_signup.addEventListener('click', clickDecorator(page_signup));
 button_singleplayer.addEventListener('click', clickDecorator(page_singleplayer));
-// button_singleplayer.addEventListener('click', Game());
-button_singleplayer.addEventListener('click', function(){
-    console.log("start Game");
-    Game();
-});
+button_singleplayer.addEventListener('click', Game);
 
 // Back to index with 'back' buttons
 let buttons_back = document.getElementsByName('button_back');
@@ -92,7 +88,7 @@ let highlight = function(input) {
     input.style.border = "1px solid red";
 };
 
-document.forms["login"]["username"].addEventListener('blur', function() {
+document.forms["form_login"]["username"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
         document.getElementById('error_username').textContent = 'Enter something!';
         highlight(this);
@@ -106,7 +102,7 @@ document.forms["login"]["username"].addEventListener('blur', function() {
     this.style.border = "1px solid #fff";
 });
 
-document.forms["login"]["password"].addEventListener('blur', function() {
+document.forms["form_login"]["password"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
         document.getElementById('error_password').textContent = 'Enter something!';
         highlight(this);
@@ -126,7 +122,7 @@ document.forms["login"]["password"].addEventListener('blur', function() {
 });
 
 // Erase error
-let inputs = document.forms["login"];
+let inputs = document.forms["form_login"];
 for (let i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener('focus', function() {
         console.log(this.nextSibling.nextSibling);
@@ -136,9 +132,23 @@ for (let i = 0; i < inputs.length; i++) {
 }
 
 // Dolan is here
-document.getElementById('login').addEventListener('click', function() {
-    page_index.style.visibility = "inherit";
-    page_login.style.visibility = "hidden";
-    document.getElementById('unregistered').style.visibility = "hidden";
-    document.getElementById('registered').style.visibility = "inherit";
+document.getElementById('login_submit').addEventListener('click', function (){
+    console.log("button_login click");
+
+    const fetcher = new Fetcher();
+
+    const parent = this.parentNode;
+    const data = {
+        login: parent['username'].value,
+        password: parent['password'].value,
+    };
+
+    console.log(document.getElementById('page_login').getElementsByClassName('result')[0]);
+
+    fetcher.fetch('/api/login', 'POST', data)
+        .then(function(okJSON) {
+            console.log(okJSON);
+            console.log(okJSON.description);
+        })
+        .catch(errorCatcher);
 });

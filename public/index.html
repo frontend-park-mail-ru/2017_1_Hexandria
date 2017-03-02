@@ -78,24 +78,12 @@
         <div class="container" id="page_login">
             <div class="page">
                 <h1 class="page__title">Login</h1>
-                <form class="page__login" name="login">
+                <form class="page__login" id="form_login" onsubmit="return false">
                     <input class="page__input" type="text" placeholder="Enter Username" name="username">
                     <div class="page__error" id="error_username"></div>
                     <input class="page__input" type="password" placeholder="Enter Password" name="password">
                     <div class="page__error" id="error_password">More than 4 symbols</div>
-                    <button type="button" class="page__button" id="login">Login</button>
-                </form>
-
-                <form class="page__container" id="form-signup" onsubmit="return false">
-                    <label>Login</label>
-                    <input class="page__input" type="text" placeholder="Enter Username" name="login"    required>
-                    <label>Password</label>
-                    <input class="page__input" type="password" placeholder="Enter Password" name="password" required>
-                    <label>Email</label>
-                    <input class="page__input" type="text" placeholder="Enter Password" name="email"    required>
-                    <button id="button_signup">Signup</button>
-                    <div class="result">
-                    </div>
+                    <button type="button" class="page__button" id="login_submit">Login</button>
                 </form>
 
                 <button class="page__back" name="button_back">Back</button>
@@ -104,6 +92,15 @@
         <div class="container" id="page_signup">
             <div class="page">
                 <div class="page__title">Signup</div>
+                <form class="page__login" id="form-signup" onsubmit="return false">
+                    <input class="page__input" type="text" placeholder="Enter Username" name="login"    required>
+                    <div class="page__error" id="error_signup_username"></div>
+                    <input class="page__input" type="password" placeholder="Enter Password" name="password" required>
+                    <div class="page__error" id="error_signup_password"></div>
+                    <input class="page__input" type="text" placeholder="Enter Email" name="email"    required>
+                    <div class="page__error" id="error_signup_email"></div>
+                    <button type="button" class="page__button" id="signup_submit">Signup</button>
+                </form>
                 <button class="page__back" name="button_back">Back</button>
             </div>
         </div>

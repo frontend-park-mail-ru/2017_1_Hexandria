@@ -25,7 +25,7 @@ const Fetcher = function () {
                 //console.log("MyRequestClass catch", err);
                 throw err;
             });
-    }
+    };
 
     let _self = this;
 
@@ -41,6 +41,9 @@ const Fetcher = function () {
             "Content-Type": "application/json"
         }
     }
-}
+};
 
-const fetcher = new Fetcher();
+const errorCatcher = function (errorJSON) {
+    console.log(errorJSON);
+    console.log(errorJSON.error);
+};
