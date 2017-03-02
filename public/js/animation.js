@@ -71,8 +71,8 @@ button_scoreboard.addEventListener('click', clickDecorator(page_scoreboard));
 button_multiplayer.addEventListener('click', clickDecorator(page_multiplayer));
 button_login.addEventListener('click', clickDecorator(page_login));
 button_signup.addEventListener('click', clickDecorator(page_signup));
+button_singleplayer.addEventListener('click', game);
 button_singleplayer.addEventListener('click', clickDecorator(page_singleplayer));
-button_singleplayer.addEventListener('click', game());
 
 // Back to index with 'back' buttons
 let buttons_back = document.getElementsByName('button_back');

@@ -1,6 +1,7 @@
 'use strict';
 
-function game() {
+var game = function() {
+    console.log('Game started');
     // Graphics variables
     let container, stats;
     let camera, controls, scene, renderer;
