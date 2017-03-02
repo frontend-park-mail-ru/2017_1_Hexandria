@@ -38,7 +38,7 @@ function game() {
         // renderer.setClearColor(0xbfd1e5);
         renderer.setClearColor(0xffffff);
         renderer.setPixelRatio(container.devicePixelRatio);
-        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setSize(container.clientWidth/2, container.clientHeight);
         //renderer.setSize(200, 200);
         renderer.shadowMap.enabled = true;
 
@@ -46,7 +46,7 @@ function game() {
 
         scene = new THREE.Scene();
 
-        camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
+        //camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
         camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.2, 2000);
 
         camera.position.x = -7;
@@ -93,7 +93,7 @@ function game() {
         document.addEventListener('mousemove', onDocumentMouseMove, false);
         document.addEventListener('mousedown', onDocumentMouseDown, false);
 
-        document.addEventListener('resize', onWindowResize, false);
+        window.addEventListener('resize', onWindowResize, false);
     }
 
     function createObjects() {
@@ -193,6 +193,11 @@ function game() {
     function onWindowResize() {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
+
+
+        console.log(container.clientWidth);
+        console.log(container.clientHeight);
+        console.log();
 
         renderer.setSize(container.clientWidth, container.clientHeight);
     }
