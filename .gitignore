@@ -40,3 +40,4 @@ jspm_packages
 .sass-cache
 *.css.map
 new_style.css
+.idea
