@@ -60,24 +60,19 @@ window.onload = function() {
 };
 
 // Main menu buttons events
-
 function clickDecorator(object) {
     return function() {
         page_index.style.visibility = "hidden";
         object.style.visibility = "visible";
     }
 }
-
 button_about.addEventListener('click', clickDecorator(page_about));
 button_scoreboard.addEventListener('click', clickDecorator(page_scoreboard));
 button_multiplayer.addEventListener('click', clickDecorator(page_multiplayer));
 button_login.addEventListener('click', clickDecorator(page_login));
 button_signup.addEventListener('click', clickDecorator(page_signup));
-button_singleplayer.addEventListener('click', function() {
-    page_index.style.visibility = "hidden";
-    page_singleplayer.style.visibility = "visible";
-    game();
-});
+button_singleplayer.addEventListener('click', clickDecorator(page_singleplayer));
+button_singleplayer.addEventListener('click', game());
 
 // Back to index with 'back' buttons
 let buttons_back = document.getElementsByName('button_back');
