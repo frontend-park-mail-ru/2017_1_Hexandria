@@ -85,6 +85,19 @@
                     <div class="page__error" id="error_password">More than 4 symbols</div>
                     <button type="button" class="page__button" id="login">Login</button>
                 </form>
+
+                <form class="page__container" id="form-signup" onsubmit="return false">
+                    <label>Login</label>
+                    <input class="page__input" type="text" placeholder="Enter Username" name="login"    required>
+                    <label>Password</label>
+                    <input class="page__input" type="password" placeholder="Enter Password" name="password" required>
+                    <label>Email</label>
+                    <input class="page__input" type="text" placeholder="Enter Password" name="email"    required>
+                    <button id="button_signup">Signup</button>
+                    <div class="result">
+                    </div>
+                </form>
+
                 <button class="page__back" name="button_back">Back</button>
             </div>
         </div>
@@ -97,6 +110,7 @@
         <script src="lib/three/build/three.js"></script>
         <script src="lib/three/examples/js/controls/OrbitControls.js"></script>
         <script src="lib/three/examples/js/libs/stats.min.js"></script>
+        <script src="js/fetcher.js"></script>
         <script src="js/hexandria.js"></script>
         <script src="js/client.js"></script>
         <script src="js/animation.js"></script>

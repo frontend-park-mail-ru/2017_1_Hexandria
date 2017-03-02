@@ -1,6 +1,8 @@
 'use strict';
 
-function game() {
+const Game = function () {
+    console.log("call game()");
+
     // Graphics variables
     let container, stats;
     let camera, controls, scene, renderer;
@@ -38,7 +40,7 @@ function game() {
         // renderer.setClearColor(0xbfd1e5);
         renderer.setClearColor(0xffffff);
         renderer.setPixelRatio(container.devicePixelRatio);
-        renderer.setSize(container.clientWidth/2, container.clientHeight);
+        renderer.setSize(container.clientWidth, container.clientHeight);
         //renderer.setSize(200, 200);
         renderer.shadowMap.enabled = true;
 
