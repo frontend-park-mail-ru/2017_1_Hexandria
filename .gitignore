@@ -36,8 +36,8 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-.idea
-
 .sass-cache
 *.css.map
 new_style.css
+
+.idea
