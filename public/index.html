@@ -75,13 +75,15 @@
         </div>
         <div class="page_container" id="page_signup">
             <div class="title">Signup</div>
-            <form class="form" id="form-signup" onsubmit="return false">
+            <form class="form" id="form_signup" onsubmit="return false">
                 <input class="form__input" type="text" placeholder="Enter Login" name="login"    required>
                 <div class="form__error" id="error_signup_login"></div>
-                <input class="form__input" type="password" placeholder="Enter Password" name="password" required>
-                <div class="form__error" id="error_signup_password"></div>
                 <input class="form__input" type="text" placeholder="Enter Email" name="email"    required>
                 <div class="form__error" id="error_signup_email"></div>
+                <input class="form__input" type="password" placeholder="Enter password" name="password" required>
+                <div class="form__error" id="error_signup_password"></div>
+                <input class="form__input" type="password" placeholder="Enter password once more" name="double_password" required>
+                <div class="form__error" id="error_signup_double_password"></div>
                 <button type="button" class="form__button" id="signup_submit">Signup</button>
             </form>
             <button class="button_back" name="button_back">Back</button>

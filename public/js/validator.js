@@ -5,54 +5,58 @@ const Validator = function() {
     const minLength = 4;
     const maxLength = 10;
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
 
-    this.checkEmpty = function(input) {
+    const checkEmpty = function(input) {
         if (!input.value || input.value === null) {
-            throw new SyntaxError("empty");
+            throw new SyntaxError("Field is empty");
         }
     };
-    this.checkMinLength = function(input) {
+    const checkMinLength = function(input) {
         if (input.value.length < minLength) {
-            throw new SyntaxError("too short");
+            throw new SyntaxError("Enter more than 4 symbols");
         }
     };
-    this.checkMaxLength = function(input) {
+    const checkMaxLength = function(input) {
         if (input.value.length > maxLength) {
-            throw new SyntaxError("too long");
+            throw new SyntaxError("Enter less than 10 symbols");
         }
     };
-    this.checkEmail = function(input) {
+    const checkEmail = function(input) {
         if (!emailRegex.test(input.value)){
-            throw new SyntaxError("not email");
+            throw new SyntaxError("This is not email");
         }
     };
-    this.checkPassword = function(input) {
+    const checkPassword = function(input) {
         if (!passwordRegex.test(input.value)){
-            throw new SyntaxError("not password");
+            throw new SyntaxError("Passwords do not match");
+        }
+    };
+    const checkDoublePassword = function(input) {
+        console.log(input.value);
+        console.log(input.parentElement['password'].value);
+        if (input.value !== input.parentElement['password'].value) {
+            throw new SyntaxError("Passwords are not equal");
         }
     };
 
     this.validateEmail = function(input) {
-        this.checkEmpty(input);
-        this.checkMinLength(input);
-        this.checkMaxLength(input);
-        this.checkEmail(input);
+        checkEmpty(input);
+        checkMinLength(input);
+        checkMaxLength(input);
+        checkEmail(input);
     };
     this.validateLogin = function(input) {
-        this.checkEmpty(input);
-        this.checkMinLength(input);
-        this.checkMaxLength(input);
+        checkEmpty(input);
+        checkMinLength(input);
+        checkMaxLength(input);
     };
     this.validatePassword = function(input) {
-        this.checkEmpty(input);
-        this.checkMinLength(input);
-        this.checkMaxLength(input);
-
+        checkEmpty(input);
+        checkMinLength(input);
+        checkMaxLength(input);
     };
-    this.validateDoublePasswords = function(first, second) {
-        if (first.value === second.value) {
-            throw new SyntaxError("not equal passwords");
-        }
+    this.validateDoublePasswords = function(input) {
+        checkDoublePassword(input);
     };
 };
