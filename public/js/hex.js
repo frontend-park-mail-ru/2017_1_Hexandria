@@ -1,13 +1,11 @@
-// Main menu buttons
+// Objects
 const hex = document.getElementById('hex');
 const button_about = document.getElementById('button_about');
 const button_scoreboard = document.getElementById('button_scoreboard');
 const button_singleplayer = document.getElementById('button_singleplayer');
 const button_multiplayer = document.getElementById('button_multiplayer');
-const button_login = document.getElementById('button_login');
-const button_signup = document.getElementById('button_signup');
 
-// Main menu buttons events
+// Button events
 function clickDecorator(object) {
     return function() {
         hex.parentElement.style.visibility = "hidden";
