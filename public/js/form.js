@@ -69,8 +69,6 @@ document.getElementById('login_submit').addEventListener('click', function() {
         .catch(errorCatcher);
 });
 
-// Input validation
-
 // Dolan is here
 document.getElementById('signup_submit').addEventListener('click', function() {
     console.log("button_login click");
