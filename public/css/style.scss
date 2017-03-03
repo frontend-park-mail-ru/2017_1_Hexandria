@@ -19,23 +19,6 @@ body .hex {
   margin: 8% auto 0 5%;
 }
 
-#game_container {
-    /*background: #f00;*/
-    border: 2px solid #f00;
-    /*width: 800px;*/
-    height: 400px;
-
-    /*fixed or static*/
-    /*position: fixed;
-    top: 100px;
-    left: 100px;*/
-}
-#canvas {
-    position: fixed;
-    top: 100px;
-    left: 100px;
-}
-
 @mixin createHex($height, $color, $z-index) {
   background-color: $color;
   height: $height / 2;
@@ -235,41 +218,29 @@ body .hex {
   }
 }
 
-.page {
-  position:absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
+body .title {
+  margin: 5% auto 5% auto;
+}
 
-  &__title {
-    text-align: center;
-    color: #fff;
-    font-size: 200%;
-    font-weight: 900;
-    margin: 5% auto 5% auto;
-  }
-  &__back {
-    @extend .button;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-  }
+.title {
+  text-align: center;
+  color: #fff;
+  font-size: 200%;
+  font-weight: 900;
+}
+
+body .form {
+  margin: 0 5% 0 25%;
+  min-width: 300px;
+}
+
+.form {
   &__button {
     @extend .button;
     position: relative;
     width: 30%;
     margin: 2% 50% 5% 20%;
     display: block;
-  }
-  &__game {
-    position: absolute;
-    top: 0;
-    z-index: -1;
-  }
-  &__login {
-    margin: 0 5% 0 25%;
-    min-width: 300px;
   }
 
   &__error {
@@ -333,4 +304,28 @@ body .hex {
     -webkit-transition: opacity .5s, text-indent 1s;
     transition: opacity .5s, text-indent 1s;
   }
+}
+
+.page_container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.game_container {
+  position: relative;
+  border: 2px solid #f00;
+  height: 400px;
+
+  /*fixed or static*/
+  /*position: fixed;
+  top: 100px;
+  left: 100px;*/
+}
+#canvas {
+  position: fixed;
+  top: 100px;
+  left: 100px;
 }

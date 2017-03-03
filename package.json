@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "startup": "node server",
-    "sassstartup": "sass public/css/new_style.scss public/css/new_style.css; node server"
+    "sassstartup": "sass public/css/style.scss public/css/style.css; node server"
   },
   "repository": {
     "type": "git",

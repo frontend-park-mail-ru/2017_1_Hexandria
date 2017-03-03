@@ -30,8 +30,6 @@ window.onload = function() {
     page_signup.style.visibility = "hidden";
     document.body.style.visibility = "visible";
 
-    // await sleep(4100);
-
     // main_hex.style.opacity = "0";
     // logo.style.opacity = "0";
     // motto.style.opacity = "0";
@@ -45,13 +43,10 @@ window.onload = function() {
     //     logo.style.opacity = i.toString();
     // }
     //
-    // // await sleep(1350);
     // for(let i = 0; i < 1; i += 0.01) {
     //     await sleep(25);
     //     motto.style.opacity = i.toString();
     // }
-    //
-    // // await sleep(1350);
     // for(let i = 0; i < 1; i += 0.01) {
     //     await sleep(25);
     //     registration.style.opacity = i.toString();
@@ -75,80 +70,13 @@ button_singleplayer.addEventListener('click', clickDecorator(page_singleplayer))
 button_singleplayer.addEventListener('click', Game);
 
 // Back to index with 'back' buttons
-let buttons_back = document.getElementsByName('button_back');
+const buttons_back = document.getElementsByName('button_back');
 for(let i = 0; i < buttons_back.length; i++) {
     buttons_back[i].addEventListener('click', function() {
         page_index.style.visibility = "visible";
         this.parentElement.style.visibility = "hidden";
     });
 }
-
-// Input validation
-let highlight = function(input) {
-    input.style.border = "1px solid red";
-};
-
-document.forms["form_login"]["username"].addEventListener('blur', function() {
-    if (!this.value || this.value === null) {
-        document.getElementById('error_username').textContent = 'Enter something!';
-        highlight(this);
-        return;
-    }
-    if (!this.value.match(/^[a-zA-Z0-9]{1,10}$/)) {
-        document.getElementById('error_username').textContent = 'Only latin letters and numerals!';
-        highlight(this);
-        return;
-    }
-    this.style.border = "1px solid #fff";
-});
-
-document.forms["form_login"]["password"].addEventListener('blur', function() {
-    if (!this.value || this.value === null) {
-        document.getElementById('error_password').textContent = 'Enter something!';
-        highlight(this);
-        return;
-    }
-    if (!this.value.match(/^[a-zA-Z0-9]{1,10}$/)) {
-        document.getElementById('error_password').textContent = 'Only latin letters and numerals!';
-        highlight(this);
-        return;
-    }
-    if(this.value.length < 5) {
-        document.getElementById('error_password').textContent = 'Enter more than 4 symbols!';
-        highlight(this);
-        return;
-    }
-    this.style.border = "1px solid #fff";
-});
-
-// Erase error
-let inputs = document.forms["form_login"];
-for (let i = 0; i < inputs.length; i++) {
-    inputs[i].addEventListener('focus', function() {
-        console.log(this.nextSibling.nextSibling);
-        this.nextSibling.nextSibling.textContent = '';
-        this.style.border = "1px solid #eb9300";
-    });
-}
-
-// Dolan is here
-document.getElementById('login_submit').addEventListener('click', function (){
-    console.log("button_login click");
-
-    const fetcher = new Fetcher();
-
-    const parent = this.parentNode;
-    const data = {
-        login: parent['username'].value,
-        password: parent['password'].value,
-    };
-
-    console.log(document.getElementById('page_login').getElementsByClassName('result')[0]);
-
-    fetcher.fetch('/api/login', 'POST', data)
-        .then(function(okJSON) {
-            console.log(okJSON);
-            console.log(okJSON.description);
-        })
-        .catch(errorCatcher);
+document.getElementById('back_from_game').addEventListener('click', function() {
+    document.getElementById('game_container').style.visibility = "hidden";
 });

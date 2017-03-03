@@ -2,23 +2,17 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="css/new_style.css">
+        <link rel="stylesheet" href="css/style.css">
         <title>Hexandria</title>
+        <!--TODO favicon-->
+        <!--TODO Readme.md-->
     </head>
     <body>
-
-        <!--<div class="fullscreen-bg">-->
-        <!--<video loop muted autoplay poster="img/background.jpg" class="fullscreen-bg__video">-->
-        <!--<source src="./video/background.mp4" type="video/mp4">-->
-        <!--</video>-->
-        <!--</div>-->
         <!--<audio controls autoplay hidden loop>-->
             <!--<source src="audio/seven_nation_army.mp3" type="audio/mp3">-->
             <!--Your browser does not support the audio element.-->
         <!--</audio>-->
-
-        <div class="container" id="page_index">
-
+        <div class="page_container" id="page_index">
             <div class="registration" id="registration">
                 <div id="unregistered" class="registration__unregistered">
                     <button class="registration__login" id="button_login">Log In</button>
@@ -50,59 +44,47 @@
                 </div>
             </div>
         </div>
-        <div class="container" id="page_about">
-            <div class="page">
-                <div class="page__title">About</div>
-                <button class="page__back" name="button_back">Back</button>
-            </div>
+        <div class="page_container" id="page_about">
+            <div class="title">About</div>
+            <button class="button" name="button_back">Back</button>
         </div>
-        <div class="container" id="page_scoreboard">
-            <div class="page">
-                <div class="page__title">Scoreboard</div>
-                <button class="page__back" name="button_back">Back</button>
-            </div>
+        <div class="page_container" id="page_scoreboard">
+            <div class="title">Scoreboard</div>
+            <button class="button" name="button_back">Back</button>
         </div>
-        <div class="container" id="page_singleplayer">
-            <div class="page">
-                <h1 class="page__title">Singleplayer</h1>
-                <button class="page__back" name="button_back">Back</button>
-            </div>
-            <div id="game_container"><br><br/><br/><br/><br/><br/><br/>Loading...</div>
+        <div class="page_container" id="page_singleplayer">
+            <h1 class="title">Singleplayer</h1>
+            <button class="button" name="button_back" id="back_from_game">Back</button>
+            <div id="game_container" class="game_container"><br><br/><br/><br/><br/><br/><br/>Loading...</div>
         </div>
-        <div class="container" id="page_multiplayer">
-            <div class="page">
-                <div class="page__title">Multiplayer</div>
-                <button class="page__back" name="button_back">Back</button>
-            </div>
+        <div class="page_container" id="page_multiplayer">
+            <div class="title">Multiplayer</div>
+            <button class="button" name="button_back">Back</button>
         </div>
-        <div class="container" id="page_login">
-            <div class="page">
-                <h1 class="page__title">Login</h1>
-                <form class="page__login" id="form_login" onsubmit="return false">
-                    <input class="page__input" type="text" placeholder="Enter Username" name="username">
-                    <div class="page__error" id="error_username"></div>
-                    <input class="page__input" type="password" placeholder="Enter Password" name="password">
-                    <div class="page__error" id="error_password">More than 4 symbols</div>
-                    <button type="button" class="page__button" id="login_submit">Login</button>
-                </form>
+        <div class="page_container" id="page_login">
+            <h1 class="title">Login</h1>
+            <form class="form" id="form_login" onsubmit="return false">
+                <input class="form__input" type="text" placeholder="Enter Username" name="username">
+                <div class="form__error" id="error_username"></div>
+                <input class="form__input" type="password" placeholder="Enter Password" name="password">
+                <div class="form__error" id="error_password">More than 4 symbols</div>
+                <button type="button" class="form__button" id="login_submit">Login</button>
+            </form>
 
-                <button class="page__back" name="button_back">Back</button>
-            </div>
+            <button class="button" name="button_back">Back</button>
         </div>
-        <div class="container" id="page_signup">
-            <div class="page">
-                <div class="page__title">Signup</div>
-                <form class="page__login" id="form-signup" onsubmit="return false">
-                    <input class="page__input" type="text" placeholder="Enter Username" name="login"    required>
-                    <div class="page__error" id="error_signup_username"></div>
-                    <input class="page__input" type="password" placeholder="Enter Password" name="password" required>
-                    <div class="page__error" id="error_signup_password"></div>
-                    <input class="page__input" type="text" placeholder="Enter Email" name="email"    required>
-                    <div class="page__error" id="error_signup_email"></div>
-                    <button type="button" class="page__button" id="signup_submit">Signup</button>
-                </form>
-                <button class="page__back" name="button_back">Back</button>
-            </div>
+        <div class="page_container" id="page_signup">
+            <div class="title">Signup</div>
+            <form class="form" id="form-signup" onsubmit="return false">
+                <input class="form__input" type="text" placeholder="Enter Username" name="login"    required>
+                <div class="form__error" id="error_signup_username"></div>
+                <input class="form__input" type="password" placeholder="Enter Password" name="password" required>
+                <div class="form__error" id="error_signup_password"></div>
+                <input class="form__input" type="text" placeholder="Enter Email" name="email"    required>
+                <div class="form__error" id="error_signup_email"></div>
+                <button type="button" class="form__button" id="signup_submit">Signup</button>
+            </form>
+            <button class="button" name="button_back">Back</button>
         </div>
         <script src="lib/three/build/three.js"></script>
         <script src="lib/three/examples/js/controls/OrbitControls.js"></script>
@@ -111,5 +93,6 @@
         <script src="js/hexandria.js"></script>
         <script src="js/client.js"></script>
         <script src="js/animation.js"></script>
+        <script src="js/form.js"></script>
     </body>
 </html>

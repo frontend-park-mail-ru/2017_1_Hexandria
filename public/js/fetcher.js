@@ -7,6 +7,7 @@ const Fetcher = function () {
         options.method = method;
         if (data) {
             options.body = JSON.stringify(data);
+            console.log(options.body);
         } else {
             options.body = null;
         }
