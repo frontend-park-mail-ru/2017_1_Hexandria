@@ -1,21 +1,19 @@
 // Constants
-const minInputLength = 6;
-const maxInputLength = 10;
-
 const fetcher = new Fetcher();
 
+// Design functions
 const colorInputBorder = function(input, color) {
     input.style.border = `1px solid ${color}`;
 };
 
-document.forms["form_login"]["username"].addEventListener('blur', function() {
+document.forms["form_login"]["login"].addEventListener('blur', function() {
     if (!this.value || this.value === null) {
-        document.getElementById('error_username').textContent = 'Enter something!';
+        document.getElementById('error_login').textContent = 'Enter something!';
         colorInputBorder(this, "red");
         return;
     }
     if (!this.value.match(/^[a-zA-Z0-9]{1,10}$/)) {
-        document.getElementById('error_username').textContent = 'Only latin letters and numerals!';
+        document.getElementById('error_login').textContent = 'Only latin letters and numerals!';
         colorInputBorder(this, "red");
         return;
     }
@@ -57,7 +55,7 @@ document.getElementById('login_submit').addEventListener('click', function() {
 
     const parent = this.parentNode;
     const data = {
-        login: parent['username'].value,
+        login: parent['login'].value,
         password: parent['password'].value,
     };
 
