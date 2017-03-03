@@ -330,3 +330,10 @@ body .form {
   top: 100px;
   left: 100px;
 }
+
+.button_back {
+  @extend .button;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
