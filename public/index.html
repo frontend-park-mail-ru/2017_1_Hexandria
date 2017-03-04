@@ -2,101 +2,28 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="css/style.css">
         <title>Hexandria</title>
-        <!--TODO favicon-->
-        <!--TODO Readme.md-->
+
+        <!--Application styles-->
+        <link rel="stylesheet" href="main.css">
+
+        <!--Component styles-->
     </head>
     <body>
-        <!--<audio controls autoplay hidden loop>-->
-            <!--<source src="audio/seven_nation_army.mp3" type="audio/mp3">-->
-            <!--Your browser does not support the audio element.-->
-        <!--</audio>-->
-        <div class="page_container" id="page_index">
-            <div class="user_panel" id="user_panel">
-                <div class="user_panel__unregistered" id="unregistered">
-                    <button class="user_panel__login" id="button_login">Log In</button>
-                    <button class="user_panel__signup" id="button_signup">Sign Up</button>
-                </div>
-                <div class="user_panel__registered" id="registered">
-                    <div class="user_panel__username">Dolan</div>
-                    <img class="user_panel__avatar" src="img/our_typical_user.jpeg">
-                </div>
-            </div>
-            <div class="hex" id="hex">
-                <div class="hex__minor_hex" id="minor_hex">
-                    <div class="hex__title" id="hex__title">
-                        hexandria
-                    </div>
-                    <div class="hex__motto" id="hex__motto">
-                        You are the ruler.
-                    </div>
-                    <div class="hex__buttons" id="buttons">
-                        <div class="hex__main_buttons">
-                            <button class="hex__singleplayer" id="button_singleplayer">Singleplayer</button>
-                            <button class="hex__multiplayer" id="button_multiplayer">Multiplayer</button>
-                        </div>
-                        <div class="hex__minor_buttons">
-                            <button class="hex__scoreboard" id="button_scoreboard">Scoreboard</button>
-                            <button class="hex__about" id="button_about">About</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="page_container" id="page_about">
-            <div class="title">About</div>
-            <button class="button_back" name="button_back">Back</button>
-        </div>
-        <div class="page_container" id="page_scoreboard">
-            <div class="title">Scoreboard</div>
-            <button class="button_back" name="button_back">Back</button>
-        </div>
-        <div class="page_container" id="page_singleplayer">
-            <h1 class="title">Singleplayer</h1>
-            <button class="button_back" name="button_back" id="back_from_game">Back</button>
-            <div class="game_container" id="game_container"><br><br/><br/><br/><br/><br/><br/>Loading...</div>
-        </div>
-        <div class="page_container" id="page_multiplayer">
-            <div class="title">Multiplayer</div>
-            <button class="button_back" name="button_back">Back</button>
-        </div>
-        <div class="page_container" id="page_login">
-            <h1 class="title">Login</h1>
-            <form class="form" id="form_login" onsubmit="return false">
-                <input class="form__input" type="text" placeholder="Enter Login" name="login">
-                <div class="form__error" id="error_login"></div>
-                <input class="form__input" type="password" placeholder="Enter Password" name="password">
-                <div class="form__error" id="error_password">More than 4 symbols</div>
-                <button type="button" class="form__button" id="login_submit">Login</button>
-            </form>
+        <div id="index"></div>
+        <div id="singleplayer"></div>
+        <div id="multiplayer"></div>
+        <div id="about"></div>
+        <div id="scoreboard"></div>
+        <div id="login"></div>
+        <div id="signup"></div>
 
-            <button class="button_back" name="button_back">Back</button>
-        </div>
-        <div class="page_container" id="page_signup">
-            <div class="title">Signup</div>
-            <form class="form" id="form_signup" onsubmit="return false">
-                <input class="form__input" type="text" placeholder="Enter Login" name="login"    required>
-                <div class="form__error" id="error_signup_login"></div>
-                <input class="form__input" type="text" placeholder="Enter Email" name="email"    required>
-                <div class="form__error" id="error_signup_email"></div>
-                <input class="form__input" type="password" placeholder="Enter password" name="password" required>
-                <div class="form__error" id="error_signup_password"></div>
-                <input class="form__input" type="password" placeholder="Enter password once more" name="double_password" required>
-                <div class="form__error" id="error_signup_double_password"></div>
-                <button type="button" class="form__button" id="signup_submit">Signup</button>
-            </form>
-            <button class="button_back" name="button_back">Back</button>
-        </div>
-        <script src="lib/three/build/three.js"></script>
-        <script src="lib/three/examples/js/controls/OrbitControls.js"></script>
-        <script src="lib/three/examples/js/libs/stats.min.js"></script>
-        <script src="js/fetcher.js"></script>
-        <script src="js/hexandria.js"></script>
-        <script src="js/client.js"></script>
-        <script src="js/main.js"></script>
-        <script src="js/validator.js"></script>
-        <script src="js/form.js"></script>
-        <script src="js/hex.js"></script>
+
+        <script src="blocks/button/button.js"></script>
+        <script src="blocks/title/title.js"></script>
+        <script src="blocks/register_panel/register_panel.js"></script>
+        <script src="blocks/user_panel/user_panel.js"></script>
+        <script src="blocks/hex/hex.js"></script>
+        <script src="main.js"></script>
     </body>
 </html>

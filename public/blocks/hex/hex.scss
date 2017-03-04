@@ -1,0 +1,134 @@
+.button {
+  text-align: center;
+  font-size: 120%;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  background-color: #000;
+  border: 1px solid #fff;
+
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    border: #eb9300 solid 1px;
+    top: 1px;
+    left: 1px;
+    right: 1px;
+    bottom: 1px;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease-in-out;
+    -o-transition: opacity 0.3s ease-in-out;
+    -moz-transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  &:hover:before, &:focus:before, &:active:before {
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+
+@mixin createHex($height, $color, $z-index) {
+  background-color: $color;
+  height: $height / 2;
+  width: $height * 0.866;
+  z-index: $z-index;
+  &::before {
+    content: " ";
+    width: 0; height: 0;
+    border-bottom: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) + 1px solid transparent;
+    position: absolute;
+    top: -($height / 4);
+  }
+  &::after {
+    content: "";
+    width: 0;
+    border-top: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) + 1px solid transparent;
+    position: absolute;
+    bottom: -($height / 4);
+  }
+}
+
+@mixin createHexInside($height, $color, $z-index) {
+  background-color: $color;
+  height: $height / 2;
+  width: $height * 0.866 - 1px;
+  z-index: $z-index;
+  &::before {
+    content: " ";
+    width: 0; height: 0;
+    border-bottom: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) solid transparent;
+    position: absolute;
+    top: -($height / 4);
+  }
+  &::after {
+    content: "";
+    width: 0;
+    border-top: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) solid transparent;
+    position: absolute;
+    bottom: -($height / 4);
+  }
+}
+
+.hex {
+  position: relative;
+  @include createHex(900px, #fff, 0);
+  &__minor_hex {
+    margin: 2px 0 0 4px;
+    position: relative;
+    @include createHexInside(892px, #000, 1);
+  }
+  &__title {
+    text-transform: uppercase;
+    padding-top: 70px;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 400%;
+  }
+  &__motto {
+    padding-top: 20px;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-weight: 400;
+    font-size: 200%;
+  }
+  &__buttons {
+    position: relative;
+    margin: 50px auto 0 auto;
+    width: 80%;
+    background-color: #000;
+    padding: 10px;
+    text-align: center;
+  }
+  &__main-buttons {
+  }
+  &__minor-buttons {
+  }
+  &__singleplayer, &__multiplayer {
+    @extend .button;
+    width: 200px;
+    margin: 3px;
+  }
+  &__about, &__scoreboard {
+    @extend .button;
+    width: 200px;
+    margin: 3px;
+  }
+}
