@@ -2,39 +2,44 @@
     'use strict';
 
     class Hex {
-        constructor({ el }) {
+        constructor({ data = [], el }) {
+            this.data = data;
             this.el = el;
             this.render();
         }
 
         render() {
             this._updateHtml();
-            // this._installControls();
+            this._installControls();
         }
 
         _updateHtml() {
+            this.el.setAttribute('class', 'hex');
             this.el.innerHTML = `
-                <div class="hex" id="hex">
-                    <div class="hex__minor_hex" id="minor_hex">
-                        <div class="hex__title" id="hex__title">
-                            hexandria
-                        </div>
-                        <div class="hex__motto" id="hex__motto">
-                            You are the ruler.
-                        </div>
-                        <div class="hex__buttons" id="buttons">
-                            <div class="hex__main_buttons">
-                                <button class="hex__singleplayer" id="button_singleplayer">Singleplayer</button>
-                                <button class="hex__multiplayer" id="button_multiplayer">Multiplayer</button>
-                            </div>
-                            <div class="hex__minor_buttons">
-                                <button class="hex__scoreboard" id="button_scoreboard">Scoreboard</button>
-                                <button class="hex__about" id="button_about">About</button>
-                            </div>
-                        </div>
+                <div class="hex__minor_hex" id="minor_hex">
+                    <div class="hex__title" id="hex__title">
+                        hexandria
+                    </div>
+                    <div class="hex__motto" id="hex__motto">
+                        You are the ruler.
+                    </div>
+                    <div class="hex__buttons" id="buttons">
+                        <div class="hex__main_buttons"></div>
+                        <div class="hex__minor_buttons"></div>
                     </div>
                 </div>
             `;
+        }
+
+        _installControls() {
+            this.singleplayer = new Button(this.data.singleplayer).render();
+            this.multiplayer = new Button(this.data.multiplayer).render();
+            this.about = new Button(this.data.about).render();
+            this.scoreboard = new Button(this.data.scoreboard).render();
+            this.el.querySelector('.hex__main_buttons').appendChild(this.singleplayer.el);
+            this.el.querySelector('.hex__main_buttons').appendChild(this.multiplayer.el);
+            this.el.querySelector('.hex__minor_buttons').appendChild(this.about.el);
+            this.el.querySelector('.hex__minor_buttons').appendChild(this.scoreboard.el);
         }
     }
 

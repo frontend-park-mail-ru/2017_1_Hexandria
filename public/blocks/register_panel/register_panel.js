@@ -4,10 +4,9 @@
     let Button = window.Button;
 
     class RegisterPanel {
-        constructor({ el, login, signup }) {
+        constructor({ el, data = [] }) {
+            this.data = data;
             this.el = el;
-            this.login = new Button(login).render();
-            this.signup = new Button(signup).render();
             this.render();
         }
 
@@ -17,20 +16,14 @@
         }
 
         _updateHtml() {
-            this.el.innerHTML = `
-                <div class="register_panel">
-                    ${this.login.toString()}
-                    ${this.signup.toString()}
-                </div>
-            `;
+            this.el.setAttribute('class', 'register_panel');
         }
 
-        _installControls () {
-
-        }
-
-        on (type, callback) {
-            this.el.addEventListener(type, callback);
+        _installControls() {
+            this.login = new Button(this.data.login).render();
+            this.signup = new Button(this.data.signup).render();
+            this.el.appendChild(this.login.el);
+            this.el.appendChild(this.signup.el);
         }
     }
 

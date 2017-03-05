@@ -2,8 +2,8 @@
     'use strict';
 
     class Title {
-        constructor({ data = {}, el }) {
-            this.data = data;
+        constructor({ title, el }) {
+            this.title = title;
             this.el = el;
             this.render();
         }
@@ -13,9 +13,8 @@
         }
 
         _updateHtml() {
-            this.el.innerHTML = `
-                <div class="title">${this.data.title}</div>
-            `;
+            this.el.setAttribute('class', 'title');
+            this.el.innerHTML = this.title;
         }
     }
 
