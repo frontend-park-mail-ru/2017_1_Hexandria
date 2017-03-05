@@ -22,10 +22,23 @@
 
 		installInputs() {
 			const { inputs = [] } = this.data;
+			let validator = new Validator();
 
 			inputs.forEach((data) => {
 				const input = new Input(data).render();
 				input.el.classList.add("form__input");
+				input.on('blur', function() {
+						try {
+							validator.validate(this);
+						}
+						catch(err) {
+							console.log(err.message);
+							input.colorInputBorder(this, "red");
+							return;
+						}
+						input.colorInputBorder(this, "#fff");
+					}
+				);
 				this.el.querySelector("form").appendChild(input.el);
 			});
 		}
