@@ -3,6 +3,7 @@
 @import "blocks/register_panel/register_panel.scss";
 @import "blocks/title/title.scss";
 @import "blocks/hex/hex.scss";
+@import "blocks/form/form.scss";
 
 body {
   font-family: 'Lato', sans-serif;
@@ -32,4 +33,9 @@ body {
   position: absolute;
   right: 10px;
   bottom: 10px;
+}
+
+.form {
+  margin: 0 25% 0 25%;
+  min-width: 300px;
 }

@@ -1,6 +1,7 @@
 'use strict';
 
 (function() {
+    // Pages
     let pageIndex = document.getElementById('index');
     let pageSingleplayer = document.getElementById('singleplayer');
     let pageMultiplayer = document.getElementById('multiplayer');
@@ -9,6 +10,21 @@
     let pageLogin = document.getElementById('login');
     let pageSignup = document.getElementById('signup');
 
+    // Create titles
+    function titleCreateDecorator(string) {
+        return {
+            el: document.createElement('div'),
+            title: string
+        }
+    }
+    pageSingleplayer.appendChild(new Title(titleCreateDecorator("Singleplayer")).el);
+    pageMultiplayer.appendChild(new Title(titleCreateDecorator("Multiplayer")).el);
+    pageAbout.appendChild(new Title(titleCreateDecorator("About")).el);
+    pageScoreboard.appendChild(new Title(titleCreateDecorator("Scoreboard")).el);
+    pageLogin.appendChild(new Title(titleCreateDecorator("Login")).el);
+    pageSignup.appendChild(new Title(titleCreateDecorator("Signup")).el);
+
+    // Main page elements
     let hex = new Hex({
         el: document.createElement('div'),
         data: {
@@ -38,11 +54,6 @@
             }
         }
     });
-
-    let userPanel = new UserPanel({
-        el: document.createElement('div')
-    });
-
     let registerPanel = new RegisterPanel({
         el: document.createElement('div'),
         data: {
@@ -60,16 +71,12 @@
             }
         }
     });
-
-    // Register panel buttons
-    function registerPanelClickDecorator(object) {
-        return function() {
-            pageIndex.hidden = true;
-            object.hidden = false;
-        }
-    }
-    registerPanel.login.on('click', registerPanelClickDecorator(pageLogin));
-    registerPanel.signup.on('click', registerPanelClickDecorator(pageSignup));
+    let userPanel = new UserPanel({
+        el: document.createElement('div')
+    });
+    pageIndex.appendChild(hex.el);
+    pageIndex.appendChild(registerPanel.el);
+    pageIndex.appendChild(userPanel.el);
 
     // Hex buttons
     function hexClickDecorator(object) {
@@ -83,19 +90,15 @@
     hex.about.on('click', hexClickDecorator(pageAbout));
     hex.scoreboard.on('click', hexClickDecorator(pageScoreboard));
 
-    // Create titles
-    function titleCreateDecorator(string) {
-        return {
-            el: document.createElement('div'),
-            title: string
+    // Register panel buttons
+    function registerPanelClickDecorator(object) {
+        return function() {
+            pageIndex.hidden = true;
+            object.hidden = false;
         }
     }
-    let titleSingleplayer = new Title(titleCreateDecorator("Singleplayer"));
-    let titleMultiplayer = new Title(titleCreateDecorator("Multiplayer"));
-    let titleAbout = new Title(titleCreateDecorator("About"));
-    let titleScoreboard = new Title(titleCreateDecorator("Scoreboard"));
-    let titleLogin = new Title(titleCreateDecorator("Login"));
-    let titleSignup = new Title(titleCreateDecorator("Signup"));
+    registerPanel.login.on('click', registerPanelClickDecorator(pageLogin));
+    registerPanel.signup.on('click', registerPanelClickDecorator(pageSignup));
 
     // Create back buttons
     let backButtonData = {
@@ -125,19 +128,57 @@
     backLogin.on('click', backButtonClickDecorator());
     backSignup.on('click', backButtonClickDecorator());
 
-    pageSingleplayer.appendChild(titleSingleplayer.el);
-    pageMultiplayer.appendChild(titleMultiplayer.el);
-    pageAbout.appendChild(titleAbout.el);
-    pageScoreboard.appendChild(titleScoreboard.el);
-    pageLogin.appendChild(titleLogin.el);
-    pageSignup.appendChild(titleSignup.el);
+    // Login form
+    let loginForm = new Form({
+        el: document.createElement('div'),
+        data: {
+            fields: [
+                {
+                    name: "login",
+                    type: "text",
+                    placeholder: "Enter Login"
+                },
+                {
+                    name: "password",
+                    type: "password",
+                    placeholder: "Enter Password"
+                }
+            ]
+        }
+    });
+    pageLogin.appendChild(loginForm.el);
 
-    pageIndex.appendChild(hex.el);
-    pageIndex.appendChild(registerPanel.el);
-    pageIndex.appendChild(userPanel.el);
+    // Login form
+    let signupForm = new Form({
+        el: document.createElement('div'),
+        data: {
+            fields: [
+                {
+                    name: "login",
+                    type: "text",
+                    placeholder: "Enter login"
+                },
+                {
+                    name: "email",
+                    type: "text",
+                    placeholder: "Enter e-mail"
+                },
+                {
+                    name: "password",
+                    type: "password",
+                    placeholder: "Enter password"
+                },
+                {
+                    name: "double_password",
+                    type: "password",
+                    placeholder: "Enter password second time"
+                }
+            ]
+        }
+    });
+    pageSignup.appendChild(signupForm.el);
 
     userPanel.hidden = true;
-
     pageIndex.hidden = false;
     pageSingleplayer.hidden = true;
     pageMultiplayer.hidden = true;
