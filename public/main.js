@@ -131,7 +131,12 @@
 	const loginForm = new Form({
 		el: document.createElement("div"),
 		data: {
-			fields: [
+			controls: [
+				{
+					text: "Login",
+				},
+			],
+			inputs: [
 				{
 					name: "login",
 					type: "text",
@@ -151,7 +156,12 @@
 	const signupForm = new Form({
 		el: document.createElement("div"),
 		data: {
-			fields: [
+			controls: [
+				{
+					text: "Signup",
+				},
+			],
+			inputs: [
 				{
 					name: "login",
 					type: "text",

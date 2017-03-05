@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "startup": "node server",
-    "sassstartup": "sass public/main.scss public/main.css && node server"
+    "sassstartup": "sass public/main.scss public/main.css && node server",
+    "eslint": "./node_modules/.bin/eslint --fix public"
+
   },
   "repository": {
     "type": "git",

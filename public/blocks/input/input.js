@@ -1,11 +1,10 @@
 (function() {
 	"use strict";
 
-	class Button {
-		constructor(options) {
-			this.text = options.text;
-			this.attrs = options.attrs || [];
-			this.el = document.createElement("button");
+	class Input {
+		constructor(attrs) {
+			this.attrs = attrs || [];
+			this.el = document.createElement("input");
 		}
 
 		setAttrs (attrs) {
@@ -29,5 +28,5 @@
 		}
     }
 
-	window.Button = Button;
+	window.Input = Input;
 })();
