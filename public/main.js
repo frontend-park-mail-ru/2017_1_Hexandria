@@ -97,6 +97,34 @@
     let titleLogin = new Title(titleCreateDecorator("Login"));
     let titleSignup = new Title(titleCreateDecorator("Signup"));
 
+    // Create back buttons
+    let backButtonData = {
+        text: "Back",
+        attrs: {
+            class: "back-button"
+        }
+    };
+    let backAbout = new Button(backButtonData).render();
+    let backScoreboard = new Button(backButtonData).render();
+    let backLogin = new Button(backButtonData).render();
+    let backSignup = new Button(backButtonData).render();
+    pageAbout.appendChild(backAbout.el);
+    pageScoreboard.appendChild(backScoreboard.el);
+    pageLogin.appendChild(backLogin.el);
+    pageSignup.appendChild(backSignup.el);
+    function backButtonClickDecorator() {
+        return function() {
+            pageIndex.hidden = false;
+            console.log(this);
+            debugger;
+            this.parentElement.hidden = true;
+        }
+    }
+    backAbout.on('click', backButtonClickDecorator());
+    backScoreboard.on('click', backButtonClickDecorator());
+    backLogin.on('click', backButtonClickDecorator());
+    backSignup.on('click', backButtonClickDecorator());
+
     pageSingleplayer.appendChild(titleSingleplayer.el);
     pageMultiplayer.appendChild(titleMultiplayer.el);
     pageAbout.appendChild(titleAbout.el);

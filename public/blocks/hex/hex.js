@@ -24,8 +24,8 @@
                         You are the ruler.
                     </div>
                     <div class="hex__buttons" id="buttons">
-                        <div class="hex__main_buttons"></div>
-                        <div class="hex__minor_buttons"></div>
+                        <div class="hex__buttons-main"></div>
+                        <div class="hex__buttons-minor"></div>
                     </div>
                 </div>
             `;
@@ -36,10 +36,10 @@
             this.multiplayer = new Button(this.data.multiplayer).render();
             this.about = new Button(this.data.about).render();
             this.scoreboard = new Button(this.data.scoreboard).render();
-            this.el.querySelector('.hex__main_buttons').appendChild(this.singleplayer.el);
-            this.el.querySelector('.hex__main_buttons').appendChild(this.multiplayer.el);
-            this.el.querySelector('.hex__minor_buttons').appendChild(this.about.el);
-            this.el.querySelector('.hex__minor_buttons').appendChild(this.scoreboard.el);
+            this.el.querySelector('.hex__buttons-main').appendChild(this.singleplayer.el);
+            this.el.querySelector('.hex__buttons-main').appendChild(this.multiplayer.el);
+            this.el.querySelector('.hex__buttons-minor').appendChild(this.about.el);
+            this.el.querySelector('.hex__buttons-minor').appendChild(this.scoreboard.el);
         }
     }
 

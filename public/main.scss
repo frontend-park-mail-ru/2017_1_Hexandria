@@ -26,3 +26,10 @@ body {
   position: absolute;
   margin: 8% auto 0 5%;
 }
+
+.back-button {
+  @extend .button;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
