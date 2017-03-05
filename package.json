@@ -27,7 +27,7 @@
     "three": "^0.84.0"
   },
   "devDependencies": {
-    "eslint": "^3.16.0",
+    "eslint": "^3.17.0",
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-import": "^2.2.0"
   }

@@ -1,34 +1,34 @@
 (function() {
-    'use strict';
+	"use strict";
 
-    class Button {
-        constructor(options) {
-            this.text = options.text;
-            this.attrs = options.attrs || [];
-            this.el = document.createElement('button');
-        }
+	class Button {
+		constructor(options) {
+			this.text = options.text;
+			this.attrs = options.attrs || [];
+			this.el = document.createElement("button");
+		}
 
-        setAttrs (attrs) {
-            Object.keys(attrs).forEach(name => {
-                this.el.setAttribute(name, attrs[name]);
-            })
-        }
+		setAttrs (attrs) {
+			Object.keys(attrs).forEach((name) => {
+				this.el.setAttribute(name, attrs[name]);
+			});
+		}
 
-        render() {
-            this.el.innerHTML = this.text;
-            this.el.classList.add('button');
-            this.setAttrs(this.attrs);
-            return this;
-        }
+		render() {
+			this.el.innerHTML = this.text;
+			this.el.classList.add("button");
+			this.setAttrs(this.attrs);
+			return this;
+		}
 
-        toString() {
-            return this.el.outerHTML;
-        }
+		toString() {
+			return this.el.outerHTML;
+		}
 
-        on (type, callback) {
-            this.el.addEventListener(type, callback);
-        }
+		on (type, callback) {
+			this.el.addEventListener(type, callback);
+		}
     }
 
-    window.Button = Button;
+	window.Button = Button;
 })();

@@ -1,36 +1,36 @@
 (function() {
-    'use strict';
+	"use strict";
 
-    class Form {
-        constructor({ data = [], el }) {
-            this.data = data;
-            this.el = el;
-            this.render();
-        }
+	class Form {
+		constructor({ data = [], el }) {
+			this.data = data;
+			this.el = el;
+			this.render();
+		}
 
-        render() {
-            this._updateHtml();
+		render() {
+			this.updateHtml();
             // this._installControls();
-        }
+		}
 
-        _getFields() {
-            let { fields = [] } = this.data;
+		getFields() {
+			const { fields = [] } = this.data;
 
-            return fields.map(field => { return `
+			return fields.map(field => `
                 <input type="${field.type}" name="${field.name}" 
                     placeholder="${field.placeholder}" class="form__input">
-            `}).join(' ');
-        }
+            `).join(" ");
+		}
 
-        _updateHtml() {
-            this.el.innerHTML = `
+		updateHtml() {
+			this.el.innerHTML = `
                 <form class="form" onsubmit="return false">
-                    ${this._getFields()}
+                    ${this.getFields()}
                     <button type="button" class="form__button" id="login_submit">Login</button>
                 </form>
             `;
-        }
+		}
     }
 
-    window.Form = Form;
+	window.Form = Form;
 })();

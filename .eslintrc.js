@@ -9,6 +9,7 @@ module.exports = {
         "sourceType": "module",
     },
     "rules": {
+        "no-param-reassign": 0,
         "no-extra-semi": 1,
         "no-undef": 1,
         "strict": [0, "global"],
@@ -26,6 +27,7 @@ module.exports = {
             "ignoreUrls": true,
             "ignoreStrings": true,
             "ignoreTemplateLiterals": true
-        }]
-    }
+        }],
+        "quotes": ["error", "double", { "avoidEscape": true }]
+    },
 };

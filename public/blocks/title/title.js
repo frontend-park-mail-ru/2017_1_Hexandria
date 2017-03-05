@@ -1,22 +1,22 @@
 (function() {
-    'use strict';
+	"use strict";
 
-    class Title {
-        constructor({ title, el }) {
-            this.title = title;
-            this.el = el;
-            this.render();
-        }
+	class Title {
+		constructor({ title, el }) {
+			this.title = title;
+			this.el = el;
+			this.render();
+		}
 
-        render() {
-            this._updateHtml();
-        }
+		render() {
+			this.updateHtml();
+		}
 
-        _updateHtml() {
-            this.el.setAttribute('class', 'title');
-            this.el.innerHTML = this.title;
-        }
+		updateHtml() {
+			this.el.setAttribute("class", "title");
+			this.el.innerHTML = this.title;
+		}
     }
 
-    window.Title = Title;
+	window.Title = Title;
 })();

@@ -1,12 +1,12 @@
 (function() {
-    'use strict';
+	"use strict";
 
-    class UserPanel {
-        constructor({ data = {}, el }) {
-            this.data = data;
-            this.el = el;
-        }
+	class UserPanel {
+		constructor({ data = {}, el }) {
+			this.data = data;
+			this.el = el;
+		}
     }
 
-    window.UserPanel = UserPanel;
+	window.UserPanel = UserPanel;
 })();
