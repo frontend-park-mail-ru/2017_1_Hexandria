@@ -5,6 +5,10 @@ node_js: 7
 branches:
   only:
   - master
+
+before_deploy:
+  - npm run sassstartup
+
 deploy:
   provider: heroku
   app:
