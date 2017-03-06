@@ -48,8 +48,6 @@
 		}
 		validateEmail(input) {
 			this.checkEmpty(input);
-			this.checkMinLength(input);
-			this.checkMaxLength(input);
 			this.checkEmail(input);
 		}
 		validatePassword(input) {
