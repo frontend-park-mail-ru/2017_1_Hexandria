@@ -91,7 +91,7 @@
 	hex.scoreboard.on("click", hexClickDecorator(pageScoreboard));
 
 	// Game
-	let gameData = {
+	const gameData = {
 		el: document.createElement("div"),
 	};
 	pageSingleplayer.appendChild(new Game(gameData).el);

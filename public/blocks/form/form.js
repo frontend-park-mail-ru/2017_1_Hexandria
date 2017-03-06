@@ -2,22 +2,36 @@
 	"use strict";
 
 	class Form {
+        /**
+         * Form constructor
+         * @param {Objects[]} data
+         * @param {HTMLElement} el
+         */
 		constructor({ data = [], el }) {
 			this.data = data;
 			this.el = el;
 			this.render();
 		}
 
+        /**
+         * DOM update
+         */
 		render() {
 			this.updateHtml();
 			this.installInputs();
 			this.installControls();
 		}
 
+        /**
+         * Update HTML
+         */
 		updateHtml() {
 			this.el.classList.add("form");
 		}
 
+        /**
+         * Form inputs install
+         */
 		installInputs() {
 			const { inputs = [] } = this.data;
 			const validator = new Validator();
@@ -42,10 +56,18 @@
 			});
 		}
 
+        /**
+         * Add event listener
+         * @param {event} type
+         * @param {function} callback
+         */
 		on (type, callback) {
 			this.el.addEventListener(type, callback);
 		}
 
+        /**
+         * Form buttons install
+         */
 		installControls () {
 			const { controls = [] } = this.data;
 
