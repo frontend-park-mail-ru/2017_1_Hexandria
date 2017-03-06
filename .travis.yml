@@ -7,7 +7,7 @@ branches:
   - master
 
 before_deploy:
-  - npm run sassstartup
+  - sass public/main.scss public/main.css
 
 deploy:
   provider: heroku
