@@ -163,10 +163,8 @@ const GameStart = function () {
     }
 
     function mouseCoordinates() {
-        // mouse.x = (event.clientX / container.clientWidth) * 2 - 1;
-        // mouse.y = -(event.clientY / container.clientHeight) * 2 + 1;
-        mouse.x = ((event.clientX - renderer.domElement.offsetLeft) / renderer.domElement.width) * 2 - 1;
-        mouse.y = -((event.clientY - renderer.domElement.offsetTop) / renderer.domElement.height) * 2 + 1;
+        mouse.x = ((event.clientX - container.offsetLeft) / renderer.domElement.width) * 2 - 1;
+        mouse.y = -((event.clientY - container.offsetTop) / renderer.domElement.height) * 2 + 1;
     }
 
     function onDocumentMouseMove(event) {
@@ -224,3 +222,4 @@ const GameStart = function () {
         time += deltaTime;
     }
 }
+
