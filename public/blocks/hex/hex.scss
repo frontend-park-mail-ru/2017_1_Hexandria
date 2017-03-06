@@ -1,0 +1,98 @@
+@mixin createHex($height, $color, $z-index) {
+  background-color: $color;
+  height: $height / 2;
+  width: $height * 0.866;
+  z-index: $z-index;
+  &::before {
+    content: " ";
+    width: 0; height: 0;
+    border-bottom: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) + 1px solid transparent;
+    position: absolute;
+    top: -($height / 4);
+  }
+  &::after {
+    content: "";
+    width: 0;
+    border-top: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) + 1px solid transparent;
+    position: absolute;
+    bottom: -($height / 4);
+  }
+}
+
+@mixin createHexInside($height, $color, $z-index) {
+  background-color: $color;
+  height: $height / 2;
+  width: $height * 0.866 - 1px;
+  z-index: $z-index;
+  &::before {
+    content: " ";
+    width: 0; height: 0;
+    border-bottom: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) solid transparent;
+    position: absolute;
+    top: -($height / 4);
+  }
+  &::after {
+    content: "";
+    width: 0;
+    border-top: ($height / 4) solid $color;
+    border-left: ($height * 0.433) solid transparent;
+    border-right: ($height * 0.433) solid transparent;
+    position: absolute;
+    bottom: -($height / 4);
+  }
+}
+
+.hex {
+  position: relative;
+  @include createHex(900px, #fff, 0);
+  &__minor_hex {
+    margin: 2px 0 0 4px;
+    position: relative;
+    @include createHexInside(892px, #000, 1);
+  }
+  &__title {
+    text-transform: uppercase;
+    padding-top: 70px;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 400%;
+  }
+  &__motto {
+    padding-top: 20px;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-weight: 400;
+    font-size: 200%;
+  }
+  &__buttons {
+    position: relative;
+    margin: 50px auto 0 auto;
+    width: 80%;
+    background-color: #000;
+    padding: 10px;
+    text-align: center;
+  }
+  &__buttons-main {
+  }
+  &__buttons-minor {
+  }
+  &__singleplayer, &__multiplayer {
+    @extend .button;
+    width: 200px;
+    margin: 3px;
+  }
+  &__about, &__scoreboard {
+    @extend .button;
+    width: 200px;
+    margin: 3px;
+  }
+}

@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import "blocks/button/button.scss";
+@import "blocks/input/input.scss";
+@import "blocks/game/game.scss";
+@import "blocks/register_panel/register_panel.scss";
+@import "blocks/title/title.scss";
+@import "blocks/hex/hex.scss";
+@import "blocks/form/form.scss";
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #000;
+  margin: 0;
+}
+
+.title {
+  margin: 5% auto 5% auto;
+}
+
+.register_panel {
+  top: 2%;
+  right: 5%;
+  height: 7%;
+  width: 20%;
+  position: absolute;
+}
+
+.hex {
+  position: absolute;
+  margin: 8% auto 0 5%;
+}
+
+.back-button {
+  @extend .button;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.form {
+  margin: 0 25% 0 25%;
+  min-width: 300px;
+}
