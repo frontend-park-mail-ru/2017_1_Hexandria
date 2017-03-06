@@ -14,21 +14,7 @@
 		}
 
 		updateHtml() {
-			this.el.setAttribute("class", "hex");
-			this.el.innerHTML = `
-                <div class="hex__minor_hex" id="minor_hex">
-                    <div class="hex__title" id="hex__title">
-                        hexandria
-                    </div>
-                    <div class="hex__motto" id="hex__motto">
-                        You are the ruler.
-                    </div>
-                    <div class="hex__buttons" id="buttons">
-                        <div class="hex__buttons-main"></div>
-                        <div class="hex__buttons-minor"></div>
-                    </div>
-                </div>
-            `;
+			this.el.innerHTML = hex_template();
 		}
 
 		installControls() {

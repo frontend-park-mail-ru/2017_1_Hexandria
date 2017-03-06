@@ -12,7 +12,7 @@
         }
 
         updateHtml() {
-            this.el.setAttribute("class", "game-container");
+            this.el.innerHTML = game_template();
         }
     }
 

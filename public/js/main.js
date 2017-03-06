@@ -136,7 +136,7 @@
 
     // Login form
 	const loginForm = new Form({
-		el: document.createElement("form"),
+		el: document.createElement("div"),
 		data: {
 			controls: [
 				{
