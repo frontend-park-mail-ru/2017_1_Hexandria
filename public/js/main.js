@@ -11,18 +11,18 @@
 	const pageSignup = document.getElementById("signup");
 
     // Create titles
-	function titleCreateDecorator(string) {
+	function titleData(string) {
 		return {
 			el: document.createElement("div"),
 			title: string,
 		};
 	}
-	pageSingleplayer.appendChild(new Title(titleCreateDecorator("Singleplayer")).el);
-	pageMultiplayer.appendChild(new Title(titleCreateDecorator("Multiplayer")).el);
-	pageAbout.appendChild(new Title(titleCreateDecorator("About")).el);
-	pageScoreboard.appendChild(new Title(titleCreateDecorator("Scoreboard")).el);
-	pageLogin.appendChild(new Title(titleCreateDecorator("Login")).el);
-	pageSignup.appendChild(new Title(titleCreateDecorator("Signup")).el);
+	pageSingleplayer.appendChild(new Title(titleData("Singleplayer")).el);
+	pageMultiplayer.appendChild(new Title(titleData("Multiplayer")).el);
+	pageAbout.appendChild(new Title(titleData("About")).el);
+	pageScoreboard.appendChild(new Title(titleData("Scoreboard")).el);
+	pageLogin.appendChild(new Title(titleData("Login")).el);
+	pageSignup.appendChild(new Title(titleData("Signup")).el);
 
     // Main page elements
 	const hex = new Hex({
@@ -89,6 +89,13 @@
 	hex.multiplayer.on("click", hexClickDecorator(pageMultiplayer));
 	hex.about.on("click", hexClickDecorator(pageAbout));
 	hex.scoreboard.on("click", hexClickDecorator(pageScoreboard));
+
+	// Game
+	let gameData = {
+		el: document.createElement("div"),
+	};
+	pageSingleplayer.appendChild(new Game(gameData).el);
+	hex.singleplayer.on("click", GameStart);
 
     // Register panel buttons
 	function registerPanelClickDecorator(object) {
