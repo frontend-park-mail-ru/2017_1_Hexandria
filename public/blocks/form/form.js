@@ -15,31 +15,30 @@
 		}
 
 		updateHtml() {
-			this.el.innerHTML = `
-                <form class="form" onsubmit="return false"></form>
-            `;
+			this.el.classList.add("form");
 		}
 
 		installInputs() {
 			const { inputs = [] } = this.data;
-			let validator = new Validator();
+			const validator = new Validator();
 
 			inputs.forEach((data) => {
 				const input = new Input(data).render();
 				input.el.classList.add("form__input");
-				input.on('blur', function() {
-						try {
-							validator.validate(this);
-						}
-						catch(err) {
-							console.log(err.message);
-							input.colorInputBorder(this, "red");
-							return;
-						}
-						input.colorInputBorder(this, "#fff");
+				input.on("blur", () => {
+					try {
+						validator.validate(input.el);
+					}						catch (err) {
+						console.log(err.message);
+						input.colorInputBorder(input, "red");
+						return;
 					}
-				);
-				this.el.querySelector("form").appendChild(input.el);
+					input.colorInputBorder(input, "#fff");
+				});
+				input.on("click", () => {
+					input.colorInputBorder(this, "#eb9300");
+				});
+				this.el.appendChild(input.el);
 			});
 		}
 
@@ -53,7 +52,7 @@
 			controls.forEach((data) => {
 				const control = new Button(data).render();
 				control.el.classList.add("form__button");
-				this.el.querySelector("form").appendChild(control.el);
+				this.el.appendChild(control.el);
 			});
 		}
     }

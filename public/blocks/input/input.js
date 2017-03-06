@@ -29,7 +29,7 @@
 
 		colorInputBorder(input, color) {
 			this.el.style.border = `1px solid ${color}`;
-		};
+		}
     }
 
 	window.Input = Input;

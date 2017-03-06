@@ -129,7 +129,7 @@
 
     // Login form
 	const loginForm = new Form({
-		el: document.createElement("div"),
+		el: document.createElement("form"),
 		data: {
 			controls: [
 				{
@@ -150,11 +150,29 @@
 			],
 		},
 	});
+	const fetcher = new Fetcher();
+	loginForm.on("submit", (event) => {
+		event.preventDefault();
+		console.log("button_login click");
+
+		const parent = loginForm.el;
+		const data = {
+			login: parent.login.value,
+			password: parent.password.value,
+		};
+
+		fetcher.fetch("/api/login", "POST", data)
+			.then((okJSON) => {
+				console.log(okJSON);
+				console.log(okJSON.description);
+			})
+			.catch(fetcher.errorCatcher);
+	});
 	pageLogin.appendChild(loginForm.el);
 
     // Login form
 	const signupForm = new Form({
-		el: document.createElement("div"),
+		el: document.createElement("form"),
 		data: {
 			controls: [
 				{
@@ -184,6 +202,24 @@
 				},
 			],
 		},
+	});
+	signupForm.on("submit", (event) => {
+		event.preventDefault();
+		console.log("button_login click");
+
+		const parent = signupForm.el;
+		const data = {
+			login: parent.login.value,
+			email: parent.email.value,
+			password: parent.password.value,
+		};
+
+		fetcher.fetch("/api/login", "POST", data)
+			.then((okJSON) => {
+				console.log(okJSON);
+				console.log(okJSON.description);
+			})
+			.catch(fetcher.errorCatcher);
 	});
 	pageSignup.appendChild(signupForm.el);
 

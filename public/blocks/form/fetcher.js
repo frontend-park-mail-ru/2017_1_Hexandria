@@ -1,50 +1,54 @@
-'use strict';
+(function() {
+	"use strict";
 
-const Fetcher = function () {
-    //this.path = path
+	class Fetcher {
+        // this.path = path
 
-    this.fetch = function (path, method, data) {
-        options.method = method;
-        if (data) {
-            options.body = JSON.stringify(data);
-            console.log(options.body);
-        } else {
-            options.body = null;
-        }
+		constructor() {
+			this.host = "http://79.137.74.9:8082";
 
-        return fetch(host + path, options)
-            .then(res => {
-                //console.log("then", res);
-                if (res.status === 200) {
-                    console.log("MyRequestClass", "OK");
-                    return res.json();
-                } else {
-                    console.log("MyRequestClass", "FAIL");
-                    return res.json().then(err => {throw err;});
-                }
-            }).catch(err => {
-                //console.log("MyRequestClass catch", err);
-                throw err;
-            });
-    };
+			this.options = {
+                // method: "POST",
+				mode: "cors",
+				credentials: "include",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+			};
+		}
 
-    let _self = this;
-
-    // const host = 'http://localhost:8082';
-    const host = 'http://79.137.74.9:8082';
-
-    let options = {
-        //method: "POST",
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+		fetch(path, method, data) {
+			const options = this.options;
+			const host = this.host;
+			options.method = method;
+			if (data) {
+				options.body = JSON.stringify(data);
+				console.log(options.body);
+			} else {
+				options.body = null;
+			}
+			return fetch(host + path, options)
+                .then((res) => {
+                    // console.log("then", res);
+	if (res.status === 200) {
+		console.log("MyRequestClass", "OK");
+		return res.json();
+	}
+	console.log("MyRequestClass", "FAIL");
+	return res.json().then((err) => {
+		throw err;
+	});
+}).catch((err) => {
+                    // console.log("MyRequestClass catch", err);
+	throw err;
+});
+		}
+		errorCatcher(errorJSON) {
+			console.log(errorJSON);
+			console.log(errorJSON.error);
+		}
     }
-};
 
-const errorCatcher = function (errorJSON) {
-    console.log(errorJSON);
-    console.log(errorJSON.error);
-};
+	window.Fetcher = Fetcher;
+})();
