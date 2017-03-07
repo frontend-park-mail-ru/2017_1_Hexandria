@@ -16,8 +16,12 @@ before_install:
   - sh -e /etc/init.d/xvfb start
   - gem install sass
 
-before_deploy:
-  - sass public/main.scss public/main.css
+script:
+  - npm run sassstartup
+
+install:
+  - npm install
+  - npm run sassstartup
 
 deploy:
   provider: heroku
