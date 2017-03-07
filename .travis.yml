@@ -1,0 +1,31 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js: 7
+branches:
+  only:
+  - master
+
+before_install:
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sudo apt-get update
+  - sudo apt-get install -y libappindicator1 fonts-liberation
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome*.deb
+  - sh -e /etc/init.d/xvfb start
+  - gem install sass
+
+script:
+  - npm run sassstartup
+
+install:
+  - npm install
+  - npm run sassstartup
+
+deploy:
+  provider: heroku
+  app:
+    master: hexandria
+  api_key:
+    secure: Km/XwCjNRGaP5Cynh0ZaZbTu8oqj+9ppeGHHX0rNbhYxHpCb/INm8CQryIZguY0O5ZwBdid/F/og7LuuVtUJ2hP2V0EFm8TNgSFeWlpD7i38M+NEsRwuY/yZjrSW2WXASRWUUEcFl8t4afFv7YUUXYSkyMZ/k61Wj3PFSSuXbNdYQc+48XEJ+zTDL/2KXV9aWpE3mHOQxQkP5bF+df6gvKkP9tZSrJyvPOQizF5AVQ4rDFoxgJGUfuWW3yNttjm+4taCpm+2jrbjuU/MeBM1HXpmT2hmao6uJy722Wz80B7JEDvk+aUgR2h2Zp93kxJNrz0H0HnY5Q6Xw0ri3WA6RZqML+DSyGOP6O1Rexbrmt35t4Op5COPo0G0qMp9r95/G4aWQ0d8PvG732KtVIBdBlVwP3L3PSoA+0iu7/IKm5GT5oUlzc51mv9z1Vh+/JcrOLjqi/WR9YJsDwYmAAgsWqaxckaeivXWXLISQei7Tz++kaxFdq89SE0zHLMhqi5hiieoXqkRJKzXhRGUaynf/bsFbRu8d49Ck1Aq0G668Hcnu73RK6sOvbHUiWRUM38JlfApSM6Mz8RN4aWkHOHXTyuZ3zhKEx1BmR1fPIcvCyzEWwSvVkGMN+Oa8dv5gndygI8yHF+BjLxgy3Cd0KMiJ6pUwE65YLrziG55boq54No=
