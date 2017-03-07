@@ -14,6 +14,6 @@ npm sassstartup
 http://localhost:3000/
 ````
 <b>Production:</b>
-
+https://hexandria.herokuapp.com/
 
 
