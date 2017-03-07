@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "startup": "node server.js",
-    "sassstartup": "sass public/main.scss public/main.css",
+    "sassstartup": "./node_modules/.bin/node-sass public/main.scss public/main.css",
     "eslint": "./node_modules/.bin/eslint --fix public"
   },
   "repository": {
@@ -32,6 +32,7 @@
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-import": "^2.2.0",
     "stylelint": "^7.9.0",
-    "stylelint-config-standard": "^16.0.0"
+    "stylelint-config-standard": "^16.0.0",
+    "node-sass": "^3.13.0"
   }
 }
