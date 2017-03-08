@@ -38,6 +38,7 @@ jspm_packages
 
 .sass-cache
 *.css.map
+main.css
 
 
 .idea
