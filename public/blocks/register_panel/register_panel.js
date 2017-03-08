@@ -4,21 +4,35 @@
 	const Button = window.Button;
 
 	class RegisterPanel {
+		/**
+		 * Register panel constructor
+		 * @param {HTMLElement} el
+		 * @param {Object[]} data
+		 */
 		constructor({ el, data = [] }) {
 			this.data = data;
 			this.el = el;
 			this.render();
 		}
 
+		/**
+		 * DOM update
+		 */
 		render() {
 			this.updateHtml();
 			this.installControls();
 		}
 
+		/**
+		 * Update HTML
+		 */
 		updateHtml() {
 			this.el.setAttribute("class", "register_panel");
 		}
 
+		/**
+		 * Install register panel buttons
+		 */
 		installControls() {
 			this.login = new Button(this.data.login).render();
 			this.signup = new Button(this.data.signup).render();

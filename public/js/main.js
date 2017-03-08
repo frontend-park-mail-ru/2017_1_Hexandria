@@ -91,7 +91,7 @@
 	hex.scoreboard.on("click", hexClickDecorator(pageScoreboard));
 
 	// Game
-	let gameData = {
+	const gameData = {
 		el: document.createElement("div"),
 	};
 	pageSingleplayer.appendChild(new Game(gameData).el);
@@ -136,7 +136,7 @@
 
     // Login form
 	const loginForm = new Form({
-		el: document.createElement("div"),
+		el: document.createElement("form"),
 		data: {
 			controls: [
 				{
@@ -162,8 +162,8 @@
 		event.preventDefault();
 		console.log("button_login click");
 
-		const parent = loginForm.el;
-		const data = {
+		let parent = loginForm.el;
+		let data = {
 			login: parent.login.value,
 			password: parent.password.value,
 		};
@@ -212,16 +212,16 @@
 	});
 	signupForm.on("submit", (event) => {
 		event.preventDefault();
-		console.log("button_login click");
+		console.log("button_signup click");
 
-		const parent = signupForm.el;
-		const data = {
+		let parent = signupForm.el;
+		let data = {
 			login: parent.login.value,
 			email: parent.email.value,
 			password: parent.password.value,
 		};
 
-		fetcher.fetch("/api/login", "POST", data)
+		fetcher.fetch("/api/signup", "POST", data)
 			.then((okJSON) => {
 				console.log(okJSON);
 				console.log(okJSON.description);
