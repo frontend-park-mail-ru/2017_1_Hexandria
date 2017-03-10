@@ -26,7 +26,8 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2017_1_Hexandria#readme",
   "dependencies": {
     "express": "^4.14.1",
-    "three": "^0.84.0"
+    "three": "^0.84.0",
+    "node-sass": "^3.13.0"
   },
   "devDependencies": {
     "eslint": "^3.17.0",
