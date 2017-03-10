@@ -162,8 +162,8 @@
 		event.preventDefault();
 		console.log("button_login click");
 
-		let parent = loginForm.el;
-		let data = {
+		const parent = loginForm.el;
+		const data = {
 			login: parent.login.value,
 			password: parent.password.value,
 		};
@@ -214,8 +214,8 @@
 		event.preventDefault();
 		console.log("button_signup click");
 
-		let parent = signupForm.el;
-		let data = {
+		const parent = signupForm.el;
+		const data = {
 			login: parent.login.value,
 			email: parent.email.value,
 			password: parent.password.value,
