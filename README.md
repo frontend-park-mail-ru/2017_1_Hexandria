@@ -11,9 +11,11 @@ npm install
 <b>Run Dev:</b>
 ````
 npm sassstartup
+npm startup
 http://localhost:3000/
 ````
 <b>Production:</b>
 
+https://hexandria.herokuapp.com/
 
 
