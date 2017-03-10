@@ -15,6 +15,10 @@ before_install:
   - sudo dpkg -i google-chrome*.deb
   - sh -e /etc/init.d/xvfb start
 
+before_deploy:
+  - npm install
+  - npm run sassstartup
+
 deploy:
   provider: heroku
   app:
