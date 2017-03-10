@@ -31,18 +31,17 @@
 			return fetch(host + path, options)
                 .then((res) => {
                     // console.log("then", res);
-	if (res.status === 200) {
-		console.log("MyRequestClass", "OK");
-		return res.json();
-	}
-	console.log("MyRequestClass", "FAIL");
-	return res.json().then((err) => {
-		throw err;
-	});
-}).catch((err) => {
-									// console.log("MyRequestClass catch", err);
-	throw err;
-});
+					if (res.status === 200) {
+						console.log("MyRequestClass", "OK");
+						return res.json();
+					}
+					console.log("MyRequestClass", "FAIL");
+					return res.json().then((err) => {
+						throw err;
+					});
+				}).catch((err) => {
+					throw err;
+				});
 		}
 		errorCatcher(errorJSON) {
 			console.log(errorJSON);

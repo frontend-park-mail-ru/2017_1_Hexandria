@@ -249,4 +249,14 @@
 	pageScoreboard.hidden = true;
 	pageLogin.hidden = true;
 	pageSignup.hidden = true;
+
+	// Autorization check on startup
+	fetcher.fetch("/api/user", "GET")
+		.then((okJSON) => {
+			console.log(okJSON);
+			console.log(okJSON.description);
+			userPanel.show();
+			registerPanel.hide();
+		})
+		.catch(fetcher.errorCatcher);
 })();
