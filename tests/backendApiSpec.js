@@ -113,7 +113,7 @@ describe("API tests.", function() {
 
 	it("GET /api/user must fail. Not authorized.", function(done) {
 
-		fetcher.fetch2("/api/user1", "GET")
+		fetcher.fetch2("/api/user", "GET")
 		.then((res) => {
 			expect(res.status).toBe(403);
 			return res.json();
