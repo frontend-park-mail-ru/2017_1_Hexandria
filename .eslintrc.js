@@ -16,12 +16,27 @@ module.exports = {
         "no-tabs": 0,
         "func-names": 0,
         "no-console": 1,
+
+        "properties": 0,
+        "no-shadow": 0,
+        "no-underscore-dangle": 0,
+        "no-console": 0,
+        "no-undef": 0,
+        "no-use-before-define": 0,
+        "no-plusplus": 0,
+        "no-mixed-operators": 0,
+        "one-var": 0,
+        "camelcase": 0,
+        "no-useless-escape": 0,
+        "default-case": 0,
+        "class-methods-use-this": 0,
+
         "indent": ["error", "tab"],
         "no-unused-vars": 0,
         "wrap-iife": 0,
         "space-before-function-paren": 0,
         "max-len": ["error", {
-            "code": 100,
+            "code": 200,
             "ignoreComments": true,
             "ignoreTrailingComments": true,
             "ignoreUrls": true,
@@ -30,4 +45,5 @@ module.exports = {
         }],
         "quotes": ["error", "double", { "avoidEscape": true }]
     },
+
 };

@@ -29,7 +29,7 @@
 		updateHtml() {
 			this.el.innerHTML = hex_template({
 				hex_title: this.title,
-				hex_phrase: this.phrase
+				hex_phrase: this.phrase,
 			});
 		}
 

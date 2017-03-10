@@ -33,7 +33,7 @@
 		 */
 		updateHtml() {
 			this.el.setAttribute("class", "user_panel");
-			this.el.innerHTML = user_panel_template({username: this.username});
+			this.el.innerHTML = user_panel_template({ username: this.username });
 		}
 	}
 

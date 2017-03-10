@@ -1,9 +1,8 @@
 "use strict";
 
-var fetch = require("node-fetch");
+const fetch = require("node-fetch");
 
 let Fetcher = (function() {
-	"use strict";
 
 	class Fetcher {
 		// this.path = path
@@ -114,7 +113,7 @@ describe("API tests.", function() {
 
 	it("GET /api/user must fail. Not authorized.", function(done) {
 
-		fetcher.fetch2("/api/user", "GET")
+		fetcher.fetch2("/api/user1", "GET")
 		.then((res) => {
 			expect(res.status).toBe(403);
 			return res.json();
@@ -124,11 +123,12 @@ describe("API tests.", function() {
 			done();
 		})
 		.catch((err) => {
+			console.log("ERROR")
 			expect(err).toBeUndefined();
-			done()
+			done();
 		});
 
-	});
+	}, 500);
 
 	it("POST /api/login must be ok", function(done) {
 		fetcher.fetch2("/api/login", "POST", data)
@@ -143,9 +143,9 @@ describe("API tests.", function() {
 		})
 		.catch((err) => {
 			expect(err).toBeUndefined();
-			done()
+			done();
 		});
-	});
+	}, 500);
 
 	it("GET /api/user must be ok.", function(done) {
 		fetcher.fetch2("/api/user", "GET", null)
@@ -159,9 +159,9 @@ describe("API tests.", function() {
 		})
 		.catch((err) => {
 			expect(err).toBeUndefined();
-			done()
+			done();
 		});
-	});
+	}, 500);
 
 	it("POST /api/login must fail", function(done) {
 		fetcher.fetch2("/api/login", "POST", data)
@@ -176,8 +176,8 @@ describe("API tests.", function() {
 		})
 		.catch((err) => {
 			expect(err).toBeUndefined();
-			done()
+			done();
 		});
-	});
+	}, 500);
 
 });

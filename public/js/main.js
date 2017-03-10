@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-    // Pages
+	// Pages
 	const pageIndex = document.getElementById("index");
 	const pageSingleplayer = document.getElementById("singleplayer");
 	const pageMultiplayer = document.getElementById("multiplayer");
@@ -10,7 +10,7 @@
 	const pageLogin = document.getElementById("login");
 	const pageSignup = document.getElementById("signup");
 
-    // Create titles
+	// Create titles
 	function titleData(string) {
 		return {
 			el: document.createElement("div"),
@@ -24,38 +24,38 @@
 	pageLogin.appendChild(new Title(titleData("Login")).el);
 	pageSignup.appendChild(new Title(titleData("Signup")).el);
 
-    // Main page elements
+	// Main page elements
 	const hex = new Hex({
 		el: document.createElement("div"),
 		data: {
 			hex_title: "hexandria",
 			hex_phrase: "You are the ruler.",
-		    controls: {
-                singleplayer: {
-                    text: "Singleplayer",
-                    attrs: {
-                        class: "hex__singleplayer",
-                    }
-                },
-                multiplayer: {
-                    text: "Multiplayer",
-                    attrs: {
-                        class: "hex__multiplayer",
-                    }
-                },
-                about: {
-                    text: "About",
-                    attrs: {
-                        class: "hex__about",
-                    }
-                },
-                scoreboard: {
-                    text: "Scoreboard",
-                    attrs: {
-                        class: "hex__scoreboard",
-                    }
-                }
-            }
+			controls: {
+				singleplayer: {
+					text: "Singleplayer",
+					attrs: {
+						class: "hex__singleplayer",
+					},
+				},
+				multiplayer: {
+					text: "Multiplayer",
+					attrs: {
+						class: "hex__multiplayer",
+					},
+				},
+				about: {
+					text: "About",
+					attrs: {
+						class: "hex__about",
+					},
+				},
+				scoreboard: {
+					text: "Scoreboard",
+					attrs: {
+						class: "hex__scoreboard",
+					},
+				},
+			},
 		},
 	});
 	const registerPanel = new RegisterPanel({
@@ -79,13 +79,13 @@
 		el: document.createElement("div"),
 		data: {
 			username: "Dolan",
-		}
+		},
 	});
 	pageIndex.appendChild(hex.el);
 	pageIndex.appendChild(registerPanel.el);
 	pageIndex.appendChild(userPanel.el);
 
-    // Hex buttons
+	// Hex buttons
 	function hexClickDecorator(object) {
 		return function() {
 			pageIndex.hidden = true;
@@ -101,12 +101,12 @@
 	const gameData = {
 		el: document.createElement("div"),
 	};
-	let game = new Game(gameData);
+	const game = new Game(gameData);
 	pageSingleplayer.appendChild(game.el);
-    console.log(pageSingleplayer.childNodes);
+	console.log(pageSingleplayer.childNodes);
 	hex.singleplayer.on("click", GameStart);
 
-    // Register panel buttons
+	// Register panel buttons
 	function registerPanelClickDecorator(object) {
 		return function() {
 			pageIndex.hidden = true;
@@ -116,19 +116,19 @@
 	registerPanel.login.on("click", registerPanelClickDecorator(pageLogin));
 	registerPanel.signup.on("click", registerPanelClickDecorator(pageSignup));
 
-    // Create back buttons
+	// Create back buttons
 	const backButtonData = {
 		text: "Back",
 		attrs: {
 			class: "back-button",
 		},
 	};
-    function backButtonClickDecorator() {
-        return function() {
-            pageIndex.hidden = false;
-            this.parentElement.hidden = true;
-        };
-    }
+	function backButtonClickDecorator() {
+		return function() {
+			pageIndex.hidden = false;
+			this.parentElement.hidden = true;
+		};
+	}
 	pageSingleplayer.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
 	pageMultiplayer.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
 	pageAbout.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
@@ -136,7 +136,7 @@
 	pageLogin.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
 	pageSignup.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
 
-    // Login form
+	// Login form
 	const loginForm = new Form({
 		el: document.createElement("form"),
 		data: {
@@ -183,7 +183,7 @@
 	});
 	pageLogin.appendChild(loginForm.el);
 
-    // Login form
+	// Login form
 	const signupForm = new Form({
 		el: document.createElement("form"),
 		data: {
