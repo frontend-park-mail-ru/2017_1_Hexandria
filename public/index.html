@@ -3,13 +3,13 @@
     <head>
         <meta charset="utf-8">
         <title>Hexandria</title>
-
-        <!--Application styles-->
         <link rel="stylesheet" href="main.css">
-
-        <!--Component styles-->
     </head>
     <body>
+        <audio controls autoplay hidden loop>
+            <source src="audio/seven_nation_army.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
         <div id="index"></div>
         <div id="singleplayer"></div>
         <div id="multiplayer"></div>
@@ -20,6 +20,7 @@
 
         <script src="blocks/game/code/client.js"></script>
         <script src="blocks/game/code/hexandria.js"></script>
+        <script src="blocks/game/code/hexandria_lib.js"></script>
 
         <script src="blocks/game/game_template.js"></script>
         <script src="blocks/hex/hex_template.js"></script>
