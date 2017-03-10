@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "startup": "node server.js",
-    "sassstartup": "sass public/main.scss public/main.css",
+    "sassstartup": "./node_modules/.bin/node-sass public/main.scss public/main.css",
     "eslint": "./node_modules/.bin/eslint --fix public",
     "test": "jasmine-node tests/"
   },
