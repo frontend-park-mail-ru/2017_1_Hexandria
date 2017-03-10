@@ -43,6 +43,7 @@
 		 */
 		on (type, callback) {
 			this.el.addEventListener(type, callback);
+			return this;
 		}
     }
 

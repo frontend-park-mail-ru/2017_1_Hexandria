@@ -40,7 +40,7 @@ const Hexandria = function (scene) {
 			for (let j = 0; j < _fieldY; j++) {
 				posX = (2 * _hexagonBeta + 0.01) * i;
 				posY = (3 * _hexagonAlpha + 0.01) * j;
-				if (j % 2 == 0) {
+				if (j % 2 === 0) {
 					posX += _hexagonBeta + 0.01;
 				}
 
@@ -60,8 +60,8 @@ const Hexandria = function (scene) {
 	this.handleHighlight = function (intersects) {
 		if (intersects.length > 1) {
 			const obj = intersects[intersects.length - 2].object;
-			if (obj != _highlighted) { //  && obj != _selected
-				if (obj != _selected) {
+			if (obj !== _highlighted) { //  && obj != _selected
+				if (obj !== _selected) {
 					if (_highlighted) {
 						_highlighted.unhighlight();
                         // this.unhighlightHex(_highlighted);
@@ -89,8 +89,8 @@ const Hexandria = function (scene) {
 		console.log(intersects);
 		if (intersects.length > 1) {
 			const obj = intersects[intersects.length - 2].object;
-			if (obj != _selected) {
-				if (obj == _highlighted) {
+			if (obj !== _selected) {
+				if (obj === _highlighted) {
 					console.log("SELECT");
 					if (_selected) {
                         // _selected.removeUnit();
@@ -161,7 +161,7 @@ const Hexandria = function (scene) {
 	function _find(obj) {
 		for (let i = 0; i < _fieldX; i++) {
 			for (let j = 0; j < _fieldY; j++) {
-				if (_field[i][j] == obj) {
+				if (_field[i][j] === obj) {
 					return true;
 				}
 			}

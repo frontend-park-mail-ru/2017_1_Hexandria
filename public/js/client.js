@@ -39,9 +39,6 @@ const GameStart = function () {
 
 	function initGraphics() {
 		container = document.querySelector(".game-container");
-		debugger;
-		container.innerHTML = "";
-		document.body.appendChild(container);
 
 		renderer = new THREE.WebGLRenderer();
         // renderer.setClearColor(0xbfd1e5);
@@ -187,7 +184,7 @@ const GameStart = function () {
 	function onDocumentMouseDown(event) {
 		event.preventDefault();
 
-		if (event.buttons == 1) {
+		if (event.buttons === 1) {
 			mouseCoordinates();
 
 			raycaster.setFromCamera(mouse, camera);

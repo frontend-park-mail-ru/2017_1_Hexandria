@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "startup": "node server.js",
-    "sassstartup": "./node_modules/.bin/node-sass public/main.scss public/main.css",
-    "eslint": "./node_modules/.bin/eslint --fix public"
+    "sassstartup": "sass public/main.scss public/main.css",
+    "eslint": "./node_modules/.bin/eslint --fix public",
+    "test": "jasmine-node tests/"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,8 @@
     "eslint": "^3.17.0",
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-import": "^2.2.0",
+    "jasmine-node": "^1.14.5",
+    "node-fetch": "^1.6.3",
     "stylelint": "^7.9.0",
     "stylelint-config-standard": "^16.0.0",
     "node-sass": "^3.13.0"
