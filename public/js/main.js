@@ -28,30 +28,34 @@
 	const hex = new Hex({
 		el: document.createElement("div"),
 		data: {
-			singleplayer: {
-				text: "Singleplayer",
-				attrs: {
-					class: "hex__singleplayer",
-				},
-			},
-			multiplayer: {
-				text: "Multiplayer",
-				attrs: {
-					class: "hex__multiplayer",
-				},
-			},
-			about: {
-				text: "About",
-				attrs: {
-					class: "hex__about",
-				},
-			},
-			scoreboard: {
-				text: "Scoreboard",
-				attrs: {
-					class: "hex__scoreboard",
-				},
-			},
+			hex_title: "hexandria",
+			hex_phrase: "You are the ruler.",
+		    controls: {
+                singleplayer: {
+                    text: "Singleplayer",
+                    attrs: {
+                        class: "hex__singleplayer",
+                    }
+                },
+                multiplayer: {
+                    text: "Multiplayer",
+                    attrs: {
+                        class: "hex__multiplayer",
+                    }
+                },
+                about: {
+                    text: "About",
+                    attrs: {
+                        class: "hex__about",
+                    }
+                },
+                scoreboard: {
+                    text: "Scoreboard",
+                    attrs: {
+                        class: "hex__scoreboard",
+                    }
+                }
+            }
 		},
 	});
 	const registerPanel = new RegisterPanel({
@@ -73,6 +77,9 @@
 	});
 	const userPanel = new UserPanel({
 		el: document.createElement("div"),
+		data: {
+			username: "Dolan",
+		}
 	});
 	pageIndex.appendChild(hex.el);
 	pageIndex.appendChild(registerPanel.el);
@@ -94,7 +101,9 @@
 	const gameData = {
 		el: document.createElement("div"),
 	};
-	pageSingleplayer.appendChild(new Game(gameData).el);
+	let game = new Game(gameData);
+	pageSingleplayer.appendChild(game.el);
+    console.log(pageSingleplayer.childNodes);
 	hex.singleplayer.on("click", GameStart);
 
     // Register panel buttons
@@ -114,25 +123,18 @@
 			class: "back-button",
 		},
 	};
-	const backAbout = new Button(backButtonData).render();
-	const backScoreboard = new Button(backButtonData).render();
-	const backLogin = new Button(backButtonData).render();
-	const backSignup = new Button(backButtonData).render();
-	pageAbout.appendChild(backAbout.el);
-	pageScoreboard.appendChild(backScoreboard.el);
-	pageLogin.appendChild(backLogin.el);
-	pageSignup.appendChild(backSignup.el);
-	function backButtonClickDecorator() {
-		return function() {
-			pageIndex.hidden = false;
-			console.log(this);
-			this.parentElement.hidden = true;
-		};
-	}
-	backAbout.on("click", backButtonClickDecorator());
-	backScoreboard.on("click", backButtonClickDecorator());
-	backLogin.on("click", backButtonClickDecorator());
-	backSignup.on("click", backButtonClickDecorator());
+    function backButtonClickDecorator() {
+        return function() {
+            pageIndex.hidden = false;
+            this.parentElement.hidden = true;
+        };
+    }
+	pageSingleplayer.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
+	pageMultiplayer.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
+	pageAbout.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
+	pageScoreboard.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
+	pageLogin.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
+	pageSignup.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
 
     // Login form
 	const loginForm = new Form({
@@ -172,6 +174,10 @@
 			.then((okJSON) => {
 				console.log(okJSON);
 				console.log(okJSON.description);
+				pageLogin.hidden = true;
+				pageIndex.hidden = false;
+				userPanel.show();
+				registerPanel.hide();
 			})
 			.catch(fetcher.errorCatcher);
 	});
@@ -225,12 +231,17 @@
 			.then((okJSON) => {
 				console.log(okJSON);
 				console.log(okJSON.description);
+				pageSignup.hidden = true;
+				pageIndex.hidden = false;
+				userPanel.show();
+				registerPanel.hide();
 			})
 			.catch(fetcher.errorCatcher);
 	});
 	pageSignup.appendChild(signupForm.el);
 
-	userPanel.hidden = true;
+	userPanel.hide();
+
 	pageIndex.hidden = false;
 	pageSingleplayer.hidden = true;
 	pageMultiplayer.hidden = true;

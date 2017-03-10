@@ -15,6 +15,14 @@
 			this.render();
 		}
 
+		hide() {
+			this.el.style.visibility = "hidden";
+		}
+
+		show() {
+			this.el.style.visibility = "visible";
+		}
+
 		/**
 		 * DOM update
 		 */

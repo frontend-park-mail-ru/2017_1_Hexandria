@@ -2,6 +2,7 @@
 @import "blocks/button/button.scss";
 @import "blocks/input/input.scss";
 @import "blocks/game/game.scss";
+@import "blocks/user_panel/user_panel.scss";
 @import "blocks/register_panel/register_panel.scss";
 @import "blocks/title/title.scss";
 @import "blocks/hex/hex.scss";
@@ -17,7 +18,7 @@ body {
   margin: 5% auto 5% auto;
 }
 
-.register_panel {
+.register_panel, .user_panel {
   top: 2%;
   right: 5%;
   height: 7%;
