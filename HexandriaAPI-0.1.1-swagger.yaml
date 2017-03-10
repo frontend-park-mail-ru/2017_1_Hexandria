@@ -1,0 +1,176 @@
+swagger: "2.0"
+info:
+  version: 0.1.1
+  title: Hexandria API
+  description: Hexandria API description
+
+basePath: /api
+
+schemes:
+ - "http"
+ - "https"
+
+consumes:
+ - "application/json"
+produces:
+ - "application/json"
+
+paths:
+  /signup:
+    post:
+      summary: Регистрировать пользователя
+      description: |
+        Регистрация нового пользователя
+      consumes: []
+      parameters:
+      - in: body
+        name: Параметры
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Плохой запрос
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        403:
+          description: Пользователь не авторизован
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /login:
+    post:
+      summary: Авторизировать пользоватя
+      description: |
+        Авторизация существующего пользоватя
+      consumes: []
+      parameters:
+      - in: body
+        name: Параметры
+        required: true
+        description:
+          \{
+            "login":"...",
+            "password":"...",
+          \}
+        schema:
+          $ref: '#/definitions/UserLoginPass'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Плохой запрос
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        403:
+          description: Пользователь не авторизован
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /user:
+    get:
+      summary: Запросить текущего пользователя
+      description: |
+        Запрос пользователя, если он авторизован
+      consumes: []
+
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/UserLoginEmail'
+        403:
+          description: Пользователь не авторизован
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    post:
+      summary: Изменить пароль пользователя
+      description: |
+        Позволяет сменить пароль пользователя
+      consumes: []
+      parameters:
+      - in: body
+        name: Параметры
+        required: true
+
+        schema:
+          $ref: '#/definitions/UserNewPass'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Плохой запрос
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        403:
+          description: Пользователь не авторизован
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /logout:
+    post:
+      summary: Разлогинить пользователя
+      consumes: []
+      responses:
+        200:
+          description: OK
+        403:
+          description: Пользователь не авторизован
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+
+definitions:
+  User:
+    type: object
+    description: |
+        Пользователь
+    properties:
+      login:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+
+  UserLoginPass:
+    type: object
+    description: |
+        Пользователь
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+
+  UserLoginEmail:
+    type: object
+    description: |
+        Пользователь
+    properties:
+      login:
+        type: string
+      email:
+        type: string
+
+  UserNewPass:
+    type: object
+    description: |
+        Пользователь
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+      newPassword:
+        type: string
+
+  ErrorResponse:
+    type: object
+    description: |
+        Текст ошибки
+    properties:
+      error:
+        type: string
