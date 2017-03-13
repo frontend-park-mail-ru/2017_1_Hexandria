@@ -4,8 +4,9 @@
   "description": "Hexandria: strategy game",
   "main": "server.js",
   "scripts": {
+    "sassstartup": "npm run sass && npm run startup",
     "startup": "node server.js",
-    "sassstartup": "./node_modules/.bin/node-sass public/main.scss public/main.css",
+    "sass": "./node_modules/.bin/node-sass public/main.scss public/main.css",
     "eslint": "./node_modules/.bin/eslint --fix public",
     "test": "jasmine-node tests/"
   },
