@@ -109,11 +109,17 @@ const authorization_error = "User not authorized in this session!";
 const authorization_already = "User already authorized in this session";
 
 
+const timeout = 500;
+
+const path_user = "/api/user";
+const path_login = "/api/login";
+const path_logout = "/api/logout";
+
 describe("API tests.", function() {
 
 	it("GET /api/user must fail. Not authorized.", function(done) {
 
-		fetcher.fetch2("/api/user", "GET")
+		fetcher.fetch2(path_user, "GET")
 		.then((res) => {
 			expect(res.status).toBe(403);
 			return res.json();
@@ -128,10 +134,10 @@ describe("API tests.", function() {
 			done();
 		});
 
-	}, 500);
+	}, timeout);
 
 	it("POST /api/login must be ok", function(done) {
-		fetcher.fetch2("/api/login", "POST", data)
+		fetcher.fetch2(path_login, "POST", data)
 		.then((res) => {
 			expect(res.status).toBe(200);
 			fetcher.setCookie(res.headers._headers['set-cookie']);
@@ -145,10 +151,10 @@ describe("API tests.", function() {
 			expect(err).toBeUndefined();
 			done();
 		});
-	}, 500);
+	}, timeout);
 
 	it("GET /api/user must be ok.", function(done) {
-		fetcher.fetch2("/api/user", "GET", null)
+		fetcher.fetch2(path_user, "GET")
 		.then((res) => {
 			expect(res.status).toBe(200);
 			return res.json();
@@ -161,10 +167,10 @@ describe("API tests.", function() {
 			expect(err).toBeUndefined();
 			done();
 		});
-	}, 500);
+	}, timeout);
 
 	it("POST /api/login must fail", function(done) {
-		fetcher.fetch2("/api/login", "POST", data)
+		fetcher.fetch2(path_login, "POST", data)
 		.then((res) => {
 			expect(res.status).toBe(403);
 			return res.json();
@@ -178,6 +184,40 @@ describe("API tests.", function() {
 			expect(err).toBeUndefined();
 			done();
 		});
-	}, 500);
+	}, timeout);
 
+	it("POST /api/logout must be ok", function(done) {
+		fetcher.fetch2(path_logout, "POST")
+		.then((res) => {
+			expect(res.status).toBe(200);
+			return res.json();
+		})
+		.then((json) => {
+			expect(json.description).toBe("User successfully logged out");
+			done();
+		})
+		.catch((err) => {
+			expect(err).toBeUndefined();
+			done();
+		});
+	}, timeout);
+
+	it("GET /api/user must fail. Not authorized.", function(done) {
+
+		fetcher.fetch2(path_user, "GET")
+		.then((res) => {
+			expect(res.status).toBe(403);
+			return res.json();
+		})
+		.then((json) => {
+			expect(json.error).toBe(authorization_error);
+			done();
+		})
+		.catch((err) => {
+			console.log("ERROR")
+			expect(err).toBeUndefined();
+			done();
+		});
+
+	}, timeout);
 });
