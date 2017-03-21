@@ -264,12 +264,12 @@
 		function sleep(ms) {
 			return new Promise(resolve => setTimeout(resolve, ms));
 		}
-		let hexElement = hex.el;
-		let hexTitleElement = hexElement.querySelector('.hex__title');
-		let hexMottoElement = hexElement.querySelector('.hex__motto');
-		let hexButtonsElement = hexElement.querySelector('.hex__buttons');
-		let registerPanelElement = registerPanel.el;
-		let userPanelElement = userPanel.el;
+		const hexElement = hex.el;
+		const hexTitleElement = hexElement.querySelector(".hex__title");
+		const hexMottoElement = hexElement.querySelector(".hex__motto");
+		const hexButtonsElement = hexElement.querySelector(".hex__buttons");
+		const registerPanelElement = registerPanel.el;
+		const userPanelElement = userPanel.el;
 
 		hexElement.style.opacity = "0";
 		hexTitleElement.style.opacity = "0";
@@ -278,16 +278,16 @@
 		registerPanelElement.style.opacity = "0";
 		userPanelElement.style.opacity = "0";
 
-		for(let i = 0; i < 1; i += 0.01) {
+		for (let i = 0; i < 1; i += 0.01) {
 			await sleep(25);
 			hexElement.style.opacity = i.toString();
 			hexTitleElement.style.opacity = i.toString();
 		}
-		for(let i = 0; i < 1; i += 0.01) {
+		for (let i = 0; i < 1; i += 0.01) {
 			await sleep(25);
 			hexMottoElement.style.opacity = i.toString();
 		}
-		for(let i = 0; i < 1; i += 0.01) {
+		for (let i = 0; i < 1; i += 0.01) {
 			await sleep(25);
 			registerPanelElement.style.opacity = i.toString();
 			userPanelElement.style.opacity = i.toString();
