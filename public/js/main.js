@@ -87,10 +87,11 @@
 
 	// Hex buttons
 	function hexClickDecorator(object) {
-		return function() {
+		/*return function() {
 			pageIndex.hidden = true;
 			object.hidden = false;
-		};
+		};*/
+        console.log("hexClickDecorator:", pageIndex, object);
 	}
 	hex.singleplayer.on("click", hexClickDecorator(pageSingleplayer));
 	hex.multiplayer.on("click", hexClickDecorator(pageMultiplayer));
@@ -108,11 +109,12 @@
 
 	// Register panel buttons
 	function registerPanelClickDecorator(object) {
-		return function() {
+		/*return function() {
 			pageIndex.hidden = true;
 			object.hidden = false;
-		};
-	}
+		};*/
+        console.log("registerPanelClickDecorator:", pageIndex, object);
+    }
 	registerPanel.login.on("click", registerPanelClickDecorator(pageLogin));
 	registerPanel.signup.on("click", registerPanelClickDecorator(pageSignup));
 
@@ -124,10 +126,11 @@
 		},
 	};
 	function backButtonClickDecorator() {
-		return function() {
+		/*return function() {
 			pageIndex.hidden = false;
 			this.parentElement.hidden = true;
-		};
+		};*/
+		console.log("backButtonClickDecorator:", pageIndex, this.parentElement);
 	}
 	pageSingleplayer.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
 	pageMultiplayer.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
@@ -243,7 +246,11 @@
 	userPanel.hide();
 
 	pageIndex.hidden = false;
+
+    console.log("pageSingleplayer: ", pageSingleplayer.hidden);
 	pageSingleplayer.hidden = true;
+	console.log("pageSingleplayer: ", pageSingleplayer.hidden);
+
 	pageMultiplayer.hidden = true;
 	pageAbout.hidden = true;
 	pageScoreboard.hidden = true;
@@ -251,48 +258,48 @@
 	pageSignup.hidden = true;
 
 	// Autorization check on startup
-	fetcher.fetch("/api/user", "GET")
-		.then((okJSON) => {
-			console.log(okJSON);
-			console.log(okJSON.description);
-			userPanel.show();
-			registerPanel.hide();
-		})
-		.catch(fetcher.errorCatcher);
+	// fetcher.fetch("/api/user", "GET")
+	// 	.then((okJSON) => {
+	// 		console.log(okJSON);
+	// 		console.log(okJSON.description);
+	// 		userPanel.show();
+	// 		registerPanel.hide();
+	// 	})
+	// 	.catch(fetcher.errorCatcher);
 
-	async function animate() {
-		function sleep(ms) {
-			return new Promise(resolve => setTimeout(resolve, ms));
-		}
-		const hexElement = hex.el;
-		const hexTitleElement = hexElement.querySelector(".hex__title");
-		const hexMottoElement = hexElement.querySelector(".hex__motto");
-		const hexButtonsElement = hexElement.querySelector(".hex__buttons");
-		const registerPanelElement = registerPanel.el;
-		const userPanelElement = userPanel.el;
-
-		hexElement.style.opacity = "0";
-		hexTitleElement.style.opacity = "0";
-		hexMottoElement.style.opacity = "0";
-		hexButtonsElement.style.opacity = "0";
-		registerPanelElement.style.opacity = "0";
-		userPanelElement.style.opacity = "0";
-
-		for (let i = 0; i < 1; i += 0.01) {
-			await sleep(25);
-			hexElement.style.opacity = i.toString();
-			hexTitleElement.style.opacity = i.toString();
-		}
-		for (let i = 0; i < 1; i += 0.01) {
-			await sleep(25);
-			hexMottoElement.style.opacity = i.toString();
-		}
-		for (let i = 0; i < 1; i += 0.01) {
-			await sleep(25);
-			registerPanelElement.style.opacity = i.toString();
-			userPanelElement.style.opacity = i.toString();
-			hexButtonsElement.style.opacity = i.toString();
-		}
-	}
-	animate();
+	// async function animate() {
+	// 	function sleep(ms) {
+	// 		return new Promise(resolve => setTimeout(resolve, ms));
+	// 	}
+	// 	const hexElement = hex.el;
+	// 	const hexTitleElement = hexElement.querySelector(".hex__title");
+	// 	const hexMottoElement = hexElement.querySelector(".hex__motto");
+	// 	const hexButtonsElement = hexElement.querySelector(".hex__buttons");
+	// 	const registerPanelElement = registerPanel.el;
+	// 	const userPanelElement = userPanel.el;
+    //
+	// 	hexElement.style.opacity = "0";
+	// 	hexTitleElement.style.opacity = "0";
+	// 	hexMottoElement.style.opacity = "0";
+	// 	hexButtonsElement.style.opacity = "0";
+	// 	registerPanelElement.style.opacity = "0";
+	// 	userPanelElement.style.opacity = "0";
+    //
+	// 	for (let i = 0; i < 1; i += 0.01) {
+	// 		// await sleep(25);
+	// 		hexElement.style.opacity = i.toString();
+	// 		hexTitleElement.style.opacity = i.toString();
+	// 	}
+	// 	for (let i = 0; i < 1; i += 0.01) {
+	// 		// await sleep(25);
+	// 		hexMottoElement.style.opacity = i.toString();
+	// 	}
+	// 	for (let i = 0; i < 1; i += 0.01) {
+	// 		// await sleep(25);
+	// 		registerPanelElement.style.opacity = i.toString();
+	// 		userPanelElement.style.opacity = i.toString();
+	// 		hexButtonsElement.style.opacity = i.toString();
+	// 	}
+	// }
+	// animate();
 })();

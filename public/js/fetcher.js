@@ -18,7 +18,7 @@
 			};
 		}
 
-        fetch(path, method, data) {
+		fetch(path, method, data) {
 			const options = this.options;
 			const host = this.host;
 			options.method = method;
