@@ -103,8 +103,7 @@
 	};
 	const game = new Game(gameData);
 	pageSingleplayer.appendChild(game.el);
-	console.log(pageSingleplayer.childNodes);
-	hex.singleplayer.on("click", GameStart);
+	hex.singleplayer.on("click", GameProcess);
 
 	// Register panel buttons
 	function registerPanelClickDecorator(object) {

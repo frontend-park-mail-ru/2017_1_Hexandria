@@ -25,6 +25,7 @@ const GameStart = function () {
 
 	init();
 	animate();
+	console.log("====================================OOO");
 
 
     // - Functions -
@@ -216,5 +217,7 @@ const GameStart = function () {
 
 		time += deltaTime;
 	}
+
+	return game;
 };
 
