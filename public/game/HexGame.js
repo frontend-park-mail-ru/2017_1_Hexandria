@@ -12,7 +12,7 @@ class HexGame extends THREE.Mesh {
         const _hexagonShape = new THREE.Shape();
         let x = (2 * _hexagonBeta + 0.01) * i;
         let y = (3 * _hexagonAlpha + 0.01) * j;
-        if (j % 2 === 0) {
+        if(j % 2 === 0) {
             x += _hexagonBeta + 0.01;
         }
         _hexagonShape.moveTo(0.0, 2.0 * _hexagonAlpha);

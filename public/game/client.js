@@ -121,13 +121,7 @@ const GameStart = function () {
 		});
 		scene.add(ground);
 
-        // let axisHelper = new THREE.AxisHelper(1);
-        // pos.set(0.0, 0.0, 0.01);
-        // axisHelper.position.copy(pos);
-        // scene.add(axisHelper);
-
-		game = new Hexandria(scene);
-		game.setMap(5, 10);
+		game = new MapGame(scene, 5, 10);
 	}
 
 	function createParalellepiped(sx, sy, sz, mass, pos, quat, material) {
@@ -176,7 +170,7 @@ const GameStart = function () {
 		mouseCoordinates();
 
 		raycaster.setFromCamera(mouse, camera);
-		const intersects = raycaster.intersectObjects(scene.children);
+		const intersects = raycaster.intersectObjects(game.scene.children);
 
 		game.handleHighlight(intersects);
 	}
@@ -188,7 +182,7 @@ const GameStart = function () {
 			mouseCoordinates();
 
 			raycaster.setFromCamera(mouse, camera);
-			const intersects = raycaster.intersectObjects(scene.children);
+			const intersects = raycaster.intersectObjects(game.scene.children);
 
 			game.handleSelect(intersects);
 		}
@@ -218,7 +212,7 @@ const GameStart = function () {
 
 		controls.update(deltaTime);
 
-		renderer.render(scene, camera);
+		renderer.render(game.scene, camera);
 
 		time += deltaTime;
 	}
