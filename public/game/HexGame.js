@@ -33,9 +33,9 @@ class HexGame extends THREE.Mesh {
         this.y = j;
         this.highlighted = false;
         this.selected = false;
-        this.unit = null;
         this.hasCapital = false;
         this.hasTown = false;
+        this.hasUnit = false;
         this.scene = scene;
     }
 
@@ -68,12 +68,11 @@ class HexGame extends THREE.Mesh {
         // this.material.emissive.setHex(_selected.currentHex);
     }
 
-    createUnit() {
-        const geometry = new THREE.SphereGeometry(0.3, 32, 32);
-        const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-        this.unit = new THREE.Mesh(geometry, material);
-        this.unit.position.copy(this.position);
-        this.scene.add(this.unit);
+    createUnit(owner) {
+        this.hasUnit = true;
+        this.unit = new UnitGame(owner);
+        this.unit.object.position.copy(this.position);
+        this.scene.add(this.unit.object);
     }
 
     createCapital(owner) {
@@ -86,10 +85,6 @@ class HexGame extends THREE.Mesh {
     removeUnit() {
         this.scene.remove(this.unit);
         this.unit = null;
-    }
-
-    hasUnit() {
-        return !!this.unit;
     }
 
     moveUnit(destinationHex) {

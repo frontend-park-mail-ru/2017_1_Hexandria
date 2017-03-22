@@ -111,4 +111,8 @@ class MapGame {
     createCapital(owner, x, y) {
         this.fields[x][y].createCapital(owner);
     }
+
+    createUnit(owner, x, y) {
+        this.fields[x][y].createUnit(owner);
+    }
 }

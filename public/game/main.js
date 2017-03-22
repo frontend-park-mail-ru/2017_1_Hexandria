@@ -6,7 +6,10 @@ const GameProcess = function() {
     let player1 = new PlayerGame("Player 1", 0xff0000);
     let player2 = new PlayerGame("Player 2", 0x0000ff);
 
-    map.createCapital(player1, 3, 8);
-    map.createCapital(player2, 1, 1);
+    map.createCapital(player1, 4, 9);
+    map.createCapital(player2, 0, 0);
+
+    map.createUnit(player1, 1, 1);
+    map.createUnit(player2, 3, 8);
 };
 
