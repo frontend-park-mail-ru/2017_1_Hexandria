@@ -1,25 +1,17 @@
 "use strict";
 
 const Hexandria = function (scene) {
-    // public
-	this.testVariable = 0;
-
-	this.testFunction = function () {
-		console.log("testFunction");
-	};
 
 	this.setMap = function (sizeX, sizeY) {
 		_fieldX = sizeX;
 		_fieldY = sizeY;
 		console.log(`setMap: ${_fieldX} ${_fieldY}`);
 
-		let posX;
-		let posY;
 		for (let i = 0; i < _fieldX; i++) {
 			_field[i] = [];
 			for (let j = 0; j < _fieldY; j++) {
-				posX = (2 * _hexagonBeta + 0.01) * i;
-				posY = (3 * _hexagonAlpha + 0.01) * j;
+                let posX = (2 * _hexagonBeta + 0.01) * i;
+                let posY = (3 * _hexagonAlpha + 0.01) * j;
 				if (j % 2 === 0) {
 					posX += _hexagonBeta + 0.01;
 				}
@@ -30,11 +22,6 @@ const Hexandria = function (scene) {
 			}
 		}
 		_field[0][0].colorize(_fieldWater);
-	};
-
-	this.setRandomColor = function () {
-		_field[0][0].colorize(_fieldWater);
-		_field[1][0].colorize(_fieldRock);
 	};
 
 	this.handleHighlight = function (intersects) {
@@ -190,11 +177,6 @@ const Hexandria = function (scene) {
 			this.currentHex = this.material.emissive.getHex();
 			this.material.emissive.setHex(_highlightedColor);
 			_highlighted = this;
-            // for i in [this.x - 3, this.x + 3] {
-            //     for j in [this.y - 3, this.y + 3] {
-            //         scene[i][j].highlight();
-            //     }
-            // }
 		}
 
 		unhighlight() {
@@ -238,4 +220,5 @@ const Hexandria = function (scene) {
 
 		}
     }
+
 };

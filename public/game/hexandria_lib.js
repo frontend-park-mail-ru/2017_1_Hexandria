@@ -12,9 +12,5 @@ const HexandriaLib = (function () {
             mesh.scale.set(s, s, s);
             return mesh;
         },
-
-        test () {
-            return "test";
-        },
     };
 })();

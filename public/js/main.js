@@ -294,5 +294,5 @@
 			hexButtonsElement.style.opacity = i.toString();
 		}
 	}
-	animate();
+	// animate();
 })();

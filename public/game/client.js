@@ -216,8 +216,6 @@ const GameStart = function () {
 	function render() {
 		const deltaTime = clock.getDelta();
 
-		game.setRandomColor();
-
 		controls.update(deltaTime);
 
 		renderer.render(scene, camera);
