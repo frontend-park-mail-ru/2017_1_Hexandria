@@ -10,18 +10,10 @@ const Hexandria = function (scene) {
 		for (let i = 0; i < _fieldX; i++) {
 			_field[i] = [];
 			for (let j = 0; j < _fieldY; j++) {
-                let posX = (2 * _hexagonBeta + 0.01) * i;
-                let posY = (3 * _hexagonAlpha + 0.01) * j;
-				if (j % 2 === 0) {
-					posX += _hexagonBeta + 0.01;
-				}
-
-				_field[i][j] = new Hex(_fieldGrass, posX, posY, 0.2, i, j);
-
+				_field[i][j] = new Hex(_fieldGrass, 0.2, i, j);
 				_scene.add(_field[i][j]);
 			}
 		}
-		_field[0][0].colorize(_fieldWater);
 	};
 
 	this.handleHighlight = function (intersects) {
@@ -138,11 +130,16 @@ const Hexandria = function (scene) {
 
 	class Hex extends THREE.Mesh {
 
-		constructor(color, x, y, z, i, j) {
+		constructor(color, z, i, j) {
 			const _hexagonDiameter = 1;
 			const _hexagonAlpha = _hexagonDiameter / 4.0;
 			const _hexagonBeta = Math.sqrt(3) * _hexagonAlpha;
 			const _hexagonShape = new THREE.Shape();
+            let x = (2 * _hexagonBeta + 0.01) * i;
+            let y = (3 * _hexagonAlpha + 0.01) * j;
+            if (j % 2 === 0) {
+                x += _hexagonBeta + 0.01;
+            }
 			_hexagonShape.moveTo(0.0, 2.0 * _hexagonAlpha);
 			_hexagonShape.lineTo(_hexagonBeta, _hexagonAlpha);
 			_hexagonShape.lineTo(_hexagonBeta, -_hexagonAlpha);
@@ -152,7 +149,6 @@ const Hexandria = function (scene) {
 			_hexagonShape.lineTo(0.0, 2.0 * _hexagonAlpha);
 
 			const geometry = new THREE.ShapeBufferGeometry(_hexagonShape);
-            // let mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({color: color, side: THREE.DoubleSide}));
 			super(geometry, new THREE.MeshPhongMaterial({ color, side: THREE.DoubleSide }));
 			this.position.set(x, y, z);
 			this.rotation.set(0, 0, 0);
