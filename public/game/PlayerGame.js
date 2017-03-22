@@ -1,7 +1,8 @@
 "use strict";
 
 class PlayerGame {
-    constructor(name) {
+    constructor(name, color) {
         this.name = name;
+        this.color = color;
     }
 }

@@ -34,6 +34,8 @@ class HexGame extends THREE.Mesh {
         this.highlighted = false;
         this.selected = false;
         this.unit = null;
+        this.hasCapital = false;
+        this.hasTown = false;
         this.scene = scene;
     }
 
@@ -72,6 +74,13 @@ class HexGame extends THREE.Mesh {
         this.unit = new THREE.Mesh(geometry, material);
         this.unit.position.copy(this.position);
         this.scene.add(this.unit);
+    }
+
+    createCapital(owner) {
+        this.hasCapital = true;
+        this.capital = new CapitalGame(owner);
+        this.capital.object.position.copy(this.position);
+        this.scene.add(this.capital.object);
     }
 
     removeUnit() {

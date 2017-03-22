@@ -19,9 +19,7 @@ class MapGame {
 
         for (let i = 0; i < sizeX; i++) {
             for (let j = 0; j < sizeY; j++) {
-                console.log("BEFORE=============");
                 this.fields[i][j] = new HexGame(this.scene, _fieldGrass, 0.2, i, j);
-                console.log(this.fields[i][j]);
                 this.scene.add(this.fields[i][j]);
             }
         }
@@ -108,5 +106,9 @@ class MapGame {
             }
             this._selected = null;
         }
+    }
+
+    createCapital(owner, x, y) {
+        this.fields[x][y].createCapital(owner);
     }
 }
