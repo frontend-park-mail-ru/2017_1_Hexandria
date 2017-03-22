@@ -1,30 +1,30 @@
 (function() {
-	"use strict";
+    "use strict";
 
-	class Game {
+    class Game {
         /**
          * Game constructor
          * @param {HTMLElement} el
          */
-		constructor({ el }) {
-			this.el = el;
-			this.render();
-		}
+        constructor({ el }) {
+            this.el = el;
+            this.render();
+        }
 
         /**
          * DOM update
          */
-		render() {
-			this.updateHtml();
-		}
+        render() {
+            this.updateHtml();
+        }
 
         /**
          * Update HTMl
          */
-		updateHtml() {
-			this.el.innerHTML = game_template();
-		}
+        updateHtml() {
+            this.el.innerHTML = game_template();
+        }
     }
 
-	window.Game = Game;
+    window.Game = Game;
 })();

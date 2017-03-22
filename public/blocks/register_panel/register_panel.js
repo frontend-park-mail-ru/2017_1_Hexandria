@@ -1,53 +1,53 @@
 (function() {
-	"use strict";
+    "use strict";
 
-	const Button = window.Button;
+    const Button = window.Button;
 
-	class RegisterPanel {
-		/**
-		 * Register panel constructor
-		 * @param {HTMLElement} el
-		 * @param {Object[]} data
-		 */
-		constructor({ el, data = [] }) {
-			this.data = data;
-			this.el = el;
-			this.render();
-		}
+    class RegisterPanel {
+        /**
+         * Register panel constructor
+         * @param {HTMLElement} el
+         * @param {Object[]} data
+         */
+        constructor({ el, data = [] }) {
+            this.data = data;
+            this.el = el;
+            this.render();
+        }
 
-		hide() {
-			this.el.style.visibility = "hidden";
-		}
+        hide() {
+            this.el.style.visibility = "hidden";
+        }
 
-		show() {
-			this.el.style.visibility = "visible";
-		}
+        show() {
+            this.el.style.visibility = "visible";
+        }
 
-		/**
-		 * DOM update
-		 */
-		render() {
-			this.updateHtml();
-			this.installControls();
-		}
+        /**
+         * DOM update
+         */
+        render() {
+            this.updateHtml();
+            this.installControls();
+        }
 
-		/**
-		 * Update HTML
-		 */
-		updateHtml() {
-			this.el.setAttribute("class", "register_panel");
-		}
+        /**
+         * Update HTML
+         */
+        updateHtml() {
+            this.el.setAttribute("class", "register_panel");
+        }
 
-		/**
-		 * Install register panel buttons
-		 */
-		installControls() {
-			this.login = new Button(this.data.login).render();
-			this.signup = new Button(this.data.signup).render();
-			this.el.appendChild(this.login.el);
-			this.el.appendChild(this.signup.el);
-		}
+        /**
+         * Install register panel buttons
+         */
+        installControls() {
+            this.login = new Button(this.data.login).render();
+            this.signup = new Button(this.data.signup).render();
+            this.el.appendChild(this.login.el);
+            this.el.appendChild(this.signup.el);
+        }
     }
 
-	window.RegisterPanel = RegisterPanel;
+    window.RegisterPanel = RegisterPanel;
 })();

@@ -13,7 +13,7 @@ module.exports = {
         "no-extra-semi": 1,
         "no-undef": 1, // or 0?
         "strict": [0, "global"],
-        "no-tabs": 0,
+        "no-tabs": 1,
         "func-names": 0,
         "no-console": 1, // or 0?
 
@@ -29,7 +29,7 @@ module.exports = {
         "default-case": 0,
         "class-methods-use-this": 0,
 
-        "indent": ["error", "tab"],
+        "indent": ["error", 4],
         "no-unused-vars": 0,
         "wrap-iife": 0,
         "space-before-function-paren": 0,
