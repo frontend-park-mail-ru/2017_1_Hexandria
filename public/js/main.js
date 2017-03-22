@@ -1,6 +1,9 @@
 "use strict";
 
 (function() {
+
+    const Router = window.Router;
+
 	// Pages
 	const pageIndex = document.getElementById("index");
 	const pageSingleplayer = document.getElementById("singleplayer");
@@ -105,7 +108,7 @@
 	const game = new Game(gameData);
 	pageSingleplayer.appendChild(game.el);
 	console.log(pageSingleplayer.childNodes);
-	hex.singleplayer.on("click", GameStart);
+	// hex.singleplayer.on("click", GameStart); // TODO create and delete game in View
 
 	// Register panel buttons
 	function registerPanelClickDecorator(object) {
@@ -130,7 +133,7 @@
 			pageIndex.hidden = false;
 			this.parentElement.hidden = true;
 		};*/
-		console.log("backButtonClickDecorator:", pageIndex, this.parentElement);
+		console.log("backButtonClickDecorator:", pageIndex/*, this.parentElement*/);
 	}
 	pageSingleplayer.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
 	pageMultiplayer.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
@@ -246,16 +249,29 @@
 	userPanel.hide();
 
 	pageIndex.hidden = false;
-
-    console.log("pageSingleplayer: ", pageSingleplayer.hidden);
 	pageSingleplayer.hidden = true;
-	console.log("pageSingleplayer: ", pageSingleplayer.hidden);
-
 	pageMultiplayer.hidden = true;
 	pageAbout.hidden = true;
 	pageScoreboard.hidden = true;
 	pageLogin.hidden = true;
 	pageSignup.hidden = true;
+
+
+
+
+    window._router = (new Router)
+        /*.addRoute('/menu', MainView)
+        .addRoute('/game', GameView)
+        .addRoute('/sgame', SingleGameView)
+        .addRoute('/score', ScoreBoardView)
+        .addRoute('/signup', SignupView)
+        .addRoute('/', LoginView)*/
+        .start();
+
+
+
+
+
 
 	// Autorization check on startup
 	// fetcher.fetch("/api/user", "GET")
