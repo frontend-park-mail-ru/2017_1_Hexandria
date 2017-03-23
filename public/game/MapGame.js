@@ -15,11 +15,12 @@ class MapGame {
         this.sizeY = sizeY;
         this.fields = [...Array(sizeX).keys()].map(i => Array(sizeY));
         this._highlighted = null;
-        this._selected = null;
+        this._selected = [];
+        this.unitSelected = false;
 
         for (let i = 0; i < sizeX; i++) {
             for (let j = 0; j < sizeY; j++) {
-                this.fields[i][j] = new HexGame(this.scene, _fieldGrass, 0.2, i, j);
+                this.fields[i][j] = new HexGame(this.scene, _fieldGrass, i, j, 0.2);
                 this.scene.add(this.fields[i][j]);
             }
         }
@@ -40,23 +41,24 @@ class MapGame {
         if (intersects.length > 1) {
             const obj = intersects[intersects.length - 2].object;
             if (obj !== this._highlighted) { //  && obj != _selected
-                if (obj !== this._selected) {
-                    if (this._highlighted) {
+                if (this._highlighted) {
+                    if(this._selected.indexOf(this._highlighted) == -1) {
                         this._highlighted.unhighlight();
-                        this._highlighted = null;
                     }
-                    if (this.find(obj)) {
-                        obj.highlight();
-                        this._highlighted = obj;
-                    }
-                } else if (this._highlighted) {
-                    this._highlighted.unhighlight();
                     this._highlighted = null;
+                }
+                if (this.find(obj)) {
+                    if(this._selected.indexOf(obj) == -1) {
+                        obj.highlight();
+                    }
+                    this._highlighted = obj;
                 }
             }
         } else {
             if (this._highlighted) {
-                this._highlighted.unhighlight();
+                if(this._selected.indexOf(this._highlighted) == -1) {
+                    this._highlighted.unhighlight();
+                }
                 this._highlighted = null;
             }
             this._highlighted = null;
@@ -66,45 +68,26 @@ class MapGame {
     handleSelect(intersects) {
         console.log(intersects);
         if (intersects.length > 1) {
-            const obj = intersects[intersects.length - 2].object;
-            if (obj !== this._selected) {
-                if (obj === this._highlighted) {
-                    console.log("SELECT");
-                    if (this._selected) {
-                        this._selected.unselect();
-                        this._highlighted = this._selected;
-                        this._selected = null;
-                    }
-
-                    obj.select();
-                    this._selected = obj;
-                    if (obj.hasUnit()) {
-                        obj.removeUnit();
-                    } else {
-                        obj.createUnit();
-                    }
-                } else {
-                    // out of map
-                    console.log("error: selected but not highlighted");
+            const hex = intersects[intersects.length - 2].object;
+            if (this._selected.indexOf(hex) == -1) {
+                if(hex.hasUnit) {
+                    this.selectUnit(hex);
                 }
             } else {
                 // if second click on the selected
-                console.log("UNSELECT");
-                this._selected.removeUnit();
-                this._selected.unselect();
-                this._highlighted = this._selected;
-                this._selected = null;
-
-                obj.highlight();
+                if (this._selected.length > 0) {
+                    this._selected.forEach(el => el.unselect() );
+                    this._selected = [];
+                }
+                this._highlighted = hex;
+                hex.highlight();
             }
         } else {
-            if (this._selected) {
-                this._selected.removeUnit();
-                this._selected.unselect();
-                this._highlighted = this._selected;
-                this._selected = null;
+            console.log("out of map");
+            if (this._selected.length > 0) {
+                this._selected.forEach(el => el.unselect() );
+                this._selected = [];
             }
-            this._selected = null;
         }
     }
 
@@ -114,5 +97,11 @@ class MapGame {
 
     createUnit(owner, x, y) {
         this.fields[x][y].createUnit(owner);
+    }
+
+    selectUnit(hex) {
+        this.unitSelected = true;
+        hex.select();
+        this._selected.push(hex);
     }
 }
