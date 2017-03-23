@@ -9,7 +9,7 @@ const GameProcess = function() {
     map.createCapital(player1, 4, 9);
     map.createCapital(player2, 0, 0);
 
-    map.createUnit(player1, 1, 1);
-    map.createUnit(player2, 3, 8);
+    map.createUnit(player1, 3, 8);
+    map.createUnit(player2, 1, 1);
 };
 

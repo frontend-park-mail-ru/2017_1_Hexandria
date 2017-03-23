@@ -100,18 +100,33 @@ class MapGame {
 
     selectUnit(hex) {
         this.unitSelected = hex;
-        for(let i = hex.x - 1; i <= hex.x + 1; i++) {
-            for(let j = hex.y - 1; j <= hex.y + 1; j++ ){
-                this.fields[i][j].select();
-                this._selected.push(this.fields[i][j]);
-            }
+        for(let i = hex.x - 1; (i <= hex.x + 1) && (i >= 0) && (i <= this.sizeX); i++) {
+            this.fields[i][hex.y].select();
+            this._selected.push(this.fields[i][hex.y]);
         }
+        for(
+            let i = hex.x - Math.floor(hex.y % 2);
+            (i <= hex.x - Math.floor(hex.y % 2) + 1) && (i >= 0) && (i <= this.sizeX);
+            i++
+        ) {
+            this.fields[i][hex.y + 1].select();
+            this._selected.push(this.fields[i][hex.y + 1]);
+            this.fields[i][hex.y - 1].select();
+            this._selected.push(this.fields[i][hex.y - 1]);
+        }
+        // for(let i = hex.x - 1; (i <= hex.x + 1) && (i < this.sizeX) && (i >= 0); i++) {
+        //     for(let j = hex.y - 1; (j <= hex.y + 1) && (j < this.sizeY) && (j >= 0); j++ ){
+        //         this.fields[i][j].select();
+        //         this._selected.push(this.fields[i][j]);
+        //     }
+        // }
     }
 
     deselectUnit(hex) {
         this._selected.forEach(el => el.unselect() );
         this._selected = [];
         this._highlighted = hex;
+        this.unitSelected = null;
         hex.highlight();
     }
 
