@@ -16,7 +16,7 @@ class MapGame {
         this.fields = [...Array(sizeX).keys()].map(i => Array(sizeY));
         this._highlighted = null;
         this._selected = [];
-        this.unitSelected = false;
+        this.unitSelected = null;
 
         for (let i = 0; i < sizeX; i++) {
             for (let j = 0; j < sizeY; j++) {
@@ -70,17 +70,16 @@ class MapGame {
         if (intersects.length > 1) {
             const hex = intersects[intersects.length - 2].object;
             if (this._selected.indexOf(hex) == -1) {
+                // choose unit
                 if(hex.hasUnit) {
                     this.selectUnit(hex);
                 }
             } else {
-                // if second click on the selected
-                if (this._selected.length > 0) {
-                    this._selected.forEach(el => el.unselect() );
-                    this._selected = [];
+                if(hex.hasUnit) {
+                    this.deselectUnit(hex);
+                } else {
+                    this.moveUnit(this.unitSelected, hex);
                 }
-                this._highlighted = hex;
-                hex.highlight();
             }
         } else {
             console.log("out of map");
@@ -100,8 +99,27 @@ class MapGame {
     }
 
     selectUnit(hex) {
-        this.unitSelected = true;
-        hex.select();
-        this._selected.push(hex);
+        this.unitSelected = hex;
+        for(let i = hex.x - 1; i <= hex.x + 1; i++) {
+            for(let j = hex.y - 1; j <= hex.y + 1; j++ ){
+                this.fields[i][j].select();
+                this._selected.push(this.fields[i][j]);
+            }
+        }
+    }
+
+    deselectUnit(hex) {
+        this._selected.forEach(el => el.unselect() );
+        this._selected = [];
+        this._highlighted = hex;
+        hex.highlight();
+    }
+
+    moveUnit(fromHex, toHex) {
+        this.deselectUnit(fromHex);
+        toHex.createUnit(fromHex.unit.owner);
+        fromHex.removeUnit();
+        fromHex.unhighlight();
+        toHex.highlight();
     }
 }

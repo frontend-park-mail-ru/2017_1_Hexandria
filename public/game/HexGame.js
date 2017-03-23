@@ -85,7 +85,8 @@ class HexGame extends THREE.Mesh {
     }
 
     removeUnit() {
-        this.scene.remove(this.unit);
+        this.hasUnit = false;
+        this.scene.remove(this.unit.object);
         this.unit = null;
     }
 
