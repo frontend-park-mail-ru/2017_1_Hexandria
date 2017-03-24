@@ -3,24 +3,24 @@
 
     const Router = window.Router;
 
-    const SingleView = window.SingleView;
-    const MultiView = window.MultiView;
+    const SingleplayerView = window.SingleplayerView;
+    const MultiplayerView = window.MultiplayerView;
     const AboutView = window.AboutView;
-    const ScoreView = window.ScoreView;
+    const ScoreboardView = window.ScoreboardView;
     const LoginView = window.LoginView;
     const SignupView = window.SignupView;
     const MainView = window.MainView;
 
 
     window.router = (new Router)
-        // .addRoute('/single', SingleView)
-        // .addRoute('/multi', MultiView)
+        // .addRoute('/singleplayer', SingleplayerView)
+        // .addRoute('/multiplayer', MultiplayerView)
         // .addRoute('/about', AboutView)
-        // .addRoute('/score', ScoreView)
+        // .addRoute('/scoreboard', ScoreboardView)
         .addRoute('/login', LoginView)
-        // .addRoute('/signup', SignupView)
+        .addRoute('/signup', SignupView)
         .addRoute('/', MainView)
-        .start({});
+        .start();
 
 
 
