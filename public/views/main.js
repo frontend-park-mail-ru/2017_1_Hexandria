@@ -61,6 +61,16 @@
                     },
                 },
             });
+            registerPanel.login.el.addEventListener("click", event => {
+                console.log("login click");
+                event.preventDefault();
+                this.router.go('/login');
+            });
+            registerPanel.signup.el.addEventListener("click", event => {
+                console.log("signup click");
+                event.preventDefault();
+                this.router.go('/signup');
+            });
             pageIndex.appendChild(registerPanel.el);
 
             /*const userPanel = new UserPanel({
