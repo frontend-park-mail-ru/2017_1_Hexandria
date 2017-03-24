@@ -1,14 +1,14 @@
-(function () {
+;(function () {
     "use strict";
 
     const Route = window.Route;
 
     /**
-     * Класс роутера
+     * Router class
      */
     class Router {
         /**
-         * Создаёт новый роутер или возвращает уже созданный инстанс
+         * Singleton constructor
          */
         constructor() {
             if (Router.__instance) {
@@ -24,10 +24,10 @@
         }
 
         /**
-         * Добавляет новый Route в роутер
-         * @param {string} pathname - Шаблон пути
-         * @param {View} view - Класс конкретной View
-         * @param {Object} [options={}] - Дополнительные параметры, которые будут переданы во view при её создании и инициализации
+         * Add new Route in Router
+         * @param {string} pathname
+         * @param {View} view
+         * @param {Object} [options={}]
          * @returns {Router}
          */
         addRoute(pathname, view, options = {}) {
@@ -38,8 +38,8 @@
         }
 
         /**
-         * Запускает роутер и переходит по текущему пути в приложении
-         * @param {Object} [state={}] - Объект state, который передаётся в первый вызов onroute
+         * Start Router
+         * @param {Object} [state={}]
          */
         start(state = {}) {
             this.startflag = true;
@@ -55,12 +55,16 @@
         }
 
         /**
-         * Функция, вызываемая при переходе на новый роут в приложении
-         * @param {string} pathname - Путь, по которому происходит переход
-         * @param {Object} [state={}] - Объект state, который передаётся в вызов метода navigate
+         * Route to new path
+         * @param {string} pathname
+         * @param {Object} [state={}]
          */
         onroute(pathname, state = {}) {
-            /* let route = this.routes.find(route => route.match(pathname));
+            console.log("onroute:", pathname);
+            let route = this.routes.find(route => route.match(pathname));
+
+            console.log(route);
+
             if (!route) {
                 return;
             }
@@ -70,24 +74,25 @@
             }
 
             this.activeRoute = route;
-            this.activeRoute.navigate(pathname, state);*/
+            this.activeRoute.navigate(pathname, state);
         }
 
-        // /**
-        //  * Программный переход на новый путь
-        //  * @param {string} pathname
-        //  * @param {Object} [state={}]
-        //  */
-        // go(pathname, state = {}) {
-        //     if (window.location.pathname === pathname) {
-        //         return;
-        //     }
-        //     this.history.pushState(state, "", pathname);
-        //     if(this.startflag){
-        //         this.onroute(pathname, state);
-        //     }
-        // }
-        //
+        /**
+         * Go to new path
+         * @param {string} pathname
+         * @param {Object} [state={}]
+         */
+        go(pathname, state = {}) {
+            console.log("pathname:", pathname);
+            if (window.location.pathname === pathname) {
+                return;
+            }
+            this.history.pushState(state, "", pathname);
+            if(this.startflag){
+                this.onroute(pathname, state);
+            }
+        }
+
         // /**
         //  * Custom realization History API
         //  * @param {Object} history - должен предоставлять реализацию методов back(), forward(), pushState()

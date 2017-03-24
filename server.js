@@ -2,20 +2,24 @@
 
 let express = require('express');
 let app = express();
-const staticPath = __dirname + '/public';
-
 app.disable('x-powered-by');
+
+let path = require('path');
 
 app.use(function(req, res, next){
     console.log('%s %s', req.method, req.url);
     next();
 });
 
-app.use(express.static(staticPath));
 app.use('/lib', express.static('node_modules'));
 
-
 app.use('/', express.static('public'));
+
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+
 
 
 const port = process.env.PORT || 3000;

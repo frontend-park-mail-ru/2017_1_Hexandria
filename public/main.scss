@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
-@import "blocks/button/button.scss";
-@import "blocks/input/input.scss";
-@import "blocks/game/game.scss";
-@import "blocks/user_panel/user_panel.scss";
-@import "blocks/register_panel/register_panel.scss";
-@import "blocks/title/title.scss";
-@import "blocks/hex/hex.scss";
-@import "blocks/form/form.scss";
+@import "components/button/button.scss";
+@import "components/input/input.scss";
+@import "components/game/game.scss";
+@import "components/user_panel/user_panel.scss";
+@import "components/register_panel/register_panel.scss";
+@import "components/title/title.scss";
+@import "components/hex/hex.scss";
+@import "components/form/form.scss";
 
 body {
   font-family: 'Lato', sans-serif;
