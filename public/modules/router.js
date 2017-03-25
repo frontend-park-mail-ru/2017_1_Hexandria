@@ -60,10 +60,9 @@
          * @param {Object} [state={}]
          */
         onroute(pathname, state = {}) {
-            console.log("onroute:", pathname);
             let route = this.routes.find(route => route.match(pathname));
 
-            console.log(route);
+            console.log("onroute:", pathname, route);
 
             if (!route) {
                 return;

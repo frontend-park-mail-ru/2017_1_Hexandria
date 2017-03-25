@@ -40,6 +40,7 @@
          * @param {Object} [options={}]
          */
         resume(options = {}) {
+            console.log("resume:", this);
             this.show();
         }
 

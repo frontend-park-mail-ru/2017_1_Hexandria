@@ -1,8 +1,6 @@
 ;(function () {
     "use strict";
 
-    const fetch = require("node-fetch");
-
     let Fetcher = (function() {
 
         class Fetcher {
@@ -22,15 +20,6 @@
                 };
             }
 
-            setCookie(cookie) {
-                if (cookie) {
-                    this.options.headers.Cookie = cookie[0];
-                }
-            }
-            dropCookie() {
-                options.headers.Cookie = null;
-            }
-
             fetch(path, method, data) {
                 console.log();
                 console.log();
@@ -45,11 +34,6 @@
                 } else {
                     options.body = null;
                 }
-                if (arguments.length >= 4) {
-                    options.headers.Cookie = arguments[3][0];
-                    //console.log("options.cookies", options.cookies);
-                }
-                console.log("opt:", options.headers);
 
                 return fetch(host + path, options)
                     .then((res) => {
@@ -77,12 +61,8 @@
                 } else {
                     options.body = null;
                 }
-                if (arguments.length >= 4) {
-                    options.headers.Cookie = arguments[3][0];
-                    // console.log("options.cookies", options.cookies);
-                }
 
-                return fetch(host + path, options)
+                return fetch(host + path, options);
             }
             errorCatcher(errorJSON) {
                 console.log(errorJSON);
@@ -141,7 +121,7 @@
             fetcher.fetch2(path_login, "POST", data)
                 .then((res) => {
                     expect(res.status).toBe(200);
-                    fetcher.setCookie(res.headers._headers['set-cookie']);
+                    //fetcher.setCookie(res.headers._headers['set-cookie']);
                     return res.json();
                 })
                 .then((json) => {

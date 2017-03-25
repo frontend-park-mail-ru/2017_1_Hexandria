@@ -8,7 +8,7 @@
     "startup": "node server.js",
     "sass": "./node_modules/.bin/node-sass public/main.scss public/main.css",
     "eslint": "./node_modules/.bin/eslint --fix public",
-    "test": "jasmine-node tests/"
+    "karmaTest": "karma start"
   },
   "repository": {
     "type": "git",
@@ -27,17 +27,20 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2017_1_Hexandria#readme",
   "dependencies": {
     "express": "^4.14.1",
-    "three": "^0.84.0",
-    "node-sass": "^3.13.0"
+    "node-sass": "^3.13.0",
+    "three": "^0.84.0"
   },
   "devDependencies": {
     "eslint": "^3.17.0",
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-import": "^2.2.0",
-    "jasmine-node": "^1.14.5",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
     "node-fetch": "^1.6.3",
+    "node-sass": "^3.13.0",
     "stylelint": "^7.9.0",
-    "stylelint-config-standard": "^16.0.0",
-    "node-sass": "^3.13.0"
+    "stylelint-config-standard": "^16.0.0"
   }
 }
