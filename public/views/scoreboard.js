@@ -10,15 +10,16 @@
 
             const pageScoreboard = document.getElementById("scoreboard");
 
-            // TODO in options
-            const backButtonData = {
+            const backButton = new Button({
                 text: "Back",
                 attrs: {
                     class: "back-button",
                 },
-            };
-            pageScoreboard.appendChild(new Button(backButtonData).render().el);
-            // end TODO in options
+                events: {
+                    click: (event) => {(new Router()).go("/")}
+                },
+            });
+            pageScoreboard.appendChild(backButton.render().el);
 
             this._el = pageScoreboard;
             this.hide();

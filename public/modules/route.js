@@ -30,7 +30,6 @@
          * @returns {boolean}
          */
         match(pathname) {
-            // console.log("match:", pathname, this.pathname, !!this.regex(pathname));
             return !!this.regex(pathname);
         }
 
@@ -40,7 +39,6 @@
          * @param {Object} [state={}]
          */
         navigate(pathname, state = {}) {
-            console.log("navigate:", pathname);
             state = state || {};
             const keys = this.regex(pathname);
             if (!this._view) {

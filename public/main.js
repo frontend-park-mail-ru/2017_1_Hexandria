@@ -11,12 +11,11 @@
     const SignupView = window.SignupView;
     const MainView = window.MainView;
 
-
-    window.router = (new Router())
-        // .addRoute("/singleplayer", SingleplayerView)
-        // .addRoute("/multiplayer", MultiplayerView)
-        // .addRoute("/about", AboutView)
-        // .addRoute("/scoreboard", ScoreboardView)
+    (new Router())
+        .addRoute("/singleplayer", SingleplayerView)
+        .addRoute("/multiplayer", MultiplayerView)
+        .addRoute("/about", AboutView)
+        .addRoute("/scoreboard", ScoreboardView)
         .addRoute("/login", LoginView)
         .addRoute("/signup", SignupView)
         .addRoute("/", MainView)

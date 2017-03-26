@@ -44,6 +44,7 @@
         installControls() {
             this.login = new Button(this.data.login).render();
             this.signup = new Button(this.data.signup).render();
+
             this.el.appendChild(this.login.el);
             this.el.appendChild(this.signup.el);
         }

@@ -10,16 +10,16 @@
 
             const pageSingleplayer = document.getElementById("singleplayer");
 
-            // TODO in options
-            const backButtonData = {
+            const backButton = new Button({
                 text: "Back",
                 attrs: {
                     class: "back-button",
                 },
-            };
-            pageSingleplayer.appendChild(new Button(backButtonData).render().el);
-            // end TODO in options
-
+                events: {
+                    click: (event) => {(new Router()).go("/")}
+                },
+            });
+            pageSingleplayer.appendChild(backButton.render().el);
 
             this._el = pageSingleplayer;
             this.hide();

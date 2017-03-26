@@ -33,7 +33,7 @@
             });
         });
 
-        describe("Шаблон пути с переменной частью: pathToRegex(/user/:id)", function () {
+        xdescribe("Шаблон пути с переменной частью: pathToRegex(/user/:id)", function () {
             beforeEach(function () {
                 this.func = pathToRegex("/user/:id")
             });
@@ -72,7 +72,7 @@
 
         });
 
-        describe("Шаблон пути с несколькими переменными частями: pathToRegex(/user/:id/post/:key)", function () {
+        xdescribe("Шаблон пути с несколькими переменными частями: pathToRegex(/user/:id/post/:key)", function () {
             beforeEach(function () {
                 this.func = pathToRegex("/user/:id/post/:key")
             });

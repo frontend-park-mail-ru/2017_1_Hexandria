@@ -10,18 +10,16 @@
 
             const pageLogin = document.getElementById("login");
 
-            // TODO in options
-            // pageLogin.appendChild(new Title(titleData("Login")).el);
-
-            // pageLogin.appendChild(new Button(backButtonData).render().on("click", backButtonClickDecorator()).el);
             const backButtonData = {
                 text: "Back",
                 attrs: {
                     class: "back-button",
                 },
+                events: {
+                    click: (event) => {(new Router()).go("/")}
+                },
             };
             pageLogin.appendChild(new Button(backButtonData).render().el);
-            // end TODO in options
 
 
             const loginForm = new Form({

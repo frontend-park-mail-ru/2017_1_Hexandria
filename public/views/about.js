@@ -10,15 +10,16 @@
 
             const pageAbout = document.getElementById("about");
 
-            // TODO in options
-            const backButtonData = {
+            const backButton = new Button({
                 text: "Back",
                 attrs: {
                     class: "back-button",
                 },
-            };
-            pageAbout.appendChild(new Button(backButtonData).render().el);
-            // end TODO in options
+                events: {
+                    click: (event) => {(new Router()).go("/")}
+                },
+            });
+            pageAbout.appendChild(backButton.render().el);
 
             this._el = pageAbout;
             this.hide();

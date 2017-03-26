@@ -41,6 +41,7 @@
             this.multiplayer = new Button(this.controls.multiplayer).render();
             this.about = new Button(this.controls.about).render();
             this.scoreboard = new Button(this.controls.scoreboard).render();
+
             this.el.querySelector(".hex__buttons-main").appendChild(this.singleplayer.el);
             this.el.querySelector(".hex__buttons-main").appendChild(this.multiplayer.el);
             this.el.querySelector(".hex__buttons-minor").appendChild(this.about.el);

@@ -62,8 +62,6 @@
         onroute(pathname, state = {}) {
             const route = this.routes.find(route => route.match(pathname));
 
-            console.log("onroute:", pathname, route);
-
             if (!route) {
                 return;
             }
@@ -82,7 +80,6 @@
          * @param {Object} [state={}]
          */
         go(pathname, state = {}) {
-            console.log("pathname:", pathname);
             if (window.location.pathname === pathname) {
                 return;
             }

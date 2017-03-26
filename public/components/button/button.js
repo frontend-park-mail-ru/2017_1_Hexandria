@@ -8,23 +8,33 @@
          */
         constructor(options) {
             this.text = options.text;
-            this.attrs = options.attrs || [];
+            this.attrs = options.attrs || {};
+            this.events = options.events || {};
             this.el = document.createElement("button");
         }
 
         render() {
             this.el.innerHTML = this.text;
-            this.setAttrs(this.attrs);
+            this.setAttrs();
+            this.setEvents();
             return this;
         }
 
         /**
          * Set button attributes
-         * @param {Object} attrs
          */
-        setAttrs (attrs) {
-            Object.keys(attrs).forEach((name) => {
-                this.el.setAttribute(name, attrs[name]);
+        setAttrs() {
+            Object.keys(this.attrs).forEach((name) => {
+                this.el.setAttribute(name, this.attrs[name]);
+            });
+        }
+
+        /**
+         * Set button events
+         */
+        setEvents() {
+            Object.keys(this.events).forEach((name) => {
+                this.el.addEventListener(name, this.events[name]);
             });
         }
 
@@ -34,16 +44,6 @@
          */
         toString() {
             return this.el.outerHTML;
-        }
-
-        /**
-         * Adds event listener to button
-         * @param {string} type
-         * @param {function} callback
-         */
-        on (type, callback) {
-            this.el.addEventListener(type, callback);
-            return this;
         }
     }
 

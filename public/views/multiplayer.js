@@ -10,16 +10,16 @@
 
             const pageMultiplayer = document.getElementById("multiplayer");
 
-            // TODO in options
-            const backButtonData = {
+            const backButton = new Button({
                 text: "Back",
                 attrs: {
                     class: "back-button",
                 },
-            };
-            pageMultiplayer.appendChild(new Button(backButtonData).render().el);
-            // end TODO in options
-
+                events: {
+                    click: (event) => {(new Router()).go("/")}
+                },
+            });
+            pageMultiplayer.appendChild(backButton.render().el);
 
             this._el = pageMultiplayer;
             this.hide();

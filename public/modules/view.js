@@ -12,8 +12,11 @@
         constructor(options = {}) {
             if (options.createElement) {
                 this.tagName = options.tagName || "div";
-                this._el = document.createElement(this.tagName);
+
+            } else {
+                this.tagName = "div";
             }
+            this._el = document.createElement(this.tagName);
         }
 
         /**
@@ -40,7 +43,6 @@
          * @param {Object} [options={}]
          */
         resume(options = {}) {
-            console.log("resume:", this);
             this.show();
         }
 
