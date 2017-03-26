@@ -98,9 +98,9 @@
          * @param {Object} [attrs={}]
          */
         setAttrs(attrs = {}) {
-            Object.keys(attrs).forEach(name => {
+            Object.keys(attrs).forEach((name) => {
                 this._el.setAttribute(name, attrs[name]);
-            })
+            });
         }
 
         /**

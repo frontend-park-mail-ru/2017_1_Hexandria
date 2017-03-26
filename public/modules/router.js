@@ -60,7 +60,7 @@
          * @param {Object} [state={}]
          */
         onroute(pathname, state = {}) {
-            let route = this.routes.find(route => route.match(pathname));
+            const route = this.routes.find(route => route.match(pathname));
 
             console.log("onroute:", pathname, route);
 
@@ -87,7 +87,7 @@
                 return;
             }
             this.history.pushState(state, "", pathname);
-            if(this.startflag){
+            if (this.startflag) {
                 this.onroute(pathname, state);
             }
         }

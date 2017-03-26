@@ -16,7 +16,7 @@
         constructor(pathname, view, options = {}) {
             this.pathToRegex = window.pathToRegex;
 
-            this.id = "p" + id;
+            this.id = `p${id}`;
             id++;
             this.pathname = pathname;
             this.regex = this.pathToRegex(pathname);
@@ -30,7 +30,7 @@
          * @returns {boolean}
          */
         match(pathname) {
-            //console.log("match:", pathname, this.pathname, !!this.regex(pathname));
+            // console.log("match:", pathname, this.pathname, !!this.regex(pathname));
             return !!this.regex(pathname);
         }
 
@@ -42,9 +42,9 @@
         navigate(pathname, state = {}) {
             console.log("navigate:", pathname);
             state = state || {};
-            let keys = this.regex(pathname);
+            const keys = this.regex(pathname);
             if (!this._view) {
-                let view = new this.View(this.options);
+                const view = new this.View(this.options);
                 view.init(this.options);
                 view.setRouter(this.__router);
                 this._view = view;

@@ -61,19 +61,19 @@
                     },
                 },
             });
-            registerPanel.login.el.addEventListener("click", event => {
+            registerPanel.login.el.addEventListener("click", (event) => {
                 console.log("login click");
                 event.preventDefault();
-                this.router.go('/login');
+                this.router.go("/login");
             });
-            registerPanel.signup.el.addEventListener("click", event => {
+            registerPanel.signup.el.addEventListener("click", (event) => {
                 console.log("signup click");
                 event.preventDefault();
-                this.router.go('/signup');
+                this.router.go("/signup");
             });
             pageIndex.appendChild(registerPanel.el);
 
-            /*const userPanel = new UserPanel({
+            /* const userPanel = new UserPanel({
                 el: document.createElement("div"),
                 data: {
                     username: "Dolan",
