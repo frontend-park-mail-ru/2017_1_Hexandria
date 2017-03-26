@@ -19,7 +19,7 @@
                     click: (event) => {(new Router()).go("/")}
                 },
             });
-            pageScoreboard.appendChild(backButton.render().el);
+            pageScoreboard.appendChild(backButton.el);
 
             this._el = pageScoreboard;
             this.hide();

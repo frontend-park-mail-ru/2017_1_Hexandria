@@ -19,7 +19,7 @@
                     click: (event) => {(new Router()).go("/")}
                 },
             });
-            pageSingleplayer.appendChild(backButton.render().el);
+            pageSingleplayer.appendChild(backButton.el);
 
             this._el = pageSingleplayer;
             this.hide();

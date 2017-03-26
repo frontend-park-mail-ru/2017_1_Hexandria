@@ -8,9 +8,11 @@
         constructor(options = {}) {
             super(options);
 
+            this.fetcher = new Fetcher();
+
             const pageLogin = document.getElementById("login");
 
-            const backButtonData = {
+            const backButton = new Button({
                 text: "Back",
                 attrs: {
                     class: "back-button",
@@ -18,8 +20,8 @@
                 events: {
                     click: (event) => {(new Router()).go("/")}
                 },
-            };
-            pageLogin.appendChild(new Button(backButtonData).render().el);
+            });
+            pageLogin.appendChild(backButton.el);
 
 
             const loginForm = new Form({
@@ -42,6 +44,34 @@
                             placeholder: "Enter Password",
                         },
                     ],
+                },
+                events: {
+                    submit: (event) => {
+                        event.preventDefault();
+                        console.log("button_login click");
+
+                        const parent = loginForm.el;
+                        const user = {
+                            login: parent.login.value,
+                            password: parent.password.value,
+                        };
+
+                        this.fetcher.post(api.path.login, user)
+                            .then((res) => {
+                                console.log(res.status);
+                                if(res.status === api.code.OK) {
+                                    //(new Router()).setUser(user);
+                                    // TODO update userPanel
+                                    (new Router()).go("/");
+                                    return {description: "login success!"};
+                                } else {
+                                    return res.json();
+                                }
+                            })
+                            .then((json) => {
+                                console.log(json.description)
+                            });
+                    },
                 },
             });
             pageLogin.appendChild(loginForm.el);

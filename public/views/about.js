@@ -19,7 +19,7 @@
                     click: (event) => {(new Router()).go("/")}
                 },
             });
-            pageAbout.appendChild(backButton.render().el);
+            pageAbout.appendChild(backButton.el);
 
             this._el = pageAbout;
             this.hide();

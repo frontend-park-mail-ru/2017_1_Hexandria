@@ -4,22 +4,23 @@
     class Form {
         /**
          * Form constructor
-         * @param {Objects[]} data
-         * @param {HTMLElement} el
+         * @param {Object} options
          */
-        constructor({ data = [], el }) {
-            this.data = data;
-            this.el = el;
-            this.render();
+        constructor(options) {
+            this.data = options.data || {};
+            this.events = options.events || {};
+            this.el = options.el;
+            this._render();
         }
 
         /**
          * DOM update
          */
-        render() {
+        _render() {
             this.updateHtml();
             this.installInputs();
             this.installControls();
+            this.setEvents();
         }
 
         /**
@@ -57,12 +58,12 @@
         }
 
         /**
-         * Add event listener
-         * @param {event} type
-         * @param {function} callback
+         * Set button events
          */
-        on (type, callback) {
-            this.el.addEventListener(type, callback);
+        setEvents() {
+            Object.keys(this.events).forEach((name) => {
+                this.el.addEventListener(name, this.events[name]);
+            });
         }
 
         /**
@@ -72,7 +73,7 @@
             const { controls = [] } = this.data;
 
             controls.forEach((data) => {
-                const control = new Button(data).render();
+                const control = new Button(data);
                 control.el.classList.add("form__button");
                 this.el.appendChild(control.el);
             });

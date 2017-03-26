@@ -19,7 +19,7 @@
                     click: (event) => {(new Router()).go("/")}
                 },
             };
-            pageSignup.appendChild(new Button(backButtonData).render().el);
+            pageSignup.appendChild(new Button(backButtonData).el);
 
             const signupForm = new Form({
                 el: document.createElement("form"),

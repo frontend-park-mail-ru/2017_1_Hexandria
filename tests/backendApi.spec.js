@@ -1,206 +1,158 @@
 ;(function () {
     "use strict";
 
-    let Fetcher = (function() {
-
-        class Fetcher {
-            // this.path = path
-
-            constructor() {
-                this.host = "http://79.137.74.9:8082";
-
-                this.options = {
-                    // method: "POST",
-                    mode: "cors",
-                    credentials: "include",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                    },
-                };
-            }
-
-            fetch(path, method, data) {
-                console.log();
-                console.log();
-
-                console.log("arguments:", arguments);
-                const options = this.options;
-                const host = this.host;
-                options.method = method;
-                if (data) {
-                    options.body = JSON.stringify(data);
-                    // console.log(options.body);
-                } else {
-                    options.body = null;
-                }
-
-                return fetch(host + path, options)
-                    .then((res) => {
-                        if (res.status === 200) {
-                            //console.log("MyRequestClass", "OK");
-                            return res.json();
-                        }
-                        //console.log("MyRequestClass", "FAIL");
-                        return res.json().then((err) => {
-                            throw err;
-                        });
-                    })
-                    .catch((err) => {
-                        // console.log("MyRequestClass catch", err);
-                        throw err;
-                    });
-            }
-            fetch2(path, method, data){
-                const options = this.options;
-                const host = this.host;
-                options.method = method;
-                if (data) {
-                    options.body = JSON.stringify(data);
-                    // console.log(options.body);
-                } else {
-                    options.body = null;
-                }
-
-                return fetch(host + path, options);
-            }
-            errorCatcher(errorJSON) {
-                console.log(errorJSON);
-                console.log(errorJSON.error);
-            }
-        }
-
-        return Fetcher;
-    })();
-
-    let fetcher = new Fetcher();
-
-
-    const login = "test-user";
-    const password = "test-password";
-    const email = "test_email@test.ru";
-
-    const data = {
-        login: login,
-        password: password,
-    };
-
-    const authorization_success = "Successfully authorized user test-user";
-    const authorization_error = "User not authorized in this session!";
-    const authorization_already = "User already authorized in this session";
-
+    const fetcher = new Fetcher();
 
     const timeout = 500;
 
-    const path_user = "/api/user";
-    const path_login = "/api/login";
-    const path_logout = "/api/logout";
+    describe("backendAPI", function() {
 
-    describe("API tests.", function() {
+        describe("Login", function() {
 
-        it("GET /api/user must fail. Not authorized.", function(done) {
+            it("GET /api/user must fail. Not authorized.", function(done) {
+                fetcher.get(api.path.user)
+                    .then((res) => {
+                        expect(res.status).toBe(api.code.FORBIDDEN);
+                        return res.json();
+                    })
+                    .then((json) => {
+                        expect(json.error).toBe(api.auth.error);
+                        done();
+                    })
+                    .catch((err) => {
+                        expect(err).toBeUndefined();
+                        done();
+                    });
+            }, timeout);
 
-            fetcher.fetch2(path_user, "GET")
-                .then((res) => {
-                    expect(res.status).toBe(403);
-                    return res.json();
-                })
-                .then((json) => {
-                    expect(json.error).toBe(authorization_error);
-                    done();
-                })
-                .catch((err) => {
-                    console.log("ERROR");
-                    expect(err).toBeUndefined();
-                    done();
-                });
+            it("POST /api/login must be ok", function(done) {
+                fetcher.post(api.path.login, api.testUser)
+                    .then((res) => {
+                        expect(res.status).toBe(api.code.OK);
+                        return res.json();
+                    })
+                    .then((json) => {
+                        expect(json.description).toBe(api.auth.login);
+                        done();
+                    })
+                    .catch((err) => {
+                        expect(err).toBeUndefined();
+                        done();
+                    });
+            }, timeout);
 
-        }, timeout);
+            it("GET /api/user must be ok.", function(done) {
+                fetcher.get(api.path.user)
+                    .then((res) => {
+                        expect(res.status).toBe(api.code.OK);
+                        return res.json();
+                    })
+                    .then((json) => {
+                        done();
+                    })
+                    .catch((err) => {
+                        expect(err).toBeUndefined();
+                        done();
+                    });
+            }, timeout);
 
-        it("POST /api/login must be ok", function(done) {
-            fetcher.fetch2(path_login, "POST", data)
-                .then((res) => {
-                    expect(res.status).toBe(200);
-                    //fetcher.setCookie(res.headers._headers['set-cookie']);
-                    return res.json();
-                })
-                .then((json) => {
-                    expect(json.description).toBe(authorization_success);
-                    done();
-                })
-                .catch((err) => {
-                    expect(err).toBeUndefined();
-                    done();
-                });
-        }, timeout);
+            it("POST /api/login must fail", function(done) {
+                fetcher.post(api.path.login, api.testUser)
+                    .then((res) => {
+                        expect(res.status).toBe(api.code.FORBIDDEN);
+                        return res.json();
+                    })
+                    .then((json) => {
+                        expect(json.error).toBe(api.auth.already);
+                        done();
+                    })
+                    .catch((err) => {
+                        expect(err).toBeUndefined();
+                        done();
+                    });
+            }, timeout);
 
-        it("GET /api/user must be ok.", function(done) {
-            fetcher.fetch2(path_user, "GET")
-                .then((res) => {
-                    expect(res.status).toBe(200);
-                    return res.json();
-                })
-                .then((json) => {
-                    //console.log("GET /user ok:", json);
-                    done();
-                })
-                .catch((err) => {
-                    expect(err).toBeUndefined();
-                    done();
-                });
-        }, timeout);
+            it("POST /api/logout must be ok", function(done) {
+                fetcher.post(api.path.logout)
+                    .then((res) => {
+                        expect(res.status).toBe(api.code.OK);
+                        return res.json();
+                    })
+                    .then((json) => {
+                        expect(json.description).toBe(api.auth.logout);
+                        done();
+                    })
+                    .catch((err) => {
+                        expect(err).toBeUndefined();
+                        done();
+                    });
+            }, timeout);
 
-        it("POST /api/login must fail", function(done) {
-            fetcher.fetch2(path_login, "POST", data)
-                .then((res) => {
-                    expect(res.status).toBe(403);
-                    return res.json();
-                })
-                .then((json) => {
-                    //console.log("POST /login fail:", json);
-                    expect(json.error).toBe(authorization_already);
-                    done();
-                })
-                .catch((err) => {
-                    expect(err).toBeUndefined();
-                    done();
-                });
-        }, timeout);
+            it("GET /api/user must fail. Not authorized.", function(done) {
+                fetcher.get(api.path.user)
+                    .then((res) => {
+                        expect(res.status).toBe(api.code.FORBIDDEN);
+                        return res.json();
+                    })
+                    .then((json) => {
+                        expect(json.error).toBe(api.auth.error);
+                        done();
+                    })
+                    .catch((err) => {
+                        expect(err).toBeUndefined();
+                        done();
+                    });
+            }, timeout);
 
-        it("POST /api/logout must be ok", function(done) {
-            fetcher.fetch2(path_logout, "POST")
-                .then((res) => {
-                    expect(res.status).toBe(200);
-                    return res.json();
-                })
-                .then((json) => {
-                    expect(json.description).toBe("User successfully logged out");
-                    done();
-                })
-                .catch((err) => {
-                    expect(err).toBeUndefined();
-                    done();
-                });
-        }, timeout);
+        });
 
-        it("GET /api/user must fail. Not authorized.", function(done) {
+        describe("Signup", function() {
+            const userNumber = Math.floor(Math.random() * 1000);
+            let testUser = {
+                login: "test-user-" + userNumber,
+                password: "test-password-" + userNumber,
+            };
+            //console.log(testUser);
 
-            fetcher.fetch2(path_user, "GET")
-                .then((res) => {
-                    expect(res.status).toBe(403);
-                    return res.json();
-                })
-                .then((json) => {
-                    expect(json.error).toBe(authorization_error);
-                    done();
-                })
-                .catch((err) => {
-                    console.log("ERROR");
-                    expect(err).toBeUndefined();
-                    done();
-                });
+            xit("POST /api/signup new user: " + testUser.login + " must fail. No email.", function(done) {
+                fetcher.post(api.path.signup, testUser)
+                    .then((res) => {
+                        console.log(res.status);
+                        //expect(res.status).toBe(api.code.BAD_REQUEST);
+                        return res.json();
+                    })
+                    .then((json) => {
+                        console.log(json.description);
+                        expect(json.description).toBe(api.auth.logout);
+                        done();
+                    })
+                    .catch((err) => {
+                        expect(err).toBeUndefined();
+                        done();
+                    });
+            }, timeout);
 
-        }, timeout);
+            //testUser.email = testUser.login + "@mail.ru";
+            //console.log(testUser);
+            it("POST /api/signup new user: " + testUser.login + " must be ok.", function(done) {
+                fetcher.post(api.path.signup, testUser)
+                    .then((res) => {
+                        console.log(res.status);
+                        //expect(res.status).toBe(api.code.OK);
+                        return res.json();
+                    })
+                    .then((json) => {
+                        console.log(json.description);
+                        expect(json.description).toBe(api.auth.signup);
+                        done();
+                    })
+                    .catch((err) => {
+                        expect(err).toBeUndefined();
+                        done();
+                    });
+            }, timeout);
+
+        });
 
     });
 

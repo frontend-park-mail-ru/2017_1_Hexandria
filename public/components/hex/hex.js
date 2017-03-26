@@ -37,10 +37,10 @@
          * Hex buttons install
          */
         installControls() {
-            this.singleplayer = new Button(this.controls.singleplayer).render();
-            this.multiplayer = new Button(this.controls.multiplayer).render();
-            this.about = new Button(this.controls.about).render();
-            this.scoreboard = new Button(this.controls.scoreboard).render();
+            this.singleplayer = new Button(this.controls.singleplayer);
+            this.multiplayer = new Button(this.controls.multiplayer);
+            this.about = new Button(this.controls.about);
+            this.scoreboard = new Button(this.controls.scoreboard);
 
             this.el.querySelector(".hex__buttons-main").appendChild(this.singleplayer.el);
             this.el.querySelector(".hex__buttons-main").appendChild(this.multiplayer.el);

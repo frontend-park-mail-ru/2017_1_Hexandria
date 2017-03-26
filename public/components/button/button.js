@@ -11,9 +11,10 @@
             this.attrs = options.attrs || {};
             this.events = options.events || {};
             this.el = document.createElement("button");
+            this._render();
         }
 
-        render() {
+        _render() {
             this.el.innerHTML = this.text;
             this.setAttrs();
             this.setEvents();

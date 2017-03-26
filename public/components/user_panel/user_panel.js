@@ -4,15 +4,16 @@
     class UserPanel {
         /**
          * User panel constructor
-         * @param {HTMLElement} el
-         * @param {Object[]} data
          */
-        constructor({ el, data = [] }) {
-            this.el = el;
-            this.username = data.username;
-            this.render();
-        }
+        constructor() {
+            this.setUser("Dolan");
 
+            this.fetcher = new Fetcher();
+
+            this.el = document.createElement("div");
+            this._render();
+            this.hide();
+        }
         hide() {
             this.el.style.visibility = "hidden";
         }
@@ -24,8 +25,9 @@
         /**
          * DOM update
          */
-        render() {
+        _render() {
             this.updateHtml();
+            this.installControls();
         }
 
         /**
@@ -34,6 +36,37 @@
         updateHtml() {
             this.el.setAttribute("class", "user_panel");
             this.el.innerHTML = user_panel_template({ username: this.username });
+        }
+
+        /**
+         * Install register panel buttons
+         */
+        installControls() {
+            this.logout = new Button({
+                text: "Logout",
+                attrs: {
+                    class: "register_panel__login",
+                },
+                events: {
+                    click: (event) => {
+                        console.log("post logout");
+                        this.fetcher.post(api.path.logout)
+                            .then((res) => {
+                                // TODO update userPanel
+                            });
+                    }
+                },
+            });
+
+            this.el.appendChild(this.logout.el);
+        }
+
+        /**
+         * Set user name
+         * @param name
+         */
+        setUser(name) {
+            this.username = name;
         }
     }
 

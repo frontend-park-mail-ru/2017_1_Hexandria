@@ -7,6 +7,8 @@
         constructor(options = {}) {
             super(options);
 
+            this.fetcher = new Fetcher();
+
             const pageIndex = document.getElementById("index");
 
             const hex = new Hex({
@@ -57,39 +59,13 @@
             pageIndex.appendChild(hex.el);
 
 
-            const registerPanel = new RegisterPanel({
-                el: document.createElement("div"),
-                data: {
-                    login: {
-                        text: "Log In",
-                        attrs: {
-                            class: "register_panel__login",
-                        },
-                        events: {
-                            click: (event) => {(new Router()).go("/login")}
-                        },
-                    },
-                    signup: {
-                        text: "Sign Up",
-                        attrs: {
-                            class: "register_panel__signup",
-                        },
-                        events: {
-                            click: (event) => {(new Router()).go("/signup")}
-                        },
-                    },
-                },
-            });
-            pageIndex.appendChild(registerPanel.el);
+            this.registerPanel = new RegisterPanel();
+            pageIndex.appendChild(this.registerPanel.el);
 
-            const userPanel = new UserPanel({
-                el: document.createElement("div"),
-                data: {
-                    username: "Dolan",
-                },
-            });
-            userPanel.hide();
-            pageIndex.appendChild(userPanel.el);
+            this.userPanel = new UserPanel();
+            pageIndex.appendChild(this.userPanel.el);
+
+            this.getUser();
 
 
             this._el = pageIndex;
@@ -98,6 +74,29 @@
 
         init(options = {}) {
         }
+
+        getUser() {
+            // Autorization check on startup
+            /*this.fetcher.fetch("/api/user", "GET")
+                .then((okJSON) => {
+                    console.log(okJSON);
+                    console.log(okJSON.description);
+                    this.userPanel.show();
+                    this.registerPanel.hide();
+                })
+                .catch(this.fetcher.errorCatcher);*/
+            this.fetcher.get(api.path.user)
+                .then((res) => {
+                    if(res.status === api.code.OK) {
+                        this.userPanel.show();
+                        this.registerPanel.hide();
+                    } else {
+                        this.userPanel.hide();
+                        this.registerPanel.show();
+                    }
+                });
+        }
+
     }
 
     window.MainView = MainView;

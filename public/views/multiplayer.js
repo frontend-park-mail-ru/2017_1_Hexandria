@@ -19,7 +19,7 @@
                     click: (event) => {(new Router()).go("/")}
                 },
             });
-            pageMultiplayer.appendChild(backButton.render().el);
+            pageMultiplayer.appendChild(backButton.el);
 
             this._el = pageMultiplayer;
             this.hide();
