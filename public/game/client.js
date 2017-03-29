@@ -1,8 +1,6 @@
 "use strict";
 
 const GameStart = function () {
-	console.log("call game()");
-
     // Graphics variables
 	let container,
 		stats;
@@ -25,8 +23,6 @@ const GameStart = function () {
 
 	init();
 	animate();
-	console.log("====================================OOO");
-
 
     // - Functions -
 
@@ -192,12 +188,6 @@ const GameStart = function () {
 	function onWindowResize() {
 		camera.aspect = container.clientWidth / container.clientHeight;
 		camera.updateProjectionMatrix();
-
-
-		console.log(container.clientWidth);
-		console.log(container.clientHeight);
-		console.log();
-
 		renderer.setSize(container.clientWidth, container.clientHeight);
 	}
 

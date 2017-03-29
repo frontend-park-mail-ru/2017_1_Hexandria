@@ -66,7 +66,6 @@ class MapGame {
     }
 
     handleSelect(intersects) {
-        console.log(intersects);
         if (intersects.length > 1) {
             const hex = intersects[intersects.length - 2].object;
             if (this._selected.indexOf(hex) == -1) {
@@ -82,7 +81,7 @@ class MapGame {
                 }
             }
         } else {
-            console.log("out of map");
+            // out of map
             if (this._selected.length > 0) {
                 this._selected.forEach(el => el.unselect() );
                 this._selected = [];
@@ -114,12 +113,6 @@ class MapGame {
             this.fields[i][hex.y - 1].select();
             this._selected.push(this.fields[i][hex.y - 1]);
         }
-        // for(let i = hex.x - 1; (i <= hex.x + 1) && (i < this.sizeX) && (i >= 0); i++) {
-        //     for(let j = hex.y - 1; (j <= hex.y + 1) && (j < this.sizeY) && (j >= 0); j++ ){
-        //         this.fields[i][j].select();
-        //         this._selected.push(this.fields[i][j]);
-        //     }
-        // }
     }
 
     deselectUnit(hex) {
