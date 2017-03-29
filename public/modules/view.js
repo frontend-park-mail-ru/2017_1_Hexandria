@@ -12,7 +12,6 @@
         constructor(options = {}) {
             if (options.createElement) {
                 this.tagName = options.tagName || "div";
-
             } else {
                 this.tagName = "div";
             }
@@ -97,7 +96,7 @@
          * @param {HTMLElement} el
          */
         setElement(el) {
-            remove(); // this._el && this._el.remove();
+            this.remove(); // this._el && this._el.remove();
             this._el = el;
         }
 

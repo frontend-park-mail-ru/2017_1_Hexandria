@@ -3,6 +3,7 @@
 
     const View = window.View;
     const Button = window.Button;
+    const Router = window.Router;
 
     class MultiplayerView extends View {
         constructor(options = {}) {
@@ -16,7 +17,7 @@
                     class: "back-button",
                 },
                 events: {
-                    click: (event) => {(new Router()).go("/")}
+                    click: (event) => { (new Router()).go("/"); },
                 },
             });
             pageMultiplayer.appendChild(backButton.el);

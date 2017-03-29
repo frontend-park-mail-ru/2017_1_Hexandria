@@ -1,6 +1,8 @@
 ;(function() {
     "use strict";
 
+    const Button = window.Button;
+
     class Hex {
         /**
          * Hex constructor

@@ -3,6 +3,10 @@
 
     const View = window.View;
     const Button = window.Button;
+    const Form = window.Form;
+    const Router = window.Router;
+    const Fetcher = window.Fetcher;
+    const api = window.api;
 
     class LoginView extends View {
         constructor(options = {}) {
@@ -18,7 +22,7 @@
                     class: "back-button",
                 },
                 events: {
-                    click: (event) => {(new Router()).go("/")}
+                    click: (event) => { (new Router()).go("/"); },
                 },
             });
             pageLogin.appendChild(backButton.el);
@@ -59,16 +63,15 @@
                         this.fetcher.post(api.path.login, user)
                             .then((res) => {
                                 console.log(res.status);
-                                if(res.status === api.code.OK) {
+                                if (res.status === api.code.OK) {
                                     (new Router()).setUser(user.login);
                                     (new Router()).go("/");
-                                    return {description: "login success!"};
-                                } else {
-                                    return res.json();
+                                    return { description: "login success!" };
                                 }
+                                return res.json();
                             })
                             .then((json) => {
-                                console.log(json.description)
+                                console.log(json.description);
                             });
                     },
                 },

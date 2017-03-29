@@ -3,6 +3,8 @@
 
     const View = window.View;
     const Button = window.Button;
+    const Router = window.Router;
+    const Form = window.Form;
 
     class SignupView extends View {
         constructor(options = {}) {
@@ -16,7 +18,7 @@
                     class: "back-button",
                 },
                 events: {
-                    click: (event) => {(new Router()).go("/")}
+                    click: (event) => { (new Router()).go("/"); },
                 },
             };
             pageSignup.appendChild(new Button(backButtonData).el);

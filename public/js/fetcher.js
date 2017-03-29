@@ -16,7 +16,7 @@
             };
         }
 
-        _prepare(method, path, data){
+        _prepare(method, path, data) {
             this.options.method = method;
             if (data) {
                 this.options.body = JSON.stringify(data);

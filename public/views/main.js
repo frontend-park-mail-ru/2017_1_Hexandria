@@ -2,6 +2,12 @@
     "use strict";
 
     const View = window.View;
+    const Hex = window.Hex;
+    const UserPanel = window.UserPanel;
+    const RegisterPanel = window.RegisterPanel;
+    const Router = window.Router;
+    const Fetcher = window.Fetcher;
+    const api = window.api;
 
     class MainView extends View {
 
@@ -22,7 +28,7 @@
                                 class: "hex__singleplayer",
                             },
                             events: {
-                                click: (event) => {(new Router()).go("/singleplayer")}
+                                click: (event) => { (new Router()).go("/singleplayer"); },
                             },
                         },
                         multiplayer: {
@@ -31,7 +37,7 @@
                                 class: "hex__multiplayer",
                             },
                             events: {
-                                click: (event) => {(new Router()).go("/multiplayer")}
+                                click: (event) => { (new Router()).go("/multiplayer"); },
                             },
                         },
                         about: {
@@ -40,7 +46,7 @@
                                 class: "hex__about",
                             },
                             events: {
-                                click: (event) => {(new Router()).go("/about")}
+                                click: (event) => { (new Router()).go("/about"); },
                             },
                         },
                         scoreboard: {
@@ -49,7 +55,7 @@
                                 class: "hex__scoreboard",
                             },
                             events: {
-                                click: (event) => {(new Router()).go("/scoreboard")}
+                                click: (event) => { (new Router()).go("/scoreboard"); },
                             },
                         },
                     },
@@ -69,16 +75,15 @@
             this.fetcher = new Fetcher();
             this.fetcher.get(api.path.user)
                 .then((res) => {
-                    if(res.status === api.code.OK) {
+                    if (res.status === api.code.OK) {
                         console.log("ok");
                         return res.json();
-                    } else {
-                        throw api.auth.error;
                     }
+                    throw api.auth.error;
                 })
                 .then((json) => {
                     console.log(json);
-                    //this.login = json.login;
+                    // this.login = json.login;
                     (new Router()).setUser(json.login);
                     this.show();
                 })
@@ -105,10 +110,8 @@
 
 
             const user = (new Router()).getUser();
-            if(this.user !== user){
-
-
-                if(user){
+            if (this.user !== user) {
+                if (user) {
                     this.userPanel.setUser(user);
                     this.userPanel.show();
                     this.registerPanel.hide();

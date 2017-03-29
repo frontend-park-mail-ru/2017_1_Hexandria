@@ -1,6 +1,10 @@
 ;(function() {
     "use strict";
 
+    const Validator = window.Validator;
+    const Input = window.Input;
+    const Button = window.Button;
+
     class Form {
         /**
          * Form constructor

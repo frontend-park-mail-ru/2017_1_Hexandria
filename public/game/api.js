@@ -7,7 +7,7 @@
     api.testUser = {
         login: "test-user",
         password: "test-password",
-        email: "test_email@test.ru"
+        email: "test_email@test.ru",
     };
 
     api.code = {

@@ -2,6 +2,7 @@
     "use strict";
 
     const Button = window.Button;
+    const Router = window.Router;
 
     class RegisterPanel {
         /**
@@ -47,7 +48,7 @@
                 events: {
                     click: (event) => {
                         (new Router()).go("/login");
-                    }
+                    },
                 },
             });
             this.signup = new Button({
@@ -58,7 +59,7 @@
                 events: {
                     click: (event) => {
                         (new Router()).go("/signup");
-                    }
+                    },
                 },
             });
 

@@ -1,6 +1,11 @@
 ;(function() {
     "use strict";
 
+    const Button = window.Button;
+    const Router = window.Router;
+    const Fetcher = window.Fetcher;
+    const api = window.api;
+
     class UserPanel {
         /**
          * User panel constructor
@@ -55,7 +60,7 @@
                                 (new Router()).setUser(null);
                                 (new Router()).update("/");
                             });
-                    }
+                    },
                 },
             });
 
