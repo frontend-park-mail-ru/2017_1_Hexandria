@@ -21,6 +21,8 @@
             this.history = window.history;
             this.startflag = false;
             Router.__instance = this;
+
+            this.userLogin = null;
         }
 
         /**
@@ -87,6 +89,28 @@
             if (this.startflag) {
                 this.onroute(pathname, state);
             }
+        }
+
+        /**
+         * Update path
+         * @param {string} pathname
+         */
+        update(pathname) {
+            const route = this.routes.find(route => route.match(pathname));
+
+            if (!route) {
+                return;
+            }
+
+            route.update(pathname);
+        }
+
+        setUser(login) {
+            this.userLogin = login;
+        }
+
+        getUser() {
+            return this.userLogin;
         }
 
         // /**

@@ -7,6 +7,7 @@
     api.testUser = {
         login: "test-user",
         password: "test-password",
+        email: "test_email@test.ru"
     };
 
     api.code = {
@@ -16,14 +17,10 @@
     };
 
     api.auth = {
-        successCode: 200,
-        errorCode: 403,
-
         login: "Successfully authorized user test-user",
         logout: "User successfully logged out",
         error: "User not authorized in this session!",
         already: "User already authorized in this session",
-
         signup: "Successfully registered user",
     };
 

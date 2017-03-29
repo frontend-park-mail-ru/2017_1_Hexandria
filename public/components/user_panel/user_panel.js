@@ -52,7 +52,8 @@
                         console.log("post logout");
                         this.fetcher.post(api.path.logout)
                             .then((res) => {
-                                // TODO update userPanel
+                                (new Router()).setUser(null);
+                                (new Router()).update("/");
                             });
                     }
                 },
@@ -66,6 +67,7 @@
          * @param name
          */
         setUser(name) {
+            console.log(name);
             this.username = name;
         }
     }

@@ -60,8 +60,7 @@
                             .then((res) => {
                                 console.log(res.status);
                                 if(res.status === api.code.OK) {
-                                    //(new Router()).setUser(user);
-                                    // TODO update userPanel
+                                    (new Router()).setUser(user.login);
                                     (new Router()).go("/");
                                     return {description: "login success!"};
                                 } else {

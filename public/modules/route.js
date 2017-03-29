@@ -52,6 +52,13 @@
         }
 
         /**
+         * Update current route
+         */
+        update() {
+            this._view.update();
+        }
+
+        /**
          * Deactivate current route
          */
         leave() {

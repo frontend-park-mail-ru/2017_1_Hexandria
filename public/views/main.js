@@ -4,10 +4,9 @@
     const View = window.View;
 
     class MainView extends View {
+
         constructor(options = {}) {
             super(options);
-
-            this.fetcher = new Fetcher();
 
             const pageIndex = document.getElementById("index");
 
@@ -65,7 +64,27 @@
             this.userPanel = new UserPanel();
             pageIndex.appendChild(this.userPanel.el);
 
-            this.getUser();
+            this.update();
+
+            this.fetcher = new Fetcher();
+            this.fetcher.get(api.path.user)
+                .then((res) => {
+                    if(res.status === api.code.OK) {
+                        console.log("ok");
+                        return res.json();
+                    } else {
+                        throw api.auth.error;
+                    }
+                })
+                .then((json) => {
+                    console.log(json);
+                    //this.login = json.login;
+                    (new Router()).setUser(json.login);
+                    this.show();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
 
 
             this._el = pageIndex;
@@ -75,26 +94,30 @@
         init(options = {}) {
         }
 
-        getUser() {
-            // Autorization check on startup
-            /*this.fetcher.fetch("/api/user", "GET")
-                .then((okJSON) => {
-                    console.log(okJSON);
-                    console.log(okJSON.description);
+        show(options = {}) {
+            super.show();
+
+            this.update();
+        }
+
+        update() {
+            super.update();
+
+
+            const user = (new Router()).getUser();
+            if(this.user !== user){
+
+
+                if(user){
+                    this.userPanel.setUser(user);
                     this.userPanel.show();
                     this.registerPanel.hide();
-                })
-                .catch(this.fetcher.errorCatcher);*/
-            this.fetcher.get(api.path.user)
-                .then((res) => {
-                    if(res.status === api.code.OK) {
-                        this.userPanel.show();
-                        this.registerPanel.hide();
-                    } else {
-                        this.userPanel.hide();
-                        this.registerPanel.show();
-                    }
-                });
+                } else {
+                    this.userPanel.hide();
+                    this.registerPanel.show();
+                }
+                this.user = user;
+            }
         }
 
     }

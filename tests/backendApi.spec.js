@@ -48,6 +48,9 @@
                         return res.json();
                     })
                     .then((json) => {
+                        console.log(json);
+                        expect(json.login).toBe(api.testUser.login);
+                        expect(json.email).toBe(api.testUser.email);
                         done();
                     })
                     .catch((err) => {
@@ -107,23 +110,25 @@
         });
 
         describe("Signup", function() {
-            const userNumber = Math.floor(Math.random() * 1000);
-            let testUser = {
-                login: "test-user-" + userNumber,
-                password: "test-password-" + userNumber,
-            };
-            //console.log(testUser);
 
-            xit("POST /api/signup new user: " + testUser.login + " must fail. No email.", function(done) {
-                fetcher.post(api.path.signup, testUser)
+            beforeEach(function () {
+                const userNumber = Math.floor(Math.random() * 1000);
+                this.testUser = {
+                    login: "test-user-" + userNumber,
+                    password: "test-password-" + userNumber,
+                };
+                console.log(this.testUser);
+            });
+
+            it("POST /api/signup new user: must fail. No email.", function(done) {
+                fetcher.post(api.path.signup, this.testUser)
                     .then((res) => {
-                        console.log(res.status);
-                        //expect(res.status).toBe(api.code.BAD_REQUEST);
+                        expect(res.status).toBe(api.code.BAD_REQUEST);
                         return res.json();
                     })
                     .then((json) => {
                         console.log(json.description);
-                        expect(json.description).toBe(api.auth.logout);
+                        //expect(json.description).toBe(api.auth.logout);
                         done();
                     })
                     .catch((err) => {
@@ -132,18 +137,17 @@
                     });
             }, timeout);
 
-            //testUser.email = testUser.login + "@mail.ru";
-            //console.log(testUser);
-            it("POST /api/signup new user: " + testUser.login + " must be ok.", function(done) {
-                fetcher.post(api.path.signup, testUser)
+            it("POST /api/signup new user: must be ok.", function(done) {
+                this.testUser.email = this.testUser.login + "@mail.ru";
+                fetcher.post(api.path.signup, this.testUser)
                     .then((res) => {
                         console.log(res.status);
-                        //expect(res.status).toBe(api.code.OK);
+                        expect(res.status).toBe(api.code.OK);
                         return res.json();
                     })
                     .then((json) => {
                         console.log(json.description);
-                        expect(json.description).toBe(api.auth.signup);
+                        //expect(json.description).toBe(api.auth.signup);
                         done();
                     })
                     .catch((err) => {

@@ -47,6 +47,12 @@
         }
 
         /**
+         * Update view
+         */
+        update() {
+        }
+
+        /**
          * Show view
          * @param {Object} [options={}]
          */
