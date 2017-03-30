@@ -5,10 +5,14 @@
     const Button = window.Button;
     const Router = window.Router;
     const Form = window.Form;
+    const Fetcher = window.Fetcher;
+    const api = window.api;
 
     class SignupView extends View {
         constructor(options = {}) {
             super(options);
+
+            this.fetcher = new Fetcher();
 
             const pageSignup = document.getElementById("signup");
 
@@ -53,6 +57,33 @@
                             placeholder: "Enter password second time",
                         },
                     ],
+                },
+                events: {
+                    submit: (event) => {
+                        event.preventDefault();
+                        console.log("button_signup click");
+
+                        const parent = signupForm.el;
+                        const user = {
+                            login: parent.login.value,
+                            email: parent.email.value,
+                            password: parent.password.value,
+                        };
+
+                        this.fetcher.post(api.path.signup, user)
+                            .then((res) => {
+                                console.log(res.status);
+                                if (res.status === api.code.OK) {
+                                    //(new Router()).setUser(user.login);
+                                    (new Router()).go("/");
+                                    return { description: "signup success!" };
+                                }
+                                return res.json();
+                            })
+                            .then((json) => {
+                                console.log(json.description);
+                            });
+                    },
                 },
             });
             pageSignup.appendChild(signupForm.el);
