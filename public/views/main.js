@@ -113,6 +113,7 @@
             if (this.user !== user) {
                 if (user) {
                     this.userPanel.setUser(user);
+                    this.userPanel._render();
                     this.userPanel.show();
                     this.registerPanel.hide();
                 } else {
