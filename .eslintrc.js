@@ -10,7 +10,7 @@ module.exports = {
     },
     "rules": {
         "no-param-reassign": 0,
-        "no-extra-semi": 1,
+        "no-extra-semi": 0, // or 1?
         "no-undef": 1, // or 0?
         "strict": [0, "global"],
         "no-tabs": 1,

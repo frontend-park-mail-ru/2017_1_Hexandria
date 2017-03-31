@@ -4,10 +4,10 @@
     class Game {
         /**
          * Game constructor
-         * @param {HTMLElement} el
          */
-        constructor({ el }) {
-            this.el = el;
+        constructor() {
+            // this.el = el;
+            this.el = document.createElement("div");
             this.render();
         }
 
