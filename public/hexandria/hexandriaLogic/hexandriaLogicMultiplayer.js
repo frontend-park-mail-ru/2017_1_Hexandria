@@ -4,8 +4,8 @@
     const HexandriaLogic = window.HexandriaLogic;
 
     class HexandriaLogicMultiplayer extends HexandriaLogic {
-        constructor(options = {}) {
-            super(options);
+        constructor(game) {
+            super(game);
             console.log("HexandriaLogicMultiplayer");
         }
     }

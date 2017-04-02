@@ -20,7 +20,6 @@
 
             this.game = null;
 
-            (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
             (new Mediator()).subscribe(this, EVENTS.GAME.INIT, "gameInit");
             (new Mediator()).subscribe(this, EVENTS.GAME.EXIT, "gameExit");
         }
@@ -42,8 +41,10 @@
 
         gameExit(payload) {
             console.log("gameExit");
-            /* this.game.destroy();
-            this.game = null;*/
+            if(this.game) {
+                this.game.destroy();
+                this.game = null;
+            }
         }
     }
 

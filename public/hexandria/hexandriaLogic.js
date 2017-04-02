@@ -5,7 +5,7 @@
     const EVENTS = window.EVENTS;
 
     class HexandriaLogic {
-        constructor(options) {
+        constructor(game) {
             console.log("HexandriaLogic created");
 
             if (this.constructor.name === HexandriaLogic.name) {

@@ -11,7 +11,7 @@
     const EVENTS = window.EVENTS;
 
     class HexandriaGraphics {
-        constructor(element) {
+        constructor(game, element) {
             console.log("HexandriaGraphics created");
 
             (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
@@ -57,8 +57,6 @@
             let game;
             let mouse,
                 raycaster;
-            let intersects,
-                INTERSECTED;
 
             let time = 0;
             let keyQ = false;
@@ -179,7 +177,7 @@
                 threeObject.position.copy(pos);
                 threeObject.quaternion.copy(quat);
 
-                scene.add(threeObject);
+                //scene.add(threeObject);
             }
 
             function initInput() {
