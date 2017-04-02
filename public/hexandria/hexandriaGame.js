@@ -1,36 +1,27 @@
 ;(function() {
     "use strict";
 
+    const HexandriaLogic = window.HexandriaLogic;
+    const HexandriaGraphics = window.HexandriaGraphics;
+
+    const Mediator = window.Mediator;
+    const EVENTS = window.EVENTS;
+
     class HexandriaGame {
-        constructor(options) {
+        constructor(Mode, element, user) {
             console.log("HexandriaGame created");
-            this.userIndexHuman = 0;
-            this.sizeX = options.size.x;
-            this.sizeY = options.size.y;
-            console.log(this.sizeX, "x", this.sizeY);
-            (new Mediator()).subscribe(this, EVENTS.KEYBOARD.ENTER_PRESSED, "enterPressed");
-            (new Mediator()).subscribe(this, EVENTS.TURN.START_TURN, "gameLoop");
-            (new Mediator()).emit("drawMapEvent", { sizeX: this.sizeX, sizeY: this.sizeY });
-        }
 
-        enterPressed() {
-            if (this.userIndex === this.userIndexHuman) {
-                console.log("Enter pressed");
+            if (!(Mode.prototype instanceof HexandriaLogic)) {
+                throw new TypeError("Mode is not a HexandriaLogic");
             }
-        }
 
-        gameLoop(options) {
-            console.log("start turn", options.userIndex);
-        }
+            this.logic = new Mode();
+            this.graphics = new HexandriaGraphics(element);
 
-        startGameLoop() {
-            this.userIndex = 0;
-            this.interval = setInterval(() => {
-                this.userIndex = (this.userIndex + 1) % 3;
-                (new Mediator()).emit(EVENTS.TURN.START_TURN, { userIndex: this.userIndex });
-            }, 3000);
-        }
 
+            (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
+            (new Mediator()).subscribe(this, EVENTS.GAME.START, "gameStart");
+        }
     }
 
     window.HexandriaGame = HexandriaGame;

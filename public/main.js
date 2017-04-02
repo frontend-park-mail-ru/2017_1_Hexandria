@@ -11,6 +11,14 @@
     const SignupView = window.SignupView;
     const MainView = window.MainView;
 
+
+    const Mediator = window.Mediator;
+    const HexandriaApp = window.HexandriaApp;
+
+    const app = new HexandriaApp();
+    (new Mediator()).done();
+
+
     (new Router())
         .addRoute("/singleplayer", SingleplayerView)
         .addRoute("/multiplayer", MultiplayerView)

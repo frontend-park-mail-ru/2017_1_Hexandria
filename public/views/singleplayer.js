@@ -6,6 +6,9 @@
     const Router = window.Router;
     const Game = window.Game;
 
+    const Mediator = window.Mediator;
+    const EVENTS = window.EVENTS;
+
     class SingleplayerView extends View {
         constructor(options = {}) {
             super(options);
@@ -15,7 +18,6 @@
 
             this.game = new Game();
             pageSingleplayer.appendChild(this.game.el);
-            this.hexandriaMain = new HexandriaMain();
 
 
             const backButton = new Button({
@@ -34,6 +36,24 @@
         }
 
         init(options = {}) {
+        }
+
+        show(options = {}) {
+            super.show();
+
+            (new Mediator()).emit(
+                EVENTS.GAME.INIT,
+                {
+                    mode: "singleplayer",
+                    element: "#singleplayer"
+                }
+            );
+        }
+
+        hide(options = {}) {
+            super.hide();
+            console.log("s hide");
+            (new Mediator()).emit(EVENTS.GAME.EXIT);
         }
     }
 

@@ -1,8 +1,17 @@
 ;(function() {
     "use strict";
 
+    const THREE = window.THREE;
+    const Stats = window.Stats;
+
+    const PlayerGame = window.PlayerGame;
+    const MapGame = window.MapGame;
+
+    const Mediator = window.Mediator;
+    const EVENTS = window.EVENTS;
+
     class HexandriaGraphics {
-        constructor() {
+        constructor(element) {
             console.log("HexandriaGraphics created");
 
             (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
@@ -14,16 +23,15 @@
                 }
             };
 
-
-            this.gameProcess();
+            this.gameProcess(element);
         }
 
         drawMap(options) {
-            console.log(options);
+            console.log("drawMap:", options);
         }
 
-        gameProcess() {
-            const map = this.gameStart();
+        gameProcess(element) {
+            const map = this.gameStart(element);
 
             const player1 = new PlayerGame("Player 1", 0xff0000);
             const player2 = new PlayerGame("Player 2", 0x0000ff);
@@ -36,7 +44,7 @@
         }
 
 
-        gameStart () {
+        gameStart (element) {
             // Graphics variables
             let container,
                 stats;
@@ -71,7 +79,9 @@
             }
 
             function initGraphics() {
-                container = document.querySelector(".game-container");
+                const sel = `${element} .game-container`;
+                console.log(sel);
+                container = document.querySelector(sel);
 
                 renderer = new THREE.WebGLRenderer();
                 // renderer.setClearColor(0xbfd1e5);

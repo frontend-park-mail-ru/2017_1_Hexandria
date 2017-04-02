@@ -1,6 +1,8 @@
 ;(function() {
     "use strict";
 
+    const HexGame = window.HexGame;
+
     const _hexagonDiameter = 1;
     const _hexagonAlpha = _hexagonDiameter / 4.0;
     const _hexagonBeta = Math.sqrt(3) * _hexagonAlpha;
@@ -43,13 +45,13 @@
                 const obj = intersects[intersects.length - 2].object;
                 if (obj !== this._highlighted) { //  && obj != _selected
                     if (this._highlighted) {
-                        if (this._selected.indexOf(this._highlighted) == -1) {
+                        if (this._selected.indexOf(this._highlighted) === -1) {
                             this._highlighted.unhighlight();
                         }
                         this._highlighted = null;
                     }
                     if (this.find(obj)) {
-                        if (this._selected.indexOf(obj) == -1) {
+                        if (this._selected.indexOf(obj) === -1) {
                             obj.highlight();
                         }
                         this._highlighted = obj;
@@ -57,7 +59,7 @@
                 }
             } else {
                 if (this._highlighted) {
-                    if (this._selected.indexOf(this._highlighted) == -1) {
+                    if (this._selected.indexOf(this._highlighted) === -1) {
                         this._highlighted.unhighlight();
                     }
                     this._highlighted = null;
@@ -69,7 +71,7 @@
         handleSelect(intersects) {
             if (intersects.length > 1) {
                 const hex = intersects[intersects.length - 2].object;
-                if (this._selected.indexOf(hex) == -1) {
+                if (this._selected.indexOf(hex) === -1) {
                     // choose unit
                     if (hex.hasUnit) {
                         this.selectUnit(hex);

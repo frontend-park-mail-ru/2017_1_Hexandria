@@ -1,6 +1,10 @@
 ;(function() {
     "use strict";
 
+    const THREE = window.THREE;
+    const UnitGame = window.UnitGame;
+    const CapitalGame = window.CapitalGame;
+
     const _highlightedColor = 0xf08080;
     const _selectedColor = 0x80f000;
 

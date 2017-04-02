@@ -1,6 +1,8 @@
 ;(function() {
     "use strict";
 
+    const THREE = window.THREE;
+
     class TownGame {
         constructor(owner) {
             this.owner = owner;

@@ -1,10 +1,9 @@
 ;(function() {
     "use strict";
 
+    const TownGame = window.TownGame;
+
     class CapitalGame extends TownGame {
-        constructor(owner) {
-            super(owner);
-        }
     }
 
     window.CapitalGame = CapitalGame;
