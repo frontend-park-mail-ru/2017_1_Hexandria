@@ -19,6 +19,8 @@
             (new Mediator()).subscribe(this, EVENTS.KEYBOARD.ENTER_PRESSED, "enterPressed");
             (new Mediator()).subscribe(this, EVENTS.TURN.START_TURN, "gameLoop");
             // (new Mediator()).emit("drawMapEvent", { sizeX: this.sizeX, sizeY: this.sizeY });
+
+            (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SELECT_FIELD, "selectField");
         }
 
         enterPressed() {
@@ -37,6 +39,10 @@
                 this.userIndex = (this.userIndex + 1) % 3;
                 (new Mediator()).emit(EVENTS.TURN.START_TURN, { userIndex: this.userIndex });
             }, 3000);*/
+        }
+
+        selectField(payload) {
+            console.log("base", payload);
         }
 
     }

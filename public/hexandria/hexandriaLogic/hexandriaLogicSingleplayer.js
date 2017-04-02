@@ -8,6 +8,11 @@
             super(game);
             console.log("HexandriaLogicSingleplayer");
         }
+
+        selectField(payload) {
+            super.selectField(payload);
+            console.log("single", payload);
+        }
     }
 
     window.HexandriaLogicSingleplayer = HexandriaLogicSingleplayer;

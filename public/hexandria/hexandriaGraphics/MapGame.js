@@ -3,16 +3,16 @@
 
     const HexGame = window.HexGame;
 
-    const _hexagonDiameter = 1;
-    const _hexagonAlpha = _hexagonDiameter / 4.0;
-    const _hexagonBeta = Math.sqrt(3) * _hexagonAlpha;
     const _fieldGrass = 0x80f080;
     const _fieldWater = 0x8080ff;
     const _fieldRock = 0x808080;
 
     class MapGame {
 
-        constructor(scene, sizeX, sizeY) {
+        constructor(scene, sizeX, sizeY, game) {
+            this.fieldGroup = new THREE.Group();
+            this.fieldMap = {};
+
             this.scene = scene;
             this.sizeX = sizeX;
             this.sizeY = sizeY;
@@ -23,26 +23,37 @@
 
             for (let i = 0; i < sizeX; i++) {
                 for (let j = 0; j < sizeY; j++) {
-                    this.fields[i][j] = new HexGame(this.scene, _fieldGrass, i, j, 0.2);
-                    this.scene.add(this.fields[i][j]);
+                    /*this.fields[i][j] = new HexGame(this.scene, _fieldGrass, i, j, 0.2);
+                    // this.scene.add(this.fields[i][j]);
+                    this.fieldGroup.add(this.fields[i][j]);*/
+
+                    const newHex = new HexGame(this.scene, _fieldGrass, i, j, 0.2);
+                    this.fields[i][j] = newHex;
+                    this.fieldMap[newHex] = {
+                        x:i,
+                        y:j
+                    };
+                    this.fieldGroup.add(newHex);
                 }
             }
+            this.scene.add(this.fieldGroup);
         }
 
         find(obj) {
-            for (let i = 0; i < this.sizeX; i++) {
+            /*for (let i = 0; i < this.sizeX; i++) {
                 for (let j = 0; j < this.sizeY; j++) {
                     if (this.fields[i][j] === obj) {
                         return true;
                     }
                 }
             }
-            return false;
+            return false;*/
+            return !!this.fieldMap[obj];
         }
 
         handleHighlight(intersects) {
-            if (intersects.length > 1) {
-                const obj = intersects[intersects.length - 2].object;
+            if (intersects.length > 0) {
+                const obj = intersects[0].object;
                 if (obj !== this._highlighted) { //  && obj != _selected
                     if (this._highlighted) {
                         if (this._selected.indexOf(this._highlighted) === -1) {
@@ -55,6 +66,7 @@
                             obj.highlight();
                         }
                         this._highlighted = obj;
+                        // console.log(obj.x, obj.y);
                     }
                 }
             } else {
@@ -69,8 +81,19 @@
         }
 
         handleSelect(intersects) {
-            if (intersects.length > 1) {
-                const hex = intersects[intersects.length - 2].object;
+            console.log("handleSelect", intersects);
+            if (intersects.length > 0) {
+                const hex = intersects[0].object;
+
+                console.log(hex, hex.x, hex.y);
+                (new Mediator()).emit(
+                    EVENTS.GRAPHICS.SELECT_FIELD,
+                    {
+                        x: hex.x,
+                        y: hex.y
+                    }
+                );
+
                 if (this._selected.indexOf(hex) === -1) {
                     // choose unit
                     if (hex.hasUnit) {
