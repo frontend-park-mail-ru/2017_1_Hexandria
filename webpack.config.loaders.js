@@ -23,10 +23,6 @@ module.exports = function() {
 		{
 			test: /\.pug$/,
 			loader: "pug-loader"
-		},
-		{
-			include: /\.pug/,
-			loader: ['raw-loader', 'pug-html-loader']
 		}
 	];
 };

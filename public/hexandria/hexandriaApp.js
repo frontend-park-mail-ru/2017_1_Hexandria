@@ -10,8 +10,8 @@
     import Router from '../modules/router';
     import Mediator from "../modules/mediator";
 
-    import HexandriaLogicSingleplayer from "./hexandriaLogic/HexandriaLogicSingleplayer";
-    import HexandriaLogicMultiplayer from "./hexandriaLogic/HexandriaLogicMultiplayer";
+    import HexandriaLogicSingleplayer from "./hexandriaLogic/hexandriaLogicSingleplayer";
+    import HexandriaLogicMultiplayer from "./hexandriaLogic/hexandriaLogicMultiplayer";
     import HexandriaGame from "./hexandriaGame";
     // const EVENTS = window.EVENTS;
     import { EVENTS } from "./events";
