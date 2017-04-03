@@ -9,7 +9,7 @@
     // const Mediator = window.Mediator;
     // const EVENTS = window.EVENTS;
     import Mediator from "../modules/mediator";
-    import THREE from "three-js";
+    import * as THREE from "three";
     import { EVENTS } from "./events";
     import PlayerGame from "./hexandriaGraphics/PlayerGame";
     import MapGame from "./hexandriaGraphics/MapGame";

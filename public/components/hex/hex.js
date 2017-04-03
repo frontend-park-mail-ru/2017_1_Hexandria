@@ -2,7 +2,9 @@
 
     // const Button = window.Button;
 	import Button from "../button/button";
-    import hex_template from "./hex_template";
+    // const hex_template = require('./hex_template');
+    import hex_template from "pug-loader!./hex_template.pug";
+
 
     export default class Hex {
         /**

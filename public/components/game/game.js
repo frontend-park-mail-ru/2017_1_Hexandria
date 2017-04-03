@@ -1,5 +1,7 @@
 import './game.scss';
-import template from "./game_template.pug";
+// import game_template from "./game_template.pug";
+import game_template from "pug-loader!./form_template.pug";
+
     "use strict";
 
     export default class Game {

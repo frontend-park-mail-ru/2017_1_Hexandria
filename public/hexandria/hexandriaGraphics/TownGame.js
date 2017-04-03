@@ -2,7 +2,8 @@
     "use strict";
 
     // const THREE = window.THREE;
-    import THREE from "three-js";
+    // import THREE from "three";
+    import * as THREE from "three";
 
 
     export default class TownGame {

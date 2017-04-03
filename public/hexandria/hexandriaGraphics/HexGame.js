@@ -2,7 +2,8 @@
     "use strict";
 
     // const THREE = window.THREE;
-    import THREE from "three";
+    // import THREE from "three";
+    import * as THREE from "three";
     import CapitalGame from "./CapitalGame";
 
 

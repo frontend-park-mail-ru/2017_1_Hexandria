@@ -5,7 +5,7 @@
     import Button from "../button/button.js";
     import Validator  from "./validator.js";
     import Input from "../input/input.js";
-    import template from "./form_template.pug";
+
 
     // const Validator = window.Validator;
     // const Input = window.Input;
