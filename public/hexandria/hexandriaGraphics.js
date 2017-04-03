@@ -46,7 +46,6 @@
             this.map.createUnit(player2, 1, 1);
         }
 
-
         gameStart () {
             // Graphics variables
             let container,
@@ -71,12 +70,13 @@
             initInput();
             createObjects();
 
-            _map = new MapGame(scene, 5, 10, this.game);
+            _map = new MapGame(scene, this.game);
 
             animate();
 
             this.scene = scene;
             this.map = _map;
+            //this.players = new HexPlayers(scene)
 
             // - Functions -
 

@@ -9,29 +9,30 @@
 
     class MapGame {
 
-        constructor(scene, sizeX, sizeY, game) {
-            this.fieldGroup = new THREE.Group();
-            this.fieldMap = {};
-
+        constructor(scene, game) {
             this.scene = scene;
-            this.sizeX = sizeX;
-            this.sizeY = sizeY;
-            this.fields = [...Array(sizeX).keys()].map(i => Array(sizeY));
+
+            this.sizeX = game.field.size.x;
+            this.sizeY = game.field.size.y;
+            this.field = [...Array(this.sizeX).keys()].map(i => Array(this.sizeY));
+            this.fieldMap = {};
+            this.fieldGroup = new THREE.Group();
+
             this._highlighted = null;
             this._selected = [];
             this.unitSelected = null;
 
-            for (let i = 0; i < sizeX; i++) {
-                for (let j = 0; j < sizeY; j++) {
-                    /*this.fields[i][j] = new HexGame(this.scene, _fieldGrass, i, j, 0.2);
-                    // this.scene.add(this.fields[i][j]);
-                    this.fieldGroup.add(this.fields[i][j]);*/
+            for (let i = 0; i < this.sizeX; i++) {
+                for (let j = 0; j < this.sizeY; j++) {
+                    /*this.field[i][j] = new HexGame(this.scene, _fieldGrass, i, j, 0.2);
+                    // this.scene.add(this.field[i][j]);
+                    this.fieldGroup.add(this.field[i][j]);*/
 
                     const newHex = new HexGame(this.scene, _fieldGrass, i, j, 0.2);
-                    this.fields[i][j] = newHex;
+                    this.field[i][j] = newHex;
                     this.fieldMap[newHex] = {
-                        x:i,
-                        y:j
+                        x: i,
+                        y: j
                     };
                     this.fieldGroup.add(newHex);
                 }
@@ -42,7 +43,7 @@
         find(obj) {
             /*for (let i = 0; i < this.sizeX; i++) {
                 for (let j = 0; j < this.sizeY; j++) {
-                    if (this.fields[i][j] === obj) {
+                    if (this.field[i][j] === obj) {
                         return true;
                     }
                 }
@@ -105,6 +106,8 @@
                     this.moveUnit(this.unitSelected, hex);
                 }
             } else {
+                (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_FIELD);
+
                 // out of map
                 if (this._selected.length > 0) {
                     this._selected.forEach(el => el.unselect());
@@ -114,28 +117,28 @@
         }
 
         createCapital(owner, x, y) {
-            this.fields[x][y].createCapital(owner);
+            this.field[x][y].createCapital(owner);
         }
 
         createUnit(owner, x, y) {
-            this.fields[x][y].createUnit(owner);
+            this.field[x][y].createUnit(owner);
         }
 
         selectUnit(hex) {
             this.unitSelected = hex;
             for (let i = hex.x - 1; (i <= hex.x + 1) && (i >= 0) && (i <= this.sizeX); i++) {
-                this.fields[i][hex.y].select();
-                this._selected.push(this.fields[i][hex.y]);
+                this.field[i][hex.y].select();
+                this._selected.push(this.field[i][hex.y]);
             }
             for (
                 let i = hex.x - Math.floor(hex.y % 2);
                 (i <= hex.x - Math.floor(hex.y % 2) + 1) && (i >= 0) && (i <= this.sizeX);
                 i++
             ) {
-                this.fields[i][hex.y + 1].select();
-                this._selected.push(this.fields[i][hex.y + 1]);
-                this.fields[i][hex.y - 1].select();
-                this._selected.push(this.fields[i][hex.y - 1]);
+                this.field[i][hex.y + 1].select();
+                this._selected.push(this.field[i][hex.y + 1]);
+                this.field[i][hex.y - 1].select();
+                this._selected.push(this.field[i][hex.y - 1]);
             }
         }
 
