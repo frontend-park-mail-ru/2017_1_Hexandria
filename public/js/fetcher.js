@@ -1,7 +1,7 @@
-;(function() {
+
     "use strict";
 
-    class Fetcher {
+    export default class Fetcher {
 
         constructor() {
             this.host = "http://79.137.74.9:8082";
@@ -34,6 +34,3 @@
             return this._prepare("POST", path, data);
         }
     }
-
-    window.Fetcher = Fetcher;
-})();

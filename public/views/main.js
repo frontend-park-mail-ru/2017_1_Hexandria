@@ -1,15 +1,23 @@
-;(function () {
+
     "use strict";
 
-    const View = window.View;
-    const Hex = window.Hex;
-    const UserPanel = window.UserPanel;
-    const RegisterPanel = window.RegisterPanel;
-    const Router = window.Router;
-    const Fetcher = window.Fetcher;
-    const api = window.api;
+    // const View = window.View;
+    // const Hex = window.Hex;
+    // const UserPanel = window.UserPanel;
+    // const RegisterPanel = window.RegisterPanel;
+    // const Router = window.Router;
+    // const Fetcher = window.Fetcher;
+    // const api = window.api;
 
-    class MainView extends View {
+    import View from "../modules/view";
+    import Router from "../modules/router";
+    import Fetcher from "../js/fetcher";
+    import { api } from "../hexandria/api";
+    import Hex from "../components/hex/hex";
+    import UserPanel from "../components/user_panel/user_panel";
+    import RegisterPanel from "../components/register_panel/register_panel";
+
+    export default class MainView extends View {
 
         constructor(options = {}) {
             super(options);
@@ -125,7 +133,3 @@
         }
 
     }
-
-    window.MainView = MainView;
-})();
-

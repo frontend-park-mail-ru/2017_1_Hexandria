@@ -1,11 +1,15 @@
-;(function () {
+
     "use strict";
 
-    const View = window.View;
-    const Button = window.Button;
-    const Router = window.Router;
+    // const View = window.View;
+    // const Button = window.Button;
+    // const Router = window.Router;
+    import View from "../modules/view";
+    import Button from "../components/button/button";
+    import Router from "../modules/router";
 
-    class AboutView extends View {
+
+    export default class AboutView extends View {
         constructor(options = {}) {
             super(options);
 
@@ -29,6 +33,3 @@
         init(options = {}) {
         }
     }
-
-    window.AboutView = AboutView;
-})();

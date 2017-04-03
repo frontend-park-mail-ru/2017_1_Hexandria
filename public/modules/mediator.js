@@ -1,7 +1,7 @@
-;(function() {
+
     "use strict";
 
-    class Mediator {
+    export default class Mediator {
 
         constructor() {
             if (Mediator.__instance) {
@@ -52,6 +52,3 @@
             }
         }
     }
-
-    window.Mediator = Mediator;
-})();

@@ -5,7 +5,7 @@
   padding: 2% 0;
 
   &__login, &__signup {
-    @extend .button;
+    @extend .button !optional;
     width: 45%;
     height: 100%;
 

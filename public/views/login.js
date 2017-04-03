@@ -1,14 +1,23 @@
-;(function () {
+
     "use strict";
 
-    const View = window.View;
-    const Button = window.Button;
-    const Form = window.Form;
-    const Router = window.Router;
-    const Fetcher = window.Fetcher;
-    const api = window.api;
+    import View from "../modules/view";
+    import Button from "../components/button/button";
+    import Router from "../modules/router";
+    import Fetcher from "../js/fetcher";
+    import { api } from "../hexandria/api";
+    import Form from "../components/form/form";
 
-    class LoginView extends View {
+
+
+    // const View = window.View;
+    // const Button = window.Button;
+    // const Form = window.Form;
+    // const Router = window.Router;
+    // const Fetcher = window.Fetcher;
+    // const api = window.api;
+
+    export default class LoginView extends View {
         constructor(options = {}) {
             super(options);
 
@@ -86,6 +95,3 @@
         init(options = {}) {
         }
     }
-
-    window.LoginView = LoginView;
-})();

@@ -1,9 +1,10 @@
-;(function() {
-    "use strict";
+ "use strict";
 
-    const Button = window.Button;
+    // const Button = window.Button;
+	import Button from "../button/button";
+    import hex_template from "./hex_template";
 
-    class Hex {
+    export default class Hex {
         /**
          * Hex constructor
          * @param {Object[]} data
@@ -50,6 +51,3 @@
             this.el.querySelector(".hex__buttons-minor").appendChild(this.scoreboard.el);
         }
     }
-
-    window.Hex = Hex;
-})();

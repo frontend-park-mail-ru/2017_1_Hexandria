@@ -1,13 +1,16 @@
-;(function() {
+
     "use strict";
 
-    const HexandriaLogic = window.HexandriaLogic;
-    const HexandriaGraphics = window.HexandriaGraphics;
+    // const HexandriaLogic = window.HexandriaLogic;
+    // const HexandriaGraphics = window.HexandriaGraphics;
+    import HexandriaLogic from "./hexandriaLogic";
+    import HexandriaGraphics from "./hexandriaGraphics";
 
-    const Mediator = window.Mediator;
-    const EVENTS = window.EVENTS;
+    import Mediator from "../modules/mediator";
+    // const EVENTS = window.EVENTS;
+    import { EVENTS } from "./events";
 
-    class HexandriaGame {
+    export default class HexandriaGame {
         constructor(Mode, element, user) {
             console.log("HexandriaGame created");
 
@@ -23,6 +26,3 @@
             (new Mediator()).subscribe(this, EVENTS.GAME.START, "gameStart");
         }
     }
-
-    window.HexandriaGame = HexandriaGame;
-})();

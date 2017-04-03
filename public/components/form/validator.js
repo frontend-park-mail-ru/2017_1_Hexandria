@@ -1,7 +1,7 @@
-(function() {
     "use strict";
+    import "./form.scss";
 
-    class Validator {
+    export default class Validator {
         // Constants
         constructor() {
             this.minLength = 4;
@@ -77,6 +77,3 @@
             }
         }
     }
-
-    window.Validator = Validator;
-})();

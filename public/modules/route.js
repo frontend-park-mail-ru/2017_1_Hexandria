@@ -1,12 +1,13 @@
-;(function () {
+
     "use strict";
+    import { pathToRegex } from "./pathToRegex";
 
     let id = 0;
 
     /**
      * Route class
      */
-    class Route {
+    export default class Route {
         /**
          * Create new route
          * @param {string} pathname
@@ -14,7 +15,7 @@
          * @param {Object} [options={}]
          */
         constructor(pathname, view, options = {}) {
-            this.pathToRegex = window.pathToRegex;
+            this.pathToRegex = pathToRegex;
 
             this.id = `p${id}`;
             id++;
@@ -73,6 +74,3 @@
             this.__router = router;
         }
     }
-
-    window.Route = Route;
-})();

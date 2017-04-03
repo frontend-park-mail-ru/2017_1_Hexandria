@@ -1,10 +1,13 @@
-(function() {
+    import './register_panel.scss';
+
     "use strict";
 
-    const Button = window.Button;
-    const Router = window.Router;
+    // const Button = window.Button;
+    // const Router = window.Router;
+    import Button from "../button/button";
+    import Router from "../../modules/router";
 
-    class RegisterPanel {
+    export default class RegisterPanel {
         /**
          * Register panel constructor
          */
@@ -67,6 +70,3 @@
             this.el.appendChild(this.signup.el);
         }
     }
-
-    window.RegisterPanel = RegisterPanel;
-})();

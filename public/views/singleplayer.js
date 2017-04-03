@@ -1,15 +1,25 @@
-;(function () {
+
     "use strict";
 
-    const View = window.View;
-    const Button = window.Button;
-    const Router = window.Router;
-    const Game = window.Game;
+    // const View = window.View;
+    // const Button = window.Button;
+    // const Router = window.Router;
+    // const Game = window.Game;
+    //
+    // const Mediator = window.Mediator;
+    // const EVENTS = window.EVENTS;
 
-    const Mediator = window.Mediator;
-    const EVENTS = window.EVENTS;
+    import View from "../modules/view";
+    import Router from "../modules/router";
+    import Button from "../components/button/button";
+    import Game from "../components/game/game";
+    import Mediator from "../modules/mediator";
 
-    class SingleplayerView extends View {
+    // const EVENTS = window.EVENTS;
+    import { EVENTS } from "../hexandria/events";
+
+
+    export default class SingleplayerView extends View {
         constructor(options = {}) {
             super(options);
 
@@ -56,6 +66,3 @@
             (new Mediator()).emit(EVENTS.GAME.EXIT);
         }
     }
-
-    window.SingleplayerView = SingleplayerView;
-})();

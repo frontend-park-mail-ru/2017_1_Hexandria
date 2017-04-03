@@ -13,16 +13,16 @@ app.use(function(req, res, next){
 
 app.use('/lib', express.static('node_modules'));
 
-app.use('/', express.static('public'));
+app.use('/', express.static('dist'));
 
 app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const server = app.listen(port, function(){
     console.log('Listening on port %s', port);
 });

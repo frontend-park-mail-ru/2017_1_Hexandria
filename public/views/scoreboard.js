@@ -1,11 +1,10 @@
-;(function () {
-    "use strict";
 
-    const View = window.View;
-    const Button = window.Button;
-    const Router = window.Router;
+    import View from "../modules/view";
+    import Router from "../modules/router";
+    import Button from "../components/button/button";
 
-    class ScoreboardView extends View {
+
+    export default class ScoreboardView extends View {
         constructor(options = {}) {
             super(options);
 
@@ -30,5 +29,4 @@
         }
     }
 
-    window.ScoreboardView = ScoreboardView;
-})();
+

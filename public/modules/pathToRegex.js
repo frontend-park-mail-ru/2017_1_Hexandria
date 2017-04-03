@@ -1,7 +1,7 @@
-;(function () {
+
     "use strict";
 
-    const pathToRegex = function (pathname) {
+    export const pathToRegex = function (pathname) {
         const keyNames = [];
         const parts = pathname
             .split("/")
@@ -47,5 +47,4 @@
         };
     };
 
-    window.pathToRegex = pathToRegex;
-})();
+

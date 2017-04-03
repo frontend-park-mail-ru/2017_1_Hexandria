@@ -1,16 +1,23 @@
-;(function() {
-    "use strict";
 
-    const THREE = window.THREE;
+
+    // const THREE = window.THREE;
+    // const Stats = window.Stats;
+    //
+    // const PlayerGame = window.PlayerGame;
+    // const MapGame = window.MapGame;
+    //
+    // const Mediator = window.Mediator;
+    // const EVENTS = window.EVENTS;
+    import Mediator from "../modules/mediator";
+    import THREE from "three-js";
+    import { EVENTS } from "./events";
+    import PlayerGame from "./hexandriaGraphics/PlayerGame";
+    import MapGame from "./hexandriaGraphics/MapGame";
     const Stats = window.Stats;
 
-    const PlayerGame = window.PlayerGame;
-    const MapGame = window.MapGame;
 
-    const Mediator = window.Mediator;
-    const EVENTS = window.EVENTS;
 
-    class HexandriaGraphics {
+    export default class HexandriaGraphics {
         constructor(element) {
             console.log("HexandriaGraphics created");
 
@@ -259,6 +266,3 @@
 
 
     }
-
-    window.HexandriaGraphics = HexandriaGraphics;
-})();

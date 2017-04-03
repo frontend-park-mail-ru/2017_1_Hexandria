@@ -1,14 +1,23 @@
-;(function () {
+
     "use strict";
 
-    const View = window.View;
-    const Button = window.Button;
-    const Router = window.Router;
-    const Form = window.Form;
-    const Fetcher = window.Fetcher;
-    const api = window.api;
+    // const View = window.View;
+    // const Button = window.Button;
+    // const Router = window.Router;
+    // const Form = window.Form;
+    // const Fetcher = window.Fetcher;
+    // const api = window.api;
 
-    class SignupView extends View {
+    import View from "../modules/view";
+    import Router from "../modules/router";
+    import Button from "../components/button/button";
+    import Form from "../components/form/form";
+    import Fetcher from "../js/fetcher";
+    // const api = window.api;
+    import { api } from "../hexandria/api";
+
+
+    export default class SignupView extends View {
         constructor(options = {}) {
             super(options);
 
@@ -96,6 +105,3 @@
         init(options = {}) {
         }
     }
-
-    window.SignupView = SignupView;
-})();

@@ -1,9 +1,11 @@
-;(function() {
+
     "use strict";
 
-    const THREE = window.THREE;
+    // const THREE = window.THREE;
+    import THREE from "three-js";
 
-    class TownGame {
+
+    export default class TownGame {
         constructor(owner) {
             this.owner = owner;
 
@@ -12,6 +14,3 @@
             this.object = new THREE.Mesh(geometry, material);
         }
     }
-
-    window.TownGame = TownGame;
-})();

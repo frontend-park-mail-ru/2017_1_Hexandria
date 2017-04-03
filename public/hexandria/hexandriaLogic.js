@@ -1,10 +1,11 @@
-;(function() {
-    "use strict";
 
-    const Mediator = window.Mediator;
-    const EVENTS = window.EVENTS;
 
-    class HexandriaLogic {
+    // const Mediator = window.Mediator;
+    // const EVENTS = window.EVENTS;
+    import Mediator from "../modules/mediator";
+    import { EVENTS } from "./events";
+
+    export default class HexandriaLogic {
         constructor(options) {
             console.log("HexandriaLogic created");
 
@@ -40,6 +41,3 @@
         }
 
     }
-
-    window.HexandriaLogic = HexandriaLogic;
-})();

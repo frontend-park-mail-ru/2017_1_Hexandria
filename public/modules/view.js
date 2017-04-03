@@ -1,10 +1,10 @@
-;(function () {
+
     "use strict";
 
     /**
      * View class
      */
-    class View {
+    export default class View {
         /**
          * Create new view
          * @param {Object} [options={}]
@@ -127,6 +127,3 @@
         }
 
     }
-
-    window.View = View;
-})();

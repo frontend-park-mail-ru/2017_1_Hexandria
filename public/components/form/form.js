@@ -1,11 +1,17 @@
-;(function() {
+
     "use strict";
 
-    const Validator = window.Validator;
-    const Input = window.Input;
-    const Button = window.Button;
+    import "./form.scss";
+    import Button from "../button/button.js";
+    import Validator  from "./validator.js";
+    import Input from "../input/input.js";
+    import template from "./form_template.pug";
 
-    class Form {
+    // const Validator = window.Validator;
+    // const Input = window.Input;
+    // const Button = window.Button;
+
+    export default class Form {
         /**
          * Form constructor
          * @param {Object} options
@@ -83,6 +89,3 @@
             });
         }
     }
-
-    window.Form = Form;
-})();

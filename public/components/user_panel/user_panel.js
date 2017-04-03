@@ -1,17 +1,25 @@
-;(function() {
+
     "use strict";
+    import Button from "../button/button";
+    import Fetcher from "../../js/fetcher.js";
+    import Router from "../../modules/router";
+    import { api } from "../../hexandria/api";
+    import './user_panel.scss';
+    import template from "./user_panel_template.pug";
 
-    const Button = window.Button;
-    const Router = window.Router;
-    const Fetcher = window.Fetcher;
-    const api = window.api;
 
-    class UserPanel {
+    // const Button = window.Button;
+    // const Router = window.Router;
+    // const Fetcher = window.Fetcher;
+    // const api = window.api;
+
+    export default class UserPanel {
         /**
          * User panel constructor
          */
         constructor() {
             this.setUser("Dolan");
+
 
             this.fetcher = new Fetcher();
 
@@ -76,6 +84,3 @@
             this.username = name;
         }
     }
-
-    window.UserPanel = UserPanel;
-})();

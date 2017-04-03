@@ -1,7 +1,8 @@
-;(function() {
-    "use strict";
 
-    class Title {
+    "use strict";
+    import './title.scss';
+
+    export default class Title {
         /**
          * Title constructor
          * @param {string} title
@@ -28,6 +29,3 @@
             this.el.innerHTML = this.title;
         }
     }
-
-    window.Title = Title;
-})();

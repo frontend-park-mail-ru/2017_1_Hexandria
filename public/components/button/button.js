@@ -1,7 +1,8 @@
-;(function() {
+import './button.scss';
+
     "use strict";
 
-    class Button {
+    export default class Button {
         /**
          * Button constructor
          * @param {Object} options
@@ -47,6 +48,3 @@
             return this.el.outerHTML;
         }
     }
-
-    window.Button = Button;
-})();

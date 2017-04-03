@@ -1,12 +1,12 @@
-;(function () {
+
     "use strict";
 
-    const Route = window.Route;
+	import Route from "./route";
 
     /**
      * Router class
      */
-    class Router {
+    export default class Router {
         /**
          * Singleton constructor
          */
@@ -135,6 +135,3 @@
         //     this.history.forward();
         // }
     }
-
-    window.Router = Router;
-})();

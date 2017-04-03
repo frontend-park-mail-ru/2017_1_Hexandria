@@ -1,14 +1,12 @@
-;(function () {
-    "use strict";
 
-    const HexandriaLogic = window.HexandriaLogic;
 
-    class HexandriaLogicMultiplayer extends HexandriaLogic {
+    // const HexandriaLogic = window.HexandriaLogic;
+    import HexandriaLogic from "../hexandriaLogic";
+
+    export default class HexandriaLogicMultiplayer extends HexandriaLogic {
         constructor(options = {}) {
             super(options);
             console.log("HexandriaLogicMultiplayer");
         }
     }
 
-    window.HexandriaLogicMultiplayer = HexandriaLogicMultiplayer;
-})();

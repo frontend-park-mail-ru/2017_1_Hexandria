@@ -1,7 +1,7 @@
-;(function() {
-    "use strict";
 
-    const HexGame = window.HexGame;
+
+    // const HexGame = window.HexGame;
+    import HexGame from "./HexGame";
 
     const _hexagonDiameter = 1;
     const _hexagonAlpha = _hexagonDiameter / 4.0;
@@ -10,7 +10,7 @@
     const _fieldWater = 0x8080ff;
     const _fieldRock = 0x808080;
 
-    class MapGame {
+    export default class MapGame {
 
         constructor(scene, sizeX, sizeY) {
             this.scene = scene;
@@ -132,6 +132,3 @@
             toHex.highlight();
         }
     }
-
-    window.MapGame = MapGame;
-})();

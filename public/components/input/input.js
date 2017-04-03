@@ -1,7 +1,7 @@
-;(function() {
     "use strict";
+    import './input.scss';
 
-    class Input {
+    export default class Input {
         /**
          * Input constructor
          * @param {Object[]} attrs
@@ -57,6 +57,3 @@
             this.el.style.border = `1px solid ${color}`;
         }
     }
-
-    window.Input = Input;
-})();

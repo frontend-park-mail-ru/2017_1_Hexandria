@@ -1,10 +1,9 @@
-;(function() {
+
     "use strict";
 
-    const TownGame = window.TownGame;
+    // const TownGame = window.TownGame;
+    import TownGame from "./TownGame";
 
-    class CapitalGame extends TownGame {
+    export default class CapitalGame extends TownGame {
     }
 
-    window.CapitalGame = CapitalGame;
-})();

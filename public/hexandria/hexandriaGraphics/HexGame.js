@@ -1,14 +1,18 @@
-;(function() {
+
     "use strict";
 
-    const THREE = window.THREE;
-    const UnitGame = window.UnitGame;
-    const CapitalGame = window.CapitalGame;
+    // const THREE = window.THREE;
+    import THREE from "three";
+    import CapitalGame from "./CapitalGame";
+
+
+    // const UnitGame = window.UnitGame;
+    // const CapitalGame = window.CapitalGame;
 
     const _highlightedColor = 0xf08080;
     const _selectedColor = 0x80f000;
 
-    class HexGame extends THREE.Mesh {
+    export default class HexGame extends THREE.Mesh {
 
         constructor(scene, color, x, y, z) {
             const _hexagonDiameter = 1;
@@ -99,6 +103,3 @@
 
         }
     }
-
-    window.HexGame = HexGame;
-})();

@@ -1,7 +1,8 @@
-;(function() {
+import './game.scss';
+import template from "./game_template.pug";
     "use strict";
 
-    class Game {
+    export default class Game {
         /**
          * Game constructor
          */
@@ -25,6 +26,3 @@
             this.el.innerHTML = game_template();
         }
     }
-
-    window.Game = Game;
-})();

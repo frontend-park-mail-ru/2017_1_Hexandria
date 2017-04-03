@@ -1,20 +1,27 @@
-;(function() {
-    "use strict";
 
-    const HexandriaLogicSingleplayer = window.HexandriaLogicSingleplayer;
-    const HexandriaLogicMultiplayer = window.HexandriaLogicMultiplayer;
-    const HexandriaGame = window.HexandriaGame;
 
-    const Router = window.Router;
-    const Mediator = window.Mediator;
-    const EVENTS = window.EVENTS;
+    // const HexandriaLogicSingleplayer = window.HexandriaLogicSingleplayer;
+    // const HexandriaLogicMultiplayer = window.HexandriaLogicMultiplayer;
+    // const HexandriaGame = window.HexandriaGame;
+    //
+    // const Router = window.Router;
+    // const Mediator = window.Mediator;
+    // const EVENTS = window.EVENTS;
+    import Router from '../modules/router';
+    import Mediator from "../modules/mediator";
+
+    import HexandriaLogicSingleplayer from "./hexandriaLogic/HexandriaLogicSingleplayer";
+    import HexandriaLogicMultiplayer from "./hexandriaLogic/HexandriaLogicMultiplayer";
+    import HexandriaGame from "./hexandriaGame";
+    // const EVENTS = window.EVENTS;
+    import { EVENTS } from "./events";
 
     const MODES = {
         SINGLEPLAYER: HexandriaLogicSingleplayer,
         MULTIPLAYER: HexandriaLogicMultiplayer,
     };
 
-    class HexandriaApp {
+    export default class HexandriaApp {
         constructor(options) {
             console.log("HexandriaApp created");
 
@@ -46,6 +53,3 @@
             this.game = null;*/
         }
     }
-
-    window.HexandriaApp = HexandriaApp;
-})();

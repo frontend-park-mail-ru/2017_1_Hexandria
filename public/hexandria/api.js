@@ -1,8 +1,7 @@
-;(function () {
-    "use strict";
 
 
-    const api = {};
+
+    export const api = {};
 
     api.testUser = {
         login: "test-user",
@@ -31,5 +30,3 @@
         signup: "/api/signup",
     };
 
-    window.api = api;
-})();

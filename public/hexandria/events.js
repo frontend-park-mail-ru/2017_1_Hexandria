@@ -1,7 +1,5 @@
-;(function() {
-    "use strict";
 
-    const EVENTS = {
+    export const EVENTS = {
         GAME: {
             INIT: "EVENTS.GAME.INIT",
             START: "EVENTS.GAME.START",
@@ -15,5 +13,3 @@
         },
     };
 
-    window.EVENTS = EVENTS;
-})();
