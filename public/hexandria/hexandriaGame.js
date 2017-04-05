@@ -66,6 +66,7 @@
 
                 players: {
                     "Bob" : {
+                        color: 0xff0000,
                         capital: "town1",
                         army: [
                             {
@@ -77,6 +78,7 @@
                         ]
                     },
                     "John": {
+                        color: 0x0000ff,
                         capital: "town4",
                         army: [
                             {

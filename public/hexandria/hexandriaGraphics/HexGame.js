@@ -30,6 +30,8 @@
             this.color = color;
             this.hasUnit = false;
             this.scene = scene;
+
+            this.emissive = this.material.emissive.getHex();
         }
 
         colorize(color) {
@@ -48,6 +50,16 @@
         unhighlight() {
             this.highlighted = false;
             this.material.emissive.setHex(this.currentHex);
+        }
+
+        highlight__() {
+            this.highlighted = true;
+            this.material.emissive.setHex(_highlightedColor);
+        }
+
+        unhighlight__() {
+            this.highlighted = false;
+            this.material.emissive.setHex(this.emissive);
         }
 
         select() {

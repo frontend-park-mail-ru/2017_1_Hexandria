@@ -38,6 +38,8 @@
                 }
             }
             this.scene.add(this.fieldGroup);
+
+            (new Mediator()).subscribe(this, EVENTS.GRAPHICS.HIGHLIGHT, "onhighlight");
         }
 
         find(obj) {
@@ -81,6 +83,21 @@
             }
         }
 
+        onhighlight(position) {
+            console.log("onhighlight", position);
+
+
+            if(this.__h) {
+                console.log("unh", this.__h);
+                this.field[this.__h.x][this.__h.y].unhighlight__();
+            }
+
+            if(position) {
+                this.__h = position;
+                this.field[this.__h.x][this.__h.y].highlight__();
+            }
+        }
+
         handleSelect(intersects) {
             console.log("handleSelect", intersects);
             if (intersects.length > 0) {
@@ -88,7 +105,7 @@
 
                 console.log(hex, hex.x, hex.y);
                 (new Mediator()).emit(
-                    EVENTS.GRAPHICS.SELECT_FIELD,
+                    EVENTS.LOGIC.SELECT,
                     {
                         x: hex.x,
                         y: hex.y
@@ -106,7 +123,7 @@
                     this.moveUnit(this.unitSelected, hex);
                 }
             } else {
-                (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_FIELD);
+                (new Mediator()).emit(EVENTS.LOGIC.SELECT);
 
                 // out of map
                 if (this._selected.length > 0) {

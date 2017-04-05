@@ -9,8 +9,8 @@
             console.log("HexandriaLogicSingleplayer");
         }
 
-        selectField(position) {
-            super.selectField(position);
+        onselect(position) {
+            super.onselect(position);
             console.log("single", position);
         }
     }

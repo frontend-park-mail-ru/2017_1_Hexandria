@@ -7,8 +7,12 @@
             START: "EVENTS.GAME.START",
             EXIT: "EVENTS.GAME.EXIT",
         },
+        LOGIC: {
+            SELECT: "EVENTS.LOGIC.SELECT"
+        },
         GRAPHICS: {
-            SELECT_FIELD: "EVENTS.GRAPHICS.SELECT_FIELD"
+            HIGHLIGHT: "EVENTS.GRAPHICS.HIGHLIGHT",
+            MOVE: "EVENTS.GRAPHICS.MOVE",
         },
         TURN: {
             START_TURN: "EVENTS.TURN.START_TURN",
