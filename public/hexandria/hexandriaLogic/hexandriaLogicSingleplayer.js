@@ -1,8 +1,6 @@
-
     "use strict";
 
-    // const HexandriaLogic = window.HexandriaLogic;
-	import HexandriaLogic from "../hexandriaLogic";
+    import HexandriaLogic from "../hexandriaLogic";
 
     export default class HexandriaLogicSingleplayer extends HexandriaLogic {
         constructor(game) {
@@ -10,8 +8,8 @@
             console.log("HexandriaLogicSingleplayer");
         }
 
-        selectField(position) {
-            super.selectField(position);
+        onselect(position) {
+            super.onselect(position);
             console.log("single", position);
         }
     }

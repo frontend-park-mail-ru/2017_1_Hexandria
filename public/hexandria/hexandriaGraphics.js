@@ -4,6 +4,8 @@
     import { EVENTS } from "./events";
     import PlayerGame from "./hexandriaGraphics/PlayerGame";
     import MapGame from "./hexandriaGraphics/MapGame";
+    import HexTown from "./hexandriaGraphics/hexTown";
+    import HexSquad from "./hexandriaGraphics/hexSquad";
     import Stats from "stats-js";
     import * as THREE from 'three';
 
@@ -17,6 +19,8 @@
             this.element = element;
 
             (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
+
+            (new Mediator()).subscribe(this, EVENTS.GRAPHICS.MOVE, "movePlayer");
 
             window.onkeypress = function(e) {
                 if (e.keyCode === 13) {
@@ -32,8 +36,49 @@
             console.log("drawMap:", options);
         }
 
+        initTowns() {
+            this.towns = [];
+
+            const towns = this.game.field.towns;
+            for (let index in towns) {
+                // console.log(towns[index]);
+
+                this.towns.push(new HexTown(this.scene, 0x777777, towns[index].position));
+            }
+        }
+
+        initPlayers() {
+            this.players = [];
+            this.playersMap = {};
+
+            for (let playerName in this.game.players) {
+                const playerColor = this.game.players[playerName].color;
+                const playerArmy = this.game.players[playerName].army;
+
+                this.playersMap[playerName] = [];
+
+                // console.log(playerName, playerArmy);
+                for (let index in playerArmy) {
+                    const squad = playerArmy[index];
+
+                    // console.log(playerName, squad.position);
+
+                    const newPlayer = new HexSquad(this.scene, playerColor, squad.position);
+                    this.players.push(newPlayer);
+                    this.playersMap[playerName].push(newPlayer);
+                }
+            }
+        }
+
+        movePlayer(player) {
+            console.log("movePlayer", player);
+            this.playersMap[player.name][player.index].move(player.position.x, player.position.y);
+        }
+
         gameProcess() {
             this.gameStart();
+            this.initTowns();
+            this.initPlayers();
 
             const player1 = new PlayerGame("Player 1", 0xff0000);
             const player2 = new PlayerGame("Player 2", 0x0000ff);

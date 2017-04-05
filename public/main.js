@@ -29,7 +29,6 @@
     const app = new HexandriaApp();
     (new Mediator()).done();
 
-
     (new Router())
         .addRoute("/singleplayer", SingleplayerView)
         .addRoute("/multiplayer", MultiplayerView)

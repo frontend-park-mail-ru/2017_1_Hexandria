@@ -9,7 +9,10 @@
     "eslint": "./node_modules/.bin/eslint public",
     "karmaTest": "karma start",
     "build": "webpack --progress --colors",
-    "watch": "webpack-dev-server --progress --colors --open"
+    "watch": "webpack-dev-server --progress --colors --open",
+
+    "webpack-develop": "./node_modules/.bin/webpack --watch --progress --colors",
+    "go": "node server.js"
   },
   "repository": {
     "type": "git",

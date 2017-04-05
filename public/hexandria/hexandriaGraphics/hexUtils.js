@@ -1,10 +1,4 @@
-
-
-
-    /*import THREELib from "three-js";
-
-    // const HexGame = window.HexGame;
-    const THREE = THREELib();*/
+    "use strict";
 
     import * as THREE from 'three';
 

@@ -1,7 +1,7 @@
  "use strict";
 
     // const Button = window.Button;
-	import Button from "../button/button";
+    import Button from "../button/button";
     // const hex_template = require('./hex_template');
     import  hex_template from "./hex_template.pug";
 

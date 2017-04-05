@@ -1,7 +1,7 @@
 
     "use strict";
 
-	import Route from "./route";
+    import Route from "./route";
 
     /**
      * Router class

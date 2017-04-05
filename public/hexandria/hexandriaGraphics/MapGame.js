@@ -30,6 +30,9 @@
             this._selected = [];
             this.unitSelected = null;
 
+            this._selectedSquad = null;
+            this._selectedArea = [];
+
             for (let i = 0; i < this.sizeX; i++) {
                 for (let j = 0; j < this.sizeY; j++) {
                     /*this.field[i][j] = new HexGame(this.scene, _fieldGrass, i, j, 0.2);
@@ -46,6 +49,9 @@
                 }
             }
             this.scene.add(this.fieldGroup);
+
+            (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SELECT_UNIT, "onSelectSquad");
+            (new Mediator()).subscribe(this, EVENTS.GRAPHICS.UNSELECT_ALL, "onUnselectAll");
         }
 
         find(obj) {
@@ -89,6 +95,52 @@
             }
         }
 
+        onSelectSquad(squadPosition) {
+            let areaPositions = this.selectSquadArea(squadPosition);
+
+            //unhighlight selected squad & area
+            this.onUnselectAll();
+
+            this._selectedSquad = squadPosition;
+            this.field[squadPosition.x][squadPosition.y].selectSquad();
+
+            this._selectedArea = [];
+            areaPositions.forEach((position) => {
+                this._selectedArea.push(position);
+                this.field[position.x][position.y].selectArea();
+            });
+        }
+
+        onUnselectAll() {
+            if(this._selectedSquad) {
+                this.field[this._selectedSquad.x][this._selectedSquad.y].unselectSquad();
+                this.selectSquadArea(this._selectedSquad).forEach(position => {
+                    console.log(position);
+                    this.field[position.x][position.y].unselectArea();
+                    console.log(this.field[position.x][position.y]);
+                });
+            }
+        }
+
+        selectSquadArea(position) {
+            let result = [];
+            result.push({x: position.x - 1, y: position.y});
+            result.push({x: position.x + 1, y: position.y});
+            if(position.y % 2 === 1) {
+                result.push({x: position.x - 1, y: position.y - 1});
+                result.push({x: position.x, y: position.y - 1});
+                result.push({x: position.x - 1, y: position.y + 1});
+                result.push({x: position.x, y: position.y + 1});
+            } else {
+                result.push({x: position.x + 1, y: position.y - 1});
+                result.push({x: position.x, y: position.y - 1});
+                result.push({x: position.x + 1, y: position.y + 1});
+                result.push({x: position.x, y: position.y + 1});
+            }
+            result = result.filter(element => element.x >= 0 && element.x < this.sizeX && element.y >= 0 && element.y < this.sizeY)
+            return result;
+        }
+
         handleSelect(intersects) {
             console.log("handleSelect", intersects);
             if (intersects.length > 0) {
@@ -96,7 +148,7 @@
 
                 console.log(hex, hex.x, hex.y);
                 (new Mediator()).emit(
-                    EVENTS.GRAPHICS.SELECT_FIELD,
+                    EVENTS.LOGIC.SELECT,
                     {
                         x: hex.x,
                         y: hex.y
@@ -114,7 +166,7 @@
                     this.moveUnit(this.unitSelected, hex);
                 }
             } else {
-                (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_FIELD);
+                (new Mediator()).emit(EVENTS.LOGIC.SELECT);
 
                 // out of map
                 if (this._selected.length > 0) {
@@ -135,7 +187,7 @@
         selectUnit(hex) {
             this.unitSelected = hex;
             for (let i = hex.x - 1; (i <= hex.x + 1) && (i >= 0) && (i <= this.sizeX); i++) {
-                this.field[i][hex.y].select();
+                this.field[i][hex.y].selectArea();
                 this._selected.push(this.field[i][hex.y]);
             }
             for (
@@ -143,9 +195,14 @@
                 (i <= hex.x - Math.floor(hex.y % 2) + 1) && (i >= 0) && (i <= this.sizeX);
                 i++
             ) {
-                this.field[i][hex.y + 1].select();
+
+                /*this.field[i][hex.y + 1].select();
                 this._selected.push(this.field[i][hex.y + 1]);
-                this.field[i][hex.y - 1].select();
+                this.field[i][hex.y - 1].select();*/
+
+                this.field[i][hex.y + 1].selectArea();
+                this._selected.push(this.field[i][hex.y + 1]);
+                this.field[i][hex.y - 1].selectArea();
                 this._selected.push(this.field[i][hex.y - 1]);
             }
         }

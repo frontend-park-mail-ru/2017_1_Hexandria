@@ -1,20 +1,17 @@
-
     "use strict";
 
-    // const THREE = window.THREE;
-    // const UnitGame = window.UnitGame;
-    // const CapitalGame = window.CapitalGame;
-    //
-    // const HexUtils = window.HexUtils;
-	// import THREELib from "three-js";
-	// var THREE = THREELib();
     import * as THREE from 'three';
-	import CapitalGame from "./CapitalGame";
-	import UnitGame from "./UnitGame";
-	import HexUtils from "./hexUtils";
+    import CapitalGame from "./CapitalGame";
+    import UnitGame from "./UnitGame";
+    import HexUtils from "./hexUtils";
 
-	const _highlightedColor = 0xf08080;
-    const _selectedColor = 0x80f000;
+    // const _highlightedColor = 0xf08080;
+    // const _selectedColor = 0x80f000;
+
+    const _highlightedColor = 0xf08080;
+    const _selectedSquadColor = 0xff0000;
+    const _selectedAreaColor = 0xffff00;
+    const _grassColor = 0x80f080;
 
     export default class HexGame extends THREE.Mesh {
 
@@ -36,6 +33,11 @@
             this.color = color;
             this.hasUnit = false;
             this.scene = scene;
+
+            this.selectedSquad = false;
+            this.selectedArea = false;
+
+            this.emissive = this.material.emissive.getHex();
         }
 
         colorize(color) {
@@ -46,26 +48,46 @@
         }
 
         highlight() {
-            this.highlighted = true;
-            this.currentHex = this.material.emissive.getHex();
-            this.material.emissive.setHex(_highlightedColor);
+            if(!this.selectedArea && !this.selectedSquad) {
+                this.highlighted = true;
+                this.material.emissive.setHex(_highlightedColor);
+            }
         }
 
         unhighlight() {
-            this.highlighted = false;
-            this.material.emissive.setHex(this.currentHex);
+            if(!this.selectedArea && !this.selectedSquad) {
+                this.highlighted = false;
+                this.material.emissive.setHex(null);
+            }
         }
 
-        select() {
+        selectSquad() {
             console.log("SELECT");
-            this.selected = true;
-            this.material.emissive.setHex(_selectedColor);
+            this.selectedSquad = true;
+            this.material.emissive.setHex(_selectedSquadColor);
+        }
+
+        selectArea() {
+            console.log("SELECT");
+            this.selectedArea = true;
+            this.material.emissive.setHex(_selectedAreaColor);
         }
 
         unselect() {
             console.log("UNSELECT");
             this.selected = false;
             this.material.emissive.setHex(this.currentHex);
+        }
+
+        unselectSquad() {
+            console.log(this.material.emissive);
+            this.selectedSquad = false;
+            this.material.emissive.setHex(null);
+        }
+
+        unselectArea() {
+            this.selectedArea = false;
+            this.material.emissive.setHex(null);
         }
 
         createUnit(owner) {

@@ -13,68 +13,68 @@ const loaders = require('./webpack.config.loaders')();
 
 
 loaders.push({
-	test: /\.s?css$/,
-	loader: ExtractTextPlugin.extract({
-		fallback: 'style-loader',
-		loader: ['css-loader?minimize', 'postcss-loader', 'sass-loader']
-	})
+    test: /\.s?css$/,
+    loader: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        loader: ['css-loader?minimize', 'postcss-loader', 'sass-loader']
+    })
 });
 
 module.exports = {
-	devtool: 'source-map',
-	entry: {
-		app: path.resolve(__dirname, 'public', 'main.js'),
-		vendor: ['babel-polyfill', 'eventsource-polyfill']
-	},
+    devtool: 'source-map',
+    entry: {
+        app: path.resolve(__dirname, 'public', 'main.js'),
+        vendor: ['babel-polyfill', 'eventsource-polyfill']
+    },
 
-	output: {
-		filename: path.join('js', '[chunkhash].js'),
-		path: path.resolve(__dirname, 'dist')
-	},
+    output: {
+        filename: path.join('js', '[chunkhash].js'),
+        path: path.resolve(__dirname, 'dist')
+    },
 
-	module: {
-		loaders
-	},
+    module: {
+        loaders
+    },
 
-	plugins: [
-		new CleanWebpackPlugin(['dist']),
-		new webpack.optimize.UglifyJsPlugin({
-			sourceMap: true,
-			beautify: false,
-			comments: false,
-			compress: {
-				sequences: true,
-				booleans: true,
-				loops: true,
-				unused: true,
-				warnings: false,
-				drop_console: true,
-				unsafe: true
-			}
-		}),
-		new HtmlPlugin({
-			filename: 'index.html',
-			template: path.resolve(__dirname, 'public/index.html')
-		}),
-		new ExtractTextPlugin(path.join('css', '[name].bundle.[hash].css')),
+    plugins: [
+        new CleanWebpackPlugin(['dist']),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            beautify: false,
+            comments: false,
+            compress: {
+                sequences: true,
+                booleans: true,
+                loops: true,
+                unused: true,
+                warnings: false,
+                drop_console: true,
+                unsafe: true
+            }
+        }),
+        new HtmlPlugin({
+            filename: 'index.html',
+            template: path.resolve(__dirname, 'public/index.html')
+        }),
+        new ExtractTextPlugin(path.join('css', '[name].bundle.[hash].css')),
 
-		new CopyWebpackPlugin(
-			[
-				{
-					from: path.join(__dirname, "public",'img'),
-					to: path.join(__dirname, "dist", 'img')
-				},
-				{
-					from: path.join(__dirname, "public",'textures'),
-					to: path.join(__dirname, "dist", 'textures')
-				}
-			]
-		),
-		new webpack.LoaderOptionsPlugin({
-			debug: true,
-			postcss: [precss, autoprefixer]
-		})
-	]
+        new CopyWebpackPlugin(
+            [
+                {
+                    from: path.join(__dirname, "public",'img'),
+                    to: path.join(__dirname, "dist", 'img')
+                },
+                {
+                    from: path.join(__dirname, "public",'textures'),
+                    to: path.join(__dirname, "dist", 'textures')
+                }
+            ]
+        ),
+        new webpack.LoaderOptionsPlugin({
+            debug: true,
+            postcss: [precss, autoprefixer]
+        })
+    ]
 };
 
 
