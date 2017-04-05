@@ -11,7 +11,8 @@
             SELECT: "EVENTS.LOGIC.SELECT"
         },
         GRAPHICS: {
-            HIGHLIGHT: "EVENTS.GRAPHICS.HIGHLIGHT",
+            SELECT_UNIT: "EVENTS.GRAPHICS.SELECT_UNIT",
+            UNSELECT_ALL: "EVENTS.GRAPHICS.UNSELECT_ALL",
             MOVE: "EVENTS.GRAPHICS.MOVE",
         },
         TURN: {

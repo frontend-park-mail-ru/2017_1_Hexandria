@@ -48,11 +48,9 @@
                 console.log("army", army);
                 if (army) {
                     if (army !== this._selected) {
-                        // TODO emit select
                         console.log("^SELECT^", army);
-
                         this._selected = army;
-                        (new Mediator()).emit(EVENTS.GRAPHICS.HIGHLIGHT, this._selected.position);
+                        (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_UNIT, this._selected.position);
                     } else {
                         console.log("else");
                         // TODO unselect old
@@ -60,12 +58,13 @@
                     }
                 } else {
                     if (this.checkNearSelected(position)) {
+                        (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
                         console.log("checkNearSelected", this._selected);
+
                         this._selected.position = position;
-
                         this.game.players[this._selected.name].army[this._selected.index].position.x = position.x;
-                        this.game.players[this._selected.name].army[this._selected.index].position.y = position.y;
 
+                        this.game.players[this._selected.name].army[this._selected.index].position.y = position.y;
                         (new Mediator()).emit(EVENTS.GRAPHICS.MOVE, this._selected);
                         this._selected = null;
                     }
@@ -74,7 +73,7 @@
                 }
             } else {
                 this._selected = null;
-                (new Mediator()).emit(EVENTS.GRAPHICS.HIGHLIGHT, null);
+                (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
                 // TODO emit unselect
             }
         }
@@ -112,6 +111,28 @@
 
                 const deltaX = this._selected.position.x - position.x;
                 const deltaY = this._selected.position.y - position.y;
+
+                // if(deltaY == 0 && deltaX <= 1 && deltaX >= 1) {
+                //     console.log("move");
+                //     return true;
+                // }
+                // if(
+                //     this._selected.position.y % 2
+                //     && (deltaY == -1 || deltaY == 1)
+                //     && (deltaX == 0 || deltaX == 1)
+                // ) {
+                //     console.log("move");
+                //     return true;
+                // }
+                // if(
+                //     this._selected.position.y % 2
+                //     && (deltaY == -1 || deltaY == 1)
+                //     && (deltaX == 0 || deltaX == -1)
+                // ) {
+                //     console.log("move");
+                //     return true;
+                // }
+                // console.log("stop");
 
                 if (-1 <= deltaX && deltaX <= 1 &&
                     -1 <= deltaY && deltaY <= 1) {
