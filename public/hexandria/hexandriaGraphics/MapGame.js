@@ -119,16 +119,17 @@
             result.push({x: position.x - 1, y: position.y});
             result.push({x: position.x + 1, y: position.y});
             if(position.y % 2 === 1) {
-                result.push({x: position.x - 1, y: position.y - 1})
-                result.push({x: position.x, y: position.y - 1})
-                result.push({x: position.x - 1, y: position.y + 1})
-                result.push({x: position.x, y: position.y + 1})
+                result.push({x: position.x - 1, y: position.y - 1});
+                result.push({x: position.x, y: position.y - 1});
+                result.push({x: position.x - 1, y: position.y + 1});
+                result.push({x: position.x, y: position.y + 1});
             } else {
-                result.push({x: position.x + 1, y: position.y - 1})
-                result.push({x: position.x, y: position.y - 1})
-                result.push({x: position.x + 1, y: position.y + 1})
-                result.push({x: position.x, y: position.y + 1})
+                result.push({x: position.x + 1, y: position.y - 1});
+                result.push({x: position.x, y: position.y - 1});
+                result.push({x: position.x + 1, y: position.y + 1});
+                result.push({x: position.x, y: position.y + 1});
             }
+            result = result.filter(element => element.x >= 0 && element.x < this.sizeX && element.y >= 0 && element.y < this.sizeY)
             return result;
         }
 

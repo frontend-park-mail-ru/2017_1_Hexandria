@@ -107,41 +107,28 @@
 
         checkNearSelected(position) {
             if (this._selected) {
-                console.log("position", position, this._selected.position.x - position.x);
-
-                const deltaX = this._selected.position.x - position.x;
-                const deltaY = this._selected.position.y - position.y;
-
-                // if(deltaY == 0 && deltaX <= 1 && deltaX >= 1) {
-                //     console.log("move");
-                //     return true;
-                // }
-                // if(
-                //     this._selected.position.y % 2
-                //     && (deltaY == -1 || deltaY == 1)
-                //     && (deltaX == 0 || deltaX == 1)
-                // ) {
-                //     console.log("move");
-                //     return true;
-                // }
-                // if(
-                //     this._selected.position.y % 2
-                //     && (deltaY == -1 || deltaY == 1)
-                //     && (deltaX == 0 || deltaX == -1)
-                // ) {
-                //     console.log("move");
-                //     return true;
-                // }
-                // console.log("stop");
-
-                if (-1 <= deltaX && deltaX <= 1 &&
-                    -1 <= deltaY && deltaY <= 1) {
-                    console.log("move");
-                    return true;
+                let result = [];
+                result.push({x: this._selected.position.x - 1, y: this._selected.position.y});
+                result.push({x: this._selected.position.x + 1, y: this._selected.position.y});
+                if(this._selected.position.y % 2 === 1) {
+                    result.push({x: this._selected.position.x - 1, y: this._selected.position.y - 1});
+                    result.push({x: this._selected.position.x, y: this._selected.position.y - 1});
+                    result.push({x: this._selected.position.x - 1, y: this._selected.position.y + 1});
+                    result.push({x: this._selected.position.x, y: this._selected.position.y + 1});
                 } else {
-                    console.log("stop");
-
+                    result.push({x: this._selected.position.x + 1, y: this._selected.position.y - 1});
+                    result.push({x: this._selected.position.x, y: this._selected.position.y - 1});
+                    result.push({x: this._selected.position.x + 1, y: this._selected.position.y + 1});
+                    result.push({x: this._selected.position.x, y: this._selected.position.y + 1});
                 }
+                result = result.filter(element => element.x >= 0 && element.x < this.game.field.size.x && element.y >= 0 && element.y < this.game.field.size.y)
+                let bool = false;
+                result.forEach(element => {
+                    if(element.x === position.x && element.y === position.y) {
+                        bool =  true;
+                    }
+                });
+                return bool;
             }
             return false;
         }

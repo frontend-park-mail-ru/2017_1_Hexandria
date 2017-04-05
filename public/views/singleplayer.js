@@ -29,6 +29,8 @@
                     click: (event) => { (new Router()).go("/"); },
                 },
             });
+
+
             pageSingleplayer.appendChild(backButton.el);
 
             this._el = pageSingleplayer;
