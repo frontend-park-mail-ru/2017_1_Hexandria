@@ -11,8 +11,7 @@
     "build": "webpack --progress --colors",
     "watch": "webpack-dev-server --progress --colors --open",
 
-    "webpack-develop": "./node_modules/.bin/webpack --watch --progress --colors",
-    "go": "node server.js"
+    "webpack-develop": "./node_modules/.bin/webpack --watch --progress --colors"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
-    "use strict";
+"use strict";
 
-    import TownGame from "./TownGame";
+import TownGame from "./TownGame";
 
-    export default class CapitalGame extends TownGame {
-    }
+export default class CapitalGame extends TownGame {
+}
