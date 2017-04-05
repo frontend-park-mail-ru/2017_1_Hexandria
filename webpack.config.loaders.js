@@ -5,7 +5,10 @@ module.exports = function() {
 			exclude: /(node_modules|bower_components)/,
 			loader: 'babel-loader',
 			query: {
-				presets: ['latest']
+				compact: true,
+				presets: [
+					['latest', {modules: false}]
+				]
 			}
 		},
 		{
@@ -21,7 +24,7 @@ module.exports = function() {
 			loader: 'html-loader'
 		},
 		{
-			test: /\.pug$/,
+			test: /\.pug/,
 			loader: "pug-loader"
 		}
 	];

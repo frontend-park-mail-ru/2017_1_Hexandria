@@ -11,6 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const loaders = require('./webpack.config.loaders')();
 
 
+
 loaders.push({
 	test: /\.s?css$/,
 	loader: ExtractTextPlugin.extract({
@@ -37,20 +38,20 @@ module.exports = {
 
 	plugins: [
 		new CleanWebpackPlugin(['dist']),
-		// new webpack.optimize.UglifyJsPlugin({
-		// 	sourceMap: true,
-		// 	beautify: false,
-		// 	comments: false,
-		// 	compress: {
-		// 		sequences: true,
-		// 		booleans: true,
-		// 		loops: true,
-		// 		unused: true,
-		// 		warnings: false,
-		// 		drop_console: true,
-		// 		unsafe: true
-		// 	}
-		// }),
+		new webpack.optimize.UglifyJsPlugin({
+			sourceMap: true,
+			beautify: false,
+			comments: false,
+			compress: {
+				sequences: true,
+				booleans: true,
+				loops: true,
+				unused: true,
+				warnings: false,
+				drop_console: true,
+				unsafe: true
+			}
+		}),
 		new HtmlPlugin({
 			filename: 'index.html',
 			template: path.resolve(__dirname, 'public/index.html')

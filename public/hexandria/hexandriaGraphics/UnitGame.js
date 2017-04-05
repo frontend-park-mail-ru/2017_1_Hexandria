@@ -1,9 +1,6 @@
 
     "use strict";
-
-    // const THREE = window.THREE;
-    // import THREE from "three";
-    import * as THREE from "three";
+    import * as THREE from 'three';
 
     export default class UnitGame {
         constructor(owner) {
@@ -14,3 +11,5 @@
             this.object = new THREE.Mesh(geometry, material);
         }
     }
+
+

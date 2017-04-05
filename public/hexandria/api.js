@@ -1,6 +1,5 @@
 
-
-
+    "use strict";
     export const api = {};
 
     api.testUser = {

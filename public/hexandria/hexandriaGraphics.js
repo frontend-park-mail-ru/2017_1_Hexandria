@@ -1,25 +1,20 @@
 
-
-    // const THREE = window.THREE;
-    // const Stats = window.Stats;
-    //
-    // const PlayerGame = window.PlayerGame;
-    // const MapGame = window.MapGame;
-    //
-    // const Mediator = window.Mediator;
-    // const EVENTS = window.EVENTS;
+    "use strict";
     import Mediator from "../modules/mediator";
-    import * as THREE from "three";
     import { EVENTS } from "./events";
     import PlayerGame from "./hexandriaGraphics/PlayerGame";
     import MapGame from "./hexandriaGraphics/MapGame";
-    const Stats = window.Stats;
+    import Stats from "stats-js";
+    import * as THREE from 'three';
 
-
+    const OrbitControls = require('three-orbit-controls')(THREE);
 
     export default class HexandriaGraphics {
-        constructor(element) {
+        constructor(game, element) {
             console.log("HexandriaGraphics created");
+
+            this.game = game;
+            this.element = element;
 
             (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
 
@@ -30,28 +25,27 @@
                 }
             };
 
-            this.gameProcess(element);
+            this.gameProcess();
         }
 
         drawMap(options) {
             console.log("drawMap:", options);
         }
 
-        gameProcess(element) {
-            const map = this.gameStart(element);
+        gameProcess() {
+            this.gameStart();
 
             const player1 = new PlayerGame("Player 1", 0xff0000);
             const player2 = new PlayerGame("Player 2", 0x0000ff);
 
-            map.createCapital(player1, 4, 9);
-            map.createCapital(player2, 0, 0);
+            this.map.createCapital(player1, 4, 9);
+            this.map.createCapital(player2, 0, 0);
 
-            map.createUnit(player1, 3, 8);
-            map.createUnit(player2, 1, 1);
+            this.map.createUnit(player1, 3, 8);
+            this.map.createUnit(player2, 1, 1);
         }
 
-
-        gameStart (element) {
+        gameStart () {
             // Graphics variables
             let container,
                 stats;
@@ -61,31 +55,31 @@
                 renderer;
             let textureLoader;
             const clock = new THREE.Clock();
-            let game;
             let mouse,
                 raycaster;
-            let intersects,
-                INTERSECTED;
 
             let time = 0;
             let keyQ = false;
 
+            let _map;
+
             // - Main code -
 
-            init();
+            initGraphics(this.element);
+            initInput();
+            createObjects();
+
+            _map = new MapGame(scene, this.game);
+
             animate();
+
+            this.scene = scene;
+            this.map = _map;
+            //this.players = new HexPlayers(scene)
 
             // - Functions -
 
-            function init() {
-                initGraphics();
-
-                createObjects();
-
-                initInput();
-            }
-
-            function initGraphics() {
+            function initGraphics(element) {
                 const sel = `${element} .game-container`;
                 console.log(sel);
                 container = document.querySelector(sel);
@@ -110,7 +104,7 @@
                 camera.position.z = 8;
                 camera.up.set(0, 0, 1);
 
-                controls = new THREE.OrbitControls(camera);
+                controls = new OrbitControls(camera);
                 controls.target.y = 2;
 
                 textureLoader = new THREE.TextureLoader();
@@ -170,8 +164,6 @@
                     ground.material.needsUpdate = true;
                 });
                 scene.add(ground);
-
-                game = new MapGame(scene, 5, 10);
             }
 
             function createParalellepiped(sx, sy, sz, mass, pos, quat, material) {
@@ -186,7 +178,7 @@
                 threeObject.position.copy(pos);
                 threeObject.quaternion.copy(quat);
 
-                scene.add(threeObject);
+                //scene.add(threeObject);
             }
 
             function initInput() {
@@ -209,7 +201,7 @@
                 }, false);
             }
 
-            function mouseCoordinates() {
+            function mouseCoordinates(event) {
                 mouse.x = ((event.clientX - container.offsetLeft) / renderer.domElement.width) * 2 - 1;
                 mouse.y = -((event.clientY - container.offsetTop) / renderer.domElement.height) * 2 + 1;
             }
@@ -217,24 +209,26 @@
             function onDocumentMouseMove(event) {
                 event.preventDefault();
 
-                mouseCoordinates();
+                mouseCoordinates(event);
 
                 raycaster.setFromCamera(mouse, camera);
-                const intersects = raycaster.intersectObjects(game.scene.children);
+                // const intersects = raycaster.intersectObjects(_map.scene.children);
+                const intersects = raycaster.intersectObjects(_map.fieldGroup.children);
 
-                game.handleHighlight(intersects);
+                _map.handleHighlight(intersects);
             }
 
             function onDocumentMouseDown(event) {
                 event.preventDefault();
 
                 if (event.buttons === 1) {
-                    mouseCoordinates();
+                    mouseCoordinates(event);
 
                     raycaster.setFromCamera(mouse, camera);
-                    const intersects = raycaster.intersectObjects(game.scene.children);
+                    // const intersects = raycaster.intersectObjects(_map.scene.children);
+                    const intersects = raycaster.intersectObjects(_map.fieldGroup.children);
 
-                    game.handleSelect(intersects);
+                    _map.handleSelect(intersects);
                 }
             }
 
@@ -256,12 +250,10 @@
 
                 controls.update(deltaTime);
 
-                renderer.render(game.scene, camera);
+                renderer.render(scene, camera);
 
                 time += deltaTime;
             }
-
-            return game;
         }
 
 

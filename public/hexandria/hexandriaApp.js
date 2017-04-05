@@ -1,4 +1,5 @@
 
+    "use strict";
 
     // const HexandriaLogicSingleplayer = window.HexandriaLogicSingleplayer;
     // const HexandriaLogicMultiplayer = window.HexandriaLogicMultiplayer;
@@ -7,13 +8,12 @@
     // const Router = window.Router;
     // const Mediator = window.Mediator;
     // const EVENTS = window.EVENTS;
+
     import Router from '../modules/router';
     import Mediator from "../modules/mediator";
-
     import HexandriaLogicSingleplayer from "./hexandriaLogic/hexandriaLogicSingleplayer";
     import HexandriaLogicMultiplayer from "./hexandriaLogic/hexandriaLogicMultiplayer";
     import HexandriaGame from "./hexandriaGame";
-    // const EVENTS = window.EVENTS;
     import { EVENTS } from "./events";
 
     const MODES = {
@@ -27,7 +27,6 @@
 
             this.game = null;
 
-            (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
             (new Mediator()).subscribe(this, EVENTS.GAME.INIT, "gameInit");
             (new Mediator()).subscribe(this, EVENTS.GAME.EXIT, "gameExit");
         }
@@ -49,7 +48,10 @@
 
         gameExit(payload) {
             console.log("gameExit");
-            /* this.game.destroy();
-            this.game = null;*/
+            if(this.game) {
+                this.game.destroy();
+                this.game = null;
+            }
         }
     }
+

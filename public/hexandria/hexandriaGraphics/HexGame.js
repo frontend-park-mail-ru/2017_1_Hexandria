@@ -2,40 +2,28 @@
     "use strict";
 
     // const THREE = window.THREE;
-    // import THREE from "three";
-    import * as THREE from "three";
-    import CapitalGame from "./CapitalGame";
-
-
     // const UnitGame = window.UnitGame;
     // const CapitalGame = window.CapitalGame;
+    //
+    // const HexUtils = window.HexUtils;
+	// import THREELib from "three-js";
+	// var THREE = THREELib();
+    import * as THREE from 'three';
+	import CapitalGame from "./CapitalGame";
+	import UnitGame from "./UnitGame";
+	import HexUtils from "./hexUtils";
 
-    const _highlightedColor = 0xf08080;
+	const _highlightedColor = 0xf08080;
     const _selectedColor = 0x80f000;
 
     export default class HexGame extends THREE.Mesh {
 
         constructor(scene, color, x, y, z) {
-            const _hexagonDiameter = 1;
-            const _hexagonAlpha = _hexagonDiameter / 4.0;
-            const _hexagonBeta = Math.sqrt(3) * _hexagonAlpha;
-            const _hexagonShape = new THREE.Shape();
-            let posX = (2 * _hexagonBeta + 0.01) * x;
-            const posY = (3 * _hexagonAlpha + 0.01) * y;
-            if (y % 2 === 0) {
-                posX += _hexagonBeta + 0.01;
-            }
-            _hexagonShape.moveTo(0.0, 2.0 * _hexagonAlpha);
-            _hexagonShape.lineTo(_hexagonBeta, _hexagonAlpha);
-            _hexagonShape.lineTo(_hexagonBeta, -_hexagonAlpha);
-            _hexagonShape.lineTo(0.0, -2.0 * _hexagonAlpha);
-            _hexagonShape.lineTo(-_hexagonBeta, -_hexagonAlpha);
-            _hexagonShape.lineTo(-_hexagonBeta, _hexagonAlpha);
-            _hexagonShape.lineTo(0.0, 2.0 * _hexagonAlpha);
+            // const geometry = new THREE.ShapeBufferGeometry(HexUtils.getHexShape());
+            const geometry = HexUtils.getHexGeometry();
 
-            const geometry = new THREE.ShapeBufferGeometry(_hexagonShape);
             super(geometry, new THREE.MeshPhongMaterial({ color, side: THREE.DoubleSide }));
-            this.position.set(posX, posY, z);
+            this.position.set(...HexUtils.getPosition(x, y), z);
             this.rotation.set(0, 0, 0);
             this.scale.set(1, 1, 1);
 

@@ -1,6 +1,12 @@
 .user_panel {
   display: inline-block;
   padding: 2% 0;
+  top: 2%;
+  right: 5%;
+  height: 7%;
+  width: 20%;
+  position: absolute;
+  z-index: 1;
 
   &__registered, &__unregistered {
     position: absolute;

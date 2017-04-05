@@ -1,9 +1,14 @@
 
+    "use strict";
+
     export const EVENTS = {
         GAME: {
             INIT: "EVENTS.GAME.INIT",
             START: "EVENTS.GAME.START",
             EXIT: "EVENTS.GAME.EXIT",
+        },
+        GRAPHICS: {
+            SELECT_FIELD: "EVENTS.GRAPHICS.SELECT_FIELD"
         },
         TURN: {
             START_TURN: "EVENTS.TURN.START_TURN",

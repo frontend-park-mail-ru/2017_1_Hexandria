@@ -2,9 +2,9 @@
     "use strict";
 
     // const THREE = window.THREE;
-    // import THREE from "three";
-    import * as THREE from "three";
-
+    /*import THREELib from "three-js";
+    var THREE = THREELib();*/
+    import * as THREE from 'three';
 
     export default class TownGame {
         constructor(owner) {
@@ -15,3 +15,4 @@
             this.object = new THREE.Mesh(geometry, material);
         }
     }
+

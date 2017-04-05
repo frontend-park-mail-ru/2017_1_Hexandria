@@ -5,7 +5,7 @@
     import Router from "../../modules/router";
     import { api } from "../../hexandria/api";
     import './user_panel.scss';
-    import template from "./user_panel_template.pug";
+    import user_panel_template from "./user_panel_template.pug";
 
 
     // const Button = window.Button;

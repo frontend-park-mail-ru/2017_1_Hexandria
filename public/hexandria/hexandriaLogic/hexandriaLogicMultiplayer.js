@@ -1,11 +1,11 @@
 
+    "use strict";
 
-    // const HexandriaLogic = window.HexandriaLogic;
     import HexandriaLogic from "../hexandriaLogic";
 
     export default class HexandriaLogicMultiplayer extends HexandriaLogic {
-        constructor(options = {}) {
-            super(options);
+        constructor(game) {
+            super(game);
             console.log("HexandriaLogicMultiplayer");
         }
     }
