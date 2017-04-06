@@ -29,3 +29,4 @@ api.path = {
     signup: "/api/signup",
 };
 
+export default api;

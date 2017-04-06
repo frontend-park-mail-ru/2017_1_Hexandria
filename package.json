@@ -10,7 +10,6 @@
     "karmaTest": "karma start",
     "build": "webpack --progress --colors",
     "watch": "webpack-dev-server --progress --colors --open",
-
     "webpack-develop": "./node_modules/.bin/webpack --watch --progress --colors"
   },
   "repository": {
@@ -60,6 +59,7 @@
     "karma": "^1.5.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",
+    "karma-webpack": "^2.0.3",
     "node-fetch": "^1.6.3",
     "node-sass": "^3.13.0",
     "postcss-loader": "^1.3.3",
