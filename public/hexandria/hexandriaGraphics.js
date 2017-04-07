@@ -1,15 +1,15 @@
 "use strict";
 
+import * as THREE from "three";
+import Stats from "stats-js";
 import Mediator from "../modules/mediator";
 import { EVENTS } from "./events";
 import PlayerGame from "./hexandriaGraphics/PlayerGame";
 import MapGame from "./hexandriaGraphics/MapGame";
 import HexTown from "./hexandriaGraphics/hexTown";
 import HexSquad from "./hexandriaGraphics/hexSquad";
-import Stats from "stats-js";
-import * as THREE from 'three';
 
-const OrbitControls = require('three-orbit-controls')(THREE);
+const OrbitControls = require("three-orbit-controls")(THREE);
 
 export default class HexandriaGraphics {
     constructor(game, element) {
@@ -40,10 +40,12 @@ export default class HexandriaGraphics {
         this.towns = [];
 
         const towns = this.game.field.towns;
-        for (let index in towns) {
-            // console.log(towns[index]);
+        for (const index in towns) {
+            if (towns[index]) {
+                // console.log(towns[index]);
 
-            this.towns.push(new HexTown(this.scene, 0x777777, towns[index].position));
+                this.towns.push(new HexTown(this.scene, 0x777777, towns[index].position));
+            }
         }
     }
 
@@ -51,21 +53,25 @@ export default class HexandriaGraphics {
         this.players = [];
         this.playersMap = {};
 
-        for (let playerName in this.game.players) {
-            const playerColor = this.game.players[playerName].color;
-            const playerArmy = this.game.players[playerName].army;
+        for (const playerName in this.game.players) {
+            if (this.game.players[playerName]) {
+                const playerColor = this.game.players[playerName].color;
+                const playerArmy = this.game.players[playerName].army;
 
-            this.playersMap[playerName] = [];
+                this.playersMap[playerName] = [];
 
-            // console.log(playerName, playerArmy);
-            for (let index in playerArmy) {
-                const squad = playerArmy[index];
+                // console.log(playerName, playerArmy);
+                for (const index in playerArmy) {
+                    if (playerArmy[index]) {
+                        const squad = playerArmy[index];
 
-                // console.log(playerName, squad.position);
+                        // console.log(playerName, squad.position);
 
-                const newPlayer = new HexSquad(this.scene, playerColor, squad.position);
-                this.players.push(newPlayer);
-                this.playersMap[playerName].push(newPlayer);
+                        const newPlayer = new HexSquad(this.scene, playerColor, squad.position);
+                        this.players.push(newPlayer);
+                        this.playersMap[playerName].push(newPlayer);
+                    }
+                }
             }
         }
     }

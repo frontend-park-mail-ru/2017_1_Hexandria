@@ -1,6 +1,6 @@
 "use strict";
 
-import * as THREE from 'three';
+import * as THREE from "three";
 import CapitalGame from "./CapitalGame";
 import UnitGame from "./UnitGame";
 import HexUtils from "./hexUtils";

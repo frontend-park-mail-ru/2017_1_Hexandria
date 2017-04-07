@@ -1,16 +1,14 @@
-
 "use strict";
 
-import * as THREE from 'three';
+import * as THREE from "three";
 import HexUtils from "./hexUtils";
-
 
 const positionZ = 0.25 + 0.5;
 
 export default class HexTown {
     constructor(scene, color, position) {
         const geometry = new THREE.BoxGeometry(0.25, 0.25, 1.0);
-        const material = new THREE.MeshBasicMaterial({ color: color });
+        const material = new THREE.MeshBasicMaterial({ color });
         this.town = new THREE.Mesh(geometry, material);
 
         scene.add(this.town);

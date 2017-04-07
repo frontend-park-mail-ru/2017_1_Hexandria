@@ -2,6 +2,7 @@
 
 import View from "../modules/view";
 import Router from "../modules/router";
+import Button from "../components/button/button";
 import Game from "../components/game/game";
 import Mediator from "../modules/mediator";
 import { EVENTS } from "../hexandria/events";

@@ -45,3 +45,5 @@ export const pathToRegex = function (pathname) {
         return null;
     };
 };
+
+export default pathToRegex;

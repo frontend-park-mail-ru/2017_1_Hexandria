@@ -63,7 +63,10 @@ export default class Route {
      * Deactivate current route
      */
     leave() {
-        this._view && this._view.pause();
+        // this._view && this._view.pause();
+        if (this._view) {
+            this._view.pause();
+        }
     }
 
     /**
