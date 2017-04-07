@@ -1,11 +1,15 @@
+"use strict";
 
+import HexandriaLogic from "../hexandriaLogic";
 
-    // const HexandriaLogic = window.HexandriaLogic;
-    import HexandriaLogic from "../hexandriaLogic";
-
-    export default class HexandriaLogicSingleplayer extends HexandriaLogic {
-        constructor(options = {}) {
-            super(options);
-            console.log("HexandriaLogicSingleplayer");
-        }
+export default class HexandriaLogicSingleplayer extends HexandriaLogic {
+    constructor(game) {
+        super(game);
+        console.log("HexandriaLogicSingleplayer");
     }
+
+    onselect(position) {
+        super.onselect(position);
+        console.log("single", position);
+    }
+}

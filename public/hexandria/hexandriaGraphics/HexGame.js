@@ -1,106 +1,111 @@
+"use strict";
 
-    "use strict";
+import * as THREE from 'three';
+import CapitalGame from "./CapitalGame";
+import UnitGame from "./UnitGame";
+import HexUtils from "./hexUtils";
 
-    // const THREE = window.THREE;
-    // import THREE from "three";
-    import * as THREE from "three";
-    import CapitalGame from "./CapitalGame";
+const _highlightedColor = 0xf08080;
+const _selectedSquadColor = 0xff0000;
+const _selectedAreaColor = 0xffff00;
+const _grassColor = 0x80f080;
 
+export default class HexGame extends THREE.Mesh {
 
-    // const UnitGame = window.UnitGame;
-    // const CapitalGame = window.CapitalGame;
+    constructor(scene, color, x, y, z) {
+        const geometry = HexUtils.getHexGeometry();
 
-    const _highlightedColor = 0xf08080;
-    const _selectedColor = 0x80f000;
+        super(geometry, new THREE.MeshPhongMaterial({ color, side: THREE.DoubleSide }));
+        this.position.set(...HexUtils.getPosition(x, y), z);
+        this.rotation.set(0, 0, 0);
+        this.scale.set(1, 1, 1);
 
-    export default class HexGame extends THREE.Mesh {
+        this.x = x;
+        this.y = y;
+        this.highlighted = false;
+        this.selected = false;
+        this.hasCapital = false;
+        this.hasTown = false;
+        this.color = color;
+        this.hasUnit = false;
+        this.scene = scene;
 
-        constructor(scene, color, x, y, z) {
-            const _hexagonDiameter = 1;
-            const _hexagonAlpha = _hexagonDiameter / 4.0;
-            const _hexagonBeta = Math.sqrt(3) * _hexagonAlpha;
-            const _hexagonShape = new THREE.Shape();
-            let posX = (2 * _hexagonBeta + 0.01) * x;
-            const posY = (3 * _hexagonAlpha + 0.01) * y;
-            if (y % 2 === 0) {
-                posX += _hexagonBeta + 0.01;
-            }
-            _hexagonShape.moveTo(0.0, 2.0 * _hexagonAlpha);
-            _hexagonShape.lineTo(_hexagonBeta, _hexagonAlpha);
-            _hexagonShape.lineTo(_hexagonBeta, -_hexagonAlpha);
-            _hexagonShape.lineTo(0.0, -2.0 * _hexagonAlpha);
-            _hexagonShape.lineTo(-_hexagonBeta, -_hexagonAlpha);
-            _hexagonShape.lineTo(-_hexagonBeta, _hexagonAlpha);
-            _hexagonShape.lineTo(0.0, 2.0 * _hexagonAlpha);
+        this.selectedSquad = false;
+        this.selectedArea = false;
 
-            const geometry = new THREE.ShapeBufferGeometry(_hexagonShape);
-            super(geometry, new THREE.MeshPhongMaterial({ color, side: THREE.DoubleSide }));
-            this.position.set(posX, posY, z);
-            this.rotation.set(0, 0, 0);
-            this.scale.set(1, 1, 1);
+        this.emissive = this.material.emissive.getHex();
+    }
 
-            this.x = x;
-            this.y = y;
-            this.highlighted = false;
-            this.selected = false;
-            this.hasCapital = false;
-            this.hasTown = false;
-            this.color = color;
-            this.hasUnit = false;
-            this.scene = scene;
-        }
+    colorize(color) {
+        const _fieldGrass = 0x80f080;
+        const _fieldWater = 0x8080ff;
+        const _fieldRock = 0x808080;
+        this.material.color.set(color);
+    }
 
-        colorize(color) {
-            const _fieldGrass = 0x80f080;
-            const _fieldWater = 0x8080ff;
-            const _fieldRock = 0x808080;
-            this.material.color.set(color);
-        }
-
-        highlight() {
+    highlight() {
+        if (!this.selectedArea && !this.selectedSquad) {
             this.highlighted = true;
-            this.currentHex = this.material.emissive.getHex();
             this.material.emissive.setHex(_highlightedColor);
         }
+    }
 
-        unhighlight() {
+    unhighlight() {
+        if (!this.selectedArea && !this.selectedSquad) {
             this.highlighted = false;
-            this.material.emissive.setHex(this.currentHex);
-        }
-
-        select() {
-            console.log("SELECT");
-            this.selected = true;
-            this.material.emissive.setHex(_selectedColor);
-        }
-
-        unselect() {
-            console.log("UNSELECT");
-            this.selected = false;
-            this.material.emissive.setHex(this.currentHex);
-        }
-
-        createUnit(owner) {
-            this.hasUnit = true;
-            this.unit = new UnitGame(owner);
-            this.unit.object.position.copy(this.position);
-            this.scene.add(this.unit.object);
-        }
-
-        createCapital(owner) {
-            this.hasCapital = true;
-            this.capital = new CapitalGame(owner);
-            this.capital.object.position.copy(this.position);
-            this.scene.add(this.capital.object);
-        }
-
-        removeUnit() {
-            this.hasUnit = false;
-            this.scene.remove(this.unit.object);
-            this.unit = null;
-        }
-
-        moveUnit(destinationHex) {
-
+            this.material.emissive.setHex(null);
         }
     }
+
+    selectSquad() {
+        console.log("SELECT");
+        this.selectedSquad = true;
+        this.material.emissive.setHex(_selectedSquadColor);
+    }
+
+    selectArea() {
+        console.log("SELECT");
+        this.selectedArea = true;
+        this.material.emissive.setHex(_selectedAreaColor);
+    }
+
+    unselect() {
+        console.log("UNSELECT");
+        this.selected = false;
+        this.material.emissive.setHex(this.currentHex);
+    }
+
+    unselectSquad() {
+        console.log(this.material.emissive);
+        this.selectedSquad = false;
+        this.material.emissive.setHex(null);
+    }
+
+    unselectArea() {
+        this.selectedArea = false;
+        this.material.emissive.setHex(null);
+    }
+
+    createUnit(owner) {
+        this.hasUnit = true;
+        this.unit = new UnitGame(owner);
+        this.unit.object.position.copy(this.position);
+        this.scene.add(this.unit.object);
+    }
+
+    createCapital(owner) {
+        this.hasCapital = true;
+        this.capital = new CapitalGame(owner);
+        this.capital.object.position.copy(this.position);
+        this.scene.add(this.capital.object);
+    }
+
+    removeUnit() {
+        this.hasUnit = false;
+        this.scene.remove(this.unit.object);
+        this.unit = null;
+    }
+
+    moveUnit(destinationHex) {
+    }
+}

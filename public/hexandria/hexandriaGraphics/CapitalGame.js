@@ -1,9 +1,6 @@
+"use strict";
 
-    "use strict";
+import TownGame from "./TownGame";
 
-    // const TownGame = window.TownGame;
-    import TownGame from "./TownGame";
-
-    export default class CapitalGame extends TownGame {
-    }
-
+export default class CapitalGame extends TownGame {
+}
