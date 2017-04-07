@@ -9,7 +9,7 @@ const timeout = 500;
 
 describe("backendAPI", function() {
 
-    describe("Login", function() {
+    xdescribe("Login", function() {
 
         it("GET /api/user must fail. Not authorized.", function(done) {
             fetcher.get(api.path.user)
@@ -110,7 +110,7 @@ describe("backendAPI", function() {
         }, timeout);
     });
 
-    describe("Signup", function() {
+    xdescribe("Signup", function() {
 
         beforeEach(function () {
             const userNumber = Math.floor(Math.random() * 1000);
