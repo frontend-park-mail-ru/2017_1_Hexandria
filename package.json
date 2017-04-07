@@ -4,11 +4,13 @@
   "description": "Hexandria: strategy game",
   "main": "server.js",
   "scripts": {
-    "sassstartup": "npm run sass && npm run startup",
-    "startup": "node server.js",
+    "startup": "webpack --progress --colors && node server.js",
     "sass": "./node_modules/.bin/node-sass public/main.scss public/main.css",
-    "eslint": "./node_modules/.bin/eslint --fix public",
-    "test": "jasmine-node tests/"
+    "eslint": "./node_modules/.bin/eslint public",
+    "karmaTest": "karma start",
+    "build": "webpack --progress --colors",
+    "watch": "webpack-dev-server --progress --colors --open",
+    "webpack-develop": "./node_modules/.bin/webpack --watch --progress --colors"
   },
   "repository": {
     "type": "git",
@@ -27,17 +29,52 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2017_1_Hexandria#readme",
   "dependencies": {
     "express": "^4.14.1",
+    "node-sass": "^3.13.0",
+    "path": "^0.12.7",
+    "pug-cli": "^1.0.0-alpha6",
+    "stats-js": "^1.0.0-alpha1",
     "three": "^0.84.0",
-    "node-sass": "^3.13.0"
+    "three-orbit-controls": "^82.1.0"
   },
   "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-latest": "^6.22.0",
+    "clean-webpack-plugin": "^0.1.15",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.26.1",
     "eslint": "^3.17.0",
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-import": "^2.2.0",
-    "jasmine-node": "^1.14.5",
+    "eventsource-polyfill": "^0.9.6",
+    "exports-loader": "^0.6.4",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.9.0",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.26.0",
+    "imports-loader": "^0.7.1",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-webpack": "^2.0.3",
     "node-fetch": "^1.6.3",
+    "node-sass": "^3.13.0",
+    "postcss-loader": "^1.3.3",
+    "precss": "^1.4.0",
+    "pug": "^2.0.0-beta3",
+    "pug-html-loader": "^1.1.4",
+    "pug-loader": "^2.3.0",
+    "sass-loader": "^4.0.2",
+    "stats-js": "^1.0.0-alpha1",
+    "style-loader": "^0.13.1",
     "stylelint": "^7.9.0",
     "stylelint-config-standard": "^16.0.0",
-    "node-sass": "^3.13.0"
+    "three": "^0.84.0",
+    "three-orbit-controls": "^82.1.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^2.3.2"
   }
 }

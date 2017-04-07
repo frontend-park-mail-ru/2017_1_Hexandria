@@ -10,18 +10,16 @@ module.exports = {
     },
     "rules": {
         "no-param-reassign": 0,
-        "no-extra-semi": 1,
-        "no-undef": 1,
+        "no-extra-semi": 0, // or 1?
+        "no-undef": 1, // or 0?
         "strict": [0, "global"],
-        "no-tabs": 0,
+        "no-tabs": 1,
         "func-names": 0,
-        "no-console": 1,
+        "no-console": 0, // or 0?
 
         "properties": 0,
         "no-shadow": 0,
         "no-underscore-dangle": 0,
-        "no-console": 0,
-        "no-undef": 0,
         "no-use-before-define": 0,
         "no-plusplus": 0,
         "no-mixed-operators": 0,
@@ -30,8 +28,9 @@ module.exports = {
         "no-useless-escape": 0,
         "default-case": 0,
         "class-methods-use-this": 0,
+        "no-restricted-syntax": 0,
 
-        "indent": ["error", "tab"],
+        "indent": ["error", 4, {"SwitchCase": 1}],
         "no-unused-vars": 0,
         "wrap-iife": 0,
         "space-before-function-paren": 0,
