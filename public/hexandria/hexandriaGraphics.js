@@ -86,14 +86,14 @@ export default class HexandriaGraphics {
         this.initTowns();
         this.initPlayers();
 
-        const player1 = new PlayerGame("Player 1", 0xff0000);
+        /* const player1 = new PlayerGame("Player 1", 0xff0000);
         const player2 = new PlayerGame("Player 2", 0x0000ff);
 
         this.map.createCapital(player1, 4, 9);
         this.map.createCapital(player2, 0, 0);
 
         this.map.createUnit(player1, 3, 8);
-        this.map.createUnit(player2, 1, 1);
+        this.map.createUnit(player2, 1, 1);*/
     }
 
     gameStart () {
@@ -146,14 +146,15 @@ export default class HexandriaGraphics {
 
             // camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
             camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.2, 2000);
-
-            camera.position.x = -7;
+            camera.position.x = 11;
             camera.position.y = 5;
-            camera.position.z = 8;
+            camera.position.z = 7;
             camera.up.set(0, 0, 1);
 
             controls = new OrbitControls(camera);
-            controls.target.y = 2;
+            controls.target.x = 5;
+            controls.target.y = 5;
+            controls.target.z = 0;
 
             textureLoader = new THREE.TextureLoader();
 
