@@ -1,10 +1,9 @@
-
 "use strict";
 
 export default class Fetcher {
 
     constructor() {
-        this.host = "http://79.137.74.9:8082";
+        this.host = "http://hexandria.ru:8082";
 
         this.options = {
             mode: "cors",
