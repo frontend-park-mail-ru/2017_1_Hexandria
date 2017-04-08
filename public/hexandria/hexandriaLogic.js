@@ -55,19 +55,17 @@ export default class HexandriaLogic {
                     // TODO unselect old
                     // TODO select new
                 }
+            } else if (this.checkNearSelected(position)) {
+                (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
+                console.log("checkNearSelected", this._selected);
+
+                this._selected.position = position;
+                this.game.players[this._selected.name].army[this._selected.index].position.x = position.x;
+
+                this.game.players[this._selected.name].army[this._selected.index].position.y = position.y;
+                (new Mediator()).emit(EVENTS.GRAPHICS.MOVE, this._selected);
+                this._selected = null;
             } else {
-                if (this.checkNearSelected(position)) {
-                    (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
-                    console.log("checkNearSelected", this._selected);
-
-                    this._selected.position = position;
-                    this.game.players[this._selected.name].army[this._selected.index].position.x = position.x;
-
-                    this.game.players[this._selected.name].army[this._selected.index].position.y = position.y;
-                    (new Mediator()).emit(EVENTS.GRAPHICS.MOVE, this._selected);
-                    this._selected = null;
-                }
-
                 // TODO if near selected then move
             }
         } else {
@@ -79,24 +77,28 @@ export default class HexandriaLogic {
 
     findArmy(position) {
         let result = null;
-        for (let playerName in this.game.players) {
-            const playerColor = this.game.players[playerName].color;
-            const playerArmy = this.game.players[playerName].army;
+        for (const playerName in this.game.players) {
+            if (this.game.players[playerName]) {
+                const playerColor = this.game.players[playerName].color;
+                const playerArmy = this.game.players[playerName].army;
 
 
-            // console.log(playerName, playerArmy);
-            for (let index in playerArmy) {
-                const squad = playerArmy[index];
-                console.log("squad.position", squad.position, position);
+                // console.log(playerName, playerArmy);
+                for (const index in playerArmy) {
+                    if (playerArmy[index]) {
+                        const squad = playerArmy[index];
+                        console.log("squad.position", squad.position, position);
 
-                if (squad.position.x === position.x &&
-                    squad.position.y === position.y) {
-                    console.log("TRUE");
-                    result = {
-                        name: playerName,
-                        index: index,
-                        position: squad.position,
-                    };
+                        if (squad.position.x === position.x &&
+                            squad.position.y === position.y) {
+                            console.log("TRUE");
+                            result = {
+                                name: playerName,
+                                index,
+                                position: squad.position,
+                            };
+                        }
+                    }
                 }
             }
         }

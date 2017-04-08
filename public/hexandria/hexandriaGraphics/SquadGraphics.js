@@ -1,9 +1,7 @@
 "use strict";
 
-// const THREE = window.THREE;
-// const HexUtils = window.HexUtils;
 import * as THREE from "three";
-import HexUtils from "./hexUtils";
+import HexUtils from "./UtilsGraphics";
 
 const positionZ = 0.5;
 
@@ -12,7 +10,7 @@ export default class HexSquad {
         // console.log("HexSquad", color, position);
 
         const geometry = new THREE.SphereGeometry(0.25, 16, 16);
-        const material = new THREE.MeshBasicMaterial({ color: color });
+        const material = new THREE.MeshBasicMaterial({ color });
         this.squad = new THREE.Mesh(geometry, material);
 
         scene.add(this.squad);

@@ -69,8 +69,8 @@ export default class HexandriaGame {
                     army: [
                         {
                             position: {
-                                x: 0,
-                                y: 0,
+                                x: 1,
+                                y: 1,
                             },
                         },
                     ],
@@ -81,8 +81,8 @@ export default class HexandriaGame {
                     army: [
                         {
                             position: {
-                                x: 2,
-                                y: 2,
+                                x: 5,
+                                y: 5,
                             },
                         },
                     ],

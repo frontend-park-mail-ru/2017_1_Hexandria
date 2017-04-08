@@ -1,15 +1,14 @@
 "use strict";
 
+import * as THREE from "three";
+import Stats from "stats-js";
 import Mediator from "../modules/mediator";
 import { EVENTS } from "./events";
-import PlayerGame from "./hexandriaGraphics/PlayerGame";
-import MapGame from "./hexandriaGraphics/MapGame";
-import HexTown from "./hexandriaGraphics/hexTown";
-import HexSquad from "./hexandriaGraphics/hexSquad";
-import Stats from "stats-js";
-import * as THREE from 'three';
+import MapGame from "./hexandriaGraphics/MapGraphics";
+import HexTown from "./hexandriaGraphics/TownGraphics";
+import HexSquad from "./hexandriaGraphics/SquadGraphics";
 
-const OrbitControls = require('three-orbit-controls')(THREE);
+const OrbitControls = require("three-orbit-controls")(THREE);
 
 export default class HexandriaGraphics {
     constructor(game, element) {
@@ -40,10 +39,12 @@ export default class HexandriaGraphics {
         this.towns = [];
 
         const towns = this.game.field.towns;
-        for (let index in towns) {
-            // console.log(towns[index]);
+        for (const index in towns) {
+            if (towns[index]) {
+                // console.log(towns[index]);
 
-            this.towns.push(new HexTown(this.scene, 0x777777, towns[index].position));
+                this.towns.push(new HexTown(this.scene, 0x777777, towns[index].position));
+            }
         }
     }
 
@@ -51,21 +52,25 @@ export default class HexandriaGraphics {
         this.players = [];
         this.playersMap = {};
 
-        for (let playerName in this.game.players) {
-            const playerColor = this.game.players[playerName].color;
-            const playerArmy = this.game.players[playerName].army;
+        for (const playerName in this.game.players) {
+            if (this.game.players[playerName]) {
+                const playerColor = this.game.players[playerName].color;
+                const playerArmy = this.game.players[playerName].army;
 
-            this.playersMap[playerName] = [];
+                this.playersMap[playerName] = [];
 
-            // console.log(playerName, playerArmy);
-            for (let index in playerArmy) {
-                const squad = playerArmy[index];
+                // console.log(playerName, playerArmy);
+                for (const index in playerArmy) {
+                    if (playerArmy[index]) {
+                        const squad = playerArmy[index];
 
-                // console.log(playerName, squad.position);
+                        // console.log(playerName, squad.position);
 
-                const newPlayer = new HexSquad(this.scene, playerColor, squad.position);
-                this.players.push(newPlayer);
-                this.playersMap[playerName].push(newPlayer);
+                        const newPlayer = new HexSquad(this.scene, playerColor, squad.position);
+                        this.players.push(newPlayer);
+                        this.playersMap[playerName].push(newPlayer);
+                    }
+                }
             }
         }
     }
@@ -79,15 +84,6 @@ export default class HexandriaGraphics {
         this.gameStart();
         this.initTowns();
         this.initPlayers();
-
-        const player1 = new PlayerGame("Player 1", 0xff0000);
-        const player2 = new PlayerGame("Player 2", 0x0000ff);
-
-        this.map.createCapital(player1, 4, 9);
-        this.map.createCapital(player2, 0, 0);
-
-        this.map.createUnit(player1, 3, 8);
-        this.map.createUnit(player2, 1, 1);
     }
 
     gameStart () {
@@ -140,14 +136,15 @@ export default class HexandriaGraphics {
 
             // camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
             camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.2, 2000);
-
-            camera.position.x = -7;
+            camera.position.x = 11;
             camera.position.y = 5;
-            camera.position.z = 8;
+            camera.position.z = 7;
             camera.up.set(0, 0, 1);
 
             controls = new OrbitControls(camera);
-            controls.target.y = 2;
+            controls.target.x = 5;
+            controls.target.y = 5;
+            controls.target.z = 0;
 
             textureLoader = new THREE.TextureLoader();
 

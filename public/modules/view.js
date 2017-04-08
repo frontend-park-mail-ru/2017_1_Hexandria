@@ -87,7 +87,10 @@ export default class View {
      * Remove view
      */
     remove() {
-        this._el && this._el.remove();
+        // this._el && this._el.remove();
+        if (this._el) {
+            this._el.remove();
+        }
     }
 
     /**

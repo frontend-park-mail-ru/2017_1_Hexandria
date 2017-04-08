@@ -7,7 +7,10 @@ export const EVENTS = {
         EXIT: "EVENTS.GAME.EXIT",
     },
     LOGIC: {
-        SELECT: "EVENTS.LOGIC.SELECT"
+        SELECT: "EVENTS.LOGIC.SELECT",
+        MOVE: "EVENTS.LOGIC.MOVE",
+        BATTLE: "EVENTS.LOGIC.BATTLE",
+        CONQUER: "EVENTS.LOGIC.CONQUER"
     },
     GRAPHICS: {
         SELECT_UNIT: "EVENTS.GRAPHICS.SELECT_UNIT",
@@ -22,3 +25,4 @@ export const EVENTS = {
     },
 };
 
+export default EVENTS;

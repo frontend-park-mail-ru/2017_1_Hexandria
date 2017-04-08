@@ -9,7 +9,7 @@ const _hexagonBeta = Math.sqrt(3) * _hexagonAlpha;
 export default class HexUtils {
     static getPosition(x, y) {
         let posX = (2 * _hexagonBeta + 0.01) * x;
-        let posY = (3 * _hexagonAlpha + 0.01) * y;
+        const posY = (3 * _hexagonAlpha + 0.01) * y;
         if (y % 2 === 0) {
             posX += _hexagonBeta + 0.01;
         }

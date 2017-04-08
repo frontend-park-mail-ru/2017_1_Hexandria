@@ -1,9 +1,7 @@
 "use strict";
 
-import * as THREE from 'three';
-import CapitalGame from "./CapitalGame";
-import UnitGame from "./UnitGame";
-import HexUtils from "./hexUtils";
+import * as THREE from "three";
+import HexUtils from "./UtilsGraphics";
 
 const _highlightedColor = 0xf08080;
 const _selectedSquadColor = 0xff0000;
@@ -15,7 +13,14 @@ export default class HexGame extends THREE.Mesh {
     constructor(scene, color, x, y, z) {
         const geometry = HexUtils.getHexGeometry();
 
-        super(geometry, new THREE.MeshPhongMaterial({ color, side: THREE.DoubleSide }));
+        let texture = new THREE.TextureLoader().load('textures/grass.jpg');
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        super(geometry, new THREE.MeshPhongMaterial({
+            color,
+            side: THREE.DoubleSide,
+            map: texture,
+        }));
         this.position.set(...HexUtils.getPosition(x, y), z);
         this.rotation.set(0, 0, 0);
         this.scale.set(1, 1, 1);
@@ -84,20 +89,6 @@ export default class HexGame extends THREE.Mesh {
     unselectArea() {
         this.selectedArea = false;
         this.material.emissive.setHex(null);
-    }
-
-    createUnit(owner) {
-        this.hasUnit = true;
-        this.unit = new UnitGame(owner);
-        this.unit.object.position.copy(this.position);
-        this.scene.add(this.unit.object);
-    }
-
-    createCapital(owner) {
-        this.hasCapital = true;
-        this.capital = new CapitalGame(owner);
-        this.capital.object.position.copy(this.position);
-        this.scene.add(this.capital.object);
     }
 
     removeUnit() {

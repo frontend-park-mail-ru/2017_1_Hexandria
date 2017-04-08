@@ -15,7 +15,7 @@ module.exports = {
         "strict": [0, "global"],
         "no-tabs": 1,
         "func-names": 0,
-        "no-console": 1, // or 0?
+        "no-console": 0, // or 0?
 
         "properties": 0,
         "no-shadow": 0,
@@ -28,8 +28,9 @@ module.exports = {
         "no-useless-escape": 0,
         "default-case": 0,
         "class-methods-use-this": 0,
+        "no-restricted-syntax": 0,
 
-        "indent": ["error", 4],
+        "indent": ["error", 4, {"SwitchCase": 1}],
         "no-unused-vars": 0,
         "wrap-iife": 0,
         "space-before-function-paren": 0,

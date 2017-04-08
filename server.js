@@ -12,8 +12,6 @@ app.use(function(req, res, next){
     next();
 });
 
-app.use("/lib", express.static("node_modules"));
-
 app.use("/", express.static("dist"));
 
 app.use("*", (req, res) => {
