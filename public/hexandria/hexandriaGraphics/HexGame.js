@@ -1,8 +1,6 @@
 "use strict";
 
 import * as THREE from "three";
-import CapitalGame from "./CapitalGame";
-import UnitGame from "./UnitGame";
 import HexUtils from "./hexUtils";
 
 const _highlightedColor = 0xf08080;
@@ -84,20 +82,6 @@ export default class HexGame extends THREE.Mesh {
     unselectArea() {
         this.selectedArea = false;
         this.material.emissive.setHex(null);
-    }
-
-    createUnit(owner) {
-        this.hasUnit = true;
-        this.unit = new UnitGame(owner);
-        this.unit.object.position.copy(this.position);
-        this.scene.add(this.unit.object);
-    }
-
-    createCapital(owner) {
-        this.hasCapital = true;
-        this.capital = new CapitalGame(owner);
-        this.capital.object.position.copy(this.position);
-        this.scene.add(this.capital.object);
     }
 
     removeUnit() {

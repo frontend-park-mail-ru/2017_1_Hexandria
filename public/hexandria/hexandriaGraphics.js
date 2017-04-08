@@ -85,15 +85,6 @@ export default class HexandriaGraphics {
         this.gameStart();
         this.initTowns();
         this.initPlayers();
-
-        /* const player1 = new PlayerGame("Player 1", 0xff0000);
-        const player2 = new PlayerGame("Player 2", 0x0000ff);
-
-        this.map.createCapital(player1, 4, 9);
-        this.map.createCapital(player2, 0, 0);
-
-        this.map.createUnit(player1, 3, 8);
-        this.map.createUnit(player2, 1, 1);*/
     }
 
     gameStart () {
