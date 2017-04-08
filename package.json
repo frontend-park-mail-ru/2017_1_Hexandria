@@ -4,12 +4,11 @@
   "description": "Hexandria: strategy game",
   "main": "server.js",
   "scripts": {
-    "startup": "webpack --progress --colors && node server.js",
+    "startup": "./node_modules/.bin/webpack && node server.js",
     "sass": "./node_modules/.bin/node-sass public/main.scss public/main.css",
     "eslint": "./node_modules/.bin/eslint public",
     "karmaTest": "karma start",
-    "build": "webpack --progress --colors",
-    "watch": "webpack-dev-server --progress --colors --open",
+    "build": "./node_modules/.bin/webpack",
     "webpack-develop": "./node_modules/.bin/webpack --watch --progress --colors",
     "webpack": "webpack --display-error-details"
   },
