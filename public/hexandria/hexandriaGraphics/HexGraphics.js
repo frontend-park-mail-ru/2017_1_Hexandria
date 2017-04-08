@@ -1,7 +1,7 @@
 "use strict";
 
 import * as THREE from "three";
-import HexUtils from "./hexUtils";
+import HexUtils from "./UtilsGraphics";
 
 const _highlightedColor = 0xf08080;
 const _selectedSquadColor = 0xff0000;

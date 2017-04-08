@@ -1,7 +1,7 @@
 "use strict";
 
 import * as THREE from "three";
-import HexGame from "./HexGame";
+import HexGame from "./HexGraphics";
 import Mediator from "../../modules/mediator";
 import { EVENTS } from "../events";
 

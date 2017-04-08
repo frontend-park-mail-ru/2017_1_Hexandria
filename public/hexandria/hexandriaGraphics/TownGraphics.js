@@ -1,7 +1,7 @@
 "use strict";
 
 import * as THREE from "three";
-import HexUtils from "./hexUtils";
+import HexUtils from "./UtilsGraphics";
 
 const positionZ = 0.25 + 0.5;
 

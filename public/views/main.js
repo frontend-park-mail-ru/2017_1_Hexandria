@@ -18,7 +18,7 @@ export default class MainView extends View {
         const hex = new Hex({
             el: document.createElement("div"),
             data: {
-                hex_title: "civilization",
+                hex_title: "hexandria",
                 hex_phrase: "You are the ruler",
                 controls: {
                     singleplayer: {

@@ -4,10 +4,9 @@ import * as THREE from "three";
 import Stats from "stats-js";
 import Mediator from "../modules/mediator";
 import { EVENTS } from "./events";
-import PlayerGame from "./hexandriaGraphics/PlayerGame";
-import MapGame from "./hexandriaGraphics/MapGame";
-import HexTown from "./hexandriaGraphics/hexTown";
-import HexSquad from "./hexandriaGraphics/hexSquad";
+import MapGame from "./hexandriaGraphics/MapGraphics";
+import HexTown from "./hexandriaGraphics/TownGraphics";
+import HexSquad from "./hexandriaGraphics/SquadGraphics";
 
 const OrbitControls = require("three-orbit-controls")(THREE);
 
