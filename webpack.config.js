@@ -31,6 +31,7 @@ module.exports = {
         filename: path.join("js", "[chunkhash].js"),
         path: path.resolve(__dirname, "dist")
     },
+    watch: true,
 
     module: {
         loaders

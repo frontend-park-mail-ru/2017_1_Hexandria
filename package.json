@@ -4,7 +4,7 @@
   "description": "Hexandria: strategy game",
   "main": "server.js",
   "scripts": {
-    "startup": "./node_modules/.bin/webpack && node server.js",
+    "startup": "./node_modules/.bin/webpack --watch & node server.js && fg",
     "sass": "./node_modules/.bin/node-sass public/main.scss public/main.css",
     "eslint": "./node_modules/.bin/eslint public",
     "karmaTest": "karma start",
