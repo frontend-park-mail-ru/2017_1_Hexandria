@@ -8,6 +8,9 @@ export const EVENTS = {
     },
     LOGIC: {
         SELECT: "EVENTS.LOGIC.SELECT",
+        MOVE: "EVENTS.LOGIC.MOVE",
+        BATTLE: "EVENTS.LOGIC.BATTLE",
+        CONQUER: "EVENTS.LOGIC.CONQUER"
     },
     GRAPHICS: {
         SELECT_UNIT: "EVENTS.GRAPHICS.SELECT_UNIT",

@@ -13,7 +13,14 @@ export default class HexGame extends THREE.Mesh {
     constructor(scene, color, x, y, z) {
         const geometry = HexUtils.getHexGeometry();
 
-        super(geometry, new THREE.MeshPhongMaterial({ color, side: THREE.DoubleSide }));
+        let texture = new THREE.TextureLoader().load('textures/grass.jpg');
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        super(geometry, new THREE.MeshPhongMaterial({
+            color,
+            side: THREE.DoubleSide,
+            map: texture,
+        }));
         this.position.set(...HexUtils.getPosition(x, y), z);
         this.rotation.set(0, 0, 0);
         this.scale.set(1, 1, 1);
