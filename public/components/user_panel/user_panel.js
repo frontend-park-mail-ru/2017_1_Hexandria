@@ -5,7 +5,7 @@ import Fetcher from "../../js/fetcher";
 import Router from "../../modules/router";
 import { api } from "../../hexandria/api";
 import "./user_panel.scss";
-import user_panel_template from "./user_panel_template.pug";
+import userPanelTemplate from "./userPanelTemplate.pug";
 
 export default class UserPanel {
     /**
@@ -42,7 +42,7 @@ export default class UserPanel {
      */
     updateHtml() {
         this.el.setAttribute("class", "user_panel");
-        this.el.innerHTML = user_panel_template({ username: this.username });
+        this.el.innerHTML = userPanelTemplate({ username: this.username });
     }
 
     /**

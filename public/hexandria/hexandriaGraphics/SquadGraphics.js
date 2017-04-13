@@ -4,7 +4,7 @@ import * as THREE from "three";
 import HexUtils from "./UtilsGraphics";
 
 const positionZ = 0.5;
-const z_sprite = 1.0;
+const spriteZ = 1.0;
 
 export default class HexSquad {
     constructor(scene, color, position) {
@@ -26,6 +26,6 @@ export default class HexSquad {
         const pos = new THREE.Vector3(...HexUtils.getPosition(x, y), positionZ);
         this.squad.position.copy(pos);
 
-        this.sprite.position.set(pos.x, pos.y, z_sprite);
+        this.sprite.position.set(pos.x, pos.y, spriteZ);
     }
 }

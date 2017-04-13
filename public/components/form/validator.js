@@ -75,6 +75,8 @@ export default class Validator {
             case "double_password":
                 this.validateDoublePasswords(input);
                 break;
+            default:
+                // do nothing
         }
     }
 }

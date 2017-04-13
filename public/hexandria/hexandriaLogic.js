@@ -66,38 +66,35 @@ export default class HexandriaLogic {
                 (new Mediator()).emit(EVENTS.GRAPHICS.MOVE, this._selected);
                 this._selected = null;
             } else {
-                // TODO if near selected then move
+                this._selected = null;
+                (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
             }
         } else {
             this._selected = null;
             (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
-            // TODO emit unselect
         }
     }
 
     findArmy(position) {
         let result = null;
-        for (const playerName in this.game.players) {
-            if (this.game.players[playerName]) {
-                const playerColor = this.game.players[playerName].color;
-                const playerArmy = this.game.players[playerName].army;
 
+        const players = this.game.players;
+        for (const playerName of Object.keys(players)) {
+            const playerArmy = this.game.players[playerName].army;
 
-                // console.log(playerName, playerArmy);
-                for (const index in playerArmy) {
-                    if (playerArmy[index]) {
-                        const squad = playerArmy[index];
-                        console.log("squad.position", squad.position, position);
+            for (const index in playerArmy) {
+                if (Object.prototype.hasOwnProperty.call(playerArmy, index)) {
+                    const squad = playerArmy[index];
+                    console.log("squad.position", squad.position, position);
 
-                        if (squad.position.x === position.x &&
-                            squad.position.y === position.y) {
-                            console.log("TRUE");
-                            result = {
-                                name: playerName,
-                                index,
-                                position: squad.position,
-                            };
-                        }
+                    if (squad.position.x === position.x &&
+                        squad.position.y === position.y) {
+                        console.log("TRUE");
+                        result = {
+                            name: playerName,
+                            index,
+                            position: squad.position,
+                        };
                     }
                 }
             }

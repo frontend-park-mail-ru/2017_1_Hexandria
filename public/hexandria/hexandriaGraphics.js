@@ -39,7 +39,8 @@ export default class HexandriaGraphics {
         this.towns = [];
 
         const towns = this.game.field.towns;
-        for (const index in towns) {
+        for (const index of Object.keys(towns)) {
+        // for (const index in towns) {
             if (towns[index]) {
                 // console.log(towns[index]);
 
@@ -52,7 +53,9 @@ export default class HexandriaGraphics {
         this.players = [];
         this.playersMap = {};
 
-        for (const playerName in this.game.players) {
+        const players = this.game.players;
+        for (const playerName of Object.keys(players)) {
+        // for (const playerName in this.game.players) {
             if (this.game.players[playerName]) {
                 const playerColor = this.game.players[playerName].color;
                 const playerArmy = this.game.players[playerName].army;
@@ -88,19 +91,18 @@ export default class HexandriaGraphics {
 
     gameStart () {
         // Graphics variables
+        const clock = new THREE.Clock();
         let container,
-            stats;
-        let camera,
+            stats,
+            camera,
             controls,
             scene,
-            renderer;
-        let textureLoader;
-        const clock = new THREE.Clock();
-        let mouse,
-            raycaster;
-
-        let time = 0;
-        let keyQ = false;
+            renderer,
+            textureLoader,
+            mouse,
+            raycaster,
+            time = 0,
+            keyQ = false;
 
         // - Main code -
 
@@ -225,6 +227,8 @@ export default class HexandriaGraphics {
                     case 81:
                         keyQ = true;
                         break;
+                    default:
+                        // do nothing
                 }
             }, false);
 
@@ -234,6 +238,8 @@ export default class HexandriaGraphics {
                     case 81:
                         keyQ = false;
                         break;
+                    default:
+                        // do nothing
                 }
             }, false);
         }

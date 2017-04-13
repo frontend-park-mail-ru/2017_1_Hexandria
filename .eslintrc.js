@@ -24,9 +24,7 @@ module.exports = {
         "no-plusplus": 0,
         "no-mixed-operators": 0,
         "one-var": 0,
-        "camelcase": 0,
         "no-useless-escape": 0,
-        "default-case": 0,
         "class-methods-use-this": 0,
         "no-restricted-syntax": 0,
 

@@ -1,7 +1,7 @@
 "use strict";
 
 import Button from "../button/button";
-import hex_template from "./hex_template.pug";
+import hexTemplate from "./hexTemplate.pug";
 
 export default class Hex {
     /**
@@ -29,7 +29,7 @@ export default class Hex {
      * Update HTML
      */
     updateHtml() {
-        this.el.innerHTML = hex_template({
+        this.el.innerHTML = hexTemplate({
             hex_title: this.title,
             hex_phrase: this.phrase,
         });
