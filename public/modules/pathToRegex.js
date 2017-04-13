@@ -2,7 +2,7 @@
 
 export const pathToRegex = function (pathname) {
     const keyNames = [];
-    const parts = pathname
+    const pathParts = pathname
         .split("/")
         .filter(part => part)
         .map((part, i, parts) => {
@@ -24,7 +24,7 @@ export const pathToRegex = function (pathname) {
 
     return function (path) {
         const keys = [];
-        const check = parts.every((regexp, step) => {
+        const check = pathParts.every((regexp, step) => {
             const tmp = regexp.exec(path);
             if (!tmp) {
                 return false;

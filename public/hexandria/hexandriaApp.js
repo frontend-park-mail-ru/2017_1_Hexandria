@@ -13,7 +13,7 @@ const MODES = {
 };
 
 export default class HexandriaApp {
-    constructor(options) {
+    constructor() {
         console.log("HexandriaApp created");
 
         this.game = null;
@@ -37,7 +37,7 @@ export default class HexandriaApp {
         }
     }
 
-    gameExit(payload) {
+    gameExit() {
         console.log("gameExit");
         if (this.game) {
             this.game.destroy();

@@ -16,7 +16,7 @@ export default class MapGame {
 
         this.sizeX = game.field.size.x;
         this.sizeY = game.field.size.y;
-        this.field = [...Array(this.sizeX).keys()].map(i => Array(this.sizeY));
+        this.field = [...Array(this.sizeX).keys()].map(() => Array(this.sizeY));
         this.fieldMap = {};
         this.fieldGroup = new THREE.Group();
 

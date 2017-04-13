@@ -45,11 +45,11 @@ export default class Router {
     start(state = {}) {
         this.startflag = true;
 
-        window.onpopstate = function (event) {
-            const state = event.state;
+        window.onpopstate = (event) => {
+            const state_ = event.state;
             const pathname = window.location.pathname;
-            this.onroute(pathname, state);
-        }.bind(this);
+            this.onroute(pathname, state_);
+        };
 
         const pathname = window.location.pathname;
         this.onroute(pathname, state);
@@ -61,7 +61,7 @@ export default class Router {
      * @param {Object} [state={}]
      */
     onroute(pathname, state = {}) {
-        const route = this.routes.find(route => route.match(pathname));
+        const route = this.routes.find(r => r.match(pathname));
 
         if (!route) {
             return;
@@ -95,7 +95,7 @@ export default class Router {
      * @param {string} pathname
      */
     update(pathname) {
-        const route = this.routes.find(route => route.match(pathname));
+        const route = this.routes.find(r => r.match(pathname));
 
         if (!route) {
             return;

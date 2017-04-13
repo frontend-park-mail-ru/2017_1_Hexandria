@@ -3,11 +3,10 @@
 import HexandriaLogic from "./hexandriaLogic";
 import HexandriaGraphics from "./hexandriaGraphics";
 import Mediator from "../modules/mediator";
-import { EVENTS } from "./events";
 
 export default class HexandriaGame {
     constructor(Mode, element, user) {
-        console.log("HexandriaGame created");
+        console.log("HexandriaGame created", user);
 
         if (!(Mode.prototype instanceof HexandriaLogic)) {
             throw new TypeError("Mode is not a HexandriaLogic");
