@@ -13,7 +13,7 @@ export default class HexGame extends THREE.Mesh {
     constructor(scene, color, x, y, z) {
         const geometry = HexUtils.getHexGeometry();
 
-        let texture = new THREE.TextureLoader().load('textures/grass.jpg');
+        const texture = new THREE.TextureLoader().load("textures/grass.jpg");
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
         super(geometry, new THREE.MeshPhongMaterial({

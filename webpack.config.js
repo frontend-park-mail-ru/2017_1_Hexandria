@@ -34,7 +34,7 @@ module.exports = {
     watch: true,
 
     module: {
-        loaders
+        loaders,
     },
 
     plugins: [

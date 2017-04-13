@@ -4,13 +4,10 @@
   "description": "Hexandria: strategy game",
   "main": "server.js",
   "scripts": {
-    "startup": "./node_modules/.bin/webpack --watch & node server.js && fg",
-    "sass": "./node_modules/.bin/node-sass public/main.scss public/main.css",
-    "eslint": "./node_modules/.bin/eslint public",
-    "karmaTest": "karma start",
-    "build": "./node_modules/.bin/webpack",
-    "webpack-develop": "./node_modules/.bin/webpack --watch --progress --colors",
-    "webpack": "webpack --display-error-details"
+    "startup": "npm run webpack & node server.js",
+    "eslint": "eslint public",
+    "karma": "karma start",
+    "webpack": "webpack --watch --progress --colors"
   },
   "repository": {
     "type": "git",
@@ -72,8 +69,6 @@
     "style-loader": "^0.13.1",
     "stylelint": "^7.9.0",
     "stylelint-config-standard": "^16.0.0",
-    "three": "^0.84.0",
-    "three-orbit-controls": "^82.1.0",
     "url-loader": "^0.5.7",
     "webpack": "^2.3.2"
   }

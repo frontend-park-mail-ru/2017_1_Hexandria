@@ -106,7 +106,7 @@ export default class HexandriaGraphics {
 
         initGraphics(this.element);
         initInput();
-        createObjects();
+        // createObjects();
 
         const _map = new MapGame(scene, this.game);
 
