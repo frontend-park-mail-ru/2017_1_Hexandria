@@ -6,7 +6,7 @@ const _hexagonDiameter = 1;
 const _hexagonAlpha = _hexagonDiameter / 4.0;
 const _hexagonBeta = Math.sqrt(3) * _hexagonAlpha;
 
-export default class HexUtils {
+export default class UtilsGraphics {
     static getPosition(x, y) {
         let posX = (2 * _hexagonBeta + 0.01) * x;
         const posY = (3 * _hexagonAlpha + 0.01) * y;
@@ -30,7 +30,7 @@ export default class HexUtils {
     }
 
     static getHexGeometry() {
-        return new THREE.ShapeBufferGeometry(HexUtils.getHexShape());
+        return new THREE.ShapeBufferGeometry(UtilsGraphics.getHexShape());
     }
 
     static makeTextSprite(message, parameters) {
@@ -63,7 +63,7 @@ export default class HexUtils {
         context.strokeStyle = `rgba(${borderColor.r},${borderColor.g},${
              borderColor.b},${borderColor.a})`;
         context.lineWidth = borderThickness;
-        HexUtils.roundRect(context, borderThickness / 2, borderThickness / 2,
+        UtilsGraphics.roundRect(context, borderThickness / 2, borderThickness / 2,
             textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6);
 
         context.fillStyle = "rgba(0, 0, 0, 1.0)";
@@ -96,7 +96,7 @@ export default class HexUtils {
     }
 
     static getSprite(text) {
-        return HexUtils.makeTextSprite(
+        return UtilsGraphics.makeTextSprite(
             text,
             {
                 fontsize: 40,

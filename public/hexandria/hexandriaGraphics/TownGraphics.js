@@ -1,11 +1,11 @@
 "use strict";
 
 import * as THREE from "three";
-import HexUtils from "./UtilsGraphics";
+import UtilsGraphics from "./UtilsGraphics";
 
 const positionZ = 0.25 + 0.5;
 
-export default class HexTown {
+export default class TownGraphics {
     constructor(scene, color, position) {
         const geometry = new THREE.BoxGeometry(0.25, 0.25, 1.0);
         const material = new THREE.MeshBasicMaterial({ color });
@@ -17,7 +17,7 @@ export default class HexTown {
     }
 
     move(x, y) {
-        const pos = new THREE.Vector3(...HexUtils.getPosition(x, y), positionZ);
+        const pos = new THREE.Vector3(...UtilsGraphics.getPosition(x, y), positionZ);
         this.town.position.copy(pos);
     }
 

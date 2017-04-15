@@ -1,17 +1,17 @@
 "use strict";
 
 import * as THREE from "three";
-import HexUtils from "./UtilsGraphics";
+import UtilsGraphics from "./UtilsGraphics";
 
 const _highlightedColor = 0xf08080;
 const _selectedSquadColor = 0xff0000;
 const _selectedAreaColor = 0xffff00;
 const _grassColor = 0x80f080;
 
-export default class HexGame extends THREE.Mesh {
+export default class HexGraphics extends THREE.Mesh {
 
     constructor(scene, color, x, y, z) {
-        const geometry = HexUtils.getHexGeometry();
+        const geometry = UtilsGraphics.getHexGeometry();
 
         const texture = new THREE.TextureLoader().load("textures/grass.jpg");
         texture.wrapS = THREE.RepeatWrapping;
@@ -21,7 +21,7 @@ export default class HexGame extends THREE.Mesh {
             side: THREE.DoubleSide,
             map: texture,
         }));
-        this.position.set(...HexUtils.getPosition(x, y), z);
+        this.position.set(...UtilsGraphics.getPosition(x, y), z);
         this.rotation.set(0, 0, 0);
         this.scale.set(1, 1, 1);
 

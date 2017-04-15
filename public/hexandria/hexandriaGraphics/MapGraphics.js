@@ -1,7 +1,7 @@
 "use strict";
 
 import * as THREE from "three";
-import HexGame from "./HexGraphics";
+import HexGraphics from "./HexGraphics";
 import Mediator from "../../modules/mediator";
 import { EVENTS } from "../events";
 
@@ -9,7 +9,7 @@ const _fieldGrass = 0x80f080;
 const _fieldWater = 0x8080ff;
 const _fieldRock = 0x808080;
 
-export default class MapGame {
+export default class MapGraphics {
 
     constructor(scene, game) {
         this.scene = scene;
@@ -29,7 +29,7 @@ export default class MapGame {
 
         for (let i = 0; i < this.sizeX; i++) {
             for (let j = 0; j < this.sizeY; j++) {
-                const newHex = new HexGame(this.scene, _fieldGrass, i, j, 0.2);
+                const newHex = new HexGraphics(this.scene, _fieldGrass, i, j, 0.2);
                 this.field[i][j] = newHex;
                 this.fieldMap[newHex] = {
                     x: i,

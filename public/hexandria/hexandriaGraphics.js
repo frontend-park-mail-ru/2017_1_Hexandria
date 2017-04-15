@@ -4,9 +4,9 @@ import * as THREE from "three";
 import Stats from "stats-js";
 import Mediator from "../modules/mediator";
 import { EVENTS } from "./events";
-import MapGame from "./hexandriaGraphics/MapGraphics";
-import HexTown from "./hexandriaGraphics/TownGraphics";
-import HexSquad from "./hexandriaGraphics/SquadGraphics";
+import MapGraphics from "./hexandriaGraphics/MapGraphics";
+import TownGraphics from "./hexandriaGraphics/TownGraphics";
+import SquadGraphics from "./hexandriaGraphics/SquadGraphics";
 import HexandriaUtils from "./hexandriaUtils";
 
 const OrbitControls = require("three-orbit-controls")(THREE);
@@ -44,7 +44,7 @@ export default class HexandriaGraphics {
         HexandriaUtils.forTown(
             this.game,
             (town) => {
-                const newTown = new HexTown(this.scene, 0x777777, town.position);
+                const newTown = new TownGraphics(this.scene, 0x777777, town.position);
 
                 this.towns.push(newTown);
                 this.townsMap[town.name] = newTown;
@@ -70,15 +70,21 @@ export default class HexandriaGraphics {
         this.players = [];
         this.playersMap = {};
 
+        HexandriaUtils.forPlayer(
+            this.game,
+            (playerObject) => {
+                this.playersMap[playerObject.player.name] = [];
+            },
+        );
         HexandriaUtils.forSquad(
             this.game,
-            (object) => {
-                const newSquad = new HexSquad(this.scene, object.player.color, object.squad);
-                this.players.push(newSquad);
+            (squadObject) => {
+                const newSquad = new SquadGraphics(this.scene, squadObject.player.color, squadObject.squad);
 
-                this.playersMap[object.player.name] = [];
-                this.playersMap[object.player.name].push(newSquad);
-            });
+                this.players.push(newSquad);
+                this.playersMap[squadObject.player.name].push(newSquad);
+            },
+        );
     }
 
     movePlayer(playerObject) {
@@ -113,7 +119,7 @@ export default class HexandriaGraphics {
         initInput();
         // createObjects();
 
-        const _map = new MapGame(scene, this.game);
+        const _map = new MapGraphics(scene, this.game);
 
         animate();
 
