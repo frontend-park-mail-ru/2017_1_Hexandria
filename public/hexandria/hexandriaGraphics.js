@@ -7,6 +7,7 @@ import { EVENTS } from "./events";
 import MapGame from "./hexandriaGraphics/MapGraphics";
 import HexTown from "./hexandriaGraphics/TownGraphics";
 import HexSquad from "./hexandriaGraphics/SquadGraphics";
+import HexandriaUtils from "./hexandriaUtils";
 
 const OrbitControls = require("three-orbit-controls")(THREE);
 
@@ -37,50 +38,47 @@ export default class HexandriaGraphics {
 
     initTowns() {
         this.towns = [];
+        this.townsMap = {};
 
-        const towns = this.game.field.towns;
-        for (const index of Object.keys(towns)) {
-        // for (const index in towns) {
-            if (towns[index]) {
-                // console.log(towns[index]);
+        HexandriaUtils.forTown(
+            this.game,
+            (town) => {
+                const newTown = new HexTown(this.scene, 0x777777, town.position);
 
-                this.towns.push(new HexTown(this.scene, 0x777777, towns[index].position));
-            }
-        }
+                this.towns.push(newTown);
+                this.townsMap[town.name] = newTown;
+            },
+        );
+
+        HexandriaUtils.forPlayer(
+            this.game,
+            (playerObject) => {
+                const player = playerObject.player;
+                if (this.townsMap[player.capital]) {
+                    this.townsMap[player.capital].changeColor(player.color);
+                }
+            },
+        );
     }
 
     initPlayers() {
         this.players = [];
         this.playersMap = {};
 
-        const players = this.game.players;
-        for (const playerName of Object.keys(players)) {
-        // for (const playerName in this.game.players) {
-            if (this.game.players[playerName]) {
-                const playerColor = this.game.players[playerName].color;
-                const playerArmy = this.game.players[playerName].army;
+        HexandriaUtils.forSquad(
+            this.game,
+            (object) => { // player, index, squad
+                const newSquad = new HexSquad(this.scene, object.player.color, object.squad.position);
+                this.players.push(newSquad);
 
-                this.playersMap[playerName] = [];
-
-                // console.log(playerName, playerArmy);
-                for (const index in playerArmy) {
-                    if (playerArmy[index]) {
-                        const squad = playerArmy[index];
-
-                        // console.log(playerName, squad.position);
-
-                        const newPlayer = new HexSquad(this.scene, playerColor, squad.position);
-                        this.players.push(newPlayer);
-                        this.playersMap[playerName].push(newPlayer);
-                    }
-                }
-            }
-        }
+                this.playersMap[object.player.name] = [];
+                this.playersMap[object.player.name].push(newSquad);
+            });
     }
 
-    movePlayer(player) {
-        console.log("movePlayer", player);
-        this.playersMap[player.name][player.index].move(player.position.x, player.position.y);
+    movePlayer(playerObject) {
+        console.log("movePlayerz", playerObject);
+        this.playersMap[playerObject.player.name][playerObject.squadIndex].move(playerObject.squad.position.x, playerObject.squad.position.y);
     }
 
     gameProcess() {

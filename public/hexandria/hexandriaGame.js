@@ -61,11 +61,12 @@ export default class HexandriaGame {
             },
 
 
-            players: {
-                Bob: {
+            players: [
+                {
+                    name: "Bob",
                     color: 0xff0000,
                     capital: "town1",
-                    army: [
+                    squads: [
                         {
                             position: {
                                 x: 1,
@@ -74,10 +75,11 @@ export default class HexandriaGame {
                         },
                     ],
                 },
-                John: {
+                {
+                    name: "John",
                     color: 0x0000ff,
                     capital: "town4",
-                    army: [
+                    squads: [
                         {
                             position: {
                                 x: 5,
@@ -86,7 +88,7 @@ export default class HexandriaGame {
                         },
                     ],
                 },
-            },
+            ],
         };
     }
 

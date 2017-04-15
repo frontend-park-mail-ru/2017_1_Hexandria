@@ -2,6 +2,7 @@
 
 import Mediator from "../modules/mediator";
 import { EVENTS } from "./events";
+import HexandriaUtils from "./hexandriaUtils";
 
 export default class HexandriaLogic {
     constructor(game) {
@@ -43,80 +44,96 @@ export default class HexandriaLogic {
         console.log("base", position);
 
         if (position) {
-            const army = this.findArmy(position);
-            console.log("army", army);
-            if (army) {
-                if (army !== this._selected) {
-                    console.log("^SELECT^", army);
-                    this._selected = army;
-                    (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_UNIT, this._selected.position);
+            if (this._selected) {
+                if (this.checkNearSelected(position)) {
+                    const army = this.findSquad(position);
+                    console.log("->", army);
+                    // if (army === enemy) {
+                    //     // emit fight!
+                    // }
+
+                    const town = this.findTown(position);
+                    console.log("->", town);
+                    // if (town === enemy) {
+                    //     // emit capture!
+                    // }
+
+                    (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
+                    this._selected.squad.position = position;
+
+                    const pIndex = this._selected.playerIndex;
+                    const sIndex = this._selected.squadIndex;
+                    this.game.players[pIndex].squads[sIndex].position.x = position.x;
+                    this.game.players[pIndex].squads[sIndex].position.y = position.y;
+                    (new Mediator()).emit(EVENTS.GRAPHICS.MOVE, this._selected);
+                    this._selected = null;
                 } else {
-                    console.log("else");
-                    // TODO unselect old
-                    // TODO select new
+                    this._selected = null;
+                    (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
                 }
-            } else if (this.checkNearSelected(position)) {
-                (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
-                console.log("checkNearSelected", this._selected);
-
-                this._selected.position = position;
-                this.game.players[this._selected.name].army[this._selected.index].position.x = position.x;
-
-                this.game.players[this._selected.name].army[this._selected.index].position.y = position.y;
-                (new Mediator()).emit(EVENTS.GRAPHICS.MOVE, this._selected);
-                this._selected = null;
             } else {
-                this._selected = null;
-                (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
+                const army = this.findSquad(position);
+                if (army) {
+                    this._selected = army;
+                    (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_UNIT, this._selected.squad.position);
+                }
             }
         } else {
             this._selected = null;
             (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
         }
     }
+    checkTownCapture() {
+        //
+    }
 
-    findArmy(position) {
+    findSquad(position) {
         let result = null;
 
-        const players = this.game.players;
-        for (const playerName of Object.keys(players)) {
-            const playerArmy = this.game.players[playerName].army;
-
-            for (const index in playerArmy) {
-                if (Object.prototype.hasOwnProperty.call(playerArmy, index)) {
-                    const squad = playerArmy[index];
-                    console.log("squad.position", squad.position, position);
-
-                    if (squad.position.x === position.x &&
-                        squad.position.y === position.y) {
-                        console.log("TRUE");
-                        result = {
-                            name: playerName,
-                            index,
-                            position: squad.position,
-                        };
-                    }
+        HexandriaUtils.forSquad(
+            this.game,
+            (object) => {
+                if (object.squad.position.x === position.x &&
+                    object.squad.position.y === position.y) {
+                    result = object;
                 }
-            }
-        }
+            },
+        );
+        return result;
+    }
+
+    findTown(position) {
+        let result = null;
+
+        HexandriaUtils.forTown(
+            this.game,
+            (town) => {
+                if (town.position.x === position.x &&
+                    town.position.y === position.y) {
+                    result = town;
+                }
+            },
+        );
         return result;
     }
 
     checkNearSelected(position) {
         if (this._selected) {
             let result = [];
-            result.push({ x: this._selected.position.x - 1, y: this._selected.position.y });
-            result.push({ x: this._selected.position.x + 1, y: this._selected.position.y });
-            if (this._selected.position.y % 2 === 1) {
-                result.push({ x: this._selected.position.x - 1, y: this._selected.position.y - 1 });
-                result.push({ x: this._selected.position.x, y: this._selected.position.y - 1 });
-                result.push({ x: this._selected.position.x - 1, y: this._selected.position.y + 1 });
-                result.push({ x: this._selected.position.x, y: this._selected.position.y + 1 });
+
+            const sPos = this._selected.squad.position;
+            result.push({ x: sPos.x - 1, y: sPos.y });
+            result.push({ x: sPos.x + 1, y: sPos.y });
+            if (sPos.y % 2 === 1) {
+                result.push({ x: sPos.x - 1, y: sPos.y - 1 });
+                result.push({ x: sPos.x, y: sPos.y - 1 });
+                result.push({ x: sPos.x - 1, y: sPos.y + 1 });
+                result.push({ x: sPos.x, y: sPos.y + 1 });
             } else {
-                result.push({ x: this._selected.position.x + 1, y: this._selected.position.y - 1 });
-                result.push({ x: this._selected.position.x, y: this._selected.position.y - 1 });
-                result.push({ x: this._selected.position.x + 1, y: this._selected.position.y + 1 });
-                result.push({ x: this._selected.position.x, y: this._selected.position.y + 1 });
+                result.push({ x: sPos.x + 1, y: sPos.y - 1 });
+                result.push({ x: sPos.x, y: sPos.y - 1 });
+                result.push({ x: sPos.x + 1, y: sPos.y + 1 });
+                result.push({ x: sPos.x, y: sPos.y + 1 });
             }
             result = result.filter(element => element.x >= 0 && element.x < this.game.field.size.x && element.y >= 0 && element.y < this.game.field.size.y);
 

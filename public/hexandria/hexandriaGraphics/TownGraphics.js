@@ -20,4 +20,8 @@ export default class HexTown {
         const pos = new THREE.Vector3(...HexUtils.getPosition(x, y), positionZ);
         this.town.position.copy(pos);
     }
+
+    changeColor(color) {
+        this.town.material.color.setHex(color);
+    }
 }
