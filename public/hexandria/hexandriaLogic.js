@@ -46,6 +46,10 @@ export default class HexandriaLogic {
         if (position) {
             if (this._selected) {
                 if (this.checkNearSelected(position)) {
+                    const pIndex = this._selected.playerIndex;
+                    const sIndex = this._selected.squadIndex;
+
+
                     const army = this.findSquad(position);
                     console.log("->", army);
                     // if (army === enemy) {
@@ -54,15 +58,15 @@ export default class HexandriaLogic {
 
                     const town = this.findTown(position);
                     console.log("->", town);
-                    // if (town === enemy) {
-                    //     // emit capture!
-                    // }
+                    if (town) {
+                        this.game.players[pIndex].towns.push(town.name);
+                        console.log(this.game.players[pIndex].towns);
+                        (new Mediator()).emit(EVENTS.GRAPHICS.CAPTURE, { player: this._selected.player, town });
+                    }
 
                     (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
                     this._selected.squad.position = position;
 
-                    const pIndex = this._selected.playerIndex;
-                    const sIndex = this._selected.squadIndex;
                     this.game.players[pIndex].squads[sIndex].position.x = position.x;
                     this.game.players[pIndex].squads[sIndex].position.y = position.y;
                     (new Mediator()).emit(EVENTS.GRAPHICS.MOVE, this._selected);
@@ -82,9 +86,6 @@ export default class HexandriaLogic {
             this._selected = null;
             (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
         }
-    }
-    checkTownCapture() {
-        //
     }
 
     findSquad(position) {

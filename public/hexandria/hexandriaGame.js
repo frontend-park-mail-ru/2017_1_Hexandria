@@ -66,10 +66,21 @@ export default class HexandriaGame {
                     name: "Bob",
                     color: 0xff0000,
                     capital: "town1",
+                    towns: [],
                     squads: [
                         {
+                            count: 10,
+                            morale: 5,
                             position: {
                                 x: 1,
+                                y: 1,
+                            },
+                        },
+                        {
+                            count: 20,
+                            morale: 11,
+                            position: {
+                                x: 2,
                                 y: 1,
                             },
                         },
@@ -79,11 +90,30 @@ export default class HexandriaGame {
                     name: "John",
                     color: 0x0000ff,
                     capital: "town4",
+                    towns: [],
                     squads: [
                         {
+                            count: 41,
+                            morale: 7,
                             position: {
                                 x: 5,
                                 y: 5,
+                            },
+                        },
+                        {
+                            count: 17,
+                            morale: 20,
+                            position: {
+                                x: 3,
+                                y: 4,
+                            },
+                        },
+                        {
+                            count: 50,
+                            morale: 10,
+                            position: {
+                                x: 4,
+                                y: 4,
                             },
                         },
                     ],

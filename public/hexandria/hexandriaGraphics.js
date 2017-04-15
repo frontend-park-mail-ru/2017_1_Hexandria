@@ -21,6 +21,7 @@ export default class HexandriaGraphics {
         (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
 
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.MOVE, "movePlayer");
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.CAPTURE, "captureTown");
 
         window.onkeypress = function(e) {
             if (e.keyCode === 13) {
@@ -61,14 +62,18 @@ export default class HexandriaGraphics {
         );
     }
 
+    captureTown(object) {
+        this.townsMap[object.town.name].changeColor(object.player.color);
+    }
+
     initPlayers() {
         this.players = [];
         this.playersMap = {};
 
         HexandriaUtils.forSquad(
             this.game,
-            (object) => { // player, index, squad
-                const newSquad = new HexSquad(this.scene, object.player.color, object.squad.position);
+            (object) => {
+                const newSquad = new HexSquad(this.scene, object.player.color, object.squad);
                 this.players.push(newSquad);
 
                 this.playersMap[object.player.name] = [];

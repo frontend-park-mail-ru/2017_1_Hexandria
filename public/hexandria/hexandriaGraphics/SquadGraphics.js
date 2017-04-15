@@ -7,18 +7,18 @@ const positionZ = 0.5;
 const spriteZ = 1.0;
 
 export default class HexSquad {
-    constructor(scene, color, position) {
+    constructor(scene, color, squad) {
         // console.log("HexSquad", color, position);
+        this.scene = scene;
 
         const geometry = new THREE.SphereGeometry(0.25, 16, 16);
         const material = new THREE.MeshBasicMaterial({ color });
         this.squad = new THREE.Mesh(geometry, material);
         scene.add(this.squad);
 
-        this.sprite = HexUtils.getSprite(" squad ");
-        scene.add(this.sprite);
+        this.setSprite(squad);
 
-        this.move(position.x, position.y);
+        this.move(squad.position.x, squad.position.y);
     }
 
     move(x, y) {
@@ -27,5 +27,14 @@ export default class HexSquad {
         this.squad.position.copy(pos);
 
         this.sprite.position.set(pos.x, pos.y, spriteZ);
+    }
+
+    setSprite(squad) {
+        if (this.sprite) {
+            this.scene.remove(this.sprite);
+        }
+
+        this.sprite = HexUtils.getSprite(` ${squad.count}/${squad.morale} `);
+        this.scene.add(this.sprite);
     }
 }
