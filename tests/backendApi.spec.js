@@ -1,6 +1,6 @@
 "use strict";
 
-import Fetcher from "../public/js/fetcher";
+import Fetcher from "../public/modules/fetcher";
 import { api } from "../public/hexandria/api";
 
 const fetcher = new Fetcher();

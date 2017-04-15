@@ -1,15 +1,15 @@
-"use strict";
+'use strict';
 
-import HexandriaLogic from "./hexandriaLogic";
-import HexandriaGraphics from "./hexandriaGraphics";
-import Mediator from "../modules/mediator";
+import HexandriaLogic from './hexandriaLogic';
+import HexandriaGraphics from './hexandriaGraphics';
+import Mediator from '../modules/mediator';
 
 export default class HexandriaGame {
     constructor(Mode, element, user) {
-        console.log("HexandriaGame created", user);
+        console.log('HexandriaGame created', user);
 
         if (!(Mode.prototype instanceof HexandriaLogic)) {
-            throw new TypeError("Mode is not a HexandriaLogic");
+            throw new TypeError('Mode is not a HexandriaLogic');
         }
 
         this.init();
@@ -18,7 +18,7 @@ export default class HexandriaGame {
         this.graphics = new HexandriaGraphics(this.game, element);
 
 
-        (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
+        (new Mediator()).subscribe(this, 'drawMapEvent', 'drawMap');
     }
 
     init() {
@@ -30,28 +30,28 @@ export default class HexandriaGame {
                 },
                 towns: [
                     {
-                        name: "town1",
+                        name: 'town1',
                         position: {
                             x: 0,
                             y: 0,
                         },
                     },
                     {
-                        name: "town2",
+                        name: 'town2',
                         position: {
                             x: 2,
                             y: 3,
                         },
                     },
                     {
-                        name: "town3",
+                        name: 'town3',
                         position: {
                             x: 7,
                             y: 8,
                         },
                     },
                     {
-                        name: "town4",
+                        name: 'town4',
                         position: {
                             x: 9,
                             y: 14,
@@ -63,9 +63,9 @@ export default class HexandriaGame {
 
             players: [
                 {
-                    name: "Bob",
+                    name: 'Bob',
                     color: 0xff0000,
-                    capital: "town1",
+                    capital: 'town1',
                     towns: [],
                     squads: [
                         {
@@ -87,9 +87,9 @@ export default class HexandriaGame {
                     ],
                 },
                 {
-                    name: "John",
+                    name: 'John',
                     color: 0x0000ff,
-                    capital: "town4",
+                    capital: 'town4',
                     towns: [],
                     squads: [
                         {

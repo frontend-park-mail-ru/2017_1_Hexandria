@@ -1,35 +1,35 @@
-"use strict";
+'use strict';
 
-import Mediator from "../modules/mediator";
-import { EVENTS } from "./events";
-import HexandriaUtils from "./hexandriaUtils";
+import Mediator from '../modules/mediator';
+import { EVENTS } from './events';
+import HexandriaUtils from './hexandriaUtils';
 
 export default class HexandriaLogic {
     constructor(game) {
-        console.log("HexandriaLogic created");
+        console.log('HexandriaLogic created');
 
         if (this.constructor.name === HexandriaLogic.name) {
-            throw new TypeError("Can not create instance of HexandriaLogic");
+            throw new TypeError('Can not create instance of HexandriaLogic');
         }
 
 
         this.game = game;
         this._selected = null;
 
-        (new Mediator()).subscribe(this, EVENTS.KEYBOARD.ENTER_PRESSED, "enterPressed");
-        (new Mediator()).subscribe(this, EVENTS.TURN.START_TURN, "gameLoop");
+        (new Mediator()).subscribe(this, EVENTS.KEYBOARD.ENTER_PRESSED, 'enterPressed');
+        (new Mediator()).subscribe(this, EVENTS.TURN.START_TURN, 'gameLoop');
 
-        (new Mediator()).subscribe(this, EVENTS.LOGIC.SELECT, "onselect");
+        (new Mediator()).subscribe(this, EVENTS.LOGIC.SELECT, 'onselect');
     }
 
     enterPressed() {
         if (this.userIndex === this.userIndexHuman) {
-            console.log("Enter pressed");
+            console.log('Enter pressed');
         }
     }
 
     gameLoop(options) {
-        console.log("start turn", options.userIndex);
+        console.log('start turn', options.userIndex);
     }
 
     startGameLoop() {
@@ -41,7 +41,7 @@ export default class HexandriaLogic {
     }
 
     onselect(position) {
-        console.log("base", position);
+        console.log('base', position);
 
         if (position) {
             if (this._selected) {
@@ -51,13 +51,13 @@ export default class HexandriaLogic {
 
 
                     const army = this.findSquad(position);
-                    console.log("->", army);
+                    console.log('->', army);
                     // if (army === enemy) {
                     //     // emit fight!
                     // }
 
                     const town = this.findTown(position);
-                    console.log("->", town);
+                    console.log('->', town);
                     if (town) {
                         this.game.players[pIndex].towns.push(town.name);
                         console.log(this.game.players[pIndex].towns);

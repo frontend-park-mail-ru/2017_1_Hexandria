@@ -1,12 +1,11 @@
+'use strict';
 
-"use strict";
-
-import View from "../modules/view";
-import Button from "../components/button/button";
-import Router from "../modules/router";
-import Fetcher from "../js/fetcher";
-import { api } from "../hexandria/api";
-import Form from "../components/form/form";
+import View from '../modules/view';
+import Button from '../components/button/button';
+import Router from '../modules/router';
+import Fetcher from '../modules/fetcher';
+import { api } from '../hexandria/api';
+import Form from '../components/form/form';
 
 export default class LoginView extends View {
     constructor(options = {}) {
@@ -14,45 +13,45 @@ export default class LoginView extends View {
 
         this.fetcher = new Fetcher();
 
-        const pageLogin = document.getElementById("login");
+        const pageLogin = document.getElementById('login');
 
         const backButton = new Button({
-            text: "Back",
+            text: 'Back',
             attrs: {
-                class: "back-button",
+                class: 'back-button',
             },
             events: {
-                click: (event) => { (new Router()).go("/"); },
+                click: (event) => { (new Router()).go('/'); },
             },
         });
         pageLogin.appendChild(backButton.el);
 
 
         const loginForm = new Form({
-            el: document.createElement("form"),
+            el: document.createElement('form'),
             data: {
                 controls: [
                     {
-                        text: "Login",
+                        text: 'Login',
                     },
                 ],
                 inputs: [
                     {
-                        name: "login",
-                        type: "text",
-                        placeholder: "Enter Login",
+                        name: 'login',
+                        type: 'text',
+                        placeholder: 'Enter Login',
                     },
                     {
-                        name: "password",
-                        type: "password",
-                        placeholder: "Enter Password",
+                        name: 'password',
+                        type: 'password',
+                        placeholder: 'Enter Password',
                     },
                 ],
             },
             events: {
                 submit: (event) => {
                     event.preventDefault();
-                    console.log("button_login click");
+                    console.log('button_login click');
 
                     const parent = loginForm.el;
                     const user = {
@@ -65,8 +64,8 @@ export default class LoginView extends View {
                             console.log(res.status);
                             if (res.status === api.code.OK) {
                                 (new Router()).setUser(user.login);
-                                (new Router()).go("/");
-                                return { description: "login success!" };
+                                (new Router()).go('/');
+                                return { description: 'login success!' };
                             }
                             return res.json();
                         })

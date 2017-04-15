@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-import "./title.scss";
+import './title.scss';
 
 export default class Title {
     /**
@@ -25,7 +25,7 @@ export default class Title {
      * HTML update
      */
     updateHtml() {
-        this.el.setAttribute("class", "title");
+        this.el.setAttribute('class', 'title');
         this.el.innerHTML = this.title;
     }
 }

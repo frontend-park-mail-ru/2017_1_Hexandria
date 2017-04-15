@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * View class
@@ -10,9 +10,9 @@ export default class View {
      */
     constructor(options = {}) {
         if (options.createElement) {
-            this.tagName = options.tagName || "div";
+            this.tagName = options.tagName || 'div';
         } else {
-            this.tagName = "div";
+            this.tagName = 'div';
         }
         this._el = document.createElement(this.tagName);
     }

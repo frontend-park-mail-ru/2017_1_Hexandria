@@ -1,17 +1,17 @@
-"use strict";
+'use strict';
 
-import View from "../modules/view";
-import Router from "../modules/router";
-import Button from "../components/button/button";
-import Game from "../components/game/game";
-import Mediator from "../modules/mediator";
-import { EVENTS } from "../hexandria/events";
+import View from '../modules/view';
+import Router from '../modules/router';
+import Button from '../components/button/button';
+import Game from '../components/game/game';
+import Mediator from '../modules/mediator';
+import { EVENTS } from '../hexandria/events';
 
 export default class MultiplayerView extends View {
     constructor(options = {}) {
         super(options);
 
-        const pageMultiplayer = document.getElementById("multiplayer");
+        const pageMultiplayer = document.getElementById('multiplayer');
 
 
         this.game = new Game();
@@ -19,12 +19,12 @@ export default class MultiplayerView extends View {
 
 
         const backButton = new Button({
-            text: "Back",
+            text: 'Back',
             attrs: {
-                class: "back-button",
+                class: 'back-button',
             },
             events: {
-                click: (event) => { (new Router()).go("/"); },
+                click: (event) => { (new Router()).go('/'); },
             },
         });
         pageMultiplayer.appendChild(backButton.el);
@@ -42,15 +42,15 @@ export default class MultiplayerView extends View {
         (new Mediator()).emit(
             EVENTS.GAME.INIT,
             {
-                mode: "singleplayer", // TODO multiplayer
-                element: "#multiplayer",
+                mode: 'singleplayer', // TODO multiplayer
+                element: '#multiplayer',
             },
         );
     }
 
     hide(options = {}) {
         super.hide();
-        console.log("m hide");
+        console.log('m hide');
         (new Mediator()).emit(EVENTS.GAME.EXIT);
     }
 }

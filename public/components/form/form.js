@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-import "./form.scss";
-import Button from "../button/button";
-import Validator from "./validator";
-import Input from "../input/input";
+import './form.scss';
+import Button from '../button/button';
+import Validator from './validator';
+import Input from '../input/input';
 
 export default class Form {
     /**
@@ -31,7 +31,7 @@ export default class Form {
      * Update HTML
      */
     updateHtml() {
-        this.el.classList.add("form");
+        this.el.classList.add('form');
     }
 
     /**
@@ -43,19 +43,19 @@ export default class Form {
 
         inputs.forEach((data) => {
             const input = new Input(data).render();
-            input.el.classList.add("form__input");
-            input.on("blur", () => {
+            input.el.classList.add('form__input');
+            input.on('blur', () => {
                 try {
                     validator.validate(input.el);
                 } catch (err) {
                     console.log(err.message);
-                    input.colorInputBorder(input, "red");
+                    input.colorInputBorder(input, 'red');
                     return;
                 }
-                input.colorInputBorder(input, "#fff");
+                input.colorInputBorder(input, '#fff');
             });
-            input.on("click", () => {
-                input.colorInputBorder(this, "#eb9300");
+            input.on('click', () => {
+                input.colorInputBorder(this, '#eb9300');
             });
             this.el.appendChild(input.el);
         });
@@ -78,7 +78,7 @@ export default class Form {
 
         controls.forEach((data) => {
             const control = new Button(data);
-            control.el.classList.add("form__button");
+            control.el.classList.add('form__button');
             this.el.appendChild(control.el);
         });
     }

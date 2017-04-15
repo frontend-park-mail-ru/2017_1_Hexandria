@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-import "./form.scss";
+import './form.scss';
 
 export default class Validator {
     // Constants
@@ -13,32 +13,32 @@ export default class Validator {
 
     checkEmpty(input) {
         if (!input.value || input.value === null) {
-            throw new SyntaxError("Field is empty");
+            throw new SyntaxError('Field is empty');
         }
     }
     checkMinLength(input) {
         if (input.value.length < this.minLength) {
-            throw new SyntaxError("Enter more than 4 symbols");
+            throw new SyntaxError('Enter more than 4 symbols');
         }
     }
     checkMaxLength(input) {
         if (input.value.length > this.maxLength) {
-            throw new SyntaxError("Enter less than 10 symbols");
+            throw new SyntaxError('Enter less than 10 symbols');
         }
     }
     checkEmail(input) {
         if (!this.emailRegex.test(input.value)) {
-            throw new SyntaxError("This is not email");
+            throw new SyntaxError('This is not email');
         }
     }
     checkPassword(input) {
         if (!this.passwordRegex.test(input.value)) {
-            throw new SyntaxError("Not a password");
+            throw new SyntaxError('Not a password');
         }
     }
     checkDoublePassword(input) {
         if (input.value !== input.parentElement.querySelector('input[name="password"]').value) {
-            throw new SyntaxError("Passwords are not equal");
+            throw new SyntaxError('Passwords are not equal');
         }
     }
 
@@ -61,18 +61,18 @@ export default class Validator {
         this.checkDoublePassword(input);
     }
     validate(input) {
-        const name = input.getAttribute("name");
+        const name = input.getAttribute('name');
         switch (name) {
-            case "login":
+            case 'login':
                 this.validateLogin(input);
                 break;
-            case "email":
+            case 'email':
                 this.validateEmail(input);
                 break;
-            case "password":
+            case 'password':
                 this.validatePassword(input);
                 break;
-            case "double_password":
+            case 'double_password':
                 this.validateDoublePasswords(input);
                 break;
             default:

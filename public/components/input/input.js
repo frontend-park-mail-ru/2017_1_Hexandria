@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-import "./input.scss";
+import './input.scss';
 
 export default class Input {
     /**
@@ -9,7 +9,7 @@ export default class Input {
      */
     constructor(attrs) {
         this.attrs = attrs || [];
-        this.el = document.createElement("input");
+        this.el = document.createElement('input');
     }
 
     /**

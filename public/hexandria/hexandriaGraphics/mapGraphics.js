@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-import * as THREE from "three";
-import HexGraphics from "./HexGraphics";
-import Mediator from "../../modules/mediator";
-import { EVENTS } from "../events";
+import * as THREE from 'three';
+import HexGraphics from './hexGraphics';
+import Mediator from '../../modules/mediator';
+import { EVENTS } from '../events';
 
 const _fieldGrass = 0x80f080;
 const _fieldWater = 0x8080ff;
@@ -40,8 +40,8 @@ export default class MapGraphics {
         }
         this.scene.add(this.fieldGroup);
 
-        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SELECT_UNIT, "onSelectSquad");
-        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.UNSELECT_ALL, "onUnselectAll");
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SELECT_UNIT, 'onSelectSquad');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.UNSELECT_ALL, 'onUnselectAll');
     }
 
     find(obj) {
@@ -124,7 +124,7 @@ export default class MapGraphics {
     }
 
     handleSelect(intersects) {
-        console.log("handleSelect", intersects);
+        console.log('handleSelect', intersects);
         if (intersects.length > 0) {
             const hex = intersects[0].object;
 

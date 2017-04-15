@@ -37,7 +37,7 @@ module.exports = {
             "ignoreStrings": true,
             "ignoreTemplateLiterals": true
         }],
-        "quotes": ["error", "double", { "avoidEscape": true }]
+        "quotes": ["error", "single", { "avoidEscape": true }]
     },
 
 };

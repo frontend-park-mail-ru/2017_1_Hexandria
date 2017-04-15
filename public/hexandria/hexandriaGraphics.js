@@ -1,27 +1,27 @@
-"use strict";
+'use strict';
 
-import * as THREE from "three";
-import Stats from "stats-js";
-import Mediator from "../modules/mediator";
-import { EVENTS } from "./events";
-import MapGraphics from "./hexandriaGraphics/MapGraphics";
-import TownGraphics from "./hexandriaGraphics/TownGraphics";
-import SquadGraphics from "./hexandriaGraphics/SquadGraphics";
-import HexandriaUtils from "./hexandriaUtils";
+import * as THREE from 'three';
+import Stats from 'stats-js';
+import Mediator from '../modules/mediator';
+import { EVENTS } from './events';
+import MapGraphics from './hexandriaGraphics/mapGraphics';
+import TownGraphics from './hexandriaGraphics/townGraphics';
+import SquadGraphics from './hexandriaGraphics/squadGraphics';
+import HexandriaUtils from './hexandriaUtils';
 
-const OrbitControls = require("three-orbit-controls")(THREE);
+const OrbitControls = require('three-orbit-controls')(THREE);
 
 export default class HexandriaGraphics {
     constructor(game, element) {
-        console.log("HexandriaGraphics created");
+        console.log('HexandriaGraphics created');
 
         this.game = game;
         this.element = element;
 
-        (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
+        (new Mediator()).subscribe(this, 'drawMapEvent', 'drawMap');
 
-        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.MOVE, "movePlayer");
-        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.CAPTURE, "captureTown");
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.MOVE, 'movePlayer');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.CAPTURE, 'captureTown');
 
         window.onkeypress = function(e) {
             if (e.keyCode === 13) {
@@ -34,7 +34,7 @@ export default class HexandriaGraphics {
     }
 
     drawMap(options) {
-        console.log("drawMap:", options);
+        console.log('drawMap:', options);
     }
 
     initTowns() {
@@ -88,7 +88,7 @@ export default class HexandriaGraphics {
     }
 
     movePlayer(playerObject) {
-        console.log("movePlayerz", playerObject);
+        console.log('movePlayerz', playerObject);
         this.playersMap[playerObject.player.name][playerObject.squadIndex].move(playerObject.squad.position.x, playerObject.squad.position.y);
     }
 
@@ -177,23 +177,23 @@ export default class HexandriaGraphics {
             scene.add(light);
 
 
-            container.innerHTML = "";
+            container.innerHTML = '';
 
             container.appendChild(renderer.domElement);
 
             stats = new Stats();
-            stats.domElement.style.position = "absolute";
-            stats.domElement.style.top = "0px";
+            stats.domElement.style.position = 'absolute';
+            stats.domElement.style.top = '0px';
             container.appendChild(stats.domElement);
 
 
             mouse = new THREE.Vector2();
             raycaster = new THREE.Raycaster();
 
-            document.addEventListener("mousemove", onDocumentMouseMove, false);
-            document.addEventListener("mousedown", onDocumentMouseDown, false);
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            document.addEventListener('mousedown', onDocumentMouseDown, false);
 
-            window.addEventListener("resize", onWindowResize, false);
+            window.addEventListener('resize', onWindowResize, false);
         }
 
         function createObjects() {
@@ -206,7 +206,7 @@ export default class HexandriaGraphics {
                 new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
             ground.castShadow = true;
             ground.receiveShadow = true;
-            textureLoader.load("textures/grid.png", (texture) => {
+            textureLoader.load('textures/grid.png', (texture) => {
                 texture.wrapS = THREE.RepeatWrapping;
                 texture.wrapT = THREE.RepeatWrapping;
                 texture.repeat.set(40, 40);
@@ -230,7 +230,7 @@ export default class HexandriaGraphics {
         }
 
         function initInput() {
-            window.addEventListener("keydown", (event) => {
+            window.addEventListener('keydown', (event) => {
                 switch (event.keyCode) {
                     // Q
                     case 81:
@@ -241,7 +241,7 @@ export default class HexandriaGraphics {
                 }
             }, false);
 
-            window.addEventListener("keyup", (event) => {
+            window.addEventListener('keyup', (event) => {
                 switch (event.keyCode) {
                     // Q
                     case 81:

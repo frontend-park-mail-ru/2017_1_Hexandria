@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
-import Router from "../modules/router";
-import Mediator from "../modules/mediator";
-import HexandriaLogicSingleplayer from "./hexandriaLogic/SingleplayerLogic";
-import HexandriaLogicMultiplayer from "./hexandriaLogic/MultiplayerLogic";
-import HexandriaGame from "./hexandriaGame";
-import { EVENTS } from "./events";
+import Router from '../modules/router';
+import Mediator from '../modules/mediator';
+import HexandriaLogicSingleplayer from './hexandriaLogic/singleplayerLogic';
+import HexandriaLogicMultiplayer from './hexandriaLogic/multiplayerLogic';
+import HexandriaGame from './hexandriaGame';
+import { EVENTS } from './events';
 
 const MODES = {
     SINGLEPLAYER: HexandriaLogicSingleplayer,
@@ -14,16 +14,16 @@ const MODES = {
 
 export default class HexandriaApp {
     constructor() {
-        console.log("HexandriaApp created");
+        console.log('HexandriaApp created');
 
         this.game = null;
 
-        (new Mediator()).subscribe(this, EVENTS.GAME.INIT, "gameInit");
-        (new Mediator()).subscribe(this, EVENTS.GAME.EXIT, "gameExit");
+        (new Mediator()).subscribe(this, EVENTS.GAME.INIT, 'gameInit');
+        (new Mediator()).subscribe(this, EVENTS.GAME.EXIT, 'gameExit');
     }
 
     gameInit(payload = {}) {
-        const _mode = (payload.mode || "").toUpperCase();
+        const _mode = (payload.mode || '').toUpperCase();
         const mode = MODES[_mode];
 
         const element = payload.element;
@@ -38,7 +38,7 @@ export default class HexandriaApp {
     }
 
     gameExit() {
-        console.log("gameExit");
+        console.log('gameExit');
         if (this.game) {
             this.game.destroy();
             this.game = null;

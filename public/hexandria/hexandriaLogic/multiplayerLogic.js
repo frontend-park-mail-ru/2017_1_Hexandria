@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
-import HexandriaLogic from "../hexandriaLogic";
+import HexandriaLogic from '../hexandriaLogic';
 
 export default class HexandriaLogicMultiplayer extends HexandriaLogic {
     constructor(game) {
         super(game);
-        console.log("HexandriaLogicMultiplayer");
+        console.log('HexandriaLogicMultiplayer');
     }
 }
 

@@ -1,24 +1,24 @@
-"use strict";
+'use strict';
 
 export const pathToRegex = function (pathname) {
     const keyNames = [];
     const pathParts = pathname
-        .split("/")
+        .split('/')
         .filter(part => part)
         .map((part, i, parts) => {
             if (i !== parts.length - 1) {
                 if (/^:/.exec(part)) {
                     keyNames.push(part.slice(1));
-                    return new RegExp("^\/([^/]+)", "i");
+                    return new RegExp('^\/([^/]+)', 'i');
                 }
-                return new RegExp(`^\/${part}(?=\/)`, "i");
+                return new RegExp(`^\/${part}(?=\/)`, 'i');
             }
 
             if (/^:/.exec(part)) {
                 keyNames.push(part.slice(1));
-                return new RegExp("^\/([^/]+)\/?$", "i");
+                return new RegExp('^\/([^/]+)\/?$', 'i');
             }
-            return new RegExp(`^\/${part}\/?$`, "i");
+            return new RegExp(`^\/${part}\/?$`, 'i');
         });
 
 
@@ -32,7 +32,7 @@ export const pathToRegex = function (pathname) {
             if (tmp.length === 2) {
                 keys.push(tmp[1]);
             }
-            path = path.replace(regexp, "");
+            path = path.replace(regexp, '');
             return true;
         });
 

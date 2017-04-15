@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-import * as THREE from "three";
+import * as THREE from 'three';
 
 const _hexagonDiameter = 1;
 const _hexagonAlpha = _hexagonDiameter / 4.0;
@@ -36,23 +36,23 @@ export default class UtilsGraphics {
     static makeTextSprite(message, parameters) {
         if (parameters === undefined) parameters = {};
 
-        const fontface = Object.prototype.hasOwnProperty.call(parameters, "fontface") ?
-            parameters.fontface : "Arial";
+        const fontface = Object.prototype.hasOwnProperty.call(parameters, 'fontface') ?
+            parameters.fontface : 'Arial';
 
-        const fontsize = Object.prototype.hasOwnProperty.call(parameters, "fontsize") ?
+        const fontsize = Object.prototype.hasOwnProperty.call(parameters, 'fontsize') ?
             parameters.fontsize : 18;
 
-        const borderThickness = Object.prototype.hasOwnProperty.call(parameters, "borderThickness") ?
+        const borderThickness = Object.prototype.hasOwnProperty.call(parameters, 'borderThickness') ?
             parameters.borderThickness : 2;
 
-        const borderColor = Object.prototype.hasOwnProperty.call(parameters, "borderColor") ?
+        const borderColor = Object.prototype.hasOwnProperty.call(parameters, 'borderColor') ?
             parameters.borderColor : { r: 0, g: 0, b: 0, a: 1.0 };
 
-        const backgroundColor = Object.prototype.hasOwnProperty.call(parameters, "backgroundColor") ?
+        const backgroundColor = Object.prototype.hasOwnProperty.call(parameters, 'backgroundColor') ?
             parameters.backgroundColor : { r: 255, g: 255, b: 255, a: 1.0 };
 
-        const canvas = document.createElement("canvas");
-        const context = canvas.getContext("2d");
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
         context.font = `${fontsize}px ${fontface}`;
 
         const metrics = context.measureText(message);
@@ -66,7 +66,7 @@ export default class UtilsGraphics {
         UtilsGraphics.roundRect(context, borderThickness / 2, borderThickness / 2,
             textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6);
 
-        context.fillStyle = "rgba(0, 0, 0, 1.0)";
+        context.fillStyle = 'rgba(0, 0, 0, 1.0)';
         context.fillText(message, borderThickness, fontsize + borderThickness);
 
         const texture = new THREE.Texture(canvas);
@@ -100,7 +100,7 @@ export default class UtilsGraphics {
             text,
             {
                 fontsize: 40,
-                fontface: "Helvetica",
+                fontface: 'Helvetica',
                 borderColor: { r: 0, g: 0, b: 0, a: 1.0 },
             },
         );

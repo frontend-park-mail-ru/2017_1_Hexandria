@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-import * as THREE from "three";
-import UtilsGraphics from "./UtilsGraphics";
+import * as THREE from 'three';
+import UtilsGraphics from './utilsGraphics';
 
 const positionZ = 0.5;
 const spriteZ = 1.0;

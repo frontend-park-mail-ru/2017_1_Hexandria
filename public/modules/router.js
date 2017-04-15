@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-import Route from "./route";
+import Route from './route';
 
 /**
  * Router class
@@ -84,7 +84,7 @@ export default class Router {
         if (window.location.pathname === pathname) {
             return;
         }
-        this.history.pushState(state, "", pathname);
+        this.history.pushState(state, '', pathname);
         if (this.startflag) {
             this.onroute(pathname, state);
         }

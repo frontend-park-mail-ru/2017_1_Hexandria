@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-import * as THREE from "three";
-import UtilsGraphics from "./UtilsGraphics";
+import * as THREE from 'three';
+import UtilsGraphics from './utilsGraphics';
 
 const _highlightedColor = 0xf08080;
 const _selectedSquadColor = 0xff0000;
@@ -13,7 +13,7 @@ export default class HexGraphics extends THREE.Mesh {
     constructor(scene, color, x, y, z) {
         const geometry = UtilsGraphics.getHexGeometry();
 
-        const texture = new THREE.TextureLoader().load("textures/grass.jpg");
+        const texture = new THREE.TextureLoader().load('textures/grass.jpg');
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
         super(geometry, new THREE.MeshPhongMaterial({
@@ -63,19 +63,19 @@ export default class HexGraphics extends THREE.Mesh {
     }
 
     selectSquad() {
-        console.log("SELECT");
+        console.log('SELECT');
         this.selectedSquad = true;
         this.material.emissive.setHex(_selectedSquadColor);
     }
 
     selectArea() {
-        console.log("SELECT");
+        console.log('SELECT');
         this.selectedArea = true;
         this.material.emissive.setHex(_selectedAreaColor);
     }
 
     unselect() {
-        console.log("UNSELECT");
+        console.log('UNSELECT');
         this.selected = false;
         this.material.emissive.setHex(this.currentHex);
     }

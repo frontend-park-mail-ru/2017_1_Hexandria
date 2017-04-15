@@ -1,17 +1,17 @@
-"use strict";
+'use strict';
 
-import View from "../modules/view";
-import Router from "../modules/router";
-import Button from "../components/button/button";
-import Game from "../components/game/game";
-import Mediator from "../modules/mediator";
-import { EVENTS } from "../hexandria/events";
+import View from '../modules/view';
+import Router from '../modules/router';
+import Button from '../components/button/button';
+import Game from '../components/game/game';
+import Mediator from '../modules/mediator';
+import { EVENTS } from '../hexandria/events';
 
 export default class SingleplayerView extends View {
     constructor(options = {}) {
         super(options);
 
-        const pageSingleplayer = document.getElementById("singleplayer");
+        const pageSingleplayer = document.getElementById('singleplayer');
 
 
         this.game = new Game();
@@ -19,12 +19,12 @@ export default class SingleplayerView extends View {
 
 
         const backButton = new Button({
-            text: "Back",
+            text: 'Back',
             attrs: {
-                class: "back-button",
+                class: 'back-button',
             },
             events: {
-                click: (event) => { (new Router()).go("/"); },
+                click: (event) => { (new Router()).go('/'); },
             },
         });
 
@@ -44,15 +44,15 @@ export default class SingleplayerView extends View {
         (new Mediator()).emit(
             EVENTS.GAME.INIT,
             {
-                mode: "singleplayer",
-                element: "#singleplayer",
+                mode: 'singleplayer',
+                element: '#singleplayer',
             },
         );
     }
 
     hide(options = {}) {
         super.hide();
-        console.log("s hide");
+        console.log('s hide');
         (new Mediator()).emit(EVENTS.GAME.EXIT);
     }
 }

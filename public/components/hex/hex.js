@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-import Button from "../button/button";
-import hexTemplate from "./hexTemplate.pug";
+import Button from '../button/button';
+import hexTemplate from './hexTemplate.pug';
 
 export default class Hex {
     /**
@@ -44,9 +44,9 @@ export default class Hex {
         this.about = new Button(this.controls.about);
         this.scoreboard = new Button(this.controls.scoreboard);
 
-        this.el.querySelector(".hex__buttons-main").appendChild(this.singleplayer.el);
-        this.el.querySelector(".hex__buttons-main").appendChild(this.multiplayer.el);
-        this.el.querySelector(".hex__buttons-minor").appendChild(this.about.el);
-        this.el.querySelector(".hex__buttons-minor").appendChild(this.scoreboard.el);
+        this.el.querySelector('.hex__buttons-main').appendChild(this.singleplayer.el);
+        this.el.querySelector('.hex__buttons-main').appendChild(this.multiplayer.el);
+        this.el.querySelector('.hex__buttons-minor').appendChild(this.about.el);
+        this.el.querySelector('.hex__buttons-minor').appendChild(this.scoreboard.el);
     }
 }

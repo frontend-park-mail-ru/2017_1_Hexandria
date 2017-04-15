@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-import "./button.scss";
+import './button.scss';
 
 export default class Button {
     /**
@@ -11,7 +11,7 @@ export default class Button {
         this.text = options.text;
         this.attrs = options.attrs || {};
         this.events = options.events || {};
-        this.el = document.createElement("button");
+        this.el = document.createElement('button');
         this._render();
     }
 
