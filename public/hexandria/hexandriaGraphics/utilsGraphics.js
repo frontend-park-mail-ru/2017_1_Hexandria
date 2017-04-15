@@ -1,5 +1,3 @@
-'use strict';
-
 import * as THREE from 'three';
 
 const _hexagonDiameter = 1;

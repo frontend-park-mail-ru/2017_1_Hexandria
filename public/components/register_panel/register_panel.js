@@ -1,5 +1,3 @@
-'use strict';
-
 import './register_panel.scss';
 import Button from '../button/button';
 import Router from '../../modules/router';

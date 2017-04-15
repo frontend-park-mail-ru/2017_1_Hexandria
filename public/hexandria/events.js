@@ -1,5 +1,3 @@
-'use strict';
-
 export const EVENTS = {
     GAME: {
         INIT: 'EVENTS.GAME.INIT',

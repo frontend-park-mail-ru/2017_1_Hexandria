@@ -1,5 +1,3 @@
-'use strict';
-
 import * as THREE from 'three';
 import HexGraphics from './hexGraphics';
 import Mediator from '../../modules/mediator';

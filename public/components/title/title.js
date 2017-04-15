@@ -1,5 +1,3 @@
-'use strict';
-
 import './title.scss';
 
 export default class Title {

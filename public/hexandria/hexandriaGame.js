@@ -1,5 +1,3 @@
-'use strict';
-
 import HexandriaLogic from './hexandriaLogic';
 import HexandriaGraphics from './hexandriaGraphics';
 import Mediator from '../modules/mediator';

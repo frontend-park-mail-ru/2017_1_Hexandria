@@ -1,5 +1,3 @@
-'use strict';
-
 import * as THREE from 'three';
 import Stats from 'stats-js';
 import Mediator from '../modules/mediator';

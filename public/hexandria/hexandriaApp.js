@@ -1,5 +1,3 @@
-'use strict';
-
 import Router from '../modules/router';
 import Mediator from '../modules/mediator';
 import HexandriaLogicSingleplayer from './hexandriaLogic/singleplayerLogic';

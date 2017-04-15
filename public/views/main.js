@@ -1,5 +1,3 @@
-'use strict';
-
 import View from '../modules/view';
 import Router from '../modules/router';
 import Fetcher from '../modules/fetcher';

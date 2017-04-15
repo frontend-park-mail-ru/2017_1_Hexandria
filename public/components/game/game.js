@@ -1,5 +1,3 @@
-'use strict';
-
 import './game.scss';
 import gameTemplate from './gameTemplate.pug';
 

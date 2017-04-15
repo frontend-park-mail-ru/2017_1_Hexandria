@@ -1,5 +1,3 @@
-'use strict';
-
 import View from '../modules/view';
 import Button from '../components/button/button';
 import Router from '../modules/router';

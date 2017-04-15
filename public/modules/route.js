@@ -1,5 +1,3 @@
-'use strict';
-
 import { pathToRegex } from './pathToRegex';
 
 let id = 0;

@@ -1,5 +1,3 @@
-'use strict';
-
 import Button from '../button/button';
 import hexTemplate from './hexTemplate.pug';
 

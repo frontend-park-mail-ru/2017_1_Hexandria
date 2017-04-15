@@ -1,5 +1,3 @@
-'use strict';
-
 import './form.scss';
 import Button from '../button/button';
 import Validator from './validator';

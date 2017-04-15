@@ -1,5 +1,3 @@
-'use strict';
-
 export const pathToRegex = function (pathname) {
     const keyNames = [];
     const pathParts = pathname

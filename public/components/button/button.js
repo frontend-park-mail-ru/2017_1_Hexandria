@@ -1,5 +1,3 @@
-'use strict';
-
 import './button.scss';
 
 export default class Button {

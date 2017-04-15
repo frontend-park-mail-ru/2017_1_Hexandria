@@ -1,5 +1,3 @@
-'use strict';
-
 import './input.scss';
 
 export default class Input {

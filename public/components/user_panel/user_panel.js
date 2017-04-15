@@ -1,5 +1,3 @@
-'use strict';
-
 import Button from '../button/button';
 import Fetcher from '../../modules/fetcher';
 import Router from '../../modules/router';

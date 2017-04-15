@@ -1,5 +1,3 @@
-'use strict';
-
 import Mediator from '../modules/mediator';
 import { EVENTS } from './events';
 import HexandriaUtils from './hexandriaUtils';

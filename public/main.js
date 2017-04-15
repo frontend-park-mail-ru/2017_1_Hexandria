@@ -1,5 +1,3 @@
-'use strict';
-
 import './main.scss';
 import Router from './modules/router';
 import MultiplayerView from './views/multiplayer';
