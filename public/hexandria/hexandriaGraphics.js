@@ -16,10 +16,10 @@ export default class HexandriaGraphics {
         this.game = game;
         this.element = element;
 
-        (new Mediator()).subscribe(this, 'drawMapEvent', 'drawMap');
-
-        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.MOVE, 'movePlayer');
-        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.CAPTURE, 'captureTown');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_MOVE, 'squadMove');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_UPDATE, 'squadUpdate');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_DELETE, 'squadDelete');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.TOWN_CAPTURE, 'townCapture');
 
         window.onkeypress = function(e) {
             if (e.keyCode === 13) {
@@ -31,20 +31,13 @@ export default class HexandriaGraphics {
         this.gameProcess();
     }
 
-    drawMap(options) {
-        console.log('drawMap:', options);
-    }
-
     initTowns() {
-        this.towns = [];
         this.townsMap = {};
 
         HexandriaUtils.forTown(
             this.game,
             (town) => {
                 const newTown = new TownGraphics(this.scene, 0x777777, town.position);
-
-                this.towns.push(newTown);
                 this.townsMap[town.name] = newTown;
             },
         );
@@ -60,40 +53,49 @@ export default class HexandriaGraphics {
         );
     }
 
-    captureTown(object) {
-        this.townsMap[object.town.name].changeColor(object.player.color);
-    }
-
-    initPlayers() {
-        this.players = [];
-        this.playersMap = {};
+    initSquads() {
+        this.squadsMap = {};
 
         HexandriaUtils.forPlayer(
             this.game,
             (playerObject) => {
-                this.playersMap[playerObject.player.name] = [];
+                this.squadsMap[playerObject.player.name] = [];
             },
         );
         HexandriaUtils.forSquad(
             this.game,
             (squadObject) => {
                 const newSquad = new SquadGraphics(this.scene, squadObject.player.color, squadObject.squad);
-
-                this.players.push(newSquad);
-                this.playersMap[squadObject.player.name].push(newSquad);
+                this.squadsMap[squadObject.player.name].push(newSquad);
             },
         );
     }
 
-    movePlayer(playerObject) {
-        console.log('movePlayerz', playerObject);
-        this.playersMap[playerObject.player.name][playerObject.squadIndex].move(playerObject.squad.position.x, playerObject.squad.position.y);
+    squadMove(squadObject) {
+        // console.log('squadMove', squadObject);
+        this.squadsMap[squadObject.player.name][squadObject.squadIndex].move(squadObject.squad.position.x, squadObject.squad.position.y);
+    }
+
+    squadUpdate(squadObject) {
+        // console.log('squadUpdate', squadObject);
+        this.squadsMap[squadObject.player.name][squadObject.squadIndex].setSprite(squadObject.squad);
+    }
+
+    squadDelete(squadObject) {
+        // console.log('squadDelete', squadObject);
+        // this.squadsMap[squadObject.player.name][squadObject.squadIndex].setSprite(squadObject.squad);
+        this.squadsMap[squadObject.player.name][squadObject.squadIndex].remove();
+        this.squadsMap[squadObject.player.name].splice(squadObject.squadIndex, 1);
+    }
+
+    townCapture(object) {
+        this.townsMap[object.town.name].changeColor(object.player.color);
     }
 
     gameProcess() {
         this.gameStart();
         this.initTowns();
-        this.initPlayers();
+        this.initSquads();
     }
 
     gameStart () {

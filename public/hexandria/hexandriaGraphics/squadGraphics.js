@@ -20,7 +20,7 @@ export default class SquadGraphics {
     }
 
     move(x, y) {
-        console.log(x, y);
+        console.log('SquadGraphics', x, y);
         const pos = new THREE.Vector3(...UtilsGraphics.getPosition(x, y), positionZ);
         this.squad.position.copy(pos);
 
@@ -28,11 +28,33 @@ export default class SquadGraphics {
     }
 
     setSprite(squad) {
+        const newSprite = UtilsGraphics.getSprite(` ${squad.count}/${squad.morale} `);
+        newSprite.position.copy(this.squad.position);
+
+        this._removeSprite();
+
+        this.sprite = newSprite;
+        this.scene.add(this.sprite);
+    }
+
+    remove() {
+        this._removeSprite();
+        this._removeSquad();
+    }
+
+    _removeSquad() {
+        if (this.squad) {
+            this.scene.remove(this.squad);
+        }
+    }
+
+
+    _moveSprite() {
+        this.sprite.position.set(pos.x, pos.y, spriteZ);
+    }
+    _removeSprite() {
         if (this.sprite) {
             this.scene.remove(this.sprite);
         }
-
-        this.sprite = UtilsGraphics.getSprite(` ${squad.count}/${squad.morale} `);
-        this.scene.add(this.sprite);
     }
 }

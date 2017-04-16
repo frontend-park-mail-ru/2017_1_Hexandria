@@ -51,6 +51,8 @@ export default class Mediator {
             this.events[event].forEach((element) => {
                 element.subscriber[element.handler](options);
             });
+        } else {
+            throw new Error('EMIT no subscribers');
         }
     }
 

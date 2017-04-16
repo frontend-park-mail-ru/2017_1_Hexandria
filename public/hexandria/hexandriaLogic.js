@@ -44,39 +44,45 @@ export default class HexandriaLogic {
         if (position) {
             if (this._selected) {
                 if (this.checkNearSelected(position)) {
+                    (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
                     const pIndex = this._selected.playerIndex;
                     const sIndex = this._selected.squadIndex;
 
+                    const squad = this.findSquad(position);
+                    // console.log('->', squad);
+                    if (squad) {
+                        // emit fight!
+                        // console.log('->', this._selected);
+                        if (this._selected.player.name === squad.player.name) {
+                            this.combineSquad(this._selected, squad);
+                        } else {
+                            this.fightSquad(this._selected, squad);
+                        }
+                    } else {
+                        this._selected.squad.position = position;
 
-                    const army = this.findSquad(position);
-                    console.log('->', army);
-                    // if (army === enemy) {
-                    //     // emit fight!
-                    // }
+                        this.game.players[pIndex].squads[sIndex].position.x = position.x;
+                        this.game.players[pIndex].squads[sIndex].position.y = position.y;
+                        (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_MOVE, this._selected);
+                    }
 
                     const town = this.findTown(position);
-                    console.log('->', town);
+                    // console.log('->', town);
                     if (town) {
                         this.game.players[pIndex].towns.push(town.name);
                         console.log(this.game.players[pIndex].towns);
-                        (new Mediator()).emit(EVENTS.GRAPHICS.CAPTURE, { player: this._selected.player, town });
+                        (new Mediator()).emit(EVENTS.GRAPHICS.TOWN_CAPTURE, { player: this._selected.player, town });
                     }
 
-                    (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
-                    this._selected.squad.position = position;
-
-                    this.game.players[pIndex].squads[sIndex].position.x = position.x;
-                    this.game.players[pIndex].squads[sIndex].position.y = position.y;
-                    (new Mediator()).emit(EVENTS.GRAPHICS.MOVE, this._selected);
                     this._selected = null;
                 } else {
                     this._selected = null;
                     (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
                 }
             } else {
-                const army = this.findSquad(position);
-                if (army) {
-                    this._selected = army;
+                const squad = this.findSquad(position);
+                if (squad) {
+                    this._selected = squad;
                     (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_UNIT, this._selected.squad.position);
                 }
             }
@@ -114,6 +120,43 @@ export default class HexandriaLogic {
             },
         );
         return result;
+    }
+
+    combineSquad(selected, squad) {
+        if (selected.player.name !== squad.player.name) {
+            console.log('combineSquad error');
+            return;
+        }
+
+        console.log('combineSquad');
+
+        const playerSquads = this.game.players[squad.playerIndex].squads;
+        if (playerSquads[squad.squadIndex].count > playerSquads[selected.squadIndex].count) {
+            playerSquads[squad.squadIndex].count += playerSquads[selected.squadIndex].count;
+            playerSquads[selected.squadIndex].count = 0;
+
+            // selected squad will be deleted
+
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_UPDATE, squad);
+            playerSquads.splice(selected.squadIndex, 1);
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, selected);
+        } else {
+            playerSquads[selected.squadIndex].count += playerSquads[squad.squadIndex].count;
+            playerSquads[squad.squadIndex].count = 0;
+
+            // move selected squad
+            playerSquads[selected.squadIndex].position.x = playerSquads[squad.squadIndex].position.x;
+            playerSquads[selected.squadIndex].position.y = playerSquads[squad.squadIndex].position.y;
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_MOVE, selected);
+
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_UPDATE, selected);
+            playerSquads.splice(squad.squadIndex, 1);
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, squad);
+        }
+    }
+
+    fightSquad(selected, squad) {
+
     }
 
     checkNearSelected(position) {

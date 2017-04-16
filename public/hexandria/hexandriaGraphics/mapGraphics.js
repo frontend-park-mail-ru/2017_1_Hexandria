@@ -95,9 +95,9 @@ export default class MapGraphics {
         if (this._selectedSquad) {
             this.field[this._selectedSquad.x][this._selectedSquad.y].unselectSquad();
             this.selectSquadArea(this._selectedSquad).forEach((position) => {
-                console.log(position);
+                // console.log(position);
                 this.field[position.x][position.y].unselectArea();
-                console.log(this.field[position.x][position.y]);
+                // console.log(this.field[position.x][position.y]);
             });
         }
     }
