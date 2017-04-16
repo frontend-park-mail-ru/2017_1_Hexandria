@@ -40,6 +40,13 @@ export default class HexandriaApp {
         if (this.game) {
             this.game.destroy();
             this.game = null;
+
+            (new Mediator())._print();
+            (new Mediator()).clear();
+            (new Mediator())._print();
+            (new Mediator()).subscribe(this, EVENTS.GAME.INIT, 'gameInit');
+            (new Mediator()).subscribe(this, EVENTS.GAME.EXIT, 'gameExit');
+            (new Router()).go('/');
         }
     }
 }

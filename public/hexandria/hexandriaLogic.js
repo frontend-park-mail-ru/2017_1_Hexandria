@@ -61,8 +61,8 @@ export default class HexandriaLogic {
 
                     const town = this.findTown(position);
                     if (town) {
-                        this.game.players[pIndex].towns.push(town.name);
-                        console.log(this.game.players[pIndex].towns);
+                        this.townHandler(this._selected, town);
+
                         (new Mediator()).emit(EVENTS.GRAPHICS.TOWN_CAPTURE, { player: this._selected.player, town });
                     }
 
@@ -87,7 +87,7 @@ export default class HexandriaLogic {
     findSquad(position) {
         let result = null;
 
-        HexandriaUtils.forSquad(
+        HexandriaUtils.forPlayersSquads(
             this.game,
             (object) => {
                 if (object.squad.position.x === position.x &&
@@ -102,7 +102,7 @@ export default class HexandriaLogic {
     findTown(position) {
         let result = null;
 
-        HexandriaUtils.forTown(
+        HexandriaUtils.forFieldTowns(
             this.game,
             (town) => {
                 if (town.position.x === position.x &&
@@ -149,6 +149,48 @@ export default class HexandriaLogic {
 
             this.game.players[to.playerIndex].squads.splice(to.squadIndex, 1);
             (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, to);
+        }
+    }
+
+    townHandler(selected, town) {
+        console.log('townHandler', selected, town);
+
+        let flag = false;
+
+        HexandriaUtils.forPlayers(
+            this.game,
+            (playerObject) => {
+                if (flag === false) {
+                    console.log('playerObject', playerObject);
+                    if (town.name === playerObject.player.capital) {
+                        if (selected.playerIndex !== playerObject.playerIndex) {
+                            flag = true;
+                            (new Mediator()).emit(EVENTS.GAME.EXIT);
+                            console.log('game over');
+                        } else {
+                            flag = true;
+                            console.log('do nothing');
+                        }
+                    }
+                    const index = playerObject.player.towns.indexOf(town.name);
+                    if (index !== -1) {
+                        if (selected.playerIndex === playerObject.playerIndex) {
+                            flag = true;
+                            console.log('do nothing');
+                        } else {
+                            playerObject.player.towns.splice(index, 1);
+                            selected.player.towns.push(town.name);
+                            flag = true;
+                            console.log('enemy town', playerObject.player, selected.player);
+                        }
+                    }
+                }
+            },
+        );
+        console.log('flag', flag);
+        if (flag === false) {
+            selected.player.towns.push(town.name);
+            console.log('empty town');
         }
     }
 

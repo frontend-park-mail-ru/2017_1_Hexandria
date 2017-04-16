@@ -64,7 +64,7 @@ export default class HexandriaGame {
                     name: 'Bob',
                     color: 0xff0000,
                     capital: 'town1',
-                    towns: [],
+                    towns: ['town2'],
                     squads: [
                         {
                             count: 10,
@@ -124,6 +124,5 @@ export default class HexandriaGame {
         this.game = null;
         this.logic = null;
         this.graphics = null;
-        (new Mediator())._print();
     }
 }

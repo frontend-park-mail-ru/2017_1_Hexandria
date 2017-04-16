@@ -56,6 +56,10 @@ export default class Mediator {
         }
     }
 
+    clear() {
+        this.events = {};
+    }
+
     _print() {
         console.log('-----');
         Object.keys(this.events).forEach((element) => {

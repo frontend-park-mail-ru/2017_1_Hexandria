@@ -34,7 +34,7 @@ export default class HexandriaGraphics {
     initTowns() {
         this.townsMap = {};
 
-        HexandriaUtils.forTown(
+        HexandriaUtils.forFieldTowns(
             this.game,
             (town) => {
                 const newTown = new TownGraphics(this.scene, 0x777777, town.position);
@@ -42,7 +42,8 @@ export default class HexandriaGraphics {
             },
         );
 
-        HexandriaUtils.forPlayer(
+        // color capitals
+        HexandriaUtils.forPlayers(
             this.game,
             (playerObject) => {
                 const player = playerObject.player;
@@ -51,18 +52,28 @@ export default class HexandriaGraphics {
                 }
             },
         );
+
+        // color towns
+        HexandriaUtils.forPlayersTowns(
+            this.game,
+            (townObject) => {
+                if (this.townsMap[townObject.town]) {
+                    this.townsMap[townObject.town].changeColor(townObject.player.color);
+                }
+            },
+        );
     }
 
     initSquads() {
         this.squadsMap = {};
 
-        HexandriaUtils.forPlayer(
+        HexandriaUtils.forPlayers(
             this.game,
             (playerObject) => {
                 this.squadsMap[playerObject.player.name] = [];
             },
         );
-        HexandriaUtils.forSquad(
+        HexandriaUtils.forPlayersSquads(
             this.game,
             (squadObject) => {
                 const newSquad = new SquadGraphics(this.scene, squadObject.player.color, squadObject.squad);
