@@ -30,6 +30,7 @@ export default class SquadGraphics {
     setSprite(squad) {
         const newSprite = UtilsGraphics.getSprite(` ${squad.count}/${squad.morale} `);
         newSprite.position.copy(this.squad.position);
+        newSprite.position.z = spriteZ;
 
         this._removeSprite();
 
@@ -48,10 +49,6 @@ export default class SquadGraphics {
         }
     }
 
-
-    _moveSprite() {
-        this.sprite.position.set(pos.x, pos.y, spriteZ);
-    }
     _removeSprite() {
         if (this.sprite) {
             this.scene.remove(this.sprite);

@@ -39,7 +39,7 @@ export default class HexandriaLogic {
     }
 
     onselect(position) {
-        console.log('base', position);
+        console.log('onselect', position);
 
         if (position) {
             if (this._selected) {
@@ -48,16 +48,9 @@ export default class HexandriaLogic {
                     const pIndex = this._selected.playerIndex;
                     const sIndex = this._selected.squadIndex;
 
-                    const squad = this.findSquad(position);
-                    // console.log('->', squad);
-                    if (squad) {
-                        // emit fight!
-                        // console.log('->', this._selected);
-                        if (this._selected.player.name === squad.player.name) {
-                            this.combineSquad(this._selected, squad);
-                        } else {
-                            this.fightSquad(this._selected, squad);
-                        }
+                    const toSquad = this.findSquad(position);
+                    if (toSquad) {
+                        this.combineSquad(this._selected, toSquad);
                     } else {
                         this._selected.squad.position = position;
 
@@ -67,7 +60,6 @@ export default class HexandriaLogic {
                     }
 
                     const town = this.findTown(position);
-                    // console.log('->', town);
                     if (town) {
                         this.game.players[pIndex].towns.push(town.name);
                         console.log(this.game.players[pIndex].towns);
@@ -122,41 +114,42 @@ export default class HexandriaLogic {
         return result;
     }
 
-    combineSquad(selected, squad) {
-        if (selected.player.name !== squad.player.name) {
-            console.log('combineSquad error');
-            return;
+    combineSquad(from, to) {
+        let sign;
+        if (from.player.name === to.player.name) {
+            sign = function (a) {
+                return a;
+            };
+        } else {
+            sign = function (a) {
+                return -a;
+            };
         }
 
-        console.log('combineSquad');
-
-        const playerSquads = this.game.players[squad.playerIndex].squads;
-        if (playerSquads[squad.squadIndex].count > playerSquads[selected.squadIndex].count) {
-            playerSquads[squad.squadIndex].count += playerSquads[selected.squadIndex].count;
-            playerSquads[selected.squadIndex].count = 0;
+        if (to.squad.count > from.squad.count) {
+            to.squad.count += sign(from.squad.count);
+            from.squad.count = 0;
 
             // selected squad will be deleted
 
-            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_UPDATE, squad);
-            playerSquads.splice(selected.squadIndex, 1);
-            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, selected);
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_UPDATE, to);
+
+            this.game.players[from.playerIndex].squads.splice(from.squadIndex, 1);
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, from);
         } else {
-            playerSquads[selected.squadIndex].count += playerSquads[squad.squadIndex].count;
-            playerSquads[squad.squadIndex].count = 0;
+            from.squad.count += sign(to.squad.count);
+            to.squad.count = 0;
 
             // move selected squad
-            playerSquads[selected.squadIndex].position.x = playerSquads[squad.squadIndex].position.x;
-            playerSquads[selected.squadIndex].position.y = playerSquads[squad.squadIndex].position.y;
-            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_MOVE, selected);
+            from.squad.position.x = to.squad.position.x;
+            from.squad.position.y = to.squad.position.y;
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_MOVE, from);
 
-            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_UPDATE, selected);
-            playerSquads.splice(squad.squadIndex, 1);
-            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, squad);
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_UPDATE, from);
+
+            this.game.players[to.playerIndex].squads.splice(to.squadIndex, 1);
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, to);
         }
-    }
-
-    fightSquad(selected, squad) {
-
     }
 
     checkNearSelected(position) {
