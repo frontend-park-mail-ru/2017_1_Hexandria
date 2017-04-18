@@ -48,7 +48,6 @@ export default class MultiplayerView extends View {
 
     hide(options = {}) {
         super.hide();
-        console.log('m hide');
         (new Mediator()).emit(EVENTS.GAME.EXIT);
     }
 }

@@ -50,7 +50,6 @@ export default class SingleplayerView extends View {
 
     hide(options = {}) {
         super.hide();
-        console.log('s hide');
         (new Mediator()).emit(EVENTS.GAME.EXIT);
     }
 }

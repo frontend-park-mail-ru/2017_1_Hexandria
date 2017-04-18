@@ -13,6 +13,7 @@ export default class HexandriaLogic {
 
         this.game = game;
         this._selected = null;
+        this.gameOver = null;
 
         (new Mediator()).subscribe(this, EVENTS.KEYBOARD.ENTER_PRESSED, 'enterPressed');
         (new Mediator()).subscribe(this, EVENTS.TURN.START_TURN, 'gameLoop');
@@ -81,6 +82,10 @@ export default class HexandriaLogic {
         } else {
             this._selected = null;
             (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL, null);
+        }
+
+        if (this.gameOver) {
+            (new Mediator()).emit(EVENTS.GAME.OVER, this.gameOver);
         }
     }
 
@@ -165,7 +170,7 @@ export default class HexandriaLogic {
                     if (town.name === playerObject.player.capital) {
                         if (selected.playerIndex !== playerObject.playerIndex) {
                             flag = true;
-                            (new Mediator()).emit(EVENTS.GAME.EXIT);
+                            this.gameOver = this._selected;
                             console.log('game over');
                         } else {
                             flag = true;

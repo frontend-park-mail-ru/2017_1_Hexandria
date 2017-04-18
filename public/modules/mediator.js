@@ -11,7 +11,7 @@ export default class Mediator {
     }
 
     subscribe(subscriber, event, handler) {
-        console.log('SUBSCRIBE:', subscriber, event, handler);
+        // console.log('SUBSCRIBE:', subscriber, event, handler);
 
         if (!this.events[event]) {
             this.events[event] = [];

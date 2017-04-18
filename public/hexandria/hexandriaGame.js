@@ -14,9 +14,6 @@ export default class HexandriaGame {
 
         this.logic = new Mode(this.game);
         this.graphics = new HexandriaGraphics(this.game, element);
-
-
-        (new Mediator()).subscribe(this, 'drawMapEvent', 'drawMap');
     }
 
     init() {

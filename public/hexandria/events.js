@@ -2,6 +2,7 @@ export const EVENTS = {
     GAME: {
         INIT: 'EVENTS.GAME.INIT',
         START: 'EVENTS.GAME.START',
+        OVER: 'EVENTS.GAME.OVER',
         EXIT: 'EVENTS.GAME.EXIT',
     },
     LOGIC: {

@@ -17,6 +17,7 @@ export default class HexandriaApp {
         this.game = null;
 
         (new Mediator()).subscribe(this, EVENTS.GAME.INIT, 'gameInit');
+        (new Mediator()).subscribe(this, EVENTS.GAME.OVER, 'gameOver');
         (new Mediator()).subscribe(this, EVENTS.GAME.EXIT, 'gameExit');
     }
 
@@ -35,15 +36,25 @@ export default class HexandriaApp {
         }
     }
 
+    gameOver(payload = {}) {
+        console.log('gameOver');
+        const winner = payload.player.name;
+        if (winner) {
+            console.log('winner', winner);
+        }
+
+        (new Router()).go('/');
+    }
+
     gameExit() {
         console.log('gameExit');
         if (this.game) {
             this.game.destroy();
             this.game = null;
 
-            (new Mediator())._print();
+            // (new Mediator())._print();
             (new Mediator()).clear();
-            (new Mediator())._print();
+            // (new Mediator())._print();
             (new Mediator()).subscribe(this, EVENTS.GAME.INIT, 'gameInit');
             (new Mediator()).subscribe(this, EVENTS.GAME.EXIT, 'gameExit');
             (new Router()).go('/');
