@@ -192,7 +192,9 @@ export default class HexandriaGraphics {
             pos.set(0, 0, -0.5);
             quat.set(0, 0, 0, 1);
             const ground = createParalellepiped(40, 40, 1, 0, pos, quat,
-                new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
+                new THREE.MeshPhongMaterial({
+                    color: 0xFFFFFF,
+                }));
             ground.castShadow = true;
             ground.receiveShadow = true;
             textureLoader.load("textures/grid.png", (texture) => {
