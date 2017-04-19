@@ -1,5 +1,6 @@
 import View from '../modules/view';
 import Button from '../components/button/button';
+import Title from '../components/title/title';
 import Router from '../modules/router';
 
 export default class AboutView extends View {
@@ -7,6 +8,12 @@ export default class AboutView extends View {
         super(options);
 
         const pageAbout = document.getElementById('about');
+
+        const title = new Title({
+            title: 'About',
+            el: document.createElement('div'),
+        });
+        pageAbout.appendChild(title.el);
 
         const backButton = new Button({
             text: '⇐',
