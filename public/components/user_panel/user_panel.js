@@ -62,6 +62,10 @@ export default class UserPanel {
                         });
                 },
             },
+            colors: {
+                backColor: '#211A1D',
+                mainColor: '#F8F0FB',
+            },
         });
 
         this.el.appendChild(this.logout.el);

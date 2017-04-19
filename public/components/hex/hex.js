@@ -1,5 +1,7 @@
 import Button from '../button/button';
 import hexTemplate from './hexTemplate.pug';
+import UserPanel from '../user_panel/user_panel';
+import RegisterPanel from '../register_panel/register_panel';
 
 export default class Hex {
     /**
@@ -31,6 +33,12 @@ export default class Hex {
             hex_title: this.title,
             hex_phrase: this.phrase,
         });
+        this.registerPanel = new RegisterPanel();
+        this.el.querySelector('.hex__panel').appendChild(this.registerPanel.el);
+        this.registerPanel.el.setAttribute('class', 'hex__register_panel');
+        this.userPanel = new UserPanel();
+        this.userPanel.el.setAttribute('class', 'hex__user_panel');
+        this.el.querySelector('.hex__panel').appendChild(this.userPanel.el);
     }
 
     /**

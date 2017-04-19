@@ -13,7 +13,7 @@ export default class MainView extends View {
 
         const pageIndex = document.getElementById('index');
 
-        const hex = new Hex({
+        this.hex = new Hex({
             el: document.createElement('div'),
             data: {
                 hex_title: 'hexandria',
@@ -27,6 +27,10 @@ export default class MainView extends View {
                         events: {
                             click: (event) => { (new Router()).go('/singleplayer'); },
                         },
+                        colors: {
+                            backColor: '#211A1D',
+                            mainColor: '#F02D3A',
+                        },
                     },
                     multiplayer: {
                         text: 'Multiplayer',
@@ -35,6 +39,10 @@ export default class MainView extends View {
                         },
                         events: {
                             click: (event) => { (new Router()).go('/multiplayer'); },
+                        },
+                        colors: {
+                            backColor: '#211A1D',
+                            mainColor: '#F02D3A',
                         },
                     },
                     about: {
@@ -45,6 +53,10 @@ export default class MainView extends View {
                         events: {
                             click: (event) => { (new Router()).go('/about'); },
                         },
+                        colors: {
+                            backColor: '#211A1D',
+                            mainColor: '#F8F0FB',
+                        },
                     },
                     scoreboard: {
                         text: 'Scoreboard',
@@ -54,18 +66,15 @@ export default class MainView extends View {
                         events: {
                             click: (event) => { (new Router()).go('/scoreboard'); },
                         },
+                        colors: {
+                            backColor: '#211A1D',
+                            mainColor: '#F8F0FB',
+                        },
                     },
                 },
             },
         });
-        pageIndex.appendChild(hex.el);
-
-
-        this.registerPanel = new RegisterPanel();
-        pageIndex.appendChild(this.registerPanel.el);
-
-        this.userPanel = new UserPanel();
-        pageIndex.appendChild(this.userPanel.el);
+        pageIndex.appendChild(this.hex.el);
 
         this.update();
 
@@ -109,13 +118,13 @@ export default class MainView extends View {
         const user = (new Router()).getUser();
         if (this.user !== user) {
             if (user) {
-                this.userPanel.setUser(user);
-                this.userPanel._render();
-                this.userPanel.show();
-                this.registerPanel.hide();
+                this.hex.userPanel.setUser(user);
+                this.hex.userPanel._render();
+                this.hex.userPanel.show();
+                this.hex.registerPanel.hide();
             } else {
-                this.userPanel.hide();
-                this.registerPanel.show();
+                this.hex.userPanel.hide();
+                this.hex.registerPanel.show();
             }
             this.user = user;
         }

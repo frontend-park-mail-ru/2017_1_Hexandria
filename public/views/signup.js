@@ -21,6 +21,10 @@ export default class SignupView extends View {
             events: {
                 click: (event) => { (new Router()).go('/'); },
             },
+            colors: {
+                backColor: '#211A1D',
+                mainColor: '#F8F0FB',
+            },
         };
         pageSignup.appendChild(new Button(backButtonData).el);
 

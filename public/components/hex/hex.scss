@@ -50,26 +50,42 @@
 
 .hex {
   position: relative;
-  @include createHex(900px, #fff, 0);
-  &__minor_hex {
-    margin: 2px 0 0 4px;
+  //@include createHex(900px, #9197ae, 0);
+  //&__minor_hex {
+  //  margin: 2px 0 0 4px;
+  //  position: relative;
+  //  @include createHexInside(892px, #211a1d, 1);
+  //}
+  border-left: #9197ae solid 10px;
+  border-right: #9197ae solid 10px;
+  &__panel {
     position: relative;
-    @include createHexInside(892px, #000, 1);
+    height: 5%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  &__register_panel {
+    height: 100%;
+    width: 30%;
+  }
+  &__user_panel {
+    height: 100%;
+    width: 30%;
   }
   &__title {
-    text-transform: uppercase;
-    padding-top: 70px;
     position: relative;
+    text-transform: uppercase;
+    padding-top: 50px;
+    padding-bottom: 50px;
     text-align: center;
-    color: #fff;
+    color: #f8f0fb;
     font-weight: 900;
     font-size: 400%;
   }
   &__motto {
-    padding-top: 20px;
     position: relative;
     text-align: center;
-    color: #fff;
+    color: #f8f0fb;
     font-weight: 400;
     font-size: 200%;
   }
@@ -77,7 +93,7 @@
     position: relative;
     margin: 50px auto 0 auto;
     width: 80%;
-    background-color: #000;
+    background-color: #211a1d;
     padding: 10px;
     text-align: center;
   }
@@ -87,7 +103,7 @@
   }
   &__singleplayer, &__multiplayer {
     @extend .button;
-    width: 200px;
+    width: 300px;
     margin: 3px;
   }
   &__about, &__scoreboard {
