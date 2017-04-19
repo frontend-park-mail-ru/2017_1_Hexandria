@@ -47,13 +47,13 @@ export default class Form {
                     validator.validate(input.el);
                 } catch (err) {
                     console.log(err.message);
-                    input.colorInputBorder(input, 'red');
+                    input.colorInputBorder(input, '#f02d3a');
                     return;
                 }
-                input.colorInputBorder(input, '#fff');
+                input.colorInputBorder(input, '#f8f0fb');
             });
             input.on('click', () => {
-                input.colorInputBorder(this, '#eb9300');
+                input.colorInputBorder(this, '#9197ae');
             });
             this.el.appendChild(input.el);
         });
