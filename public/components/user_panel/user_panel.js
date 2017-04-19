@@ -67,7 +67,7 @@ export default class UserPanel {
                 mainColor: '#F8F0FB',
             },
         });
-
+        this.logout.el.setAttribute('class', 'user_panel__logout');
         this.el.appendChild(this.logout.el);
     }
 
@@ -76,7 +76,6 @@ export default class UserPanel {
      * @param name
      */
     setUser(name) {
-        console.log(name);
         this.username = name;
     }
 }
