@@ -1,4 +1,6 @@
 .form {
+  border-left: #9197ae solid 10px;
+  border-right: #9197ae solid 10px;
   &__button {
     @extend .button !optional;
     position: relative;

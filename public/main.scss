@@ -37,6 +37,10 @@ body {
 }
 
 .form {
-  margin: 0 25% 0 25%;
-  min-width: 300px;
+  position: absolute;
+  width: 65%;
+  height: 100%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
 }

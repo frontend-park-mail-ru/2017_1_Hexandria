@@ -65,29 +65,33 @@
     padding-bottom: 5px;
   }
   &__register_panel {
+    position: absolute;
+    right: 3%;
     height: 100%;
     width: 30%;
   }
   &__user_panel {
+    position: absolute;
+    right: 3%;
     height: 100%;
     width: 30%;
   }
   &__title {
     position: relative;
     text-transform: uppercase;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 13%;
+    padding-bottom: 3%;
     text-align: center;
     color: #f8f0fb;
     font-weight: 900;
-    font-size: 400%;
+    font-size: 500%;
   }
   &__motto {
     position: relative;
     text-align: center;
     color: #f8f0fb;
     font-weight: 400;
-    font-size: 200%;
+    font-size: 225%;
   }
   &__buttons {
     position: relative;
