@@ -14,7 +14,7 @@ export default class LoginView extends View {
         const pageLogin = document.getElementById('login');
 
         const backButton = new Button({
-            text: 'Back',
+            text: '⇐',
             attrs: {
                 class: 'back-button',
             },

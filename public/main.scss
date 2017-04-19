@@ -32,8 +32,8 @@ body {
 .back-button {
   @extend .button;
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  left: 10px;
+  top: 10px;
 }
 
 .form {

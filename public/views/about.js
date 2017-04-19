@@ -9,7 +9,7 @@ export default class AboutView extends View {
         const pageAbout = document.getElementById('about');
 
         const backButton = new Button({
-            text: 'Back',
+            text: '⇐',
             attrs: {
                 class: 'back-button',
             },

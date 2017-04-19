@@ -10,7 +10,7 @@ export default class ScoreboardView extends View {
         const pageScoreboard = document.getElementById('scoreboard');
 
         const backButton = new Button({
-            text: 'Back',
+            text: '⇐',
             attrs: {
                 class: 'back-button',
             },

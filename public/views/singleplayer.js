@@ -17,7 +17,7 @@ export default class SingleplayerView extends View {
 
 
         const backButton = new Button({
-            text: 'Back',
+            text: '⇐',
             attrs: {
                 class: 'back-button',
             },
