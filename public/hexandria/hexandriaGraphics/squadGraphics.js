@@ -14,7 +14,7 @@ export default class SquadGraphics {
         this.squad = new THREE.Mesh(geometry, material);
         scene.add(this.squad);
 
-        this.setSprite(squad);
+        this.setSprite(squad.count, squad.morale);
 
         this.move(squad.position.x, squad.position.y);
     }
@@ -27,8 +27,8 @@ export default class SquadGraphics {
         this.sprite.position.set(pos.x, pos.y, spriteZ);
     }
 
-    setSprite(squad) {
-        const newSprite = UtilsGraphics.getSprite(` ${squad.count}/${squad.morale} `);
+    setSprite(count, morale) {
+        const newSprite = UtilsGraphics.getSprite(` ${count}/${morale} `);
         newSprite.position.copy(this.squad.position);
         newSprite.position.z = spriteZ;
 

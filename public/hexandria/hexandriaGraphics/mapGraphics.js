@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import HexGraphics from './hexGraphics';
 import Mediator from '../../modules/mediator';
 import { EVENTS } from '../events';
+import HexandriaUtils from '../hexandriaUtils';
 
 const _fieldGrass = 0x80f080;
 const _fieldWater = 0x8080ff;
@@ -76,16 +77,19 @@ export default class MapGraphics {
     }
 
     onSelectSquad(squadPosition) {
-        const areaPositions = this.selectSquadArea(squadPosition);
-
         // unhighlight selected squad & area
         this.onUnselectAll();
 
-        this._selectedSquad = squadPosition;
+        // this._selectedSquad = squadPosition;
+        // copy position!
+        this._selectedSquad = {
+            x: squadPosition.x,
+            y: squadPosition.y,
+        };
         this.field[squadPosition.x][squadPosition.y].selectSquad();
 
         this._selectedArea = [];
-        areaPositions.forEach((position) => {
+        this.selectSquadArea(squadPosition).forEach((position) => {
             this._selectedArea.push(position);
             this.field[position.x][position.y].selectArea();
         });
@@ -99,26 +103,12 @@ export default class MapGraphics {
                 this.field[position.x][position.y].unselectArea();
                 // console.log(this.field[position.x][position.y]);
             });
+            this._selectedSquad = null;
         }
     }
 
     selectSquadArea(position) {
-        let result = [];
-        result.push({ x: position.x - 1, y: position.y });
-        result.push({ x: position.x + 1, y: position.y });
-        if (position.y % 2 === 1) {
-            result.push({ x: position.x - 1, y: position.y - 1 });
-            result.push({ x: position.x, y: position.y - 1 });
-            result.push({ x: position.x - 1, y: position.y + 1 });
-            result.push({ x: position.x, y: position.y + 1 });
-        } else {
-            result.push({ x: position.x + 1, y: position.y - 1 });
-            result.push({ x: position.x, y: position.y - 1 });
-            result.push({ x: position.x + 1, y: position.y + 1 });
-            result.push({ x: position.x, y: position.y + 1 });
-        }
-        result = result.filter(element => element.x >= 0 && element.x < this.sizeX && element.y >= 0 && element.y < this.sizeY);
-        return result;
+        return HexandriaUtils.nearElements(this.sizeX, this.sizeY, position);
     }
 
     handleSelect(intersects) {

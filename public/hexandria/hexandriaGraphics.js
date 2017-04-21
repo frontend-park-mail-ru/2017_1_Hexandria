@@ -82,25 +82,21 @@ export default class HexandriaGraphics {
         );
     }
 
-    squadMove(squadObject) {
-        // console.log('squadMove', squadObject);
-        this.squadsMap[squadObject.player.name][squadObject.squadIndex].move(squadObject.squad.position.x, squadObject.squad.position.y);
+    squadMove(data) {
+        this.squadsMap[data.playerName][data.squadIndex].move(data.position.x, data.position.y);
     }
 
-    squadUpdate(squadObject) {
-        // console.log('squadUpdate', squadObject);
-        this.squadsMap[squadObject.player.name][squadObject.squadIndex].setSprite(squadObject.squad);
+    squadUpdate(data) {
+        this.squadsMap[data.playerName][data.squadIndex].setSprite(data.squad.count, data.squad.morale);
     }
 
-    squadDelete(squadObject) {
-        // console.log('squadDelete', squadObject);
-        // this.squadsMap[squadObject.player.name][squadObject.squadIndex].setSprite(squadObject.squad);
-        this.squadsMap[squadObject.player.name][squadObject.squadIndex].remove();
-        this.squadsMap[squadObject.player.name].splice(squadObject.squadIndex, 1);
+    squadDelete(data) {
+        this.squadsMap[data.playerName][data.squadIndex].remove();
+        this.squadsMap[data.playerName].splice(data.squadIndex, 1);
     }
 
-    townCapture(object) {
-        this.townsMap[object.town.name].changeColor(object.player.color);
+    townCapture(data) {
+        this.townsMap[data.townName].changeColor(data.playerColor);
     }
 
     gameProcess() {

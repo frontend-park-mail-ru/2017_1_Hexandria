@@ -5,9 +5,4 @@ export default class HexandriaLogicSingleplayer extends HexandriaLogic {
         super(game);
         console.log('HexandriaLogicSingleplayer');
     }
-
-    onselect(position) {
-        super.onselect(position);
-        console.log('single', position);
-    }
 }

@@ -36,10 +36,10 @@ export default class HexandriaApp {
         }
     }
 
-    gameOver(payload = {}) {
+    gameOver(payload = null) {
         console.log('gameOver');
-        const winner = payload.player.name;
-        if (winner) {
+        if (payload) {
+            const winner = payload.player.name;
             console.log('winner', winner);
         }
 
