@@ -31,6 +31,7 @@ export default class Mediator {
                 this.emitAfter(storedElement.event, storedElement.options);
             });
         }
+        this.emitStack = null;
 
         this.emit = this.emitAfter;
     }

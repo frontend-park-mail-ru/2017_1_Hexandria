@@ -7,8 +7,7 @@ const _selectedAreaColor = 0xffff00;
 const _grassColor = 0x80f080;
 
 export default class HexGraphics extends THREE.Mesh {
-
-    constructor(scene, color, x, y, z) {
+    constructor(color, x, y, z) {
         const geometry = UtilsGraphics.getHexGeometry();
 
         const texture = new THREE.TextureLoader().load('textures/grass.jpg');
@@ -23,6 +22,8 @@ export default class HexGraphics extends THREE.Mesh {
         this.rotation.set(0, 0, 0);
         this.scale.set(1, 1, 1);
 
+        this.name = 'hex';
+
         this.x = x;
         this.y = y;
         this.highlighted = false;
@@ -31,7 +32,6 @@ export default class HexGraphics extends THREE.Mesh {
         this.hasTown = false;
         this.color = color;
         this.hasUnit = false;
-        this.scene = scene;
 
         this.selectedSquad = false;
         this.selectedArea = false;
@@ -61,40 +61,26 @@ export default class HexGraphics extends THREE.Mesh {
     }
 
     selectSquad() {
-        console.log('SELECT');
+        console.log('selectSquad');
         this.selectedSquad = true;
         this.material.emissive.setHex(_selectedSquadColor);
     }
 
-    selectArea() {
-        console.log('SELECT');
-        this.selectedArea = true;
-        this.material.emissive.setHex(_selectedAreaColor);
-    }
-
-    unselect() {
-        console.log('UNSELECT');
-        this.selected = false;
-        this.material.emissive.setHex(this.currentHex);
-    }
-
     unselectSquad() {
-        console.log(this.material.emissive);
+        console.log('unselectSquad', this.material.emissive);
         this.selectedSquad = false;
         this.material.emissive.setHex(null);
     }
 
+    selectArea() {
+        console.log('selectArea');
+        this.selectedArea = true;
+        this.material.emissive.setHex(_selectedAreaColor);
+    }
+
     unselectArea() {
+        console.log('unselectArea');
         this.selectedArea = false;
         this.material.emissive.setHex(null);
-    }
-
-    removeUnit() {
-        this.hasUnit = false;
-        this.scene.remove(this.unit.object);
-        this.unit = null;
-    }
-
-    moveUnit(destinationHex) {
     }
 }

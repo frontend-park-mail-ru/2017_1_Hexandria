@@ -1,11 +1,10 @@
-/* eslint-disable no-lonely-if */
 import Mediator from '../modules/mediator';
 import { EVENTS } from './events';
 import HexandriaUtils from './hexandriaUtils';
 
 export default class HexandriaLogic {
     constructor(game) {
-        console.log('HexandriaLogic created');
+        console.log('HexandriaLogic created', game);
 
         if (this.constructor.name === HexandriaLogic.name) {
             throw new TypeError('Can not create instance of HexandriaLogic');
@@ -22,6 +21,11 @@ export default class HexandriaLogic {
         (new Mediator()).subscribe(this, EVENTS.LOGIC.SELECT, 'onSelect');
         // TODO (new Mediator()).subscribe(this, EVENTS.LOGIC.MOVE, 'onmove');
         // TODO (new Mediator()).subscribe(this, EVENTS.LOGIC.UPDATE, 'onupdate');
+    }
+
+    destroy() {
+        this.game = null;
+        this._selected = null;
     }
 
     enterPressed() {
@@ -46,7 +50,7 @@ export default class HexandriaLogic {
         console.log('');
         console.log('');
         console.log('');
-        console.log('onselect', position);
+        console.log('onselect', position, this._selected);
         // throw new TypeError('Not implemented');
 
         if (position) {
@@ -56,6 +60,7 @@ export default class HexandriaLogic {
                     this.eventMove(data);
                 }
                 this._selected = null;
+                console.log('2');
                 (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
             } else {
                 const squad = this.findSquad(position);
@@ -66,6 +71,7 @@ export default class HexandriaLogic {
             }
         } else {
             this._selected = null;
+            console.log('1');
             (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
         }
 

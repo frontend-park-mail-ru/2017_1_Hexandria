@@ -12,8 +12,8 @@ export default class HexandriaGame {
 
         this.init();
 
-        this.logic = new Mode(this.game);
-        this.graphics = new HexandriaGraphics(this.game, element);
+        this.logic = new Mode(JSON.parse(this.gameString));
+        this.graphics = new HexandriaGraphics(JSON.parse(this.gameString), element);
     }
 
     init() {
@@ -115,10 +115,14 @@ export default class HexandriaGame {
                 },
             ],
         };
+
+        this.gameString = JSON.stringify(this.game);
     }
 
     destroy() {
-        this.game = null;
+        this.logic.destroy();
+        this.graphics.destroy();
+
         this.logic = null;
         this.graphics = null;
     }

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import Stats from 'stats-js';
+// import Stats from 'stats-js';
 import Mediator from '../modules/mediator';
 import { EVENTS } from './events';
 import MapGraphics from './hexandriaGraphics/mapGraphics';
@@ -16,6 +16,15 @@ export default class HexandriaGraphics {
         this.game = game;
         this.element = element;
 
+        this._scene = null;
+        this._id = null;
+        this._raycaster = null;
+        this._mouseHandler = true;
+
+        this.map = null;
+        this.townsMap = null;
+        this.squadsMap = null;
+
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_MOVE, 'squadMove');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_UPDATE, 'squadUpdate');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_DELETE, 'squadDelete');
@@ -28,7 +37,36 @@ export default class HexandriaGraphics {
             }
         };
 
-        this.gameProcess();
+        this.initGame();
+    }
+
+    destroy() {
+        console.log('destroy');
+
+        cancelAnimationFrame(this._id);
+
+        this.map.destroy();
+
+        while (this._scene.children.length > 0) {
+            // console.log('deleting...', this._scene.children[0]);
+            this._scene.remove(this._scene.children[0]);
+        }
+
+        this._scene = null;
+        this._id = null;
+        this._raycaster = null;
+        this._mouseHandler = null;
+
+        this.map = null;
+        this.townsMap = null;
+        this.squadsMap = null;
+
+        const sel = `${this.element} .game-container`;
+        const container = document.querySelector(sel);
+        container.innerHTML = '';
+
+        this.game = null;
+        this.element = null;
     }
 
     initTowns() {
@@ -37,7 +75,7 @@ export default class HexandriaGraphics {
         HexandriaUtils.forFieldTowns(
             this.game,
             (town) => {
-                const newTown = new TownGraphics(this.scene, 0x777777, town.position);
+                const newTown = new TownGraphics(this._scene, 0x777777, town);
                 this.townsMap[town.name] = newTown;
             },
         );
@@ -76,7 +114,7 @@ export default class HexandriaGraphics {
         HexandriaUtils.forPlayersSquads(
             this.game,
             (squadObject) => {
-                const newSquad = new SquadGraphics(this.scene, squadObject.player.color, squadObject.squad);
+                const newSquad = new SquadGraphics(this._scene, squadObject.player.color, squadObject.squad);
                 this.squadsMap[squadObject.player.name].push(newSquad);
             },
         );
@@ -99,44 +137,39 @@ export default class HexandriaGraphics {
         this.townsMap[data.townName].changeColor(data.playerColor);
     }
 
-    gameProcess() {
-        this.gameStart();
+    initGame() {
+        this.initTHREE();
+
+        this.map = new MapGraphics(this._scene, this.game);
         this.initTowns();
         this.initSquads();
     }
 
-    gameStart () {
+    initTHREE () {
+        console.log('initTHREE');
         // Graphics variables
         const clock = new THREE.Clock();
         let container,
-            stats,
             camera,
             controls,
-            scene,
             renderer,
             textureLoader,
             mouse,
-            raycaster,
             time = 0,
             keyQ = false;
 
         // - Main code -
 
-        initGraphics(this.element);
+        initGraphics.call(this);
         initInput();
-        // createObjects();
-
-        const _map = new MapGraphics(scene, this.game);
-
-        animate();
-
-        this.scene = scene;
-        this.map = _map;
+        animate.call(this);
 
         // - Functions -
 
-        function initGraphics(element) {
-            const sel = `${element} .game-container`;
+        function initGraphics() {
+            console.log('initGraphics', this);
+
+            const sel = `${this.element} .game-container`;
             console.log(sel);
             container = document.querySelector(sel);
 
@@ -148,18 +181,15 @@ export default class HexandriaGraphics {
             // renderer.setSize(200, 200);
             renderer.shadowMap.enabled = true;
 
-            container.appendChild(renderer.domElement);
+            this._scene = new THREE.Scene();
 
-            scene = new THREE.Scene();
-
-            // camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
             camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.2, 2000);
             camera.position.x = 11;
             camera.position.y = 5;
             camera.position.z = 7;
             camera.up.set(0, 0, 1);
 
-            controls = new OrbitControls(camera);
+            controls = new OrbitControls(camera, container);
             controls.target.x = 5;
             controls.target.y = 5;
             controls.target.z = 0;
@@ -167,7 +197,7 @@ export default class HexandriaGraphics {
             textureLoader = new THREE.TextureLoader();
 
             const ambientLight = new THREE.AmbientLight(0x404040);
-            scene.add(ambientLight);
+            this._scene.add(ambientLight);
 
             const light = new THREE.DirectionalLight(0xffffff, 1);
             light.position.set(-10, 10, 10);
@@ -181,59 +211,25 @@ export default class HexandriaGraphics {
             light.shadow.camera.far = 50;
             light.shadow.mapSize.x = 1024;
             light.shadow.mapSize.y = 1024;
-            scene.add(light);
+            this._scene.add(light);
 
 
             container.innerHTML = '';
 
             container.appendChild(renderer.domElement);
 
-            stats = new Stats();
+            /* stats = new Stats();
             stats.domElement.style.position = 'absolute';
             stats.domElement.style.top = '0px';
-            container.appendChild(stats.domElement);
-
+            container.appendChild(stats.domElement);*/
 
             mouse = new THREE.Vector2();
-            raycaster = new THREE.Raycaster();
+            this._raycaster = new THREE.Raycaster();
 
-            document.addEventListener('mousemove', onDocumentMouseMove, false);
-            document.addEventListener('mousedown', onDocumentMouseDown, false);
+            container.addEventListener('mousemove', onDocumentMouseMove.bind(this), false);
+            container.addEventListener('mousedown', onDocumentMouseDown.bind(this), false);
 
             window.addEventListener('resize', onWindowResize, false);
-        }
-
-        function createObjects() {
-            const pos = new THREE.Vector3();
-            const quat = new THREE.Quaternion();
-
-            pos.set(0, 0, -0.5);
-            quat.set(0, 0, 0, 1);
-            const ground = createParalellepiped(40, 40, 1, 0, pos, quat,
-                new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
-            ground.castShadow = true;
-            ground.receiveShadow = true;
-            textureLoader.load('textures/grid.png', (texture) => {
-                texture.wrapS = THREE.RepeatWrapping;
-                texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.set(40, 40);
-                ground.material.map = texture;
-                ground.material.needsUpdate = true;
-            });
-            scene.add(ground);
-        }
-
-        function createParalellepiped(sx, sy, sz, mass, pos, quat, material) {
-            const threeObject = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz, 1, 1, 1), material);
-
-            createRigidBody(threeObject, mass, pos, quat);
-
-            return threeObject;
-        }
-
-        function createRigidBody(threeObject, mass, pos, quat) {
-            threeObject.position.copy(pos);
-            threeObject.quaternion.copy(quat);
         }
 
         function initInput() {
@@ -268,26 +264,26 @@ export default class HexandriaGraphics {
         function onDocumentMouseMove(event) {
             event.preventDefault();
 
-            mouseCoordinates(event);
+            if (this._mouseHandler) {
+                mouseCoordinates(event);
 
-            raycaster.setFromCamera(mouse, camera);
-            // const intersects = raycaster.intersectObjects(_map.scene.children);
-            const intersects = raycaster.intersectObjects(_map.fieldGroup.children);
+                this._raycaster.setFromCamera(mouse, camera);
+                const intersects = this._raycaster.intersectObjects(this.map.fieldGroup.children);
 
-            _map.handleHighlight(intersects);
+                this.map.handleHighlight(intersects);
+            }
         }
 
         function onDocumentMouseDown(event) {
             event.preventDefault();
 
-            if (event.buttons === 1) {
+            if (this._mouseHandler && event.buttons === 1) {
                 mouseCoordinates(event);
 
-                raycaster.setFromCamera(mouse, camera);
-                // const intersects = raycaster.intersectObjects(_map.scene.children);
-                const intersects = raycaster.intersectObjects(_map.fieldGroup.children);
+                this._raycaster.setFromCamera(mouse, camera);
+                const intersects = this._raycaster.intersectObjects(this.map.fieldGroup.children);
 
-                _map.handleSelect(intersects);
+                this.map.handleSelect(intersects);
             }
         }
 
@@ -298,10 +294,10 @@ export default class HexandriaGraphics {
         }
 
         function animate() {
-            requestAnimationFrame(animate);
+            this._id = requestAnimationFrame(animate.bind(this));
 
-            render();
-            stats.update();
+            render.call(this);
+            // stats.update();
         }
 
         function render() {
@@ -309,11 +305,9 @@ export default class HexandriaGraphics {
 
             controls.update(deltaTime);
 
-            renderer.render(scene, camera);
+            renderer.render(this._scene, camera);
 
             time += deltaTime;
         }
     }
-
-
 }

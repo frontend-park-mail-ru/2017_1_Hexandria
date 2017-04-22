@@ -9,8 +9,9 @@ const _fieldWater = 0x8080ff;
 const _fieldRock = 0x808080;
 
 export default class MapGraphics {
-
     constructor(scene, game) {
+        console.log('MapGraphics created');
+
         this.scene = scene;
 
         this.sizeX = game.field.size.x;
@@ -28,7 +29,7 @@ export default class MapGraphics {
 
         for (let i = 0; i < this.sizeX; i++) {
             for (let j = 0; j < this.sizeY; j++) {
-                const newHex = new HexGraphics(this.scene, _fieldGrass, i, j, 0.2);
+                const newHex = new HexGraphics(_fieldGrass, i, j, 0.2);
                 this.field[i][j] = newHex;
                 this.fieldMap[newHex] = {
                     x: i,
@@ -41,6 +42,28 @@ export default class MapGraphics {
 
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SELECT_UNIT, 'onSelectSquad');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.UNSELECT_ALL, 'onUnselectAll');
+    }
+
+    destroy() {
+        while (this.fieldGroup.children.length > 0) {
+            // console.log('deleting...', this.fieldGroup.children[0]);
+            this.fieldGroup.remove(this.fieldGroup.children[0]);
+        }
+
+        this.sizeX = null;
+        this.sizeY = null;
+        this.field = null;
+        this.fiesldMap = null;
+        this.fieldGroup = null;
+
+        this._highlighted = null;
+        this._selected = [];
+        this.unitSelected = null;
+
+        this._selectedSquad = null;
+        this._selectedArea = [];
+
+        this.scene = null;
     }
 
     find(obj) {
@@ -125,7 +148,7 @@ export default class MapGraphics {
                 },
             );
 
-            if (this._selected.indexOf(hex) === -1) {
+            /* if (this._selected.indexOf(hex) === -1) {
                 // choose unit
                 if (hex.hasUnit) {
                     this.selectUnit(hex);
@@ -134,61 +157,15 @@ export default class MapGraphics {
                 this.deselectUnit(hex);
             } else {
                 this.moveUnit(this.unitSelected, hex);
-            }
+            }*/
         } else {
             (new Mediator()).emit(EVENTS.LOGIC.SELECT);
 
             // out of map
-            if (this._selected.length > 0) {
+            /* if (this._selected.length > 0) {
                 this._selected.forEach(el => el.unselect());
                 this._selected = [];
-            }
+            }*/
         }
-    }
-
-    createCapital(owner, x, y) {
-        this.field[x][y].createCapital(owner);
-    }
-
-    createUnit(owner, x, y) {
-        this.field[x][y].createUnit(owner);
-    }
-
-    selectUnit(hex) {
-        this.unitSelected = hex;
-        for (let i = hex.x - 1; (i <= hex.x + 1) && (i >= 0) && (i <= this.sizeX); i++) {
-            this.field[i][hex.y].selectArea();
-            this._selected.push(this.field[i][hex.y]);
-        }
-        for (
-            let i = hex.x - Math.floor(hex.y % 2);
-            (i <= hex.x - Math.floor(hex.y % 2) + 1) && (i >= 0) && (i <= this.sizeX);
-            i++
-        ) {
-            /* this.field[i][hex.y + 1].select();
-             this._selected.push(this.field[i][hex.y + 1]);
-             this.field[i][hex.y - 1].select();*/
-
-            this.field[i][hex.y + 1].selectArea();
-            this._selected.push(this.field[i][hex.y + 1]);
-            this.field[i][hex.y - 1].selectArea();
-            this._selected.push(this.field[i][hex.y - 1]);
-        }
-    }
-
-    deselectUnit(hex) {
-        this._selected.forEach(el => el.unselect());
-        this._selected = [];
-        this._highlighted = hex;
-        this.unitSelected = null;
-        hex.highlight();
-    }
-
-    moveUnit(fromHex, toHex) {
-        this.deselectUnit(fromHex);
-        toHex.createUnit(fromHex.unit.owner);
-        fromHex.removeUnit();
-        fromHex.unhighlight();
-        toHex.highlight();
     }
 }

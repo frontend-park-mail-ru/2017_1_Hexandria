@@ -12,6 +12,7 @@ export default class SquadGraphics {
         const geometry = new THREE.SphereGeometry(0.25, 16, 16);
         const material = new THREE.MeshBasicMaterial({ color });
         this.squad = new THREE.Mesh(geometry, material);
+        this.squad.name = 'squad';
         scene.add(this.squad);
 
         this.setSprite(squad.count, squad.morale);
@@ -35,6 +36,7 @@ export default class SquadGraphics {
         this._removeSprite();
 
         this.sprite = newSprite;
+        this.sprite.name = 'squad sprite';
         this.scene.add(this.sprite);
     }
 
