@@ -16,7 +16,7 @@ export default class ScoreboardView extends View {
         pageScoreboard.appendChild(title.el);
 
         const backButton = new Button({
-            text: '⇐',
+            text: '⬅',
             attrs: {
                 class: 'back-button',
             },

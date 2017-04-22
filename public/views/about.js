@@ -16,7 +16,7 @@ export default class AboutView extends View {
         pageAbout.appendChild(title.el);
 
         const backButton = new Button({
-            text: '⇐',
+            text: '⬅',
             attrs: {
                 class: 'back-button',
             },

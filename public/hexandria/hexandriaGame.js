@@ -123,7 +123,7 @@ export default class HexandriaGame {
         this.logic.destroy();
         this.graphics.destroy();
 
-        this.logic = null;
-        this.graphics = null;
+        delete this.logic;
+        delete this.graphics;
     }
 }

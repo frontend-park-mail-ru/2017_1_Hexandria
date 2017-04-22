@@ -17,7 +17,7 @@ export default class MultiplayerView extends View {
 
 
         const backButton = new Button({
-            text: '⇐',
+            text: '⬅',
             attrs: {
                 class: 'back-button',
             },

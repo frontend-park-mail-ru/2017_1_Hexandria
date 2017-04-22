@@ -14,7 +14,7 @@ export default class SignupView extends View {
         const pageSignup = document.getElementById('signup');
 
         const backButtonData = {
-            text: '⇐',
+            text: '⬅',
             attrs: {
                 class: 'back-button',
             },

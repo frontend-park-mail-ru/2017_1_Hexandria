@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-// import Stats from 'stats-js';
 import Mediator from '../modules/mediator';
 import { EVENTS } from './events';
 import MapGraphics from './hexandriaGraphics/mapGraphics';
@@ -14,7 +13,16 @@ export default class HexandriaGraphics {
         console.log('HexandriaGraphics created');
 
         this.game = game;
-        this.element = element;
+
+        this.selector = `${element} .game-container`;
+        console.log(this.selector);
+
+        this._clock = null;
+        this._container = null;
+        this._camera = null;
+        this._controls = null;
+        this._renderer = null;
+        this._mouse = null;
 
         this._scene = null;
         this._id = null;
@@ -29,13 +37,6 @@ export default class HexandriaGraphics {
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_UPDATE, 'squadUpdate');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_DELETE, 'squadDelete');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.TOWN_CAPTURE, 'townCapture');
-
-        window.onkeypress = function(e) {
-            if (e.keyCode === 13) {
-                console.log(EVENTS.KEYBOARD.ENTER_PRESSED);
-                (new Mediator()).emit(EVENTS.KEYBOARD.ENTER_PRESSED);
-            }
-        };
 
         this.initGame();
     }
@@ -52,6 +53,20 @@ export default class HexandriaGraphics {
             this._scene.remove(this._scene.children[0]);
         }
 
+        this._container.addEventListener('mousemove', null, false);
+        this._container.addEventListener('mousedown', null, false);
+        window.addEventListener('resize', null, false);
+        this._container.innerHTML = '';
+
+        this.game = null;
+
+        this._clock = null;
+        this._container = null;
+        this._camera = null;
+        this._controls = null;
+        this._renderer = null;
+        this._mouse = null;
+
         this._scene = null;
         this._id = null;
         this._raycaster = null;
@@ -60,13 +75,6 @@ export default class HexandriaGraphics {
         this.map = null;
         this.townsMap = null;
         this.squadsMap = null;
-
-        const sel = `${this.element} .game-container`;
-        const container = document.querySelector(sel);
-        container.innerHTML = '';
-
-        this.game = null;
-        this.element = null;
     }
 
     initTowns() {
@@ -138,176 +146,130 @@ export default class HexandriaGraphics {
     }
 
     initGame() {
-        this.initTHREE();
+        this._clock = new THREE.Clock();
+        this.initGraphics();
 
         this.map = new MapGraphics(this._scene, this.game);
         this.initTowns();
         this.initSquads();
+
+        this.animate();
     }
 
-    initTHREE () {
-        console.log('initTHREE');
-        // Graphics variables
-        const clock = new THREE.Clock();
-        let container,
-            camera,
-            controls,
-            renderer,
-            textureLoader,
-            mouse,
-            time = 0,
-            keyQ = false;
+    initGraphics() {
+        console.log('initGraphics', this);
 
-        // - Main code -
+        this._container = document.querySelector(this.selector);
 
-        initGraphics.call(this);
-        initInput();
-        animate.call(this);
+        this._renderer = new THREE.WebGLRenderer();
+        // renderer.setClearColor(0xbfd1e5);
+        this._renderer.setClearColor(0xffffff);
+        this._renderer.setPixelRatio(this._container.devicePixelRatio);
+        // renderer.setSize(container.clientWidth, container.clientHeight);
+        this._renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // - Functions -
+        this._renderer.shadowMap.enabled = true; // TODO
 
-        function initGraphics() {
-            console.log('initGraphics', this);
+        this._scene = new THREE.Scene();
 
-            const sel = `${this.element} .game-container`;
-            console.log(sel);
-            container = document.querySelector(sel);
+        this._camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
+        this._camera.position.x = 11;
+        this._camera.position.y = 5;
+        this._camera.position.z = 7;
+        this._camera.up.set(0, 0, 1);
 
-            renderer = new THREE.WebGLRenderer();
-            // renderer.setClearColor(0xbfd1e5);
-            renderer.setClearColor(0xffffff);
-            renderer.setPixelRatio(container.devicePixelRatio);
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            // renderer.setSize(200, 200);
-            renderer.shadowMap.enabled = true;
+        this._controls = new OrbitControls(this._camera, this._container);
+        this._controls.target.x = 5;
+        this._controls.target.y = 5;
+        this._controls.target.z = 0;
 
-            this._scene = new THREE.Scene();
+        // this._textureLoader = new THREE.TextureLoader();
 
-            camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.2, 2000);
-            camera.position.x = 11;
-            camera.position.y = 5;
-            camera.position.z = 7;
-            camera.up.set(0, 0, 1);
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        this._scene.add(ambientLight);
 
-            controls = new OrbitControls(camera, container);
-            controls.target.x = 5;
-            controls.target.y = 5;
-            controls.target.z = 0;
-
-            textureLoader = new THREE.TextureLoader();
-
-            const ambientLight = new THREE.AmbientLight(0x404040);
-            this._scene.add(ambientLight);
-
-            const light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(-10, 10, 10);
-            light.castShadow = true;
-            const d = 10;
-            light.shadow.camera.left = -d;
-            light.shadow.camera.right = d;
-            light.shadow.camera.top = d;
-            light.shadow.camera.bottom = -d;
-            light.shadow.camera.near = 2;
-            light.shadow.camera.far = 50;
-            light.shadow.mapSize.x = 1024;
-            light.shadow.mapSize.y = 1024;
-            this._scene.add(light);
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(-10, 10, 10);
+        light.castShadow = true;
+        const d = 10;
+        light.shadow.camera.left = -d;
+        light.shadow.camera.right = d;
+        light.shadow.camera.top = d;
+        light.shadow.camera.bottom = -d;
+        light.shadow.camera.near = 2;
+        light.shadow.camera.far = 50;
+        light.shadow.mapSize.x = 1024;
+        light.shadow.mapSize.y = 1024;
+        this._scene.add(light);
 
 
-            container.innerHTML = '';
+        this._container.innerHTML = '';
 
-            container.appendChild(renderer.domElement);
+        this._container.appendChild(this._renderer.domElement);
 
-            /* stats = new Stats();
-            stats.domElement.style.position = 'absolute';
-            stats.domElement.style.top = '0px';
-            container.appendChild(stats.domElement);*/
+        /* stats = new Stats();
+         stats.domElement.style.position = 'absolute';
+         stats.domElement.style.top = '0px';
+         container.appendChild(stats.domElement);*/
 
-            mouse = new THREE.Vector2();
-            this._raycaster = new THREE.Raycaster();
+        this._mouse = new THREE.Vector2();
+        this._raycaster = new THREE.Raycaster();
 
-            container.addEventListener('mousemove', onDocumentMouseMove.bind(this), false);
-            container.addEventListener('mousedown', onDocumentMouseDown.bind(this), false);
+        this._container.addEventListener('mousemove', (e) => { this.onDocumentMouseMove(e); }, false);
+        this._container.addEventListener('mousedown', (e) => { this.onDocumentMouseDown(e); }, false);
 
-            window.addEventListener('resize', onWindowResize, false);
+        window.addEventListener('resize', (e) => { this.onWindowResize(e); }, false);
+    }
+
+    mouseCoordinates(event) {
+        this._mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this._mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    }
+
+    onDocumentMouseMove(event) {
+        event.preventDefault();
+
+        if (this._mouseHandler) {
+            this.mouseCoordinates(event);
+
+            this._raycaster.setFromCamera(this._mouse, this._camera);
+            const intersects = this._raycaster.intersectObjects(this.map.fieldGroup.children);
+
+            this.map.handleHighlight(intersects);
         }
+    }
 
-        function initInput() {
-            window.addEventListener('keydown', (event) => {
-                switch (event.keyCode) {
-                    // Q
-                    case 81:
-                        keyQ = true;
-                        break;
-                    default:
-                        // do nothing
-                }
-            }, false);
+    onDocumentMouseDown(event) {
+        event.preventDefault();
 
-            window.addEventListener('keyup', (event) => {
-                switch (event.keyCode) {
-                    // Q
-                    case 81:
-                        keyQ = false;
-                        break;
-                    default:
-                        // do nothing
-                }
-            }, false);
+        if (this._mouseHandler && event.buttons === 1) {
+            this.mouseCoordinates(event);
+
+            this._raycaster.setFromCamera(this._mouse, this._camera);
+            const intersects = this._raycaster.intersectObjects(this.map.fieldGroup.children);
+
+            this.map.handleSelect(intersects);
         }
+    }
 
-        function mouseCoordinates(event) {
-            mouse.x = ((event.clientX - container.offsetLeft) / renderer.domElement.width) * 2 - 1;
-            mouse.y = -((event.clientY - container.offsetTop) / renderer.domElement.height) * 2 + 1;
-        }
+    onWindowResize() {
+        this._camera.aspect = window.innerWidth / window.innerHeight;
+        this._camera.updateProjectionMatrix();
+        this._renderer.setSize(window.innerWidth, window.innerHeight);
+    }
 
-        function onDocumentMouseMove(event) {
-            event.preventDefault();
+    animate() {
+        this._id = requestAnimationFrame(() => { this.animate(); });
 
-            if (this._mouseHandler) {
-                mouseCoordinates(event);
+        this.render();
+        // stats.update();
+    }
 
-                this._raycaster.setFromCamera(mouse, camera);
-                const intersects = this._raycaster.intersectObjects(this.map.fieldGroup.children);
+    render() {
+        const deltaTime = this._clock.getDelta();
 
-                this.map.handleHighlight(intersects);
-            }
-        }
+        this._controls.update(deltaTime);
 
-        function onDocumentMouseDown(event) {
-            event.preventDefault();
-
-            if (this._mouseHandler && event.buttons === 1) {
-                mouseCoordinates(event);
-
-                this._raycaster.setFromCamera(mouse, camera);
-                const intersects = this._raycaster.intersectObjects(this.map.fieldGroup.children);
-
-                this.map.handleSelect(intersects);
-            }
-        }
-
-        function onWindowResize() {
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        }
-
-        function animate() {
-            this._id = requestAnimationFrame(animate.bind(this));
-
-            render.call(this);
-            // stats.update();
-        }
-
-        function render() {
-            const deltaTime = clock.getDelta();
-
-            controls.update(deltaTime);
-
-            renderer.render(this._scene, camera);
-
-            time += deltaTime;
-        }
+        this._renderer.render(this._scene, this._camera);
     }
 }
