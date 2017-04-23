@@ -40,7 +40,7 @@ export default class MultiplayerView extends View {
         (new Mediator()).emit(
             EVENTS.GAME.INIT,
             {
-                mode: 'singleplayer', // TODO multiplayer
+                mode: 'multiplayer', // TODO multiplayer
                 element: '#multiplayer',
             },
         );
