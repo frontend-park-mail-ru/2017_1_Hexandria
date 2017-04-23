@@ -12,6 +12,10 @@ export default class HexandriaGraphics {
     constructor(game, element) {
         console.log('HexandriaGraphics created');
 
+        this.__move = (e) => { this.onDocumentMouseMove(e); };
+        this.__down = (e) => { this.onDocumentMouseDown(e); };
+        this.__resize = (e) => { this.onWindowResize(e); };
+
         this.game = game;
 
         this.selector = `${element} .game-container`;
@@ -53,9 +57,9 @@ export default class HexandriaGraphics {
             this._scene.remove(this._scene.children[0]);
         }
 
-        this._container.addEventListener('mousemove', null, false);
-        this._container.addEventListener('mousedown', null, false);
-        window.addEventListener('resize', null, false);
+        this._container.removeEventListener('mousemove', this.__move, false);
+        this._container.removeEventListener('mousedown', this.__down, false);
+        window.removeEventListener('resize', this.__resize, false);
         this._container.innerHTML = '';
 
         this.game = null;
@@ -70,7 +74,7 @@ export default class HexandriaGraphics {
         this._scene = null;
         this._id = null;
         this._raycaster = null;
-        this._mouseHandler = null;
+        // this._mouseHandler = null;
 
         this.map = null;
         this.townsMap = null;
@@ -183,8 +187,6 @@ export default class HexandriaGraphics {
         this._controls.target.y = 5;
         this._controls.target.z = 0;
 
-        // this._textureLoader = new THREE.TextureLoader();
-
         const ambientLight = new THREE.AmbientLight(0x404040);
         this._scene.add(ambientLight);
 
@@ -202,23 +204,15 @@ export default class HexandriaGraphics {
         light.shadow.mapSize.y = 1024;
         this._scene.add(light);
 
-
         this._container.innerHTML = '';
-
         this._container.appendChild(this._renderer.domElement);
-
-        /* stats = new Stats();
-         stats.domElement.style.position = 'absolute';
-         stats.domElement.style.top = '0px';
-         container.appendChild(stats.domElement);*/
 
         this._mouse = new THREE.Vector2();
         this._raycaster = new THREE.Raycaster();
 
-        this._container.addEventListener('mousemove', (e) => { this.onDocumentMouseMove(e); }, false);
-        this._container.addEventListener('mousedown', (e) => { this.onDocumentMouseDown(e); }, false);
-
-        window.addEventListener('resize', (e) => { this.onWindowResize(e); }, false);
+        this._container.addEventListener('mousemove', this.__move, false);
+        this._container.addEventListener('mousedown', this.__down, false);
+        window.addEventListener('resize', this.__resize, false);
     }
 
     mouseCoordinates(event) {
@@ -262,7 +256,6 @@ export default class HexandriaGraphics {
         this._id = requestAnimationFrame(() => { this.animate(); });
 
         this.render();
-        // stats.update();
     }
 
     render() {
