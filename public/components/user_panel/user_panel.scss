@@ -1,8 +1,5 @@
 .user_panel {
-  top: 2%;
-  right: 5%;
-  height: 7%;
-  width: 20%;
+  margin: auto;
   position: absolute;
   z-index: 1;
 
@@ -10,19 +7,16 @@
     font-size: 140%;
     color: #f8f0fb;
     display: inline-block;
-    //float: left;
     vertical-align: middle;
   }
 
   &__logout {
     @extend .button !optional;
+
     display: inline-block;
-    //float: left;
-    //text-align: center;
     color: #f8f0fb;
-    background-color: #211A1D;
+    background-color: #211a1d;
     border: none;
-    text-decoration: underline;
-    //vertical-align: middle;
+    //text-decoration: underline;
   }
 }

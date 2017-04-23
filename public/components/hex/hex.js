@@ -34,10 +34,8 @@ export default class Hex {
             hex_phrase: this.phrase,
         });
         this.registerPanel = new RegisterPanel();
-        this.registerPanel.el.setAttribute('class', 'hex__register_panel');
         this.el.querySelector('.hex__panel').appendChild(this.registerPanel.el);
         this.userPanel = new UserPanel();
-        this.userPanel.el.setAttribute('class', 'hex__user_panel');
         this.el.querySelector('.hex__panel').appendChild(this.userPanel.el);
     }
 

@@ -8,6 +8,6 @@
         "composes"
       ]
     }],
-    "unit-whitelist": ["em", "rem", "s", "%"]
+    "unit-whitelist": ["em", "rem", "s", "%", "px"]
   }
 }

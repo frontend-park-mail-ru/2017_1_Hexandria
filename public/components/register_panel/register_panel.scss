@@ -1,24 +1,17 @@
 .register_panel {
-  top: 2%;
-  right: 5%;
-  height: 7%;
-  width: 20%;
+  margin: auto;
   position: absolute;
   z-index: 1;
 
-  &__login, &__signup {
+  &__login,
+  &__signup {
     @extend .button !optional;
-    width: 45%;
-    height: 100%;
 
-    margin: 0 2%;
     text-align: center;
     color: #f8f0fb;
-    //text-decoration: none;
-    background-color: #211A1D;
+    background-color: #211a1d;
     border: none;
-    text-decoration: underline;
-    //border: 1px solid #fff;
+    //text-decoration: underline;
     display: inline-block;
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);

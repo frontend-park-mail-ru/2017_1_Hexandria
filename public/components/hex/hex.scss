@@ -3,15 +3,18 @@
   height: $height / 2;
   width: $height * 0.866;
   z-index: $z-index;
+
   &::before {
     content: " ";
-    width: 0; height: 0;
+    width: 0;
+    height: 0;
     border-bottom: ($height / 4) solid $color;
     border-left: ($height * 0.433) solid transparent;
     border-right: ($height * 0.433) + 1px solid transparent;
     position: absolute;
     top: -($height / 4);
   }
+
   &::after {
     content: "";
     width: 0;
@@ -28,15 +31,18 @@
   height: $height / 2;
   width: $height * 0.866 - 1px;
   z-index: $z-index;
+
   &::before {
     content: " ";
-    width: 0; height: 0;
+    width: 0;
+    height: 0;
     border-bottom: ($height / 4) solid $color;
     border-left: ($height * 0.433) solid transparent;
     border-right: ($height * 0.433) solid transparent;
     position: absolute;
     top: -($height / 4);
   }
+
   &::after {
     content: "";
     width: 0;
@@ -58,18 +64,21 @@
   //}
   border-left: #9197ae solid 10px;
   border-right: #9197ae solid 10px;
+
   &__panel {
     position: relative;
     height: 5%;
     padding-top: 5px;
     padding-bottom: 5px;
   }
+
   &__register_panel {
     position: absolute;
     right: 3%;
     height: 100%;
     width: 30%;
   }
+
   &__user_panel {
     position: absolute;
     right: 3%;
@@ -77,6 +86,7 @@
     width: 100%;
     background-color: yellow;
   }
+
   &__title {
     position: relative;
     text-transform: uppercase;
@@ -87,6 +97,7 @@
     font-weight: 900;
     font-size: 500%;
   }
+
   &__motto {
     position: relative;
     text-align: center;
@@ -94,6 +105,7 @@
     font-weight: 400;
     font-size: 225%;
   }
+
   &__buttons {
     position: relative;
     margin: 50px auto 0 auto;
@@ -102,17 +114,25 @@
     padding: 10px;
     text-align: center;
   }
+
   &__buttons-main {
   }
+
   &__buttons-minor {
   }
-  &__singleplayer, &__multiplayer {
+
+  &__singleplayer,
+  &__multiplayer {
     @extend .button;
+
     width: 300px;
     margin: 3px;
   }
-  &__about, &__scoreboard {
+
+  &__about,
+  &__scoreboard {
     @extend .button;
+
     width: 200px;
     margin: 3px;
   }
