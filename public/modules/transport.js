@@ -1,4 +1,5 @@
-import Mediator from '../modules/mediator';
+import Mediator from './mediator';
+import Router from './router';
 
 export default class Transport {
     constructor() {
@@ -7,26 +8,48 @@ export default class Transport {
         }
         Transport.__instance = this;
 
+        this.EVENTS = {
+            SERVICE: {
+                CONNECT: 'EVENTS.SERVICE.CONNECT',
+                PING: 'EVENTS.SERVICE.PING',
+            },
+        };
+
         const host = 'ws://hexandria.ru:8082/game';
         // const host = 'ws://localhost:8082/game';
 
         this.ws = new WebSocket(host);
-        this.ws.onopen = function (event) {
-            console.log(`WebSocket on address ${host} opened`);
+        this.ws.onopen = (event) => {
+            console.log(`webSocket open on address ${host}`);
 
             console.dir(this.ws);
 
+            this.send(this.EVENTS.SERVICE.CONNECT, (new Router()).getUser());
+
             this.ws.onmessage = this.handleMessage.bind(this);
+
             this.interval = setInterval(() => {
                 console.log('ws send update');
-                this.ws.send('update');
+                this.ws.send(this.EVENTS.SERVICE.PING, (new Router()).getUser());
             }, 10 * 1000);
 
             this.ws.onclose = () => {
-                console.log(`WebSocket on address ${host} closed`);
+                console.log(`webSocket close on address ${host}`);
                 clearInterval(this.interval);
             };
-        }.bind(this);
+        };
+
+        this.ws.onmessage = (event) => {
+            console.log('webSocket message:', event);
+        };
+
+        this.ws.onerror = (event) => {
+            console.log('webSocket error:', event);
+        };
+
+        this.ws.onclose = () => {
+            console.log('webSocket close:', event);
+        };
     }
 
     handleMessage(event) {
@@ -37,8 +60,15 @@ export default class Transport {
         (new Mediator()).emit(message.type, message.payload);
     }
 
-    send(type, payload) {
-        const data = JSON.stringify({ type, payload });
+    send(event, payload = null) {
+        let data;
+
+        if (payload) {
+            data = JSON.stringify({ event, payload });
+        } else {
+            data = JSON.stringify({ event, payload: '' });
+            throw new TypeError('Payload is empty');
+        }
         console.log('sending...', data);
 
         this.ws.send(data);

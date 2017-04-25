@@ -1,6 +1,5 @@
 export const EVENTS = {
     GAME: {
-        // EXIT: 'EVENTS.GAME.EXIT',
         START: 'EVENTS.GAME.START',
         PLAY: 'EVENTS.GAME.PLAY',
         RESULT: 'EVENTS.GAME.RESULT',
