@@ -1,9 +1,13 @@
 import Router from '../modules/router';
 import Mediator from '../modules/mediator';
+import { EVENTS } from './events';
+import HexandriaGame from './hexandriaGame';
 import HexandriaLogicSingleplayer from './hexandriaLogic/singleplayerLogic';
 import HexandriaLogicMultiplayer from './hexandriaLogic/multiplayerLogic';
-import HexandriaGame from './hexandriaGame';
-import { EVENTS } from './events';
+import HexandriaStartView from './hexandriaViews/hexandriaStartView';
+import HexandriaPlayView from './hexandriaViews/hexandriaPlayView';
+import HexandriaResultView from './hexandriaViews/hexandriaResultView';
+import HexandriaFinishView from './hexandriaViews/hexandriaFinishView';
 
 const MODES = {
     SINGLEPLAYER: HexandriaLogicSingleplayer,
@@ -14,40 +18,76 @@ export default class HexandriaApp {
     constructor() {
         console.log('HexandriaApp created');
 
+        // this._el = document.getElementById('game');
+
+        this.views = {
+            start: new HexandriaStartView(),
+            play: new HexandriaPlayView(),
+            result: new HexandriaResultView(),
+            finish: new HexandriaFinishView(),
+        };
+
+        this.mode = null;
+        this.user = null;
         this.game = null;
 
-        (new Mediator()).subscribe(this, EVENTS.GAME.INIT, 'gameInit');
-        (new Mediator()).subscribe(this, EVENTS.GAME.OVER, 'gameOver');
-        (new Mediator()).subscribe(this, EVENTS.GAME.EXIT, 'gameExit');
+        this._subscribe();
     }
 
-    gameInit(payload = {}) {
+    _subscribe() {
+        (new Mediator()).subscribe(this, EVENTS.GAME.START, 'gameStart');
+        (new Mediator()).subscribe(this, EVENTS.GAME.PLAY, 'gamePlay');
+        (new Mediator()).subscribe(this, EVENTS.GAME.RESULT, 'gameResult');
+        (new Mediator()).subscribe(this, EVENTS.GAME.FINISH, 'gameFinish');
+    }
+
+    gameStart(payload = {}) {
+        console.log('gameStart', payload);
+        this.views.start.show();
+
         const _mode = (payload.mode || '').toUpperCase();
-        const mode = MODES[_mode];
+        this.mode = MODES[_mode];
 
-        const element = payload.element;
+        this.user = (new Router()).getUser();
+    }
 
-        const user = (new Router()).getUser();
+    gamePlay(payload = {}) {
+        console.log('gamePlay', payload);
+        this.views.start.hide();
+        this.views.play.show();
 
-        if (mode) {
-            this.game = new HexandriaGame(mode, element, user);
+        // const _mode = (payload.mode || '').toUpperCase();
+        // const mode = MODES[_mode];
+        //
+        // const user = (new Router()).getUser();
+
+        if (this.mode) { // TODO && this.user
+            this.game = new HexandriaGame(this.mode, this.user);
         } else {
-            throw new TypeError(`gameStart error: mode=${_mode}`);
+            throw new TypeError(`gameStart error: mode=${this.mode}`);
         }
     }
 
-    gameOver(payload = null) {
-        console.log('gameOver');
-        if (payload) {
-            const winner = payload.player.name;
-            console.log('winner', winner);
-        }
-
-        (new Router()).go('/');
+    gameResult(payload = {}) {
+        console.log('gameResult', payload);
+        this.views.play.hide();
+        this.views.result.show();
     }
 
-    gameExit() {
-        console.log('gameExit');
+    // gameOver(payload = null) {
+    //     console.log('gameOver');
+    //     if (payload) {
+    //         const winner = payload.player.name;
+    //         console.log('winner', winner);
+    //     }
+    //
+    //     (new Router()).go('/');
+    // }
+
+    gameFinish(payload = {}) {
+        console.log('gameFinish', payload);
+        this.views.result.hide();
+
         if (this.game) {
             this.game.destroy();
             this.game = null;
@@ -55,9 +95,7 @@ export default class HexandriaApp {
             // (new Mediator())._print();
             (new Mediator()).clear();
             // (new Mediator())._print();
-            (new Mediator()).subscribe(this, EVENTS.GAME.INIT, 'gameInit');
-            (new Mediator()).subscribe(this, EVENTS.GAME.OVER, 'gameOver');
-            (new Mediator()).subscribe(this, EVENTS.GAME.EXIT, 'gameExit');
+            this._subscribe();
             (new Router()).go('/');
         }
     }

@@ -1,4 +1,4 @@
-import View from '../modules/view';
+import View from './view';
 import Router from '../modules/router';
 import Button from '../components/button/button';
 import Form from '../components/form/form';

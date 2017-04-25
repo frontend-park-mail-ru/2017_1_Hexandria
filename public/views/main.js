@@ -1,4 +1,4 @@
-import View from '../modules/view';
+import View from './view';
 import Router from '../modules/router';
 import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';

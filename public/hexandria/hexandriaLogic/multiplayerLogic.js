@@ -13,7 +13,6 @@ export default class HexandriaLogicMultiplayer extends HexandriaLogic {
         console.log('');
         console.log('');
         console.log('eventMove (HexandriaLogicMultiplayer)', data);
-        this.transport.send();
+        this.transport.send(data);
     }
 }
-

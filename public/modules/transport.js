@@ -7,7 +7,8 @@ export default class Transport {
         }
         Transport.__instance = this;
 
-        const host = 'ws://hexandria.ru:8082/ws';
+        const host = 'ws://hexandria.ru:8082/game';
+        // const host = 'ws://localhost:8082/game';
 
         this.ws = new WebSocket(host);
         this.ws.onopen = function (event) {
@@ -16,10 +17,14 @@ export default class Transport {
             console.dir(this.ws);
 
             this.ws.onmessage = this.handleMessage.bind(this);
-            const interval = this.interval = setInterval(() => this.ws.send('update'), 10 * 1000);
+            this.interval = setInterval(() => {
+                console.log('ws send update');
+                this.ws.send('update');
+            }, 10 * 1000);
 
-            this.ws.onclose = function () {
-                clearInterval(interval);
+            this.ws.onclose = () => {
+                console.log(`WebSocket on address ${host} closed`);
+                clearInterval(this.interval);
             };
         }.bind(this);
     }
@@ -29,7 +34,6 @@ export default class Transport {
         const message = JSON.parse(messageText);
         console.log('message...', message);
 
-        // this.mediator.emit(message.type, message.payload);
         (new Mediator()).emit(message.type, message.payload);
     }
 

@@ -63,7 +63,6 @@ export default class HexandriaLogic {
                     this.eventMove(data);
                 }
                 this._selected = null;
-                console.log('2');
                 (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
             } else {
                 const squad = this.findSquad(position);
@@ -74,12 +73,7 @@ export default class HexandriaLogic {
             }
         } else {
             this._selected = null;
-            console.log('1');
             (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
-        }
-
-        if (this.gameOver) {
-            (new Mediator()).emit(EVENTS.GAME.OVER, this.gameOver);
         }
     }
 
@@ -278,8 +272,11 @@ export default class HexandriaLogic {
         };
         (new Mediator()).emit(EVENTS.GRAPHICS.TOWN_CAPTURE, graphicsData);
 
-        console.log('game over', this.game.players[enemyIndex].name);
-        (new Mediator()).emit(EVENTS.GAME.OVER, this.gameOver);
+        const resultData = HexandriaUtils.packResult(this.game.players[playerIndex].name,
+            this.game.players[enemyIndex].name);
+        // console.log('game over', this.game.players[enemyIndex].name);
+        console.log('game over', resultData);
+        (new Mediator()).emit(EVENTS.GAME.RESULT, resultData);
     }
 
     onAttackTown(data) {

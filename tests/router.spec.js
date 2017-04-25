@@ -1,7 +1,7 @@
 'use strict';
 
 import Route from '../public/modules/route';
-import View from '../public/modules/view';
+import View from '../public/views/view';
 import Router from '../public/modules/router';
 
 describe('Router tests', function () {

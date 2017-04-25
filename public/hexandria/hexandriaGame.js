@@ -3,7 +3,7 @@ import HexandriaGraphics from './hexandriaGraphics';
 import Mediator from '../modules/mediator';
 
 export default class HexandriaGame {
-    constructor(Mode, element, user) {
+    constructor(Mode, user) {
         console.log('HexandriaGame created', user);
 
         if (!(Mode.prototype instanceof HexandriaLogic)) {
@@ -13,7 +13,7 @@ export default class HexandriaGame {
         this.init();
 
         this.logic = new Mode(JSON.parse(this.gameString));
-        this.graphics = new HexandriaGraphics(JSON.parse(this.gameString), element);
+        this.graphics = new HexandriaGraphics(JSON.parse(this.gameString));
     }
 
     init() {

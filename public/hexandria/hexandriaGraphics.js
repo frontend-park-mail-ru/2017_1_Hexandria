@@ -18,7 +18,7 @@ export default class HexandriaGraphics {
 
         this.game = game;
 
-        this.selector = `${element} .game-container`;
+        this.selector = '#game .game-container';
         console.log(this.selector);
 
         this._clock = null;

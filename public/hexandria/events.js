@@ -1,9 +1,10 @@
 export const EVENTS = {
     GAME: {
-        INIT: 'EVENTS.GAME.INIT',
+        // EXIT: 'EVENTS.GAME.EXIT',
         START: 'EVENTS.GAME.START',
-        OVER: 'EVENTS.GAME.OVER',
-        EXIT: 'EVENTS.GAME.EXIT',
+        PLAY: 'EVENTS.GAME.PLAY',
+        RESULT: 'EVENTS.GAME.RESULT',
+        FINISH: 'EVENTS.GAME.FINISH',
     },
     LOGIC: {
         SELECT: 'EVENTS.LOGIC.SELECT',

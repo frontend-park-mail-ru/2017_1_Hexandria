@@ -1,6 +1,6 @@
 'use strict';
 
-import View from '../public/modules/view';
+import View from '../public/views/view';
 
 describe('View tests', function () {
     beforeEach(function () {

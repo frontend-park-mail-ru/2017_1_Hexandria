@@ -112,4 +112,15 @@ export default class HexandriaUtils {
     static unpackToAttackTown(data) {
         // TODO
     }
+
+    static packResult(winner, loser) {
+        return {
+            winner,
+            loser,
+        };
+    }
+
+    static unpackResult(data) {
+        // TODO
+    }
 }
