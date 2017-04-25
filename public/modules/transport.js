@@ -30,7 +30,7 @@ export default class Transport {
 
             this.interval = setInterval(() => {
                 console.log('ws send update');
-                this.ws.send(this.EVENTS.SERVICE.PING, (new Router()).getUser());
+                this.send(this.EVENTS.SERVICE.PING, (new Router()).getUser());
             }, 10 * 1000);
 
             this.ws.onclose = () => {
