@@ -22,9 +22,9 @@ api.auth = {
 
 api.path = {
     user: '/api/user',
-    login: '/api/login',
-    logout: '/api/logout',
-    signup: '/api/signup',
+    login: '/api/user/login',
+    logout: '/api/user/logout',
+    signup: '/api/user/signup',
 };
 
 export default api;
