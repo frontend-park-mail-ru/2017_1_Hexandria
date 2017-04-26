@@ -10,8 +10,7 @@ npm install
 
 <b>Run Dev:</b>
 ````
-npm sassstartup
-npm startup
+npm run startup
 http://localhost:3000/
 ````
 <b>Production:</b>
