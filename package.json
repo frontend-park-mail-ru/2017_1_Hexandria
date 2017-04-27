@@ -4,10 +4,13 @@
   "description": "Hexandria: strategy game",
   "main": "server.js",
   "scripts": {
-    "startup": "npm run webpack & node server.js",
     "eslint": "eslint public",
     "karma": "karma start",
-    "webpack": "webpack --watch --progress --colors"
+    "webpack": "webpack --progress --colors",
+    "webpack-dev": "webpack --progress --colors --watch",
+    "server": "node server.js",
+
+    "dev": "npm run webpack-dev & npm run server"
   },
   "repository": {
     "type": "git",
