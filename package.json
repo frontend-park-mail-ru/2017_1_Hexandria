@@ -10,9 +10,8 @@
     "webpack-dev": "webpack --progress --colors --watch",
     "server": "node server.js",
 
-
     "default": "npm run webpack && npm run server",
-    "develop": "npm run webpack-dev && npm run server"
+    "develop": "npm run webpack-dev & npm run server"
   },
   "repository": {
     "type": "git",

@@ -72,7 +72,10 @@ export default class LoginView extends View {
                             return res.json();
                         })
                         .then((json) => {
-                            console.log(json.description);
+                            console.log(json);
+                        })
+                        .catch((err) => {
+                            console.log(err);
                         });
                 },
             },

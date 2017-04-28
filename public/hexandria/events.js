@@ -1,4 +1,8 @@
 export const EVENTS = {
+    SERVICE: {
+        CONNECT: 'EVENTS.SERVICE.CONNECT',
+        PING: 'EVENTS.SERVICE.PING',
+    },
     GAME: {
         START: 'EVENTS.GAME.START',
         PLAY: 'EVENTS.GAME.PLAY',
