@@ -119,14 +119,14 @@ describe('backendAPI', function() {
             console.log(this.testUser);
         });
 
-        xit(`POST ${api.path.signup} ${this.testUser} must fail. No email.`, function(done) {
+        it(`POST ${api.path.signup} ${this.testUser} must fail. No email.`, function(done) {
             fetcher.post(api.path.signup, this.testUser)
                 .then((res) => {
                     expect(res.status).toBe(api.code.BAD_REQUEST);
                     return res.json();
                 })
                 .then((json) => {
-                    console.log(json);
+                    console.log('signup', json);
                     // expect(json.description).toBe(api.auth.logout);
                     done();
                 })
@@ -136,7 +136,7 @@ describe('backendAPI', function() {
                 });
         }, timeout);
 
-        xit(`POST ${api.path.signup} ${this.testUser} must be ok.`, function(done) {
+        it(`POST ${api.path.signup} ${this.testUser} must be ok.`, function(done) {
             this.testUser.email = `${this.testUser.login}@mail.ru`;
             fetcher.post(api.path.signup, this.testUser)
                 .then((res) => {
@@ -155,13 +155,6 @@ describe('backendAPI', function() {
                 });
         }, timeout);
 
-
-
-
-
-
-
-
         it(`POST ${api.path.login} must be ok.`, function(done) {
             fetcher.post(api.path.login, this.testUser)
                 .then((res) => {
@@ -169,7 +162,7 @@ describe('backendAPI', function() {
                     return res.json();
                 })
                 .then((json) => {
-                    expect(json.description).toBe(api.auth.login + this.testUser.login);
+                    expect(json.description).toBe(api.auth.login(this.testUser.login));
                     done();
                 })
                 .catch((err) => {
@@ -178,17 +171,29 @@ describe('backendAPI', function() {
                 });
         }, timeout);
 
-        xit(`POST ${api.path.delete} new user: must be ok.`, function(done) {
+        it(`POST ${api.path.delete} new user: must be ok.`, function(done) {
             this.testUser.email = `${this.testUser.login}@mail.ru`;
             fetcher.post(api.path.delete)
                 .then((res) => {
                     console.log(res.status);
                     expect(res.status).toBe(api.code.OK);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(err);
+                    expect(err).toBeUndefined();
+                    done();
+                });
+        }, timeout);
+
+        it(`POST ${api.path.logout} must be ok.`, function(done) {
+            fetcher.post(api.path.logout)
+                .then((res) => {
+                    expect(res.status).toBe(api.code.OK);
                     return res.json();
                 })
                 .then((json) => {
-                    console.log(json);
-                    // expect(json.description).toBe(api.auth.signup);
+                    expect(json.description).toBe(api.auth.logout);
                     done();
                 })
                 .catch((err) => {

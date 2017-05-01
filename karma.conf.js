@@ -2,6 +2,7 @@
 // Generated on Sat Mar 25 2017 23:03:26 GMT+0300 (MSK)
 
 const webpackConfig = require("./webpack.config.js");
+webpackConfig.watch = true;
 
 module.exports = function(config) {
   config.set({

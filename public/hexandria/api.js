@@ -13,7 +13,9 @@ api.code = {
 };
 
 api.auth = {
-    login: 'Successfully authorized user ',
+    login(login) {
+        return `Successfully authorized user ${login}`;
+    },
     logout: 'User successfully logged out',
     error: 'UserEntity not authorized in this session!',
     already: 'User already authorized in this session',
