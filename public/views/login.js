@@ -29,10 +29,6 @@ export default class LoginView extends View {
             events: {
                 click: (event) => { (new Router()).go('/'); },
             },
-            colors: {
-                backColor: '#211A1D',
-                mainColor: '#F8F0FB',
-            },
         });
         pageLogin.appendChild(backButton.el);
 

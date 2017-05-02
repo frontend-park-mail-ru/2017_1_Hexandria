@@ -1,5 +1,3 @@
-import './title.scss';
-
 export default class Title {
     /**
      * Title constructor

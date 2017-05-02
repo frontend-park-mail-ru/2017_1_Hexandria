@@ -14,6 +14,7 @@ export default class Hex {
         this.phrase = data.hex_phrase;
         this.controls = data.controls;
         this.el = el;
+        this.el.setAttribute('class', 'hex');
         this.render();
     }
 

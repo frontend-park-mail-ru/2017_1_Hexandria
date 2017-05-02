@@ -1,4 +1,3 @@
-import './register_panel.scss';
 import Button from '../button/button';
 import Router from '../../modules/router';
 
@@ -48,10 +47,6 @@ export default class RegisterPanel {
                     (new Router()).go('/login');
                 },
             },
-            colors: {
-                backColor: '#211A1D',
-                mainColor: '#F8F0FB',
-            },
         });
         this.signup = new Button({
             text: 'Signup',
@@ -62,10 +57,6 @@ export default class RegisterPanel {
                 click: (event) => {
                     (new Router()).go('/signup');
                 },
-            },
-            colors: {
-                backColor: '#211A1D',
-                mainColor: '#F8F0FB',
             },
         });
 

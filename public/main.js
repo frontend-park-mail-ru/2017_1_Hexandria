@@ -1,5 +1,9 @@
 import './main.scss';
+
 import Router from './modules/router';
+import Mediator from './modules/mediator';
+import HexandriaApp from './hexandria/hexandriaApp';
+
 import MultiplayerView from './views/multiplayer';
 import SingleplayerView from './views/singleplayer';
 import AboutView from './views/about';
@@ -8,8 +12,6 @@ import LoginView from './views/login';
 import SignupView from './views/signup';
 import MainView from './views/main';
 
-import Mediator from './modules/mediator';
-import HexandriaApp from './hexandria/hexandriaApp';
 
 const app = new HexandriaApp();
 (new Mediator()).done();

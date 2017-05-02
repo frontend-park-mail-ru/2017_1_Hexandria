@@ -1,4 +1,11 @@
 .hex {
+  //position: absolute;
+  width: 65%;
+  height: 100%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  // -----
   border-left: #9197ae solid 10px;
   border-right: #9197ae solid 10px;
   min-width: 400px;
@@ -54,14 +61,17 @@
   }
 
   &__buttons-main {
+    border-color: #f02d3a;
   }
 
   &__buttons-minor {
+    border-color: #f8f0fb;
   }
 
   &__singleplayer,
   &__multiplayer {
     @extend .button;
+    @extend .hex__buttons-main;
 
     width: 300px;
     margin: 3px;
@@ -70,6 +80,7 @@
   &__about,
   &__scoreboard {
     @extend .button;
+    @extend .hex__buttons-minor;
 
     width: 200px;
     margin: 3px;

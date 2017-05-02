@@ -1,4 +1,3 @@
-import './form.scss';
 import Button from '../button/button';
 import Validator from './validator';
 import Input from '../input/input';

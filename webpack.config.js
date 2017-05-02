@@ -11,7 +11,6 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const loaders = require("./webpack.config.loaders")();
 
 
-
 loaders.push({
     test: /\.s?css$/,
     loader: ExtractTextPlugin.extract({
