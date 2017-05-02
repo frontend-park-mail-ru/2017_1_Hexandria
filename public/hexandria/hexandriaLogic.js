@@ -92,19 +92,10 @@ export default class HexandriaLogic {
         console.log('');
         console.log('eventMove', data);
 
-        const pIndex = data.playerIndex;
-        const sIndex = data.squadIndex;
-        const position = data.moveTo;
-
         // squad fight/combine handler
-        const to = this.findSquad(position);
+        const to = this.findSquad(data.to);
         if (to) {
-            const from = {
-                playerIndex: data.playerIndex,
-                player: this.game.players[pIndex],
-                squadIndex: data.squadIndex,
-                squad: this.game.players[pIndex].squads[sIndex],
-            };
+            const from = this.findSquad(data.from);
 
             let sign;
             if (from.player.name === to.player.name) {
@@ -149,14 +140,9 @@ export default class HexandriaLogic {
         }
 
         // town handler
-        const town = this.findTown(position);
+        const town = this.findTown(data.to);
         if (town) {
-            const selected = {
-                playerIndex: data.playerIndex,
-                player: this.game.players[pIndex],
-                squadIndex: data.squadIndex,
-                squad: this.game.players[pIndex].squads[sIndex],
-            };
+            const selected = this.findSquad(data.from);
 
             console.log('townHandler', selected, town);
 
@@ -216,25 +202,28 @@ export default class HexandriaLogic {
     }
 
     onMove(data) {
-        const playerIndex = data.playerIndex;
-        const squadIndex = data.squadIndex;
-        const position = data.moveTo;
-
+        console.log('');
+        console.log('');
+        console.log('onMove', data);
         const from = data.from;
         const to = data.to;
+
+
         console.log(
             'onMove field:',
             this.field,
             this.field[from.x][from.y],
         );
 
-        this.game.players[playerIndex].squads[squadIndex].position.x = position.x;
-        this.game.players[playerIndex].squads[squadIndex].position.y = position.y;
+        const fromSquadObject = this.findSquad(data.from);
+        console.log(fromSquadObject, to);
+        fromSquadObject.squad.position.x = to.x;
+        fromSquadObject.squad.position.y = to.y;
 
         const graphicsData = {
-            playerName: this.game.players[playerIndex].name,
-            squadIndex,
-            position,
+            playerName: fromSquadObject.player.name,
+            squadIndex: fromSquadObject.squadIndex,
+            position: data.to,
         };
         (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_MOVE, graphicsData);
     }
