@@ -6,6 +6,7 @@
   "scripts": {
     "eslint": "eslint public",
     "karma": "karma start",
+    "_webpack": "./node_modules/.bin/webpack --progress --colors",
     "webpack": "webpack --progress --colors",
     "webpack-dev": "webpack --progress --colors --watch",
     "server": "node server.js",
