@@ -1,86 +1,24 @@
-@mixin createHex($height, $color, $z-index) {
-  background-color: $color;
-  height: $height / 2;
-  width: $height * 0.866;
-  z-index: $z-index;
-
-  &::before {
-    content: " ";
-    width: 0;
-    height: 0;
-    border-bottom: ($height / 4) solid $color;
-    border-left: ($height * 0.433) solid transparent;
-    border-right: ($height * 0.433) + 1px solid transparent;
-    position: absolute;
-    top: -($height / 4);
-  }
-
-  &::after {
-    content: "";
-    width: 0;
-    border-top: ($height / 4) solid $color;
-    border-left: ($height * 0.433) solid transparent;
-    border-right: ($height * 0.433) + 1px solid transparent;
-    position: absolute;
-    bottom: -($height / 4);
-  }
-}
-
-@mixin createHexInside($height, $color, $z-index) {
-  background-color: $color;
-  height: $height / 2;
-  width: $height * 0.866 - 1px;
-  z-index: $z-index;
-
-  &::before {
-    content: " ";
-    width: 0;
-    height: 0;
-    border-bottom: ($height / 4) solid $color;
-    border-left: ($height * 0.433) solid transparent;
-    border-right: ($height * 0.433) solid transparent;
-    position: absolute;
-    top: -($height / 4);
-  }
-
-  &::after {
-    content: "";
-    width: 0;
-    border-top: ($height / 4) solid $color;
-    border-left: ($height * 0.433) solid transparent;
-    border-right: ($height * 0.433) solid transparent;
-    position: absolute;
-    bottom: -($height / 4);
-  }
-}
-
 .hex {
-  position: relative;
-  //@include createHex(900px, #9197ae, 0);
-  //&__minor_hex {
-  //  margin: 2px 0 0 4px;
-  //  position: relative;
-  //  @include createHexInside(892px, #211a1d, 1);
-  //}
   border-left: #9197ae solid 10px;
   border-right: #9197ae solid 10px;
+  min-width: 400px;
 
   &__panel {
-    position: relative;
+    //position: relative;
     height: 5%;
     padding-top: 5px;
     padding-bottom: 5px;
   }
 
   &__register_panel {
-    position: absolute;
+    //position: absolute;
     right: 3%;
     height: 100%;
     width: 30%;
   }
 
   &__user_panel {
-    position: absolute;
+    //position: absolute;
     right: 3%;
     height: 100%;
     width: 100%;
@@ -88,14 +26,14 @@
   }
 
   &__title {
-    position: relative;
+    //position: relative;
     text-transform: uppercase;
     padding-top: 13%;
     padding-bottom: 3%;
     text-align: center;
     color: #f8f0fb;
-    font-weight: 900;
-    font-size: 500%;
+    font-weight: 700;
+    font-size: 400%;
   }
 
   &__motto {
@@ -103,7 +41,7 @@
     text-align: center;
     color: #f8f0fb;
     font-weight: 400;
-    font-size: 225%;
+    font-size: 200%;
   }
 
   &__buttons {

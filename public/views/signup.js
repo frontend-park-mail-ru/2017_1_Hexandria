@@ -1,9 +1,10 @@
-import View from './view';
 import Router from '../modules/router';
-import Button from '../components/button/button';
-import Form from '../components/form/form';
 import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';
+
+import View from './view';
+import Button from '../components/button/button';
+import Form from '../components/form/form';
 
 export default class SignupView extends View {
     constructor(options = {}) {

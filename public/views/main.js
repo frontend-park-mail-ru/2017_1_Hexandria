@@ -1,7 +1,8 @@
-import View from './view';
 import Router from '../modules/router';
 import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';
+
+import View from './view';
 import Hex from '../components/hex/hex';
 import UserPanel from '../components/user_panel/user_panel';
 import RegisterPanel from '../components/register_panel/register_panel';

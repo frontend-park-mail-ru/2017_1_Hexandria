@@ -11,10 +11,9 @@
     color: #f8f0fb;
     background-color: #211a1d;
     border: none;
-    //text-decoration: underline;
     display: inline-block;
     vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
+    //-webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     position: relative;
   }

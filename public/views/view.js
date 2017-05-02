@@ -9,7 +9,6 @@ export default class View {
     constructor(options = {}) {
         if (options.createElement) {
             this.tagName = options.tagName || 'div';
-            // throw new TypeError('options.createElement is deprecated!'); // TODO delete later
         } else {
             this.tagName = 'div';
         }

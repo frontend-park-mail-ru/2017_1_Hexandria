@@ -1,5 +1,6 @@
-import View from './view';
 import Router from '../modules/router';
+
+import View from './view';
 import Button from '../components/button/button';
 import Title from '../components/title/title';
 

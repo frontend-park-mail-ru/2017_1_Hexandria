@@ -1,8 +1,10 @@
-import View from './view';
-import Button from '../components/button/button';
 import Router from '../modules/router';
 import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';
+
+import View from './view';
+import Button from '../components/button/button';
+import Title from '../components/title/title';
 import Form from '../components/form/form';
 
 export default class LoginView extends View {
@@ -12,6 +14,12 @@ export default class LoginView extends View {
         this.fetcher = new Fetcher();
 
         const pageLogin = document.getElementById('login');
+
+        const title = new Title({
+            title: 'Login',
+            el: document.createElement('div'),
+        });
+        pageLogin.appendChild(title.el);
 
         const backButton = new Button({
             text: '⬅',
