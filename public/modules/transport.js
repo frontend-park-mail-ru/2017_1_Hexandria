@@ -14,42 +14,45 @@ export default class Transport {
 
         this.ws = new WebSocket(host);
         this.ws.onopen = (event) => {
-            console.log(`webSocket open on address ${host}`);
+            console.log(`WebSocket open on address ${host}`);
 
             console.dir(this.ws);
 
-            this.send(EVENTS.SERVICE.CONNECT, (new Router()).getUser());
+            this.send(EVENTS.SERVICE.CONNECT, this.getUser());
 
             this.ws.onmessage = this.handleMessage.bind(this);
 
             this.interval = setInterval(() => {
-                console.log('ws send update');
-                this.send(EVENTS.SERVICE.PING, (new Router()).getUser());
+                this.send(EVENTS.SERVICE.PING, this.getUser());
             }, 10 * 1000);
 
             this.ws.onclose = () => {
-                console.log(`webSocket close on address ${host}`);
+                console.log(`WebSocket close on address ${host}`);
                 clearInterval(this.interval);
             };
         };
 
         this.ws.onmessage = (event) => {
-            console.log('webSocket message:', event);
+            console.log('WebSocket message:', event);
         };
 
         this.ws.onerror = (event) => {
-            console.log('webSocket error:', event);
+            console.log('WebSocket error:', event);
         };
 
         this.ws.onclose = () => {
-            console.log('webSocket close:', event);
+            console.log('WebSocket close:', event);
         };
+    }
+
+    getUser() {
+        return (new Router()).getUser() || 'guest';
     }
 
     handleMessage(event) {
         const messageText = event.data;
         const message = JSON.parse(messageText);
-        console.log('message...', message);
+        console.log('HandleMessage:', message);
 
         (new Mediator()).emit(message.type, message.payload);
     }
@@ -63,7 +66,7 @@ export default class Transport {
             data = JSON.stringify({ event, payload: '' });
             throw new TypeError('Payload is empty');
         }
-        console.log('sending...', data);
+        console.log('Send:', data);
 
         this.ws.send(data);
     }

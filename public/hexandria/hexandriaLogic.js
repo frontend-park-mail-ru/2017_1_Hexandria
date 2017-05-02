@@ -1,5 +1,6 @@
 import Mediator from '../modules/mediator';
 import { EVENTS } from './events';
+import HexLogic from './hexandriaLogic/hexLogic';
 import HexandriaUtils from './hexandriaUtils';
 
 export default class HexandriaLogic {
@@ -13,7 +14,16 @@ export default class HexandriaLogic {
 
         this.game = game;
         this._selected = null;
-        this.gameOver = null;
+
+        const sizeX = this.game.field.size.x;
+        const sizeY = this.game.field.size.y;
+        this.field = [...Array(sizeX).keys()].map(i => Array(sizeY));
+        for (let i = 0; i < sizeX; i++) {
+            for (let j = 0; j < sizeY; j++) {
+                // this.field[i][j] = i + j;
+                this.field[i][j] = new HexLogic();
+            }
+        }
 
         (new Mediator()).subscribe(this, EVENTS.KEYBOARD.ENTER_PRESSED, 'enterPressed');
         (new Mediator()).subscribe(this, EVENTS.TURN.START_TURN, 'gameLoop');
@@ -209,6 +219,14 @@ export default class HexandriaLogic {
         const playerIndex = data.playerIndex;
         const squadIndex = data.squadIndex;
         const position = data.moveTo;
+
+        const oldCoordinates = data.oldCoordinates;
+        const newCoordinates = data.newCoordinates;
+        console.log(
+            'onMove field:',
+            this.field,
+            this.field[oldCoordinates.x][oldCoordinates.y],
+        );
 
         this.game.players[playerIndex].squads[squadIndex].position.x = position.x;
         this.game.players[playerIndex].squads[squadIndex].position.y = position.y;

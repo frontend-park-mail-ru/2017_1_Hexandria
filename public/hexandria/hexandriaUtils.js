@@ -55,6 +55,11 @@ export default class HexandriaUtils {
         data.playerIndex = selected.playerIndex;
         data.squadIndex = selected.squadIndex;
         data.moveTo = position;
+
+        console.log('packToMove:', selected.squad.position, position);
+
+        data.from = JSON.parse(JSON.stringify(selected.squad.position));
+        data.to = JSON.parse(JSON.stringify(position));
         return data;
     }
 
