@@ -3,29 +3,29 @@ module.exports = function() {
         {
             test: /\.js$/,
             exclude: /(node_modules|bower_components)/,
-            loader: "babel-loader",
+            loader: 'babel-loader',
             query: {
                 compact: true,
                 presets: [
-                    ["latest", {modules: false}]
+                    ['latest', { modules: false }]
                 ]
             }
         },
         {
             test: /\.(jpe?g|png|gif|svg|)$/i,
-            loader: "file?name=img/[hash].[ext]"
+            loader: 'file?name=img/[hash].[ext]',
         },
         {
             test: /\.(eot|svg|ttf|woff|woff2)$/,
-            loader: "file?name=fonts/[hash].[ext]"
+            loader: 'file?name=fonts/[hash].[ext]',
         },
         {
             test: /\.html/,
-            loader: "html-loader"
+            loader: 'html-loader',
         },
         {
             test: /\.pug/,
-            loader: "pug-loader"
-        }
+            loader: 'pug-loader',
+        },
     ];
 };

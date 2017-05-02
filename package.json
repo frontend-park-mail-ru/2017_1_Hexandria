@@ -9,7 +9,6 @@
     "webpack": "webpack --progress --colors",
     "webpack-dev": "webpack --progress --colors --watch",
     "server": "node server.js",
-
     "default": "npm run webpack && npm run server",
     "develop": "npm run webpack-dev & npm run server"
   },
@@ -29,6 +28,7 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2017_1_Hexandria#readme",
   "dependencies": {
+    "autoprefixer": "^6.7.7",
     "express": "^4.14.1",
     "node-sass": "^3.13.0",
     "path": "^0.12.7",

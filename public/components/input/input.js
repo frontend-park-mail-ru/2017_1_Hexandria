@@ -50,7 +50,7 @@ export default class Input {
      * @param {HTMLElement} input
      * @param color
      */
-    colorInputBorder(input, color) { //TODO wtf? delete!
+    colorInputBorder(input, color) { // TODO wtf? delete!
         this.el.style.border = `1px solid ${color}`;
     }
 }
