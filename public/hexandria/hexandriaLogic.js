@@ -220,12 +220,12 @@ export default class HexandriaLogic {
         const squadIndex = data.squadIndex;
         const position = data.moveTo;
 
-        const oldCoordinates = data.oldCoordinates;
-        const newCoordinates = data.newCoordinates;
+        const from = data.from;
+        const to = data.to;
         console.log(
             'onMove field:',
             this.field,
-            this.field[oldCoordinates.x][oldCoordinates.y],
+            this.field[from.x][from.y],
         );
 
         this.game.players[playerIndex].squads[squadIndex].position.x = position.x;
