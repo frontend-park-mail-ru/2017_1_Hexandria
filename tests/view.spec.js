@@ -4,7 +4,7 @@ import View from '../public/views/view';
 
 describe('View tests', function () {
     beforeEach(function () {
-        this.view = new View({ createElement: true });
+        this.view = new View();
     });
 
     it('Если при создании view задана опция createElement, то создастся элемент div', function () {

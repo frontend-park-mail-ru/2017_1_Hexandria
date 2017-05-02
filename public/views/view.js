@@ -7,12 +7,12 @@ export default class View {
      * @param {Object} [options={}]
      */
     constructor(options = {}) {
-        if (options.createElement) {
-            this.tagName = options.tagName || 'div';
-            throw new TypeError('options.createElement is deprecated!'); // TODO delete later
-        } else {
-            this.tagName = 'div';
-        }
+        // if (options.createElement) {
+        //     this.tagName = options.tagName || 'div';
+        // } else {
+        //     this.tagName = 'div';
+        // }
+        this.tagName = options.tagName || 'div';
         this._el = document.createElement(this.tagName);
     }
 

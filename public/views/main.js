@@ -1,10 +1,11 @@
-import View from './view';
 import Router from '../modules/router';
 import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';
+
+import View from './view';
 import Hex from '../components/hex/hex';
-import UserPanel from '../components/user_panel/user_panel';
-import RegisterPanel from '../components/register_panel/register_panel';
+// import UserPanel from '../components/user_panel/user_panel';
+// import RegisterPanel from '../components/register_panel/register_panel';
 
 export default class MainView extends View {
 
@@ -27,10 +28,6 @@ export default class MainView extends View {
                         events: {
                             click: (event) => { (new Router()).go('/singleplayer'); },
                         },
-                        colors: {
-                            backColor: '#211A1D',
-                            mainColor: '#F02D3A',
-                        },
                     },
                     multiplayer: {
                         text: 'Multiplayer',
@@ -39,10 +36,6 @@ export default class MainView extends View {
                         },
                         events: {
                             click: (event) => { (new Router()).go('/multiplayer'); },
-                        },
-                        colors: {
-                            backColor: '#211A1D',
-                            mainColor: '#F02D3A',
                         },
                     },
                     about: {
@@ -53,10 +46,6 @@ export default class MainView extends View {
                         events: {
                             click: (event) => { (new Router()).go('/about'); },
                         },
-                        colors: {
-                            backColor: '#211A1D',
-                            mainColor: '#F8F0FB',
-                        },
                     },
                     scoreboard: {
                         text: 'Scoreboard',
@@ -65,10 +54,6 @@ export default class MainView extends View {
                         },
                         events: {
                             click: (event) => { (new Router()).go('/scoreboard'); },
-                        },
-                        colors: {
-                            backColor: '#211A1D',
-                            mainColor: '#F8F0FB',
                         },
                     },
                 },

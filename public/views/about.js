@@ -1,7 +1,8 @@
+import Router from '../modules/router';
+
 import View from './view';
 import Button from '../components/button/button';
 import Title from '../components/title/title';
-import Router from '../modules/router';
 
 export default class AboutView extends View {
     constructor(options = {}) {
@@ -22,10 +23,6 @@ export default class AboutView extends View {
             },
             events: {
                 click: (event) => { (new Router()).go('/'); },
-            },
-            colors: {
-                backColor: '#211A1D',
-                mainColor: '#F8F0FB',
             },
         });
         pageAbout.appendChild(backButton.el);

@@ -2,7 +2,7 @@ import Button from '../button/button';
 import Fetcher from '../../modules/fetcher';
 import Router from '../../modules/router';
 import { api } from '../../hexandria/api';
-import './user_panel.scss';
+
 import userPanelTemplate from './userPanelTemplate.pug';
 
 export default class UserPanel {
@@ -61,10 +61,6 @@ export default class UserPanel {
                             (new Router()).update('/');
                         });
                 },
-            },
-            colors: {
-                backColor: '#211A1D',
-                mainColor: '#F8F0FB',
             },
         });
         this.logout.el.setAttribute('class', 'user_panel__logout');

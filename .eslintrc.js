@@ -25,6 +25,7 @@ module.exports = {
         "no-useless-escape": 0,
         "class-methods-use-this": 0,
         "no-restricted-syntax": 0,
+        "prefer-arrow-callback": 0,
 
         "indent": ["error", 4, {"SwitchCase": 1}],
         "no-unused-vars": 0,

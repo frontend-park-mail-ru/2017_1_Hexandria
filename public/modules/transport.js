@@ -1,5 +1,6 @@
 import Mediator from './mediator';
 import Router from './router';
+import { EVENTS } from '../hexandria/events';
 
 export default class Transport {
     constructor() {
@@ -7,13 +8,6 @@ export default class Transport {
             return Transport.__instance;
         }
         Transport.__instance = this;
-
-        this.EVENTS = {
-            SERVICE: {
-                CONNECT: 'EVENTS.SERVICE.CONNECT',
-                PING: 'EVENTS.SERVICE.PING',
-            },
-        };
 
         const host = 'ws://hexandria.ru:8082/game';
         // const host = 'ws://localhost:8082/game';
@@ -24,13 +18,13 @@ export default class Transport {
 
             console.dir(this.ws);
 
-            this.send(this.EVENTS.SERVICE.CONNECT, (new Router()).getUser());
+            this.send(EVENTS.SERVICE.CONNECT, (new Router()).getUser());
 
             this.ws.onmessage = this.handleMessage.bind(this);
 
             this.interval = setInterval(() => {
                 console.log('ws send update');
-                this.send(this.EVENTS.SERVICE.PING, (new Router()).getUser());
+                this.send(EVENTS.SERVICE.PING, (new Router()).getUser());
             }, 10 * 1000);
 
             this.ws.onclose = () => {

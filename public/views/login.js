@@ -1,8 +1,10 @@
-import View from './view';
-import Button from '../components/button/button';
 import Router from '../modules/router';
 import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';
+
+import View from './view';
+import Button from '../components/button/button';
+import Title from '../components/title/title';
 import Form from '../components/form/form';
 
 export default class LoginView extends View {
@@ -13,6 +15,12 @@ export default class LoginView extends View {
 
         const pageLogin = document.getElementById('login');
 
+        const title = new Title({
+            title: 'Login',
+            el: document.createElement('div'),
+        });
+        pageLogin.appendChild(title.el);
+
         const backButton = new Button({
             text: '⬅',
             attrs: {
@@ -20,10 +28,6 @@ export default class LoginView extends View {
             },
             events: {
                 click: (event) => { (new Router()).go('/'); },
-            },
-            colors: {
-                backColor: '#211A1D',
-                mainColor: '#F8F0FB',
             },
         });
         pageLogin.appendChild(backButton.el);
@@ -72,7 +76,10 @@ export default class LoginView extends View {
                             return res.json();
                         })
                         .then((json) => {
-                            console.log(json.description);
+                            console.log(json);
+                        })
+                        .catch((err) => {
+                            console.log(err);
                         });
                 },
             },

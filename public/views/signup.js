@@ -1,9 +1,10 @@
-import View from './view';
 import Router from '../modules/router';
-import Button from '../components/button/button';
-import Form from '../components/form/form';
 import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';
+
+import View from './view';
+import Button from '../components/button/button';
+import Form from '../components/form/form';
 
 export default class SignupView extends View {
     constructor(options = {}) {
@@ -20,10 +21,6 @@ export default class SignupView extends View {
             },
             events: {
                 click: (event) => { (new Router()).go('/'); },
-            },
-            colors: {
-                backColor: '#211A1D',
-                mainColor: '#F8F0FB',
             },
         };
         pageSignup.appendChild(new Button(backButtonData).el);
@@ -82,7 +79,10 @@ export default class SignupView extends View {
                             return res.json();
                         })
                         .then((json) => {
-                            console.log(json.description);
+                            console.log(json);
+                        })
+                        .catch((err) => {
+                            console.log(err);
                         });
                 },
             },

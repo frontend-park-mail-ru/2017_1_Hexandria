@@ -1,5 +1,3 @@
-import './form.scss';
-
 export default class Validator {
     // Constants
     constructor() {

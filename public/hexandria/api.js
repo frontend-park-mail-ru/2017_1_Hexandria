@@ -13,7 +13,9 @@ api.code = {
 };
 
 api.auth = {
-    login: 'Successfully authorized user test-user',
+    login(login) {
+        return `Successfully authorized user ${login}`;
+    },
     logout: 'User successfully logged out',
     error: 'UserEntity not authorized in this session!',
     already: 'User already authorized in this session',
@@ -25,6 +27,7 @@ api.path = {
     login: '/api/user/login',
     logout: '/api/user/logout',
     signup: '/api/user/signup',
+    delete: '/api/user/delete',
 };
 
 export default api;
