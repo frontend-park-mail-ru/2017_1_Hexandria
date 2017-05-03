@@ -10,7 +10,7 @@ export default class RegisterPanel extends Component {
     constructor() {
         super({
             attrs: {
-                class: 'register_panel',
+                class: 'register-panel',
             },
         });
 
@@ -25,7 +25,7 @@ export default class RegisterPanel extends Component {
         this.login = new Button({
             text: 'Login',
             attrs: {
-                class: 'register_panel__login',
+                class: 'register-panel__login',
             },
             events: {
                 click: (event) => {
@@ -36,7 +36,7 @@ export default class RegisterPanel extends Component {
         this.signup = new Button({
             text: 'Signup',
             attrs: {
-                class: 'register_panel__signup',
+                class: 'register-panel__signup',
             },
             events: {
                 click: (event) => {

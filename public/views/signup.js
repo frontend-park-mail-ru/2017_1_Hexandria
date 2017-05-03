@@ -4,6 +4,7 @@ import { api } from '../hexandria/api';
 
 import View from './view';
 import Button from '../components/button/button';
+import Title from '../components/title/title';
 import Form from '../components/form/form';
 
 export default class SignupView extends View {
@@ -13,6 +14,11 @@ export default class SignupView extends View {
         this.fetcher = new Fetcher();
 
         const pageSignup = document.getElementById('signup');
+
+        const title = new Title({
+            text: 'Signup',
+        });
+        pageSignup.appendChild(title.el);
 
         const backButton = new Button({
             text: '⬅',

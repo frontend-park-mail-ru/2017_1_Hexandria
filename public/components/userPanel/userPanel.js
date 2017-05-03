@@ -13,7 +13,7 @@ export default class UserPanel extends Component {
     constructor() {
         super({
             attrs: {
-                class: 'user_panel',
+                class: 'user-panel',
             },
         });
 
@@ -31,7 +31,7 @@ export default class UserPanel extends Component {
         this.logout = new Button({
             text: 'Logout',
             attrs: {
-                class: 'user_panel__logout',
+                class: 'user-panel__logout',
             },
             events: {
                 click: (event) => {

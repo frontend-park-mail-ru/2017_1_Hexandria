@@ -4,8 +4,6 @@ import { api } from '../hexandria/api';
 
 import View from './view';
 import Hex from '../components/hex/hex';
-// import UserPanel from '../components/user_panel/user_panel';
-// import RegisterPanel from '../components/register_panel/register_panel';
 
 export default class MainView extends View {
 
