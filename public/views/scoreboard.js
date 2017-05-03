@@ -11,8 +11,7 @@ export default class ScoreboardView extends View {
         const pageScoreboard = document.getElementById('scoreboard');
 
         const title = new Title({
-            title: 'Scoreboard',
-            el: document.createElement('div'),
+            text: 'Scoreboard',
         });
         pageScoreboard.appendChild(title.el);
 

@@ -11,8 +11,7 @@ export default class AboutView extends View {
         const pageAbout = document.getElementById('about');
 
         const title = new Title({
-            title: 'About',
-            el: document.createElement('div'),
+            text: 'About',
         });
         pageAbout.appendChild(title.el);
 

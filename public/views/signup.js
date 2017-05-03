@@ -14,7 +14,7 @@ export default class SignupView extends View {
 
         const pageSignup = document.getElementById('signup');
 
-        const backButtonData = {
+        const backButton = new Button({
             text: '⬅',
             attrs: {
                 class: 'back-button',
@@ -22,8 +22,8 @@ export default class SignupView extends View {
             events: {
                 click: (event) => { (new Router()).go('/'); },
             },
-        };
-        pageSignup.appendChild(new Button(backButtonData).el);
+        });
+        pageSignup.appendChild(backButton.el);
 
         const signupForm = new Form({
             el: document.createElement('form'),

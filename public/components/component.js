@@ -6,7 +6,6 @@ export default class Component {
     constructor(options) {
         this.text = options.text || '';
         this.tagName = options.tagName || 'div';
-        // this.el = document.createElement('button');
         this.el = document.createElement(this.tagName);
         this.attrs = options.attrs || {};
         this.events = options.events || {};
@@ -17,9 +16,17 @@ export default class Component {
      * Render component
      */
     render() {
-        this.el.innerHTML = this.text;
-        this.setAttrs();
-        this.setEvents();
+        this.innerHTML(this.text);
+        this.setAttrs(this.attrs);
+        this.setEvents(this.events);
+    }
+
+    /**
+     * HTML update
+     * @param {String} html*
+     */
+    innerHTML(html = '') {
+        this.el.innerHTML = html;
     }
 
     /**
@@ -31,17 +38,19 @@ export default class Component {
 
     /**
      * Set component attributes
+     * @param {Object} [attrs={}]
      */
-    setAttrs() {
-        Object.keys(this.attrs).forEach((name) => {
-            this.el.setAttribute(name, this.attrs[name]);
+    setAttrs(attrs = {}) {
+        Object.keys(attrs).forEach((name) => {
+            this.el.setAttribute(name, attrs[name]);
         });
     }
 
     /**
      * Set component events
+     * @param {Object} [events={}]
      */
-    setEvents(events) {
+    setEvents(events = {}) {
         Object.keys(events).forEach((name) => {
             this.el.addEventListener(name, events[name]);
         });

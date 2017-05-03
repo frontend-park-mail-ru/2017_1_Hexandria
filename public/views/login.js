@@ -16,8 +16,7 @@ export default class LoginView extends View {
         const pageLogin = document.getElementById('login');
 
         const title = new Title({
-            title: 'Login',
-            el: document.createElement('div'),
+            text: 'Login',
         });
         pageLogin.appendChild(title.el);
 

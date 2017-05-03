@@ -1,27 +1,21 @@
-export default class Title {
+import Component from '../component';
+
+export default class Title extends Component {
     /**
      * Title constructor
-     * @param {string} title
-     * @param {HTMLElement} el
+     * @param {Object} options
      */
-    constructor({ title, el }) {
-        this.title = title;
-        this.el = el;
-        this.render();
-    }
+    constructor(options) {
+        if (!options.tagName) {
+            options.tagName = 'div';
+        }
 
-    /**
-     * Update DOM
-     */
-    render() {
-        this.updateHtml();
-    }
+        if (!options.attrs) {
+            options.attrs = {
+                class: 'title',
+            };
+        }
 
-    /**
-     * HTML update
-     */
-    updateHtml() {
-        this.el.setAttribute('class', 'title');
-        this.el.innerHTML = this.title;
+        super(options);
     }
 }
