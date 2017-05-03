@@ -7,11 +7,6 @@ export default class View {
      * @param {Object} [options={}]
      */
     constructor(options = {}) {
-        // if (options.createElement) {
-        //     this.tagName = options.tagName || 'div';
-        // } else {
-        //     this.tagName = 'div';
-        // }
         this.tagName = options.tagName || 'div';
         this._el = document.createElement(this.tagName);
     }
@@ -51,17 +46,15 @@ export default class View {
 
     /**
      * Show view
-     * @param {Object} [options={}]
      */
-    show(options = {}) {
+    show() {
         this._el.hidden = false;
     }
 
     /**
      * Hide view
-     * @param {Object} [options={}]
      */
-    hide(options = {}) {
+    hide() {
         this._el.hidden = true;
     }
 

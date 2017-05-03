@@ -1,6 +1,6 @@
 .user_panel {
   margin: auto;
-  position: absolute;
+  //position: absolute;
   z-index: 1;
 
   &__username {
@@ -16,7 +16,7 @@
     display: inline-block;
     color: #f8f0fb;
     background-color: #211a1d;
-    border: none;
+    //border: none;
     //text-decoration: underline;
   }
 }

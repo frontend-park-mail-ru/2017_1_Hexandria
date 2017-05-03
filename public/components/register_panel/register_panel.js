@@ -11,11 +11,13 @@ export default class RegisterPanel {
     }
 
     hide() {
-        this.el.style.visibility = 'hidden';
+        // this.el.style.visibility = 'hidden';
+        this.el.hidden = true;
     }
 
     show() {
-        this.el.style.visibility = 'visible';
+        // this.el.style.visibility = 'visible';
+        this.el.hidden = false;
     }
 
     /**
