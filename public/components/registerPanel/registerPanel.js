@@ -1,44 +1,27 @@
 import Button from '../button/button';
 import Router from '../../modules/router';
 
-export default class RegisterPanel {
+import Component from '../component';
+
+export default class RegisterPanel extends Component {
     /**
      * Register panel constructor
      */
     constructor() {
-        this.el = document.createElement('div');
-        this._render();
-    }
+        super({
+            attrs: {
+                class: 'register_panel',
+            },
+        });
 
-    hide() {
-        // this.el.style.visibility = 'hidden';
-        this.el.hidden = true;
-    }
-
-    show() {
-        // this.el.style.visibility = 'visible';
-        this.el.hidden = false;
+        this.hide();
     }
 
     /**
-     * DOM update
+     * Set component inner HTML
+     * @param {String} html
      */
-    _render() {
-        this.updateHtml();
-        this.installControls();
-    }
-
-    /**
-     * Update HTML
-     */
-    updateHtml() {
-        this.el.setAttribute('class', 'register_panel');
-    }
-
-    /**
-     * Install register panel buttons
-     */
-    installControls() {
+    innerHTML(html = '') {
         this.login = new Button({
             text: 'Login',
             attrs: {

@@ -3,7 +3,7 @@ export default class Component {
      * Component constructor
      * @param {Object} options
      */
-    constructor(options) {
+    constructor(options = {}) {
         this.text = options.text || '';
         this.tagName = options.tagName || 'div';
         this.el = document.createElement(this.tagName);
@@ -22,8 +22,8 @@ export default class Component {
     }
 
     /**
-     * HTML update
-     * @param {String} html*
+     * Set component inner HTML
+     * @param {String} html
      */
     innerHTML(html = '') {
         this.el.innerHTML = html;

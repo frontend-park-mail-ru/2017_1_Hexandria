@@ -4,55 +4,34 @@ import Router from '../../modules/router';
 import { api } from '../../hexandria/api';
 
 import userPanelTemplate from './userPanelTemplate.pug';
+import Component from '../component';
 
-export default class UserPanel {
+export default class UserPanel extends Component {
     /**
      * User panel constructor
      */
     constructor() {
-        this.setUser('Dolan');
+        super({
+            attrs: {
+                class: 'user_panel',
+            },
+        });
 
-
-        this.fetcher = new Fetcher();
-
-        this.el = document.createElement('div');
-        this._render();
         this.hide();
-    }
-    hide() {
-        // this.el.style.visibility = 'hidden';
-        this.el.hidden = true;
-    }
-
-    show() {
-        // this.el.style.visibility = 'visible';
-        this.el.hidden = false;
+        this.fetcher = new Fetcher();
     }
 
     /**
-     * DOM update
+     * Set component inner HTML
+     * @param {String} html
      */
-    _render() {
-        this.updateHtml();
-        this.installControls();
-    }
+    innerHTML(html = '') {
+        this.el.innerHTML = userPanelTemplate({ username: (new Router()).getUser() });
 
-    /**
-     * Update HTML
-     */
-    updateHtml() {
-        this.el.setAttribute('class', 'user_panel');
-        this.el.innerHTML = userPanelTemplate({ username: this.username });
-    }
-
-    /**
-     * Install register panel buttons
-     */
-    installControls() {
         this.logout = new Button({
             text: 'Logout',
             attrs: {
-                class: 'register_panel__login',
+                class: 'user_panel__logout',
             },
             events: {
                 click: (event) => {
@@ -65,15 +44,10 @@ export default class UserPanel {
                 },
             },
         });
-        this.logout.el.setAttribute('class', 'user_panel__logout');
         this.el.appendChild(this.logout.el);
     }
 
-    /**
-     * Set user name
-     * @param name
-     */
-    setUser(name) {
-        this.username = name;
+    updateUser() {
+        this.innerHTML();
     }
 }

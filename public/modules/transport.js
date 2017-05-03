@@ -46,7 +46,7 @@ export default class Transport {
     }
 
     getUser() {
-        return (new Router()).getUser() || 'guest';
+        return (new Router()).getUser();
     }
 
     handleMessage(event) {
