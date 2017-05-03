@@ -9,7 +9,7 @@ export default class Button extends Component {
      */
     constructor(options) {
         if (!options.tagName) {
-            options.tagName = 'button'; // TODO div?
+            options.tagName = 'div'; // TODO div?
         }
 
         if (!options.attrs) {

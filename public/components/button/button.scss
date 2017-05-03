@@ -11,7 +11,6 @@
   background-color: $hexandria-background;
   border: 1px solid $hexandria-white;
   vertical-align: middle;
-  transform: perspective(1px) translateZ(0);
 
   &:hover {
     background-color: $hexandria-default;
@@ -25,4 +24,11 @@
   position: absolute;
   top: 5%;
   left: 5%;
+}
+
+@media screen and (max-width: $max-width) {
+  .button {
+    font-size: 200%;
+    padding: 15px;
+  }
 }
