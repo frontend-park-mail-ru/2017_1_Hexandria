@@ -1,7 +1,7 @@
 import Button from '../button/button';
 import hexTemplate from './hexTemplate.pug';
-import UserPanel from '../user_panel/user_panel';
-import RegisterPanel from '../register_panel/register_panel';
+import UserPanel from '../userPanel/userPanel';
+import RegisterPanel from '../registerPanel/registerPanel';
 
 export default class Hex {
     /**
