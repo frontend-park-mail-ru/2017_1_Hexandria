@@ -1,3 +1,5 @@
+import './title.scss';
+
 import Component from '../component';
 
 export default class Title extends Component {

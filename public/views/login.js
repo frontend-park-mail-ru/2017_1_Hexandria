@@ -38,6 +38,9 @@ export default class LoginView extends View {
                 controls: [
                     {
                         text: 'Login',
+                        attrs: {
+                            class: 'form__button',
+                        },
                     },
                 ],
                 inputs: [

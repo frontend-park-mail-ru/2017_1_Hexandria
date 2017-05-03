@@ -1,3 +1,5 @@
+import './registerPanel.scss';
+
 import Button from '../button/button';
 import Router from '../../modules/router';
 
@@ -10,7 +12,7 @@ export default class RegisterPanel extends Component {
     constructor() {
         super({
             attrs: {
-                class: 'register-panel',
+                class: 'hex__register-panel',
             },
         });
 
@@ -25,7 +27,7 @@ export default class RegisterPanel extends Component {
         this.login = new Button({
             text: 'Login',
             attrs: {
-                class: 'register-panel__login',
+                class: 'hex__button-login',
             },
             events: {
                 click: (event) => {
@@ -36,7 +38,7 @@ export default class RegisterPanel extends Component {
         this.signup = new Button({
             text: 'Signup',
             attrs: {
-                class: 'register-panel__signup',
+                class: 'hex__button-signup',
             },
             events: {
                 click: (event) => {

@@ -1,3 +1,5 @@
+import './hex.scss';
+
 import Button from '../button/button';
 import hexTemplate from './hexTemplate.pug';
 import UserPanel from '../userPanel/userPanel';

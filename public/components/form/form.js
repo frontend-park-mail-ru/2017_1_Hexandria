@@ -1,3 +1,5 @@
+import './form.scss';
+
 import Button from '../button/button';
 import Validator from './validator';
 import Input from '../input/input';
@@ -71,11 +73,11 @@ export default class Form {
      * Form buttons install
      */
     installControls () {
-        const { controls = [] } = this.data;
+        // const { controls = [] } = this.data;
+        const controls = this.data.controls || {};
 
         controls.forEach((data) => {
             const control = new Button(data);
-            control.el.classList.add('form__button');
             this.el.appendChild(control.el);
         });
     }

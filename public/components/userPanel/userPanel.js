@@ -1,3 +1,5 @@
+import './userPanel.scss';
+
 import Button from '../button/button';
 import Fetcher from '../../modules/fetcher';
 import Router from '../../modules/router';
@@ -13,7 +15,7 @@ export default class UserPanel extends Component {
     constructor() {
         super({
             attrs: {
-                class: 'user-panel',
+                class: 'hex__user-panel',
             },
         });
 
@@ -31,7 +33,7 @@ export default class UserPanel extends Component {
         this.logout = new Button({
             text: 'Logout',
             attrs: {
-                class: 'user-panel__logout',
+                class: 'hex__button-logout',
             },
             events: {
                 click: (event) => {

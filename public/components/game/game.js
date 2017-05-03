@@ -1,3 +1,5 @@
+import './game.scss';
+
 import gameTemplate from './gameTemplate.pug';
 
 export default class Game {

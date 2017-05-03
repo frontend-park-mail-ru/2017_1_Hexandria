@@ -37,6 +37,9 @@ export default class SignupView extends View {
                 controls: [
                     {
                         text: 'Signup',
+                        attrs: {
+                            class: 'form__button',
+                        },
                     },
                 ],
                 inputs: [

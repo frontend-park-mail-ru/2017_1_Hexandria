@@ -1,10 +1,13 @@
+@import "../button/button";
+@import "../../scheme";
+
 .hex {
   //position: absolute;
+  left: 0;
+  right: 0;
   width: 65%;
   height: 100%;
   margin: 0 auto;
-  left: 0;
-  right: 0;
   // -----
   //border-left: #9197ae solid 10px;
   //border-right: #9197ae solid 10px;
@@ -13,59 +16,55 @@
   &__panel {
     //position: relative;
     height: 5%;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    margin: 5px;
+    padding: 0 5px;
   }
 
   &__register-panel {
-    //position: absolute;
-    right: 3%;
-    height: 100%;
-    width: 30%;
+    //...
   }
 
   &__user-panel {
-    //position: absolute;
-    right: 3%;
-    height: 100%;
-    width: 100%;
-    background-color: yellow;
+    //...
   }
 
   &__title {
-    //position: relative;
     text-transform: uppercase;
     padding-top: 13%;
     padding-bottom: 3%;
     text-align: center;
-    color: #f8f0fb;
+    color: $hexandria-white;
     font-weight: 700;
     font-size: 400%;
   }
 
   &__motto {
-    //position: relative;
     text-align: center;
-    color: #f8f0fb;
+    color: $hexandria-white;
     font-weight: 400;
     font-size: 200%;
   }
 
   &__buttons {
-    //position: relative;
-    margin: 50px auto 0 auto;
+    margin: 50px auto 0;
     width: 80%;
-    background-color: #211a1d;
+    background-color: $hexandria-background;
     padding: 10px;
     text-align: center;
   }
 
   &__buttons-main {
-    border-color: #f02d3a;
+    border-color: $hexandria-special
   }
 
   &__buttons-minor {
-    border-color: #f8f0fb;
+    border-color: $hexandria-white;
+  }
+
+  &__button-login,
+  &__button-signup,
+  &__button-logout {
+    @extend .button;
   }
 
   &__singleplayer,

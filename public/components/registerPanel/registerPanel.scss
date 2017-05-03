@@ -1,17 +1,19 @@
+@import "../button/button";
+@import "../../scheme";
+
 .register-panel {
+  z-index: 1;
   margin: auto;
   //position: absolute;
-  z-index: 1;
 
-  &__login,
-  &__signup {
-    @extend .button !optional;
+  &__button {
+    @extend .button;
 
-    text-align: center;
-    color: #f8f0fb;
-    background-color: #211a1d;
-    border: none;
     display: inline-block;
+    text-align: center;
+    color: $hexandria-white;
+    background-color: $hexandria-background;
+    border: none;
     vertical-align: middle;
     //-webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
