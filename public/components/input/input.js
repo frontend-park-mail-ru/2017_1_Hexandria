@@ -53,6 +53,6 @@ export default class Input {
      * @param color
      */
     colorInputBorder(input, color) { // TODO wtf? delete!
-        this.el.style.border = `1px solid ${color}`;
+        // this.el.style.border = `1px solid ${color}`;
     }
 }

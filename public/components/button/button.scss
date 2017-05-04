@@ -9,8 +9,9 @@
   padding: 10px;
   text-decoration: none;
   background-color: $hexandria-background;
-  border: 1px solid $hexandria-white;
+  border: 1px solid $hexandria-default;
   vertical-align: middle;
+  min-width: 150px;
 
   &:hover {
     background-color: $hexandria-default;
@@ -24,6 +25,7 @@
   position: absolute;
   top: 5%;
   left: 5%;
+  min-width: unset;
 }
 
 @media screen and (max-width: $max-width) {

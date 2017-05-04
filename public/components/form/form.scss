@@ -1,23 +1,15 @@
 @import "../button/button";
 @import "../input/input";
+@import "../hex/hex";
 
 .form {
-  //position: absolute;
-  left: 0;
-  right: 0;
-  width: 65%;
-  height: 100%;
+  padding: 0 100px;
   margin: 0 auto;
-  // -----
-  //border-left: #9197ae solid 10px;
-  //border-right: #9197ae solid 10px;
+  text-align: center;
 
   &__button {
     @extend .button;
 
-    //position: relative;
-    display: block;
-    width: 50%;
     margin: 20px auto 5px;
   }
 
@@ -28,9 +20,15 @@
   &__input {
     @extend .input;
 
-    //display: inline-block;
-    width: 90%;
-    margin: 10px 5px;
-    box-sizing: border-box;
+    //width: 100%;
+    //margin: 10px 5px;
+    //padding: 10px 5px;
+    //box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: $max-width) {
+  .form {
+    padding: 0 5px;
   }
 }

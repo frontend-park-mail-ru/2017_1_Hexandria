@@ -2,22 +2,15 @@
 @import "../../scheme";
 
 .hex {
-  //position: absolute;
-  left: 0;
-  right: 0;
-  width: 65%;
-  height: 100%;
+  padding: 0 100px;
   margin: 0 auto;
   // -----
   //border-left: #9197ae solid 10px;
   //border-right: #9197ae solid 10px;
-  min-width: 400px;
+  //min-width: 400px;
 
   &__panel {
-    //position: relative;
-    height: 5%;
-    margin: 5px;
-    padding: 0 5px;
+    padding: 10px 0;
   }
 
   &__register-panel {
@@ -30,8 +23,7 @@
 
   &__title {
     text-transform: uppercase;
-    padding-top: 13%;
-    padding-bottom: 3%;
+    padding: 50px 0 5px;
     text-align: center;
     color: $hexandria-white;
     font-weight: 700;
@@ -39,6 +31,7 @@
   }
 
   &__motto {
+    padding: 5px 0;
     text-align: center;
     color: $hexandria-white;
     font-weight: 400;
@@ -46,10 +39,10 @@
   }
 
   &__buttons {
-    margin: 50px auto 0;
-    width: 80%;
+    //margin: 25px auto 5;
+    //width: 80%;
     background-color: $hexandria-background;
-    padding: 10px;
+    padding: 50px 0 5px;
     text-align: center;
   }
 
@@ -96,6 +89,6 @@
 
 @media screen and (max-width: $max-width) {
   .hex {
-    width: 100%;
+    padding: 0 5px;
   }
 }
