@@ -15,17 +15,6 @@ export default class ScoreboardView extends View {
         });
         pageScoreboard.appendChild(title.el);
 
-        const backButton = new Button({
-            text: '⬅',
-            attrs: {
-                class: 'back-button',
-            },
-            events: {
-                click: (event) => { (new Router()).go('/'); },
-            },
-        });
-        pageScoreboard.appendChild(backButton.el);
-
         this._el = pageScoreboard;
         this.hide();
     }

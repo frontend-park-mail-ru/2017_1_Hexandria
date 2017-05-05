@@ -20,18 +20,6 @@ export default class LoginView extends View {
         });
         pageLogin.appendChild(title.el);
 
-        const backButton = new Button({
-            text: '⬅',
-            attrs: {
-                class: 'back-button',
-            },
-            events: {
-                click: (event) => { (new Router()).go('/'); },
-            },
-        });
-        pageLogin.appendChild(backButton.el);
-
-
         const loginForm = new Form({
             el: document.createElement('form'),
             data: {

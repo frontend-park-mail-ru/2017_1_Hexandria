@@ -20,17 +20,6 @@ export default class SignupView extends View {
         });
         pageSignup.appendChild(title.el);
 
-        const backButton = new Button({
-            text: '⬅',
-            attrs: {
-                class: 'back-button',
-            },
-            events: {
-                click: (event) => { (new Router()).go('/'); },
-            },
-        });
-        pageSignup.appendChild(backButton.el);
-
         const signupForm = new Form({
             el: document.createElement('form'),
             data: {

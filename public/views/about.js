@@ -15,17 +15,6 @@ export default class AboutView extends View {
         });
         pageAbout.appendChild(title.el);
 
-        const backButton = new Button({
-            text: '⬅',
-            attrs: {
-                class: 'back-button',
-            },
-            events: {
-                click: (event) => { (new Router()).go('/'); },
-            },
-        });
-        pageAbout.appendChild(backButton.el);
-
         this._el = pageAbout;
         this.hide();
     }

@@ -51,10 +51,10 @@ export default class Form {
                     input.colorInputBorder(input, '#f02d3a');
                     return;
                 }
-                input.colorInputBorder(input, '#f8f0fb');
+                input.colorInputBorder(input, '#9197ae'); // f8f0fb
             });
             input.on('click', () => {
-                input.colorInputBorder(this, '#9197ae');
+                input.colorInputBorder(this, '#f8f0fb'); // 9197ae
             });
             this.el.appendChild(input.el);
         });

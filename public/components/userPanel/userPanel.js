@@ -1,11 +1,11 @@
 import './userPanel.scss';
 
-import Button from '../button/button';
 import Fetcher from '../../modules/fetcher';
 import Router from '../../modules/router';
 import { api } from '../../hexandria/api';
 
 import userPanelTemplate from './userPanelTemplate.pug';
+import Button from '../button/button';
 import Component from '../component';
 
 export default class UserPanel extends Component {
