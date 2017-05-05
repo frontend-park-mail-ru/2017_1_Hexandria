@@ -1,7 +1,6 @@
 import Router from '../modules/router';
 
 import View from './view';
-import Button from '../components/button/button';
 import Title from '../components/title/title';
 
 export default class ScoreboardView extends View {
@@ -12,6 +11,7 @@ export default class ScoreboardView extends View {
 
         const title = new Title({
             text: 'Scoreboard',
+            'back-button': true,
         });
         pageScoreboard.appendChild(title.el);
 

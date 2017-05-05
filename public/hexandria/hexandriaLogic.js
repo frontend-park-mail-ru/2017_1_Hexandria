@@ -141,8 +141,9 @@ export default class HexandriaLogic {
 
         // town handler
         const town = this.findTown(data.to);
-        if (town) {
-            const selected = this.findSquad(data.from);
+        const selected = this.findSquad(data.to);
+        if (town && selected) {
+            // const selected = this.findSquad(data.to);
 
             console.log('townHandler', selected, town);
 

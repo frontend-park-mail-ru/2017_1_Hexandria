@@ -2,22 +2,21 @@
 @import "../../scheme";
 
 .title {
+  display: flex;
   margin: 10px auto 5px;
-  text-align: center;
   color: $hexandria-white;
 
-  p {
-    display: inline-block;
-    margin: 10px 0;
+  &__main {
+    text-align: center;
+    flex-grow: 100;
     font-size: 200%;
     font-weight: 900;
+    vertical-align: middle;
   }
 
-  .title-back-button {
+  &__back-button {
     @extend .button;
 
-    display: inline-block;
-    float: left;
     min-width: 50px;
   }
 }

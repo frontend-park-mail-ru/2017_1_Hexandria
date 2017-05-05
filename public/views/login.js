@@ -3,7 +3,6 @@ import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';
 
 import View from './view';
-import Button from '../components/button/button';
 import Title from '../components/title/title';
 import Form from '../components/form/form';
 
@@ -17,6 +16,7 @@ export default class LoginView extends View {
 
         const title = new Title({
             text: 'Login',
+            'back-button': true,
         });
         pageLogin.appendChild(title.el);
 
