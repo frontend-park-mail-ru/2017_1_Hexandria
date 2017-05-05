@@ -17,16 +17,7 @@ import MainView from './views/main';
 const app = new HexandriaApp();
 (new Mediator()).done();
 
-SwLoader.register('../../sw.js');
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('sw.js')
-//         .then(function (registration) {
-//             console.log('ServiceWorker registration', registration);
-//         })
-//         .catch(function (err) {
-//             console.error(err);
-//         });
-// }
+// SwLoader.register('sw.js');
 
 (new Router())
     .addRoute('/singleplayer', SingleplayerView)

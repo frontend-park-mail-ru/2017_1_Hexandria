@@ -3,11 +3,40 @@
   "rules": {
     "indentation": 2,
     "number-leading-zero": null,
-    "property-no-unknown": [ true, {
-      "ignoreProperties": [
-        "composes"
-      ]
-    }],
-    "unit-whitelist": ["em", "rem", "s", "%", "px"]
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": [
+          "composes"
+        ]
+      }
+    ],
+    "unit-whitelist": [
+      "em",
+      "rem",
+      "s",
+      "%",
+      "px"
+    ],
+    "declaration-block-properties-order": [
+      [
+        "content",
+        "position",
+        {
+          "order": "flexible",
+          "properties": [
+            "top",
+            "left",
+            "right",
+            "bottom",
+          ]
+        },
+        "z-index",
+        "display"
+      ],
+      {
+        "unspecified": "bottom"
+      }
+    ]
   }
 }

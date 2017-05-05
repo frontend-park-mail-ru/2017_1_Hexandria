@@ -3,7 +3,6 @@ import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';
 
 import View from './view';
-import Button from '../components/button/button';
 import Title from '../components/title/title';
 import Form from '../components/form/form';
 
@@ -16,22 +15,10 @@ export default class LoginView extends View {
         const pageLogin = document.getElementById('login');
 
         const title = new Title({
-            title: 'Login',
-            el: document.createElement('div'),
+            text: 'Login',
+            'back-button': true,
         });
         pageLogin.appendChild(title.el);
-
-        const backButton = new Button({
-            text: '⬅',
-            attrs: {
-                class: 'back-button',
-            },
-            events: {
-                click: (event) => { (new Router()).go('/'); },
-            },
-        });
-        pageLogin.appendChild(backButton.el);
-
 
         const loginForm = new Form({
             el: document.createElement('form'),
@@ -39,6 +26,9 @@ export default class LoginView extends View {
                 controls: [
                     {
                         text: 'Login',
+                        attrs: {
+                            class: 'form__button',
+                        },
                     },
                 ],
                 inputs: [

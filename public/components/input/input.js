@@ -1,3 +1,5 @@
+import './input.scss';
+
 export default class Input {
     /**
      * Input constructor

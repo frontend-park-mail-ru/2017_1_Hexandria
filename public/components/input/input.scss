@@ -1,10 +1,18 @@
+@import "../../scheme";
+
 .input {
-  border: 1px solid #f8f0fb;
-  background-color: #211a1d;
-  color: #f8f0fb;
+  border: 1px solid $hexandria-default;
+  background-color: $hexandria-background;
+  color: $hexandria-white;
   font-size: 150%;
-  min-height: 40px;
-  padding: 12px;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
   outline: none;
-  transition: border 0.2s ease-in-out;
+  transition: border 0.25s ease-in-out;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $hexandria-white;
+  }
 }

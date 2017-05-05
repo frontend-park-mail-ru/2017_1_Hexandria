@@ -107,7 +107,7 @@ export default class Router {
     }
 
     getUser() {
-        return this.userLogin;
+        return this.userLogin || 'guest';
     }
 
     // /**

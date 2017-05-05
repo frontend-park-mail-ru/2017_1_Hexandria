@@ -6,7 +6,7 @@ export default class HexandriaPlayView extends View {
         super(options);
         this.init({
             attrs: {
-                class: 'view-play',
+                class: 'hexandria__view-play',
             },
         });
 

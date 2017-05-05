@@ -1,3 +1,5 @@
+import './form.scss';
+
 import Button from '../button/button';
 import Validator from './validator';
 import Input from '../input/input';
@@ -49,10 +51,10 @@ export default class Form {
                     input.colorInputBorder(input, '#f02d3a');
                     return;
                 }
-                input.colorInputBorder(input, '#f8f0fb');
+                input.colorInputBorder(input, '#9197ae'); // f8f0fb
             });
             input.on('click', () => {
-                input.colorInputBorder(this, '#9197ae');
+                input.colorInputBorder(this, '#f8f0fb'); // 9197ae
             });
             this.el.appendChild(input.el);
         });
@@ -71,11 +73,11 @@ export default class Form {
      * Form buttons install
      */
     installControls () {
-        const { controls = [] } = this.data;
+        // const { controls = [] } = this.data;
+        const controls = this.data.controls || {};
 
         controls.forEach((data) => {
             const control = new Button(data);
-            control.el.classList.add('form__button');
             this.el.appendChild(control.el);
         });
     }

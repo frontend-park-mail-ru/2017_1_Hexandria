@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "eslint": "eslint public",
+    "stylelint": "stylelint public/**/*.scss",
     "karma": "karma start",
     "_webpack": "./node_modules/.bin/webpack --progress --colors",
     "webpack": "webpack --progress --colors",
