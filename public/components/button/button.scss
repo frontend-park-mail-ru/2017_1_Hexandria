@@ -1,30 +1,17 @@
 .button {
   text-align: center;
-  font-size: 120%;
+  font-size: 150%;
   color: white;
   padding: 10px;
   text-decoration: none;
-  background-color: #000;
-  border: 1px solid #fff;
+  background-color: #211a1d;
+  border: 1px solid #f8f0fb;
   display: inline-block;
   vertical-align: middle;
   transform: perspective(1px) translateZ(0);
-  position: relative;
 
-  &:before {
-    content: '';
-    position: absolute;
-    border: #eb9300 solid 1px;
-    top: 1px;
-    left: 1px;
-    right: 1px;
-    bottom: 1px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  &:hover:before, &:focus:before, &:active:before {
-    opacity: 1;
+  &:hover {
+    background-color: #9197ae;
     cursor: pointer;
   }
 }

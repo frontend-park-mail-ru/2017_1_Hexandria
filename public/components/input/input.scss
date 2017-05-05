@@ -1,23 +1,10 @@
 .input {
-  border: 1px solid #fff;
-  background-color: #000;
-  color: #fff;
+  border: 1px solid #f8f0fb;
+  background-color: #211a1d;
+  color: #f8f0fb;
+  font-size: 150%;
   min-height: 40px;
   padding: 12px;
   outline: none;
   transition: border 0.2s ease-in-out;
-}
-
-::-webkit-input-placeholder {
-  color: #ccc;
-  text-indent: 0;
-  -webkit-transition: opacity .75s;
-  transition: opacity .75s;
-}
-
-:focus::-webkit-input-placeholder {
-  text-indent: 100%;
-  opacity: 0;
-  -webkit-transition: opacity .5s, text-indent 1s;
-  transition: opacity .5s, text-indent 1s;
 }

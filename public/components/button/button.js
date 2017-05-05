@@ -1,7 +1,3 @@
-"use strict";
-
-import "./button.scss";
-
 export default class Button {
     /**
      * Button constructor
@@ -9,9 +5,10 @@ export default class Button {
      */
     constructor(options) {
         this.text = options.text;
+        this.el = document.createElement('button');
         this.attrs = options.attrs || {};
         this.events = options.events || {};
-        this.el = document.createElement("button");
+        this.colors = options.colors || {};
         this._render();
     }
 
@@ -19,6 +16,7 @@ export default class Button {
         this.el.innerHTML = this.text;
         this.setAttrs();
         this.setEvents();
+        this.colorize();
         return this;
     }
 
@@ -46,5 +44,10 @@ export default class Button {
      */
     toString() {
         return this.el.outerHTML;
+    }
+
+    colorize() {
+        this.el.style.backgroundColor = this.colors.backgroundColor;
+        this.el.style.borderColor = this.colors.mainColor;
     }
 }

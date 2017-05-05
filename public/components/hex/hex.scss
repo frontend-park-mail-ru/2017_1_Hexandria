@@ -1,97 +1,87 @@
-@mixin createHex($height, $color, $z-index) {
-  background-color: $color;
-  height: $height / 2;
-  width: $height * 0.866;
-  z-index: $z-index;
-  &::before {
-    content: " ";
-    width: 0; height: 0;
-    border-bottom: ($height / 4) solid $color;
-    border-left: ($height * 0.433) solid transparent;
-    border-right: ($height * 0.433) + 1px solid transparent;
-    position: absolute;
-    top: -($height / 4);
-  }
-  &::after {
-    content: "";
-    width: 0;
-    border-top: ($height / 4) solid $color;
-    border-left: ($height * 0.433) solid transparent;
-    border-right: ($height * 0.433) + 1px solid transparent;
-    position: absolute;
-    bottom: -($height / 4);
-  }
-}
-
-@mixin createHexInside($height, $color, $z-index) {
-  background-color: $color;
-  height: $height / 2;
-  width: $height * 0.866 - 1px;
-  z-index: $z-index;
-  &::before {
-    content: " ";
-    width: 0; height: 0;
-    border-bottom: ($height / 4) solid $color;
-    border-left: ($height * 0.433) solid transparent;
-    border-right: ($height * 0.433) solid transparent;
-    position: absolute;
-    top: -($height / 4);
-  }
-  &::after {
-    content: "";
-    width: 0;
-    border-top: ($height / 4) solid $color;
-    border-left: ($height * 0.433) solid transparent;
-    border-right: ($height * 0.433) solid transparent;
-    position: absolute;
-    bottom: -($height / 4);
-  }
-}
-
 .hex {
-  position: relative;
-  @include createHex(900px, #fff, 0);
-  &__minor_hex {
-    margin: 2px 0 0 4px;
-    position: relative;
-    @include createHexInside(892px, #000, 1);
+  //position: absolute;
+  width: 65%;
+  height: 100%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  // -----
+  border-left: #9197ae solid 10px;
+  border-right: #9197ae solid 10px;
+  min-width: 400px;
+
+  &__panel {
+    //position: relative;
+    height: 5%;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
+
+  &__register_panel {
+    //position: absolute;
+    right: 3%;
+    height: 100%;
+    width: 30%;
+  }
+
+  &__user_panel {
+    //position: absolute;
+    right: 3%;
+    height: 100%;
+    width: 100%;
+    background-color: yellow;
+  }
+
   &__title {
+    //position: relative;
     text-transform: uppercase;
-    padding-top: 70px;
-    position: relative;
+    padding-top: 13%;
+    padding-bottom: 3%;
     text-align: center;
-    color: #fff;
-    font-weight: 900;
+    color: #f8f0fb;
+    font-weight: 700;
     font-size: 400%;
   }
+
   &__motto {
-    padding-top: 20px;
     position: relative;
     text-align: center;
-    color: #fff;
+    color: #f8f0fb;
     font-weight: 400;
     font-size: 200%;
   }
+
   &__buttons {
     position: relative;
     margin: 50px auto 0 auto;
     width: 80%;
-    background-color: #000;
+    background-color: #211a1d;
     padding: 10px;
     text-align: center;
   }
+
   &__buttons-main {
+    border-color: #f02d3a;
   }
+
   &__buttons-minor {
+    border-color: #f8f0fb;
   }
-  &__singleplayer, &__multiplayer {
+
+  &__singleplayer,
+  &__multiplayer {
     @extend .button;
-    width: 200px;
+    @extend .hex__buttons-main;
+
+    width: 300px;
     margin: 3px;
   }
-  &__about, &__scoreboard {
+
+  &__about,
+  &__scoreboard {
     @extend .button;
+    @extend .hex__buttons-minor;
+
     width: 200px;
     margin: 3px;
   }

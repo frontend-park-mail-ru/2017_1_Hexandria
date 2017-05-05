@@ -1,306 +1,268 @@
-"use strict";
+import * as THREE from 'three';
+import Mediator from '../modules/mediator';
+import { EVENTS } from './events';
+import MapGraphics from './hexandriaGraphics/mapGraphics';
+import TownGraphics from './hexandriaGraphics/townGraphics';
+import SquadGraphics from './hexandriaGraphics/squadGraphics';
+import HexandriaUtils from './hexandriaUtils';
 
-import * as THREE from "three";
-import Stats from "stats-js";
-import Mediator from "../modules/mediator";
-import { EVENTS } from "./events";
-import PlayerGame from "./hexandriaGraphics/PlayerGame";
-import MapGame from "./hexandriaGraphics/MapGame";
-import HexTown from "./hexandriaGraphics/hexTown";
-import HexSquad from "./hexandriaGraphics/hexSquad";
-
-const OrbitControls = require("three-orbit-controls")(THREE);
+const OrbitControls = require('three-orbit-controls')(THREE);
 
 export default class HexandriaGraphics {
     constructor(game, element) {
-        console.log("HexandriaGraphics created");
+        console.log('HexandriaGraphics created');
+
+        this.__move = (e) => { this.onDocumentMouseMove(e); };
+        this.__down = (e) => { this.onDocumentMouseDown(e); };
+        this.__resize = (e) => { this.onWindowResize(e); };
 
         this.game = game;
-        this.element = element;
 
-        (new Mediator()).subscribe(this, "drawMapEvent", "drawMap");
+        this.selector = '#game .game-container';
+        console.log(this.selector);
 
-        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.MOVE, "movePlayer");
+        this._clock = null;
+        this._container = null;
+        this._camera = null;
+        this._controls = null;
+        this._renderer = null;
+        this._mouse = null;
 
-        window.onkeypress = function(e) {
-            if (e.keyCode === 13) {
-                console.log(EVENTS.KEYBOARD.ENTER_PRESSED);
-                (new Mediator()).emit(EVENTS.KEYBOARD.ENTER_PRESSED);
-            }
-        };
+        this._scene = null;
+        this._id = null;
+        this._raycaster = null;
+        this._mouseHandler = true;
 
-        this.gameProcess();
+        this.map = null;
+        this.townsMap = null;
+        this.squadsMap = null;
+
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_MOVE, 'squadMove');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_UPDATE, 'squadUpdate');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_DELETE, 'squadDelete');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.TOWN_CAPTURE, 'townCapture');
+
+        this.initGame();
     }
 
-    drawMap(options) {
-        console.log("drawMap:", options);
+    destroy() {
+        console.log('destroy');
+
+        cancelAnimationFrame(this._id);
+
+        this.map.destroy();
+
+        while (this._scene.children.length > 0) {
+            // console.log('deleting...', this._scene.children[0]);
+            this._scene.remove(this._scene.children[0]);
+        }
+
+        this._container.removeEventListener('mousemove', this.__move, false);
+        this._container.removeEventListener('mousedown', this.__down, false);
+        window.removeEventListener('resize', this.__resize, false);
+        this._container.innerHTML = '';
+
+        this.game = null;
+
+        this._clock = null;
+        this._container = null;
+        this._camera = null;
+        this._controls = null;
+        this._renderer = null;
+        this._mouse = null;
+
+        this._scene = null;
+        this._id = null;
+        this._raycaster = null;
+        // this._mouseHandler = null;
+
+        this.map = null;
+        this.townsMap = null;
+        this.squadsMap = null;
     }
 
     initTowns() {
-        this.towns = [];
+        this.townsMap = {};
 
-        const towns = this.game.field.towns;
-        for (const index in towns) {
-            if (towns[index]) {
-                // console.log(towns[index]);
+        HexandriaUtils.forFieldTowns(
+            this.game,
+            (town) => {
+                const newTown = new TownGraphics(this._scene, 0x777777, town);
+                this.townsMap[town.name] = newTown;
+            },
+        );
 
-                this.towns.push(new HexTown(this.scene, 0x777777, towns[index].position));
-            }
-        }
-    }
-
-    initPlayers() {
-        this.players = [];
-        this.playersMap = {};
-
-        for (const playerName in this.game.players) {
-            if (this.game.players[playerName]) {
-                const playerColor = this.game.players[playerName].color;
-                const playerArmy = this.game.players[playerName].army;
-
-                this.playersMap[playerName] = [];
-
-                // console.log(playerName, playerArmy);
-                for (const index in playerArmy) {
-                    if (playerArmy[index]) {
-                        const squad = playerArmy[index];
-
-                        // console.log(playerName, squad.position);
-
-                        const newPlayer = new HexSquad(this.scene, playerColor, squad.position);
-                        this.players.push(newPlayer);
-                        this.playersMap[playerName].push(newPlayer);
-                    }
+        // color capitals
+        HexandriaUtils.forPlayers(
+            this.game,
+            (playerObject) => {
+                const player = playerObject.player;
+                if (this.townsMap[player.capital]) {
+                    this.townsMap[player.capital].changeColor(player.color);
                 }
-            }
-        }
+            },
+        );
+
+        // color towns
+        HexandriaUtils.forPlayersTowns(
+            this.game,
+            (townObject) => {
+                if (this.townsMap[townObject.town]) {
+                    this.townsMap[townObject.town].changeColor(townObject.player.color);
+                }
+            },
+        );
     }
 
-    movePlayer(player) {
-        console.log("movePlayer", player);
-        this.playersMap[player.name][player.index].move(player.position.x, player.position.y);
+    initSquads() {
+        this.squadsMap = {};
+
+        HexandriaUtils.forPlayers(
+            this.game,
+            (playerObject) => {
+                this.squadsMap[playerObject.player.name] = [];
+            },
+        );
+        HexandriaUtils.forPlayersSquads(
+            this.game,
+            (squadObject) => {
+                const newSquad = new SquadGraphics(this._scene, squadObject.player.color, squadObject.squad);
+                this.squadsMap[squadObject.player.name].push(newSquad);
+            },
+        );
     }
 
-    gameProcess() {
-        this.gameStart();
+    squadMove(data) {
+        this.squadsMap[data.playerName][data.squadIndex].move(data.position.x, data.position.y);
+    }
+
+    squadUpdate(data) {
+        this.squadsMap[data.playerName][data.squadIndex].setSprite(data.squad.count, data.squad.morale);
+    }
+
+    squadDelete(data) {
+        this.squadsMap[data.playerName][data.squadIndex].remove();
+        this.squadsMap[data.playerName].splice(data.squadIndex, 1);
+    }
+
+    townCapture(data) {
+        this.townsMap[data.townName].changeColor(data.playerColor);
+    }
+
+    initGame() {
+        this._clock = new THREE.Clock();
+        this.initGraphics();
+
+        this.map = new MapGraphics(this._scene, this.game);
         this.initTowns();
-        this.initPlayers();
+        this.initSquads();
 
-        const player1 = new PlayerGame("Player 1", 0xff0000);
-        const player2 = new PlayerGame("Player 2", 0x0000ff);
-
-        this.map.createCapital(player1, 4, 9);
-        this.map.createCapital(player2, 0, 0);
-
-        this.map.createUnit(player1, 3, 8);
-        this.map.createUnit(player2, 1, 1);
+        this.animate();
     }
 
-    gameStart () {
-        // Graphics variables
-        let container,
-            stats;
-        let camera,
-            controls,
-            scene,
-            renderer;
-        let textureLoader;
-        const clock = new THREE.Clock();
-        let mouse,
-            raycaster;
+    initGraphics() {
+        console.log('initGraphics', this);
 
-        let time = 0;
-        let keyQ = false;
+        this._container = document.querySelector(this.selector);
 
-        // - Main code -
+        this._renderer = new THREE.WebGLRenderer();
+        // renderer.setClearColor(0xbfd1e5);
+        this._renderer.setClearColor(0xffffff);
+        this._renderer.setPixelRatio(this._container.devicePixelRatio);
+        // renderer.setSize(container.clientWidth, container.clientHeight);
+        this._renderer.setSize(window.innerWidth, window.innerHeight);
 
-        initGraphics(this.element);
-        initInput();
-        createObjects();
+        this._renderer.shadowMap.enabled = true; // TODO
 
-        const _map = new MapGame(scene, this.game);
+        this._scene = new THREE.Scene();
 
-        animate();
+        this._camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
+        this._camera.position.x = 11;
+        this._camera.position.y = 5;
+        this._camera.position.z = 7;
+        this._camera.up.set(0, 0, 1);
 
-        this.scene = scene;
-        this.map = _map;
+        this._controls = new OrbitControls(this._camera, this._container);
+        this._controls.target.x = 5;
+        this._controls.target.y = 5;
+        this._controls.target.z = 0;
 
-        // - Functions -
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        this._scene.add(ambientLight);
 
-        function initGraphics(element) {
-            const sel = `${element} .game-container`;
-            console.log(sel);
-            container = document.querySelector(sel);
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(-10, 10, 10);
+        light.castShadow = true;
+        const d = 10;
+        light.shadow.camera.left = -d;
+        light.shadow.camera.right = d;
+        light.shadow.camera.top = d;
+        light.shadow.camera.bottom = -d;
+        light.shadow.camera.near = 2;
+        light.shadow.camera.far = 50;
+        light.shadow.mapSize.x = 1024;
+        light.shadow.mapSize.y = 1024;
+        this._scene.add(light);
 
-            renderer = new THREE.WebGLRenderer();
-            // renderer.setClearColor(0xbfd1e5);
-            renderer.setClearColor(0xffffff);
-            renderer.setPixelRatio(container.devicePixelRatio);
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            // renderer.setSize(200, 200);
-            renderer.shadowMap.enabled = true;
+        this._container.innerHTML = '';
+        this._container.appendChild(this._renderer.domElement);
 
-            container.appendChild(renderer.domElement);
+        this._mouse = new THREE.Vector2();
+        this._raycaster = new THREE.Raycaster();
 
-            scene = new THREE.Scene();
+        this._container.addEventListener('mousemove', this.__move, false);
+        this._container.addEventListener('mousedown', this.__down, false);
+        window.addEventListener('resize', this.__resize, false);
+    }
 
-            // camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
-            camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.2, 2000);
+    mouseCoordinates(event) {
+        this._mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this._mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    }
 
-            camera.position.x = -7;
-            camera.position.y = 5;
-            camera.position.z = 8;
-            camera.up.set(0, 0, 1);
+    onDocumentMouseMove(event) {
+        event.preventDefault();
 
-            controls = new OrbitControls(camera);
-            controls.target.y = 2;
+        if (this._mouseHandler) {
+            this.mouseCoordinates(event);
 
-            textureLoader = new THREE.TextureLoader();
+            this._raycaster.setFromCamera(this._mouse, this._camera);
+            const intersects = this._raycaster.intersectObjects(this.map.fieldGroup.children);
 
-            const ambientLight = new THREE.AmbientLight(0x404040);
-            scene.add(ambientLight);
-
-            const light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(-10, 10, 10);
-            light.castShadow = true;
-            const d = 10;
-            light.shadow.camera.left = -d;
-            light.shadow.camera.right = d;
-            light.shadow.camera.top = d;
-            light.shadow.camera.bottom = -d;
-            light.shadow.camera.near = 2;
-            light.shadow.camera.far = 50;
-            light.shadow.mapSize.x = 1024;
-            light.shadow.mapSize.y = 1024;
-            scene.add(light);
-
-
-            container.innerHTML = "";
-
-            container.appendChild(renderer.domElement);
-
-            stats = new Stats();
-            stats.domElement.style.position = "absolute";
-            stats.domElement.style.top = "0px";
-            container.appendChild(stats.domElement);
-
-
-            mouse = new THREE.Vector2();
-            raycaster = new THREE.Raycaster();
-
-            document.addEventListener("mousemove", onDocumentMouseMove, false);
-            document.addEventListener("mousedown", onDocumentMouseDown, false);
-
-            window.addEventListener("resize", onWindowResize, false);
-        }
-
-        function createObjects() {
-            const pos = new THREE.Vector3();
-            const quat = new THREE.Quaternion();
-
-            pos.set(0, 0, -0.5);
-            quat.set(0, 0, 0, 1);
-            const ground = createParalellepiped(40, 40, 1, 0, pos, quat,
-                new THREE.MeshPhongMaterial({ color: 0xFFFFFF }));
-            ground.castShadow = true;
-            ground.receiveShadow = true;
-            textureLoader.load("textures/grid.png", (texture) => {
-                texture.wrapS = THREE.RepeatWrapping;
-                texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.set(40, 40);
-                ground.material.map = texture;
-                ground.material.needsUpdate = true;
-            });
-            scene.add(ground);
-        }
-
-        function createParalellepiped(sx, sy, sz, mass, pos, quat, material) {
-            const threeObject = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz, 1, 1, 1), material);
-
-            createRigidBody(threeObject, mass, pos, quat);
-
-            return threeObject;
-        }
-
-        function createRigidBody(threeObject, mass, pos, quat) {
-            threeObject.position.copy(pos);
-            threeObject.quaternion.copy(quat);
-        }
-
-        function initInput() {
-            window.addEventListener("keydown", (event) => {
-                switch (event.keyCode) {
-                    // Q
-                    case 81:
-                        keyQ = true;
-                        break;
-                }
-            }, false);
-
-            window.addEventListener("keyup", (event) => {
-                switch (event.keyCode) {
-                    // Q
-                    case 81:
-                        keyQ = false;
-                        break;
-                }
-            }, false);
-        }
-
-        function mouseCoordinates(event) {
-            mouse.x = ((event.clientX - container.offsetLeft) / renderer.domElement.width) * 2 - 1;
-            mouse.y = -((event.clientY - container.offsetTop) / renderer.domElement.height) * 2 + 1;
-        }
-
-        function onDocumentMouseMove(event) {
-            event.preventDefault();
-
-            mouseCoordinates(event);
-
-            raycaster.setFromCamera(mouse, camera);
-            // const intersects = raycaster.intersectObjects(_map.scene.children);
-            const intersects = raycaster.intersectObjects(_map.fieldGroup.children);
-
-            _map.handleHighlight(intersects);
-        }
-
-        function onDocumentMouseDown(event) {
-            event.preventDefault();
-
-            if (event.buttons === 1) {
-                mouseCoordinates(event);
-
-                raycaster.setFromCamera(mouse, camera);
-                // const intersects = raycaster.intersectObjects(_map.scene.children);
-                const intersects = raycaster.intersectObjects(_map.fieldGroup.children);
-
-                _map.handleSelect(intersects);
-            }
-        }
-
-        function onWindowResize() {
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            render();
-            stats.update();
-        }
-
-        function render() {
-            const deltaTime = clock.getDelta();
-
-            controls.update(deltaTime);
-
-            renderer.render(scene, camera);
-
-            time += deltaTime;
+            this.map.handleHighlight(intersects);
         }
     }
 
+    onDocumentMouseDown(event) {
+        event.preventDefault();
 
+        if (this._mouseHandler && event.buttons === 1) {
+            this.mouseCoordinates(event);
+
+            this._raycaster.setFromCamera(this._mouse, this._camera);
+            const intersects = this._raycaster.intersectObjects(this.map.fieldGroup.children);
+
+            this.map.handleSelect(intersects);
+        }
+    }
+
+    onWindowResize() {
+        this._camera.aspect = window.innerWidth / window.innerHeight;
+        this._camera.updateProjectionMatrix();
+        this._renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    animate() {
+        this._id = requestAnimationFrame(() => { this.animate(); });
+
+        this.render();
+    }
+
+    render() {
+        const deltaTime = this._clock.getDelta();
+
+        this._controls.update(deltaTime);
+
+        this._renderer.render(this._scene, this._camera);
+    }
 }

@@ -8,31 +8,29 @@
 @import "components/hex/hex";
 @import "components/form/form";
 
+html,
 body {
   font-family: 'Lato', sans-serif;
-  background-color: #000;
+  background-color: #211a1d;
   margin: 0;
+  padding: 0;
   height: 100%;
   overflow-y: hidden;
 }
 
-.title {
-  margin: 5% auto 5% auto;
-}
-
-.hex {
-  position: absolute;
-  margin: 8% auto 0 5%;
-}
-
 .back-button {
   @extend .button;
+
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  left: 5%;
+  top: 5%;
 }
 
-.form {
-  margin: 0 25% 0 25%;
-  min-width: 300px;
+#index,
+#game,
+#about,
+#scoreboard,
+#login,
+#signup {
+  height: 100%;
 }

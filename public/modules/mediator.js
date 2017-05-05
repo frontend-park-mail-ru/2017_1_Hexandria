@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Mediator {
 
     constructor() {
@@ -13,7 +11,7 @@ export default class Mediator {
     }
 
     subscribe(subscriber, event, handler) {
-        console.log("SUBSCRIBE:", subscriber, event, handler);
+        // console.log('SUBSCRIBE:', subscriber, event, handler);
 
         if (!this.events[event]) {
             this.events[event] = [];
@@ -27,18 +25,19 @@ export default class Mediator {
     }
 
     done() {
-        console.log("DONE");
+        console.log('DONE');
         if (this.emitStack) {
             this.emitStack.forEach((storedElement) => {
                 this.emitAfter(storedElement.event, storedElement.options);
             });
         }
+        this.emitStack = null;
 
         this.emit = this.emitAfter;
     }
 
     emitBefore(event, options = null) {
-        console.log("EMIT before:", event, options);
+        console.log('EMIT before:', event, options);
 
         if (!this.emitStack) {
             this.emitStack = [];
@@ -47,23 +46,29 @@ export default class Mediator {
     }
 
     emitAfter(event, options = null) {
-        console.log("EMIT after:", event, options);
+        console.log('EMIT after:', event, options);
 
         if (this.events[event]) {
             this.events[event].forEach((element) => {
                 element.subscriber[element.handler](options);
             });
+        } else {
+            throw new Error('EMIT no subscribers');
         }
     }
 
+    clear() {
+        this.events = {};
+    }
+
     _print() {
-        console.log("-----");
+        console.log('-----');
         Object.keys(this.events).forEach((element) => {
-            console.log("  ", element);
+            console.log('  ', element);
             this.events[element].forEach((event) => {
-                console.log("    ", event);
+                console.log('    ', event);
             });
         });
-        console.log("-----");
+        console.log('-----');
     }
 }

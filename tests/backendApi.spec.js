@@ -1,17 +1,15 @@
-"use strict";
+'use strict';
 
-import Fetcher from "../public/js/fetcher";
+import Fetcher from "../public/modules/fetcher";
 import { api } from "../public/hexandria/api";
 
 const fetcher = new Fetcher();
 
 const timeout = 500;
 
-describe("backendAPI", function() {
-
-    xdescribe("Login", function() {
-
-        it("GET /api/user must fail. Not authorized.", function(done) {
+describe('backendAPI', function() {
+    xdescribe('Login', function() {
+        it(`GET ${api.path.user} must fail. Not authorized.`, function(done) {
             fetcher.get(api.path.user)
                 .then((res) => {
                     expect(res.status).toBe(api.code.FORBIDDEN);
@@ -27,7 +25,7 @@ describe("backendAPI", function() {
                 });
         }, timeout);
 
-        it("POST /api/login must be ok", function(done) {
+        it(`POST ${api.path.login} must be ok.`, function(done) {
             fetcher.post(api.path.login, api.testUser)
                 .then((res) => {
                     expect(res.status).toBe(api.code.OK);
@@ -43,7 +41,7 @@ describe("backendAPI", function() {
                 });
         }, timeout);
 
-        it("GET /api/user must be ok.", function(done) {
+        it(`GET ${api.path.user} must be ok.`, function(done) {
             fetcher.get(api.path.user)
                 .then((res) => {
                     expect(res.status).toBe(api.code.OK);
@@ -61,7 +59,7 @@ describe("backendAPI", function() {
                 });
         }, timeout);
 
-        it("POST /api/login must fail", function(done) {
+        it(`POST ${api.path.login} must fail.`, function(done) {
             fetcher.post(api.path.login, api.testUser)
                 .then((res) => {
                     expect(res.status).toBe(api.code.FORBIDDEN);
@@ -77,7 +75,7 @@ describe("backendAPI", function() {
                 });
         }, timeout);
 
-        it("POST /api/logout must be ok", function(done) {
+        it(`POST ${api.path.logout} must be ok.`, function(done) {
             fetcher.post(api.path.logout)
                 .then((res) => {
                     expect(res.status).toBe(api.code.OK);
@@ -93,7 +91,7 @@ describe("backendAPI", function() {
                 });
         }, timeout);
 
-        it("GET /api/user must fail. Not authorized.", function(done) {
+        it(`GET ${api.path.user} must fail. Not authorized.`, function(done) {
             fetcher.get(api.path.user)
                 .then((res) => {
                     expect(res.status).toBe(api.code.FORBIDDEN);
@@ -110,26 +108,26 @@ describe("backendAPI", function() {
         }, timeout);
     });
 
-    xdescribe("Signup", function() {
-
+    describe('Signup', function() {
         beforeEach(function () {
-            const userNumber = Math.floor(Math.random() * 1000);
+            // const userNumber = Math.floor(Math.random() * 1000);
+            const userNumber = 1;
             this.testUser = {
-                login: "test-user-" + userNumber,
-                password: "test-password-" + userNumber,
+                login: `test-user-${userNumber}`,
+                password: `test-password-${userNumber}`,
             };
             console.log(this.testUser);
         });
 
-        it("POST /api/signup new user: must fail. No email.", function(done) {
+        it(`POST ${api.path.signup} ${this.testUser} must fail. No email.`, function(done) {
             fetcher.post(api.path.signup, this.testUser)
                 .then((res) => {
                     expect(res.status).toBe(api.code.BAD_REQUEST);
                     return res.json();
                 })
                 .then((json) => {
-                    console.log(json.description);
-                    //expect(json.description).toBe(api.auth.logout);
+                    console.log('signup', json);
+                    // expect(json.description).toBe(api.auth.logout);
                     done();
                 })
                 .catch((err) => {
@@ -138,8 +136,8 @@ describe("backendAPI", function() {
                 });
         }, timeout);
 
-        it("POST /api/signup new user: must be ok.", function(done) {
-            this.testUser.email = this.testUser.login + "@mail.ru";
+        it(`POST ${api.path.signup} ${this.testUser} must be ok.`, function(done) {
+            this.testUser.email = `${this.testUser.login}@mail.ru`;
             fetcher.post(api.path.signup, this.testUser)
                 .then((res) => {
                     console.log(res.status);
@@ -147,8 +145,55 @@ describe("backendAPI", function() {
                     return res.json();
                 })
                 .then((json) => {
-                    console.log(json.description);
+                    console.log(json);
                     // expect(json.description).toBe(api.auth.signup);
+                    done();
+                })
+                .catch((err) => {
+                    expect(err).toBeUndefined();
+                    done();
+                });
+        }, timeout);
+
+        it(`POST ${api.path.login} must be ok.`, function(done) {
+            fetcher.post(api.path.login, this.testUser)
+                .then((res) => {
+                    expect(res.status).toBe(api.code.OK);
+                    return res.json();
+                })
+                .then((json) => {
+                    expect(json.description).toBe(api.auth.login(this.testUser.login));
+                    done();
+                })
+                .catch((err) => {
+                    expect(err).toBeUndefined();
+                    done();
+                });
+        }, timeout);
+
+        it(`POST ${api.path.delete} new user: must be ok.`, function(done) {
+            this.testUser.email = `${this.testUser.login}@mail.ru`;
+            fetcher.post(api.path.delete)
+                .then((res) => {
+                    console.log(res.status);
+                    expect(res.status).toBe(api.code.OK);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(err);
+                    expect(err).toBeUndefined();
+                    done();
+                });
+        }, timeout);
+
+        it(`POST ${api.path.logout} must be ok.`, function(done) {
+            fetcher.post(api.path.logout)
+                .then((res) => {
+                    expect(res.status).toBe(api.code.OK);
+                    return res.json();
+                })
+                .then((json) => {
+                    expect(json.description).toBe(api.auth.logout);
                     done();
                 })
                 .catch((err) => {

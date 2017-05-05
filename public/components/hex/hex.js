@@ -1,7 +1,7 @@
-"use strict";
-
-import Button from "../button/button";
-import hex_template from "./hex_template.pug";
+import Button from '../button/button';
+import hexTemplate from './hexTemplate.pug';
+import UserPanel from '../user_panel/user_panel';
+import RegisterPanel from '../register_panel/register_panel';
 
 export default class Hex {
     /**
@@ -14,6 +14,7 @@ export default class Hex {
         this.phrase = data.hex_phrase;
         this.controls = data.controls;
         this.el = el;
+        this.el.setAttribute('class', 'hex');
         this.render();
     }
 
@@ -29,10 +30,14 @@ export default class Hex {
      * Update HTML
      */
     updateHtml() {
-        this.el.innerHTML = hex_template({
+        this.el.innerHTML = hexTemplate({
             hex_title: this.title,
             hex_phrase: this.phrase,
         });
+        this.registerPanel = new RegisterPanel();
+        this.el.querySelector('.hex__panel').appendChild(this.registerPanel.el);
+        this.userPanel = new UserPanel();
+        this.el.querySelector('.hex__panel').appendChild(this.userPanel.el);
     }
 
     /**
@@ -44,9 +49,9 @@ export default class Hex {
         this.about = new Button(this.controls.about);
         this.scoreboard = new Button(this.controls.scoreboard);
 
-        this.el.querySelector(".hex__buttons-main").appendChild(this.singleplayer.el);
-        this.el.querySelector(".hex__buttons-main").appendChild(this.multiplayer.el);
-        this.el.querySelector(".hex__buttons-minor").appendChild(this.about.el);
-        this.el.querySelector(".hex__buttons-minor").appendChild(this.scoreboard.el);
+        this.el.querySelector('.hex__buttons-main').appendChild(this.singleplayer.el);
+        this.el.querySelector('.hex__buttons-main').appendChild(this.multiplayer.el);
+        this.el.querySelector('.hex__buttons-minor').appendChild(this.about.el);
+        this.el.querySelector('.hex__buttons-minor').appendChild(this.scoreboard.el);
     }
 }

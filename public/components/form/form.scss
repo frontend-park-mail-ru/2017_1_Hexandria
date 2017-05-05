@@ -1,6 +1,17 @@
 .form {
+  position: absolute;
+  width: 65%;
+  height: 100%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  // -----
+  border-left: #9197ae solid 10px;
+  border-right: #9197ae solid 10px;
+
   &__button {
     @extend .button !optional;
+
     position: relative;
     width: 50%;
     margin: 2% 25% 5% 25%;
@@ -8,11 +19,11 @@
   }
 
   &__error {
-
   }
 
   &__input {
     @extend .input !optional;
+
     display: inline-block;
     width: 90%;
     margin: 20px 5% 20px 5%;

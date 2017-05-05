@@ -16,7 +16,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 before_deploy:
-  - npm run build
+  - npm run _webpack
 
 deploy:
   provider: heroku

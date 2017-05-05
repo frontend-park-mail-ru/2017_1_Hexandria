@@ -1,24 +1,21 @@
-"use strict";
-
-import "./register_panel.scss";
-import Button from "../button/button";
-import Router from "../../modules/router";
+import Button from '../button/button';
+import Router from '../../modules/router';
 
 export default class RegisterPanel {
     /**
      * Register panel constructor
      */
     constructor() {
-        this.el = document.createElement("div");
+        this.el = document.createElement('div');
         this._render();
     }
 
     hide() {
-        this.el.style.visibility = "hidden";
+        this.el.style.visibility = 'hidden';
     }
 
     show() {
-        this.el.style.visibility = "visible";
+        this.el.style.visibility = 'visible';
     }
 
     /**
@@ -33,7 +30,7 @@ export default class RegisterPanel {
      * Update HTML
      */
     updateHtml() {
-        this.el.setAttribute("class", "register_panel");
+        this.el.setAttribute('class', 'register_panel');
     }
 
     /**
@@ -41,24 +38,24 @@ export default class RegisterPanel {
      */
     installControls() {
         this.login = new Button({
-            text: "Login",
+            text: 'Login',
             attrs: {
-                class: "register_panel__login",
+                class: 'register_panel__login',
             },
             events: {
                 click: (event) => {
-                    (new Router()).go("/login");
+                    (new Router()).go('/login');
                 },
             },
         });
         this.signup = new Button({
-            text: "Signup",
+            text: 'Signup',
             attrs: {
-                class: "register_panel__signup",
+                class: 'register_panel__signup',
             },
             events: {
                 click: (event) => {
-                    (new Router()).go("/signup");
+                    (new Router()).go('/signup');
                 },
             },
         });

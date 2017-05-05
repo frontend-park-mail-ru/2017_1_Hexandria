@@ -1,7 +1,4 @@
-"use strict";
-
-import "./game.scss";
-import game_template from "./game_template.pug";
+import gameTemplate from './gameTemplate.pug';
 
 export default class Game {
     /**
@@ -9,7 +6,7 @@ export default class Game {
      */
     constructor() {
         // this.el = el;
-        this.el = document.createElement("div");
+        this.el = document.createElement('div');
         this.render();
     }
 
@@ -24,6 +21,6 @@ export default class Game {
      * Update HTMl
      */
     updateHtml() {
-        this.el.innerHTML = game_template();
+        this.el.innerHTML = gameTemplate();
     }
 }

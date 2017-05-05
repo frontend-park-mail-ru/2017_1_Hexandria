@@ -1,24 +1,28 @@
-"use strict";
-
-import * as THREE from "three";
-import CapitalGame from "./CapitalGame";
-import UnitGame from "./UnitGame";
-import HexUtils from "./hexUtils";
+import * as THREE from 'three';
+import UtilsGraphics from './utilsGraphics';
 
 const _highlightedColor = 0xf08080;
 const _selectedSquadColor = 0xff0000;
 const _selectedAreaColor = 0xffff00;
 const _grassColor = 0x80f080;
 
-export default class HexGame extends THREE.Mesh {
+export default class HexGraphics extends THREE.Mesh {
+    constructor(color, x, y, z) {
+        const geometry = UtilsGraphics.getHexGeometry();
 
-    constructor(scene, color, x, y, z) {
-        const geometry = HexUtils.getHexGeometry();
-
-        super(geometry, new THREE.MeshPhongMaterial({ color, side: THREE.DoubleSide }));
-        this.position.set(...HexUtils.getPosition(x, y), z);
+        const texture = new THREE.TextureLoader().load('textures/grass.jpg');
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        super(geometry, new THREE.MeshPhongMaterial({
+            color,
+            side: THREE.DoubleSide,
+            map: texture,
+        }));
+        this.position.set(...UtilsGraphics.getPosition(x, y), z);
         this.rotation.set(0, 0, 0);
         this.scale.set(1, 1, 1);
+
+        this.name = 'hex';
 
         this.x = x;
         this.y = y;
@@ -28,7 +32,6 @@ export default class HexGame extends THREE.Mesh {
         this.hasTown = false;
         this.color = color;
         this.hasUnit = false;
-        this.scene = scene;
 
         this.selectedSquad = false;
         this.selectedArea = false;
@@ -58,54 +61,26 @@ export default class HexGame extends THREE.Mesh {
     }
 
     selectSquad() {
-        console.log("SELECT");
+        console.log('selectSquad');
         this.selectedSquad = true;
         this.material.emissive.setHex(_selectedSquadColor);
     }
 
-    selectArea() {
-        console.log("SELECT");
-        this.selectedArea = true;
-        this.material.emissive.setHex(_selectedAreaColor);
-    }
-
-    unselect() {
-        console.log("UNSELECT");
-        this.selected = false;
-        this.material.emissive.setHex(this.currentHex);
-    }
-
     unselectSquad() {
-        console.log(this.material.emissive);
+        console.log('unselectSquad', this.material.emissive);
         this.selectedSquad = false;
         this.material.emissive.setHex(null);
     }
 
+    selectArea() {
+        console.log('selectArea');
+        this.selectedArea = true;
+        this.material.emissive.setHex(_selectedAreaColor);
+    }
+
     unselectArea() {
+        console.log('unselectArea');
         this.selectedArea = false;
         this.material.emissive.setHex(null);
-    }
-
-    createUnit(owner) {
-        this.hasUnit = true;
-        this.unit = new UnitGame(owner);
-        this.unit.object.position.copy(this.position);
-        this.scene.add(this.unit.object);
-    }
-
-    createCapital(owner) {
-        this.hasCapital = true;
-        this.capital = new CapitalGame(owner);
-        this.capital.object.position.copy(this.position);
-        this.scene.add(this.capital.object);
-    }
-
-    removeUnit() {
-        this.hasUnit = false;
-        this.scene.remove(this.unit.object);
-        this.unit = null;
-    }
-
-    moveUnit(destinationHex) {
     }
 }
