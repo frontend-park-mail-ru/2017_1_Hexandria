@@ -26,6 +26,7 @@ export default class LoginView extends View {
                 controls: [
                     {
                         text: 'Login',
+                        tagName: 'button',
                         attrs: {
                             class: 'form__button',
                         },
