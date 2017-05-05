@@ -4,8 +4,6 @@ import { api } from '../hexandria/api';
 
 import View from './view';
 import Hex from '../components/hex/hex';
-// import UserPanel from '../components/user_panel/user_panel';
-// import RegisterPanel from '../components/register_panel/register_panel';
 
 export default class MainView extends View {
 
@@ -61,7 +59,6 @@ export default class MainView extends View {
         });
         pageIndex.appendChild(this.hex.el);
 
-        this.update();
 
         this.fetcher = new Fetcher();
         this.fetcher.get(api.path.user)
@@ -85,6 +82,8 @@ export default class MainView extends View {
 
         this._el = pageIndex;
         this.hide();
+
+        this.update();
     }
 
     init(options = {}) {
@@ -99,19 +98,16 @@ export default class MainView extends View {
     update() {
         super.update();
 
-
         const user = (new Router()).getUser();
-        if (this.user !== user) {
-            if (user) {
-                this.hex.userPanel.setUser(user);
-                this.hex.userPanel._render();
-                this.hex.userPanel.show();
-                this.hex.registerPanel.hide();
-            } else {
-                this.hex.userPanel.hide();
-                this.hex.registerPanel.show();
-            }
+        if (user !== 'guest' && user !== this.user) {
             this.user = user;
+            this.hex.userPanel.updateUser();
+
+            this.hex.userPanel.show();
+            this.hex.registerPanel.hide();
+        } else {
+            this.hex.userPanel.hide();
+            this.hex.registerPanel.show();
         }
     }
 

@@ -1,36 +1,10 @@
+@import "./scheme";
 @import url('https://fonts.googleapis.com/css?family=Lato');
-@import "components/button/button";
-@import "components/input/input";
-@import "components/game/game";
-@import "components/user_panel/user_panel";
-@import "components/register_panel/register_panel";
-@import "components/title/title";
-@import "components/hex/hex";
-@import "components/form/form";
 
 html,
 body {
   font-family: 'Lato', sans-serif;
-  background-color: #211a1d;
+  background-color: $hexandria-background;
   margin: 0;
   padding: 0;
-  height: 100%;
-  overflow-y: hidden;
-}
-
-.back-button {
-  @extend .button;
-
-  position: absolute;
-  left: 5%;
-  top: 5%;
-}
-
-#index,
-#game,
-#about,
-#scoreboard,
-#login,
-#signup {
-  height: 100%;
 }

@@ -3,7 +3,7 @@ import Fetcher from '../modules/fetcher';
 import { api } from '../hexandria/api';
 
 import View from './view';
-import Button from '../components/button/button';
+import Title from '../components/title/title';
 import Form from '../components/form/form';
 
 export default class SignupView extends View {
@@ -14,16 +14,11 @@ export default class SignupView extends View {
 
         const pageSignup = document.getElementById('signup');
 
-        const backButtonData = {
-            text: '⬅',
-            attrs: {
-                class: 'back-button',
-            },
-            events: {
-                click: (event) => { (new Router()).go('/'); },
-            },
-        };
-        pageSignup.appendChild(new Button(backButtonData).el);
+        const title = new Title({
+            text: 'Signup',
+            'back-button': true,
+        });
+        pageSignup.appendChild(title.el);
 
         const signupForm = new Form({
             el: document.createElement('form'),
@@ -31,6 +26,9 @@ export default class SignupView extends View {
                 controls: [
                     {
                         text: 'Signup',
+                        attrs: {
+                            class: 'form__button',
+                        },
                     },
                 ],
                 inputs: [

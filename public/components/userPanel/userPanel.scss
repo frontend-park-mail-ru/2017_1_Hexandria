@@ -1,0 +1,25 @@
+@import "../button/button";
+@import "../../scheme";
+
+.user-panel {
+  z-index: 1;
+  margin: auto;
+  //position: absolute;
+
+  &__username {
+    display: inline-block;
+    font-size: 150%;
+    color: $hexandria-white;
+    vertical-align: middle;
+  }
+
+  &__logout {
+    @extend .button;
+
+    display: inline-block;
+    color: $hexandria-white;
+    background-color: $hexandria-background;
+    //border: none;
+    //text-decoration: underline;
+  }
+}

@@ -1,6 +1,6 @@
 import View from '../../views/view';
-import Router from '../../modules/router';
 import Button from '../../components/button/button';
+import Title from '../../components/title/title';
 import Mediator from '../../modules/mediator';
 import { EVENTS } from '../../hexandria/events';
 
@@ -9,19 +9,15 @@ export default class HexandriaStartView extends View {
         super();
         this.init({
             attrs: {
-                class: 'view-start',
+                class: 'hexandria__view-start',
             },
         });
 
-        const backButton = new Button({
-            text: '⬅',
-            attrs: {
-                class: 'back-button',
-            },
-            events: {
-                click: (event) => { (new Router()).go('/'); },
-            },
+        const title = new Title({
+            text: 'StartView',
+            'back-button': true,
         });
+        this._el.appendChild(title.el);
 
         const startButton = new Button({
             text: 'start',
@@ -34,8 +30,6 @@ export default class HexandriaStartView extends View {
                 },
             },
         });
-
-        this._el.appendChild(backButton.el);
         this._el.appendChild(startButton.el);
 
         this.gameEl = document.getElementById('game');

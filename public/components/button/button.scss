@@ -1,17 +1,36 @@
+@import "../../scheme";
+
 .button {
+  display: inline-block;
   text-align: center;
   font-size: 150%;
-  color: white;
+  color: $hexandria-white;
+  margin: 0 5px;
   padding: 10px;
   text-decoration: none;
-  background-color: #211a1d;
-  border: 1px solid #f8f0fb;
-  display: inline-block;
+  background-color: $hexandria-background;
+  border: 1px solid $hexandria-default;
   vertical-align: middle;
-  transform: perspective(1px) translateZ(0);
+  min-width: 150px;
 
   &:hover {
-    background-color: #9197ae;
+    background-color: $hexandria-default;
     cursor: pointer;
+  }
+}
+
+.back-button {
+  @extend .button;
+
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  min-width: unset;
+}
+
+@media screen and (max-width: $max-width) {
+  .button {
+    font-size: 200%;
+    padding: 15px;
   }
 }
