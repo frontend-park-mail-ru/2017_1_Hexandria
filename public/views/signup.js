@@ -92,7 +92,4 @@ export default class SignupView extends View {
         this._el = pageSignup;
         this.hide();
     }
-
-    init(options = {}) {
-    }
 }

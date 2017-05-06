@@ -7,7 +7,7 @@ const fetcher = new Fetcher();
 
 const timeout = 500;
 
-describe('backendAPI', function() {
+xdescribe('backendAPI', function() {
     xdescribe('Login', function() {
         it(`GET ${api.path.user} must fail. Not authorized.`, function(done) {
             fetcher.get(api.path.user)

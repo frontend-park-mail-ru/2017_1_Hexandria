@@ -81,7 +81,4 @@ export default class LoginView extends View {
         this._el = pageLogin;
         this.hide();
     }
-
-    init(options = {}) {
-    }
 }

@@ -9,7 +9,7 @@ import HexandriaUtils from './hexandriaUtils';
 const OrbitControls = require('three-orbit-controls')(THREE);
 
 export default class HexandriaGraphics {
-    constructor(game, element) {
+    constructor(game) {
         console.log('HexandriaGraphics created');
 
         this.__move = (e) => { this.onDocumentMouseMove(e); };
@@ -87,8 +87,7 @@ export default class HexandriaGraphics {
         HexandriaUtils.forFieldTowns(
             this.game,
             (town) => {
-                const newTown = new TownGraphics(this._scene, 0x777777, town);
-                this.townsMap[town.name] = newTown;
+                this.townsMap[town.name] = new TownGraphics(this._scene, 0x777777, town);
             },
         );
 

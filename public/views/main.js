@@ -24,7 +24,7 @@ export default class MainView extends View {
                             class: 'hex__singleplayer',
                         },
                         events: {
-                            click: (event) => { (new Router()).go('/singleplayer'); },
+                            click: () => { (new Router()).go('/singleplayer'); },
                         },
                     },
                     multiplayer: {
@@ -33,7 +33,7 @@ export default class MainView extends View {
                             class: 'hex__multiplayer',
                         },
                         events: {
-                            click: (event) => { (new Router()).go('/multiplayer'); },
+                            click: () => { (new Router()).go('/multiplayer'); },
                         },
                     },
                     about: {
@@ -42,7 +42,7 @@ export default class MainView extends View {
                             class: 'hex__about',
                         },
                         events: {
-                            click: (event) => { (new Router()).go('/about'); },
+                            click: () => { (new Router()).go('/about'); },
                         },
                     },
                     scoreboard: {
@@ -51,7 +51,7 @@ export default class MainView extends View {
                             class: 'hex__scoreboard',
                         },
                         events: {
-                            click: (event) => { (new Router()).go('/scoreboard'); },
+                            click: () => { (new Router()).go('/scoreboard'); },
                         },
                     },
                 },
@@ -84,9 +84,6 @@ export default class MainView extends View {
         this.hide();
 
         this.update();
-    }
-
-    init(options = {}) {
     }
 
     show(options = {}) {

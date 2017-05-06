@@ -15,15 +15,15 @@ export default class HexandriaLogic {
         this.game = game;
         this._selected = null;
 
-        const sizeX = this.game.field.size.x;
-        const sizeY = this.game.field.size.y;
-        this.field = [...Array(sizeX).keys()].map(i => Array(sizeY));
-        for (let i = 0; i < sizeX; i++) {
-            for (let j = 0; j < sizeY; j++) {
-                // this.field[i][j] = i + j;
-                this.field[i][j] = new HexLogic();
-            }
-        }
+        // const sizeX = this.game.field.size.x;
+        // const sizeY = this.game.field.size.y;
+        // this.field = [...Array(sizeX).keys()].map(i => Array(sizeY));
+        // for (let i = 0; i < sizeX; i++) {
+        //     for (let j = 0; j < sizeY; j++) {
+        //         // this.field[i][j] = i + j;
+        //         this.field[i][j] = new HexLogic();
+        //     }
+        // }
 
         (new Mediator()).subscribe(this, EVENTS.KEYBOARD.ENTER_PRESSED, 'enterPressed');
         (new Mediator()).subscribe(this, EVENTS.TURN.START_TURN, 'gameLoop');
@@ -210,11 +210,11 @@ export default class HexandriaLogic {
         const to = data.to;
 
 
-        console.log(
-            'onMove field:',
-            this.field,
-            this.field[from.x][from.y],
-        );
+        // console.log(
+        //     'onMove field:',
+        //     this.field,
+        //     this.field[from.x][from.y],
+        // );
 
         const fromSquadObject = this.findSquad(data.from);
         console.log(fromSquadObject, to);

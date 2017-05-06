@@ -1,6 +1,5 @@
 import HexandriaLogic from './hexandriaLogic';
 import HexandriaGraphics from './hexandriaGraphics';
-import Mediator from '../modules/mediator';
 
 export default class HexandriaGame {
     constructor(Mode, user) {

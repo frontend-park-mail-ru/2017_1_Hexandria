@@ -1,5 +1,3 @@
-import Router from '../modules/router';
-
 import View from './view';
 import Title from '../components/title/title';
 
@@ -17,8 +15,5 @@ export default class AboutView extends View {
 
         this._el = pageAbout;
         this.hide();
-    }
-
-    init(options = {}) {
     }
 }

@@ -36,10 +36,10 @@ export default class UserPanel extends Component {
                 class: 'hex__button-logout',
             },
             events: {
-                click: (event) => {
+                click: () => {
                     console.log('post logout');
                     this.fetcher.post(api.path.logout)
-                        .then((res) => {
+                        .then(() => {
                             (new Router()).setUser(null);
                             (new Router()).update('/');
                         });

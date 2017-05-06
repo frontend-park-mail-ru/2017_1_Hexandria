@@ -13,9 +13,6 @@ export default class GameView extends View {
         this.hide();
     }
 
-    init(options = {}) {
-    }
-
     show(options = {}) {
         super.show();
 

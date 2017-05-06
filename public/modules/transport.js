@@ -1,5 +1,6 @@
 import Mediator from './mediator';
 import Router from './router';
+import { api } from '../hexandria/api';
 import { EVENTS } from '../hexandria/events';
 
 export default class Transport {
@@ -13,7 +14,7 @@ export default class Transport {
         // const host = 'ws://localhost:8082/game';
 
         this.ws = new WebSocket(host);
-        this.ws.onopen = (event) => {
+        this.ws.onopen = () => {
             console.log(`WebSocket open on address ${host}`);
 
             console.dir(this.ws);

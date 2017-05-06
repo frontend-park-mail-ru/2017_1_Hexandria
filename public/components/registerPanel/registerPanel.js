@@ -30,7 +30,7 @@ export default class RegisterPanel extends Component {
                 class: 'hex__button-login',
             },
             events: {
-                click: (event) => {
+                click: () => {
                     (new Router()).go('/login');
                 },
             },
@@ -41,7 +41,7 @@ export default class RegisterPanel extends Component {
                 class: 'hex__button-signup',
             },
             events: {
-                click: (event) => {
+                click: () => {
                     (new Router()).go('/signup');
                 },
             },
