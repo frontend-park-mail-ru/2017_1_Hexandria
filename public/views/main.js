@@ -1,6 +1,6 @@
 import Router from '../modules/router';
 import Fetcher from '../modules/fetcher';
-import { api } from '../hexandria/api';
+import { API } from '../hexandria/api';
 
 import View from './view';
 import Hex from '../components/hex/hex';
@@ -60,14 +60,14 @@ export default class MainView extends View {
         pageIndex.appendChild(this.hex.el);
 
 
-        this.fetcher = new Fetcher();
-        this.fetcher.get(api.path.user)
+        this.fetcher = new Fetcher(API.HOST);
+        this.fetcher.get(API.PATH.USER)
             .then((res) => {
-                if (res.status === api.code.OK) {
+                if (res.status === API.CODE.OK) {
                     console.log('ok');
                     return res.json();
                 }
-                throw api.auth.error;
+                throw API.AUTH.ERROR;
             })
             .then((json) => {
                 console.log(json);

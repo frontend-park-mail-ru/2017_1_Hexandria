@@ -1,3 +1,4 @@
+import { API } from '../api';
 import { EVENTS } from '../events';
 import HexandriaLogic from '../hexandriaLogic';
 import Transport from '../../modules/transport';
@@ -7,7 +8,7 @@ export default class HexandriaLogicMultiplayer extends HexandriaLogic {
         super(game);
         console.log('HexandriaLogicMultiplayer');
 
-        this.transport = new Transport();
+        this.transport = new Transport(API.HOST);
     }
 
     eventMove(data) {

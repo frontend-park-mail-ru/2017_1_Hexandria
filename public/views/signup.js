@@ -1,6 +1,6 @@
 import Router from '../modules/router';
 import Fetcher from '../modules/fetcher';
-import { api } from '../hexandria/api';
+import { API } from '../hexandria/api';
 
 import View from './view';
 import Title from '../components/title/title';
@@ -10,7 +10,7 @@ export default class SignupView extends View {
     constructor(options = {}) {
         super(options);
 
-        this.fetcher = new Fetcher();
+        this.fetcher = new Fetcher(API.HOST);
 
         const pageSignup = document.getElementById('signup');
 
@@ -67,10 +67,10 @@ export default class SignupView extends View {
                         password: parent.password.value,
                     };
 
-                    this.fetcher.post(api.path.signup, user)
+                    this.fetcher.post(API.PATH.SIGNUP, user)
                         .then((res) => {
                             console.log(res.status);
-                            if (res.status === api.code.OK) {
+                            if (res.status === API.CODE.OK) {
                                 // (new Router()).setUser(user.login);
                                 (new Router()).go('/');
                                 return { description: 'signup success!' };

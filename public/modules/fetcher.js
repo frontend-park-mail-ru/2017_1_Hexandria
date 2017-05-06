@@ -1,8 +1,7 @@
 export default class Fetcher {
 
-    constructor() {
-        this.host = 'http://hexandria.ru:8082';
-        // this.host = 'http://localhost:8082';
+    constructor(host) {
+        this.address = `http://${host}`;
 
         this.options = {
             mode: 'cors',
@@ -21,7 +20,7 @@ export default class Fetcher {
         } else {
             this.options.body = null;
         }
-        return fetch(this.host + path, this.options);
+        return fetch(this.address + path, this.options);
     }
 
     get(path) {
