@@ -11,6 +11,7 @@
     "webpack": "webpack --progress --colors",
     "webpack-dev": "webpack --progress --colors --watch",
     "server": "node server.js",
+    "startheroku": "./node_modules/.bin/webpack && node server.js",
     "default": "npm run webpack && npm run server",
     "develop": "npm run webpack-dev & npm run server"
   },
