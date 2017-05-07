@@ -77,6 +77,9 @@ module.exports = {
                 {
                     from: path.join(__dirname, 'public', 'sw.js')
                     // to: path.join(__dirname, 'dist', 'sw.js'),
+                },
+                {
+                    from: path.join(__dirname, 'public', 'favicon.ico')
                 }
             ]
         ),
