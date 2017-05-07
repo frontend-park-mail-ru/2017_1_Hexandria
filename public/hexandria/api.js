@@ -1,33 +1,36 @@
-export const api = {};
+export const API = {};
 
-api.testUser = {
-    login: 'test-user',
-    password: 'test-password',
-    email: 'test_email@test.ru',
-};
+// API.testUser = {
+//     login: 'test-user',
+//     password: 'test-password',
+//     email: 'test_email@test.ru',
+// };
 
-api.code = {
+API.HOST = 'hexandria.ru:8082';
+// API.HOST = 'localhost.ru:8082';
+
+API.CODE = {
     OK: 200,
     BAD_REQUEST: 400,
     FORBIDDEN: 403,
 };
 
-api.auth = {
-    login(login) {
+API.AUTH = {
+    LOGIN(login) {
         return `Successfully authorized user ${login}`;
     },
-    logout: 'User successfully logged out',
-    error: 'UserEntity not authorized in this session!',
-    already: 'User already authorized in this session',
-    signup: 'Successfully registered user',
+    LOGOUT: 'User successfully logged out',
+    ERROR: 'UserEntity not authorized in this session!',
+    ALREADY: 'User already authorized in this session',
+    SIGNUP: 'Successfully registered user',
 };
 
-api.path = {
-    user: '/api/user',
-    login: '/api/user/login',
-    logout: '/api/user/logout',
-    signup: '/api/user/signup',
-    delete: '/api/user/delete',
+API.PATH = {
+    USER: '/api/user',
+    LOGIN: '/api/user/login',
+    LOGOUT: '/api/user/logout',
+    SIGNUP: '/api/user/signup',
+    DELETE: '/api/user/delete',
 };
 
-export default api;
+export default API;

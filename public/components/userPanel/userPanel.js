@@ -2,7 +2,7 @@ import './userPanel.scss';
 
 import Fetcher from '../../modules/fetcher';
 import Router from '../../modules/router';
-import { api } from '../../hexandria/api';
+import { API } from '../../hexandria/api';
 
 import userPanelTemplate from './userPanelTemplate.pug';
 import Button from '../button/button';
@@ -20,7 +20,7 @@ export default class UserPanel extends Component {
         });
 
         this.hide();
-        this.fetcher = new Fetcher();
+        this.fetcher = new Fetcher(API.HOST);
     }
 
     /**
@@ -36,10 +36,10 @@ export default class UserPanel extends Component {
                 class: 'hex__button-logout',
             },
             events: {
-                click: (event) => {
+                click: () => {
                     console.log('post logout');
-                    this.fetcher.post(api.path.logout)
-                        .then((res) => {
+                    this.fetcher.post(API.PATH.LOGOUT)
+                        .then(() => {
                             (new Router()).setUser(null);
                             (new Router()).update('/');
                         });

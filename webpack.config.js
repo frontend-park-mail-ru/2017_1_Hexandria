@@ -29,7 +29,7 @@ module.exports = {
     },
 
     output: {
-        filename: path.join('js', '[chunkhash].js'),
+        filename: path.join('js', '[name].js'),
         path: path.resolve(__dirname, 'dist')
     },
     watch: false,
@@ -58,14 +58,14 @@ module.exports = {
             filename: 'index.html',
             template: path.resolve(__dirname, 'public/index.html')
         }),
-        new ExtractTextPlugin(path.join('css', '[name].bundle.[hash].css')),
+        new ExtractTextPlugin(path.join('css', '[name].css')),
 
         new CopyWebpackPlugin(
             [
-                {
-                    from: path.join(__dirname, 'public', 'img'),
-                    to: path.join(__dirname, 'dist', 'img')
-                },
+                // {
+                //     from: path.join(__dirname, 'public', 'img'),
+                //     to: path.join(__dirname, 'dist', 'img')
+                // },
                 {
                     from: path.join(__dirname, 'public', 'textures'),
                     to: path.join(__dirname, 'dist', 'textures')

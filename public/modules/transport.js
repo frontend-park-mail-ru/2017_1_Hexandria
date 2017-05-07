@@ -3,18 +3,17 @@ import Router from './router';
 import { EVENTS } from '../hexandria/events';
 
 export default class Transport {
-    constructor() {
+    constructor(host) {
         if (Transport.__instance) {
             return Transport.__instance;
         }
         Transport.__instance = this;
 
-        const host = 'ws://hexandria.ru:8082/game';
-        // const host = 'ws://localhost:8082/game';
+        const address = `ws://${host}/game`;
 
-        this.ws = new WebSocket(host);
-        this.ws.onopen = (event) => {
-            console.log(`WebSocket open on address ${host}`);
+        this.ws = new WebSocket(address);
+        this.ws.onopen = () => {
+            console.log(`WebSocket open on address ${address}`);
 
             console.dir(this.ws);
 
@@ -27,7 +26,7 @@ export default class Transport {
             }, 10 * 1000);
 
             this.ws.onclose = () => {
-                console.log(`WebSocket close on address ${host}`);
+                console.log(`WebSocket close on address ${address}`);
                 clearInterval(this.interval);
             };
         };

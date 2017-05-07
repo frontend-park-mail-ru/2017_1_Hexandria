@@ -17,7 +17,7 @@ import MainView from './views/main';
 const app = new HexandriaApp();
 (new Mediator()).done();
 
-// SwLoader.register('sw.js');
+SwLoader.register('/sw.js');
 
 (new Router())
     .addRoute('/singleplayer', SingleplayerView)
