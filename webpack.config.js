@@ -71,6 +71,10 @@ module.exports = {
                     to: path.join(__dirname, 'dist', 'textures')
                 },
                 {
+                    from: path.join(__dirname, 'public', 'fonts'),
+                    to: path.join(__dirname, 'dist', 'fonts')
+                },
+                {
                     from: path.join(__dirname, 'public', 'sw.js')
                     // to: path.join(__dirname, 'dist', 'sw.js'),
                 }
