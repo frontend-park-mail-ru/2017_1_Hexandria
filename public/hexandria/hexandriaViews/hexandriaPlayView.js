@@ -1,5 +1,6 @@
 import View from '../../views/view';
-import Game from '../../components/game/game';
+import Title from '../../components/title/title';
+import Component from '../../components/component';
 
 export default class HexandriaPlayView extends View {
     constructor(options = {}) {
@@ -10,9 +11,18 @@ export default class HexandriaPlayView extends View {
             },
         });
 
-        this.game = new Game();
+        const title = new Title({
+            text: 'PlayView',
+            'back-button': true,
+        });
+        this._el.appendChild(title.el);
 
-        this._el.appendChild(this.game.el);
+        const canvasContainer = new Component({
+            attrs: {
+                class: 'threejs-container',
+            },
+        });
+        this._el.appendChild(canvasContainer.el);
 
         this.gameEl = document.getElementById('game');
         this.gameEl.appendChild(this._el);

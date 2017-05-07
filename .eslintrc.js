@@ -29,6 +29,7 @@ module.exports = {
         "comma-dangle": "warn",
         "no-unused-vars": "off",
         "space-before-function-paren": "off",
+        "guard-for-in": "warn",
 
         "indent": ["error", 4, {"SwitchCase": 1}],
         "max-len": ["error", {
