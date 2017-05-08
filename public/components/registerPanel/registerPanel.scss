@@ -1,10 +1,9 @@
-@import "../button/button";
-@import "../../scheme";
+@import '../button/button';
+@import '../../scheme';
 
 .register-panel {
   z-index: 1;
   margin: auto;
-  //position: absolute;
 
   &__button {
     @extend .button;
@@ -15,8 +14,6 @@
     background-color: $hexandria-background;
     border: none;
     vertical-align: middle;
-    //-webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
-    //position: relative;
   }
 }

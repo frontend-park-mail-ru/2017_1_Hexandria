@@ -1,13 +1,9 @@
-@import "../button/button";
-@import "../../scheme";
+@import '../button/button';
+@import '../../scheme';
 
 .hex {
   padding: 0 100px;
   margin: 0 auto;
-  // -----
-  //border-left: #9197ae solid 10px;
-  //border-right: #9197ae solid 10px;
-  //min-width: 400px;
 
   &__panel {
     padding: 10px 0;
@@ -39,8 +35,6 @@
   }
 
   &__buttons {
-    //margin: 25px auto 5;
-    //width: 80%;
     background-color: $hexandria-background;
     padding: 50px 0 5px;
     text-align: center;

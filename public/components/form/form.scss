@@ -1,6 +1,6 @@
-@import "../button/button";
-@import "../input/input";
-@import "../hex/hex";
+@import '../button/button';
+@import '../input/input';
+@import '../hex/hex';
 
 .form {
   padding: 0 100px;
@@ -19,11 +19,6 @@
 
   &__input {
     @extend .input;
-
-    //width: 100%;
-    //margin: 10px 5px;
-    //padding: 10px 5px;
-    //box-sizing: border-box;
   }
 }
 

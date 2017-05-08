@@ -1,10 +1,9 @@
-@import "../button/button";
-@import "../../scheme";
+@import '../button/button';
+@import '../../scheme';
 
 .user-panel {
   z-index: 1;
   margin: auto;
-  //position: absolute;
 
   &__username {
     display: inline-block;
@@ -19,7 +18,5 @@
     display: inline-block;
     color: $hexandria-white;
     background-color: $hexandria-background;
-    //border: none;
-    //text-decoration: underline;
   }
 }
