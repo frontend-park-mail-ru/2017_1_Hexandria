@@ -5,15 +5,8 @@
   z-index: 1;
   margin: auto;
 
-  &__button {
+  &__button-login,
+  &__button-signup {
     @extend .button;
-
-    display: inline-block;
-    text-align: center;
-    color: $hexandria-white;
-    background-color: $hexandria-background;
-    border: none;
-    vertical-align: middle;
-    transform: perspective(1px) translateZ(0);
   }
 }

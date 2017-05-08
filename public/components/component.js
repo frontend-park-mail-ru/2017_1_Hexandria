@@ -4,11 +4,20 @@ export default class Component {
      * @param {Object} options
      */
     constructor(options = {}) {
-        this.text = options.text || '';
+        this.options = options;
+
         this.tagName = options.tagName || 'div';
         this.el = document.createElement(this.tagName);
+
+        if (options.text && options.childs) {
+            console.warn('Component text will be deleted!');
+        }
+        this.text = options.text || '';
+        this.childs = options.childs || [];
+
         this.attrs = options.attrs || {};
         this.events = options.events || {};
+
         this.render();
     }
 
@@ -17,6 +26,7 @@ export default class Component {
      */
     render() {
         this.innerHTML(this.text);
+        this.setChilds(this.childs);
         this.setAttrs(this.attrs);
         this.setEvents(this.events);
     }
@@ -27,6 +37,16 @@ export default class Component {
      */
     innerHTML(html = '') {
         this.el.innerHTML = html;
+    }
+
+    /**
+     * Set component childs
+     * @param {Object} [childs=[]]
+     */
+    setChilds(childs = []) {
+        for (const i in childs) {
+            this.el.appendChild(childs[i].el);
+        }
     }
 
     /**

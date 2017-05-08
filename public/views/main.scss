@@ -1,7 +1,7 @@
-@import '../button/button';
-@import '../../scheme';
+@import '../components/button/button';
+@import '../scheme';
 
-.hex {
+.main {
   padding: 0 100px;
   margin: 0 auto;
 
@@ -40,12 +40,6 @@
     text-align: center;
   }
 
-  &__button-login,
-  &__button-signup,
-  &__button-logout {
-    @extend .button;
-  }
-
   &__singleplayer,
   &__multiplayer {
     @extend .button;
@@ -82,7 +76,7 @@
 }
 
 @media screen and (max-width: $max-width) {
-  .hex {
+  .main {
     padding: 0 5px;
   }
 }

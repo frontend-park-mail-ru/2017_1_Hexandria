@@ -41,7 +41,6 @@ export default class HexandriaApp {
         (new Mediator()).subscribe(this, EVENTS.GAME.FINISH, 'gameFinish');
     }
     _hideAll() {
-        console.warn('hideAll()');
         for (const v in this.views) {
             console.log(v, this.views[v]);
             this.views[v].hide();

@@ -10,13 +10,10 @@
     font-size: 150%;
     color: $hexandria-white;
     vertical-align: middle;
+    margin: 0 10px;
   }
 
-  &__logout {
+  &__button-logout {
     @extend .button;
-
-    display: inline-block;
-    color: $hexandria-white;
-    background-color: $hexandria-background;
   }
 }
