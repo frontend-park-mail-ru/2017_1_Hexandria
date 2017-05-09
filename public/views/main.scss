@@ -53,7 +53,10 @@
       background-color: unset;
       border-color: $hexandria-special;
       cursor: pointer;
-      transition: border-left-color 0.25s, border-right-color 0.25s, border-top-color 0.5s;
+      transition:
+        border-left-color 0.4s,
+        border-right-color 0.4s,
+        border-top-color 0.8s;
     }
   }
 
@@ -70,7 +73,10 @@
       background-color: unset;
       border-color: $hexandria-default;
       cursor: pointer;
-      transition: border-left-color 0.25s, border-right-color 0.25s, border-top-color 0.5s;
+      transition:
+        border-left-color 0.4s,
+        border-right-color 0.4s,
+        border-top-color 0.8s;
     }
   }
 }

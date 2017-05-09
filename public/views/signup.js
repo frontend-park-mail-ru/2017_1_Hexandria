@@ -5,6 +5,7 @@ import { API } from '../hexandria/api';
 import View from './view';
 import Title from '../components/title/title';
 import Form from '../components/form/form';
+import Component from '../components/component';
 
 export default class SignupView extends View {
     constructor(options = {}) {
@@ -19,6 +20,13 @@ export default class SignupView extends View {
             'back-button': true,
         });
         pageSignup.appendChild(title.el);
+
+        this._errorComponent = new Component({
+            attrs: {
+                class: 'error',
+            },
+        });
+        pageSignup.appendChild(this._errorComponent.el);
 
         const signupForm = new Form({
             el: document.createElement('form'),
@@ -59,6 +67,7 @@ export default class SignupView extends View {
                 submit: (event) => {
                     event.preventDefault();
                     console.log('button_signup click');
+                    this.showError();
 
                     const parent = signupForm.el;
                     const user = {
@@ -79,6 +88,12 @@ export default class SignupView extends View {
                         })
                         .then((json) => {
                             console.log(json);
+                            if (json instanceof Array && json.length > 0) {
+                                console.log(json[0].error);
+                                this.showError(json[0].error);
+                            } else {
+                                console.log('signup', json);
+                            }
                         })
                         .catch((err) => {
                             console.log(err);
@@ -91,5 +106,15 @@ export default class SignupView extends View {
 
         this._el = pageSignup;
         this.hide();
+    }
+
+    showError(err = '') {
+        this._errorComponent.innerHTML(err);
+    }
+
+    hide() {
+        super.hide();
+
+        this.showError();
     }
 }

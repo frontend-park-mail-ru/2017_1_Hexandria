@@ -158,16 +158,14 @@ export default class MainView extends View {
         this.fetcher.get(API.PATH.USER)
             .then((res) => {
                 if (res.status === API.CODE.OK) {
-                    console.log('ok');
                     return res.json();
                 }
                 throw API.AUTH.ERROR;
             })
             .then((json) => {
                 console.log(json);
-                // this.login = json.login;
                 (new Router()).setUser(json.login);
-                this.show();
+                this.update();
             })
             .catch((err) => {
                 console.log(err);

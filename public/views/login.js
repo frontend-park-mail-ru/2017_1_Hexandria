@@ -5,6 +5,7 @@ import { API } from '../hexandria/api';
 import View from './view';
 import Title from '../components/title/title';
 import Form from '../components/form/form';
+import Component from '../components/component';
 
 export default class LoginView extends View {
     constructor(options = {}) {
@@ -14,13 +15,22 @@ export default class LoginView extends View {
 
         const pageLogin = document.getElementById('login');
 
-        const title = new Title({
+        this._title = new Title({
             text: 'Login',
             'back-button': true,
         });
-        pageLogin.appendChild(title.el);
+        pageLogin.appendChild(this._title.el);
 
-        const loginForm = new Form({
+
+        this._errorComponent = new Component({
+            attrs: {
+                class: 'error',
+            },
+        });
+        pageLogin.appendChild(this._errorComponent.el);
+
+
+        this._loginForm = new Form({
             el: document.createElement('form'),
             data: {
                 controls: [
@@ -49,8 +59,9 @@ export default class LoginView extends View {
                 submit: (event) => {
                     event.preventDefault();
                     console.log('button_login click');
+                    this.showError();
 
-                    const parent = loginForm.el;
+                    const parent = this._loginForm.el;
                     const user = {
                         login: parent.login.value,
                         password: parent.password.value,
@@ -67,18 +78,33 @@ export default class LoginView extends View {
                             return res.json();
                         })
                         .then((json) => {
-                            console.log(json);
+                            if (json instanceof Array && json.length > 0) {
+                                console.log(json[0].error);
+                                this.showError(json[0].error);
+                            } else {
+                                console.log('login', json);
+                            }
                         })
                         .catch((err) => {
-                            console.log(err);
+                            console.log('catch', err);
                         });
                 },
             },
         });
-        pageLogin.appendChild(loginForm.el);
+        pageLogin.appendChild(this._loginForm.el);
 
 
         this._el = pageLogin;
         this.hide();
+    }
+
+    showError(err = '') {
+        this._errorComponent.innerHTML(err);
+    }
+
+    hide() {
+        super.hide();
+
+        this.showError();
     }
 }

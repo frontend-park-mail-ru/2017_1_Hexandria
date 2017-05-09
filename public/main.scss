@@ -21,3 +21,32 @@ body {
 .threejs-container canvas {
   display: block; // there is a 4px gap below canvas
 }
+
+.error {
+  margin: 10px 100px;
+  padding: 5px;
+  font-size: 150%;
+  //
+  opacity: 1;
+  color: $hexandria-special;
+  border: 1px solid $hexandria-special;
+  transition:
+    opacity 0.1s,
+    color 2s,
+    border 2s;
+}
+
+.error:empty {
+  margin: 0 100px;
+  padding: 0;
+  //
+  opacity: 0;
+  color: $hexandria-background;
+  border: 1px solid $hexandria-background;
+}
+
+@media screen and (max-width: $max-width) {
+  .error {
+    margin: 10px;
+  }
+}
