@@ -5,7 +5,6 @@ import { API } from '../hexandria/api';
 import View from './view';
 import Title from '../components/title/title';
 import Form from '../components/form/form';
-import Component from '../components/component';
 
 export default class SignupView extends View {
     constructor(options = {}) {
@@ -21,55 +20,47 @@ export default class SignupView extends View {
         });
         pageSignup.appendChild(title.el);
 
-        this._errorComponent = new Component({
-            attrs: {
-                class: 'error',
-            },
-        });
-        pageSignup.appendChild(this._errorComponent.el);
 
-        const signupForm = new Form({
-            el: document.createElement('form'),
-            data: {
-                controls: [
-                    {
-                        text: 'Signup',
-                        tagName: 'button',
-                        attrs: {
-                            class: 'form__button',
-                        },
-                    },
-                ],
-                inputs: [
-                    {
-                        name: 'login',
-                        type: 'text',
-                        placeholder: 'Enter login',
-                    },
-                    {
-                        name: 'email',
-                        type: 'text',
-                        placeholder: 'Enter e-mail',
-                    },
-                    {
-                        name: 'password',
-                        type: 'password',
-                        placeholder: 'Enter password',
-                    },
-                    {
-                        name: 'double_password',
-                        type: 'password',
-                        placeholder: 'Enter password second time',
-                    },
-                ],
+        this._signupForm = new Form({
+            attrs: {
+                class: 'form',
+            },
+            inputs: [
+                {
+                    name: 'login',
+                    type: 'text',
+                    placeholder: 'Enter login',
+                },
+                {
+                    name: 'email',
+                    type: 'text',
+                    placeholder: 'Enter e-mail',
+                },
+                {
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'Enter password',
+                },
+                {
+                    name: 'double_password',
+                    type: 'password',
+                    placeholder: 'Enter password second time',
+                },
+            ],
+            button: {
+                text: 'Signup',
+                tagName: 'button',
+                attrs: {
+                    class: 'form__button',
+                },
             },
             events: {
                 submit: (event) => {
                     event.preventDefault();
                     console.log('button_signup click');
-                    this.showError();
+                    this._signupForm.showError();
 
-                    const parent = signupForm.el;
+                    const parent = this._signupForm.el;
                     const user = {
                         login: parent.login.value,
                         email: parent.email.value,
@@ -90,7 +81,7 @@ export default class SignupView extends View {
                             console.log(json);
                             if (json instanceof Array && json.length > 0) {
                                 console.log(json[0].error);
-                                this.showError(json[0].error);
+                                this._signupForm.showError(json[0].error);
                             } else {
                                 console.log('signup', json);
                             }
@@ -101,20 +92,16 @@ export default class SignupView extends View {
                 },
             },
         });
-        pageSignup.appendChild(signupForm.el);
+        pageSignup.appendChild(this._signupForm.el);
 
 
         this._el = pageSignup;
         this.hide();
     }
 
-    showError(err = '') {
-        this._errorComponent.innerHTML(err);
-    }
-
     hide() {
         super.hide();
 
-        this.showError();
+        this._signupForm.showError();
     }
 }

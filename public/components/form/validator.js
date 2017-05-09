@@ -1,10 +1,9 @@
 export default class Validator {
-    // Constants
     constructor() {
         this.minLength = 4;
         this.maxLength = 10;
         this.emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        this.passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
+        // this.passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
     }
 
     checkEmpty(input) {
@@ -27,11 +26,11 @@ export default class Validator {
             throw new SyntaxError('This is not email');
         }
     }
-    checkPassword(input) {
-        if (!this.passwordRegex.test(input.value)) {
-            throw new SyntaxError('Not a password');
-        }
-    }
+    // checkPassword(input) {
+    //     if (!this.passwordRegex.test(input.value)) {
+    //         throw new SyntaxError('Not a password');
+    //     }
+    // }
     checkDoublePassword(input) {
         if (input.value !== input.parentElement.querySelector('input[name="password"]').value) {
             throw new SyntaxError('Passwords are not equal');
@@ -51,7 +50,7 @@ export default class Validator {
         this.checkEmpty(input);
         this.checkMinLength(input);
         this.checkMaxLength(input);
-        this.checkPassword(input);
+        // this.checkPassword(input);
     }
     validateDoublePasswords(input) {
         this.checkDoublePassword(input);

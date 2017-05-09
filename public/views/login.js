@@ -5,7 +5,6 @@ import { API } from '../hexandria/api';
 import View from './view';
 import Title from '../components/title/title';
 import Form from '../components/form/form';
-import Component from '../components/component';
 
 export default class LoginView extends View {
     constructor(options = {}) {
@@ -22,44 +21,34 @@ export default class LoginView extends View {
         pageLogin.appendChild(this._title.el);
 
 
-        this._errorComponent = new Component({
-            attrs: {
-                class: 'error',
-            },
-        });
-        pageLogin.appendChild(this._errorComponent.el);
-
-
         this._loginForm = new Form({
-            el: document.createElement('form'),
-            data: {
-                controls: [
-                    {
-                        text: 'Login',
-                        tagName: 'button',
-                        attrs: {
-                            class: 'form__button',
-                        },
-                    },
-                ],
-                inputs: [
-                    {
-                        name: 'login',
-                        type: 'text',
-                        placeholder: 'Enter Login',
-                    },
-                    {
-                        name: 'password',
-                        type: 'password',
-                        placeholder: 'Enter Password',
-                    },
-                ],
+            attrs: {
+                class: 'form',
+            },
+            inputs: [
+                {
+                    name: 'login',
+                    type: 'text',
+                    placeholder: 'Enter Login',
+                },
+                {
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'Enter Password',
+                },
+            ],
+            button: {
+                text: 'Login',
+                tagName: 'button',
+                attrs: {
+                    class: 'form__button',
+                },
             },
             events: {
                 submit: (event) => {
                     event.preventDefault();
                     console.log('button_login click');
-                    this.showError();
+                    this._loginForm.showError();
 
                     const parent = this._loginForm.el;
                     const user = {
@@ -80,7 +69,7 @@ export default class LoginView extends View {
                         .then((json) => {
                             if (json instanceof Array && json.length > 0) {
                                 console.log(json[0].error);
-                                this.showError(json[0].error);
+                                this._loginForm.showError(json[0].error);
                             } else {
                                 console.log('login', json);
                             }
@@ -98,13 +87,9 @@ export default class LoginView extends View {
         this.hide();
     }
 
-    showError(err = '') {
-        this._errorComponent.innerHTML(err);
-    }
-
     hide() {
         super.hide();
 
-        this.showError();
+        this._loginForm.showError();
     }
 }

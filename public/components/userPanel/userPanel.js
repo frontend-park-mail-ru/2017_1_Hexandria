@@ -29,7 +29,7 @@ export default class UserPanel extends Component {
      * @param {String} html
      */
     innerHTML(html = '') {
-        this.el.innerHTML = userPanelTemplate({ username: this.options.username });
+        super.innerHTML(userPanelTemplate({ username: this.options.username }));
 
         this.logout = new Button({
             text: 'Logout',
