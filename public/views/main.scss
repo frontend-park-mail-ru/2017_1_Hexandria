@@ -2,8 +2,7 @@
 @import '../scheme';
 
 .main {
-  padding: 0 100px;
-  margin: 0 auto;
+  @extend .center-block__;
 
   &__panel {
     padding: 10px 0;
@@ -78,11 +77,5 @@
         border-right-color 0.4s,
         border-top-color 0.8s;
     }
-  }
-}
-
-@media screen and (max-width: $max-width) {
-  .main {
-    padding: 0 5px;
   }
 }

@@ -13,13 +13,13 @@ export default class HexandriaStartView extends View {
             },
         });
 
-        const title = new Title({
+        this._title = new Title({
             text: 'StartView',
             'back-button': true,
         });
-        this._el.appendChild(title.el);
+        this._el.appendChild(this._title.el);
 
-        const startButton = new Button({
+        this._startButton = new Button({
             text: 'start',
             attrs: {
                 class: 'button',
@@ -30,11 +30,15 @@ export default class HexandriaStartView extends View {
                 },
             },
         });
-        this._el.appendChild(startButton.el);
+        this._el.appendChild(this._startButton.el);
 
         this.gameEl = document.getElementById('game');
         this.gameEl.appendChild(this._el);
 
         this.hide();
+    }
+
+    refresh(payload = {}) {
+        this._title._div.innerHTML(payload.mode);
     }
 }

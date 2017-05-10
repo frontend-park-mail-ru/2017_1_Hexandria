@@ -1,6 +1,12 @@
+import './hexandria.scss';
+
+import Mediator from '../../modules/mediator';
+import { EVENTS } from '../events';
+
 import View from '../../views/view';
 import Title from '../../components/title/title';
 import Component from '../../components/component';
+import infoTemplate from './infoTemplate.pug';
 
 export default class HexandriaPlayView extends View {
     constructor(options = {}) {
@@ -11,11 +17,11 @@ export default class HexandriaPlayView extends View {
             },
         });
 
-        const title = new Title({
+        this._title = new Title({
             text: 'PlayView',
             'back-button': true,
         });
-        this._el.appendChild(title.el);
+        this._el.appendChild(this._title.el);
 
         const canvasContainer = new Component({
             attrs: {
@@ -29,4 +35,21 @@ export default class HexandriaPlayView extends View {
 
         this.hide();
     }
+
+    subscribe() {
+        (new Mediator()).subscribe(this, EVENTS.GAME.INFO, 'refresh');
+    }
+
+    refresh(payload = {}) {
+        const html = infoTemplate({
+            player1Name: payload[0].name,
+            player1Towns: payload[0].towns.length,
+
+            player2Name: payload[1].name,
+            player2Towns: payload[1].towns.length,
+        });
+
+        this._title._div.innerHTML(html);
+    }
+
 }

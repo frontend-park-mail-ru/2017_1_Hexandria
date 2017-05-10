@@ -4,3 +4,13 @@ $hexandria-special: #f02d3a;
 $hexandria-white: #fff; //#f8f0fb
 
 $max-width: 768px;
+
+.center-block__ {
+  padding: 0 100px;
+  margin: 0 auto;
+  //text-align: center;
+
+  @media screen and (max-width: $max-width) {
+    padding: 0 5px;
+  }
+}

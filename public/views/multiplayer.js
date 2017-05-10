@@ -4,6 +4,6 @@ export default class MultiplayerView extends GameView {
     constructor(options = {}) {
         super(options);
 
-        this.mode = 'multiplayer';
+        this.mode = 'Multiplayer';
     }
 }

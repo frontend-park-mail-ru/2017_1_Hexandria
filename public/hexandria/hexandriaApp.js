@@ -4,6 +4,7 @@ import { EVENTS } from './events';
 import HexandriaGame from './hexandriaGame';
 import HexandriaLogicSingleplayer from './hexandriaLogic/singleplayerLogic';
 import HexandriaLogicMultiplayer from './hexandriaLogic/multiplayerLogic';
+
 import HexandriaStartView from './hexandriaViews/hexandriaStartView';
 import HexandriaPlayView from './hexandriaViews/hexandriaPlayView';
 import HexandriaResultView from './hexandriaViews/hexandriaResultView';
@@ -39,10 +40,12 @@ export default class HexandriaApp {
         (new Mediator()).subscribe(this, EVENTS.GAME.PLAY, 'gamePlay');
         (new Mediator()).subscribe(this, EVENTS.GAME.RESULT, 'gameResult');
         (new Mediator()).subscribe(this, EVENTS.GAME.FINISH, 'gameFinish');
+
+        this.views.play.subscribe();
     }
     _hideAll() {
         for (const v in this.views) {
-            console.log(v, this.views[v]);
+            // console.log(v, this.views[v]);
             this.views[v].hide();
         }
     }
@@ -50,6 +53,12 @@ export default class HexandriaApp {
     gameStart(payload = {}) {
         console.log('gameStart', payload);
         this._hideAll();
+
+        if (!payload.mode) {
+            console.error('Undefined mode');
+        }
+
+        this.views.start.refresh(payload);
         this.views.start.show();
 
         const _mode = (payload.mode || '').toUpperCase();
@@ -78,6 +87,8 @@ export default class HexandriaApp {
     gameResult(payload = {}) {
         console.log('gameResult', payload);
         this._hideAll();// this.views.play.hide();
+
+        this.views.result.refresh(payload);
         this.views.result.show();
     }
 

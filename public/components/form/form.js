@@ -57,7 +57,7 @@ export default class Form extends Component {
 
         const buttonOptions = this.options.button;
         if (!buttonOptions) {
-            console.warn('Button options empty');
+            console.error('Button options empty');
         }
         this._button = new Button(buttonOptions);
         this.el.appendChild(this._button.el);

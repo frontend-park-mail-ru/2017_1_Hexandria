@@ -10,10 +10,10 @@ export default class Component {
         this.el = document.createElement(this.tagName);
 
         if (options.text && options.childs) {
-            console.warn('Component text will be deleted!');
+            console.error('Component text will be deleted!');
         }
         this.text = options.text || '';
-        this.childs = options.childs || [];
+        this.childs = options.childs || {};
 
         this.attrs = options.attrs || {};
         this.events = options.events || {};
@@ -26,7 +26,7 @@ export default class Component {
      */
     render() {
         this.innerHTML(this.text);
-        this.setChilds(this.childs);
+        this.addChilds(this.childs);
         this.setAttrs(this.attrs);
         this.setEvents(this.events);
     }
@@ -40,12 +40,19 @@ export default class Component {
     }
 
     /**
-     * Set component childs
-     * @param {Object} [childs=[]]
+     * Add component childs
+     * @param {Object} [childs={}]
      */
-    setChilds(childs = []) {
+    addChilds(childs = {}) {
         for (const i in childs) {
-            this.el.appendChild(childs[i].el);
+            if (childs[i]) {
+                // console.log('^ ^ ^', i, items[i]);
+                if (i in this) {
+                    console.error('Component addChilds collision');
+                }
+                this[i] = childs[i];
+                this.el.appendChild(this[i].el);
+            }
         }
     }
 

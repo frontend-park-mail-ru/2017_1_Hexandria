@@ -18,7 +18,6 @@ export default class ErrorMessage extends Component {
     }
 
     showError(err = '') {
-        console.log('///', err);
         this.innerHTML(err);
     }
 }

@@ -11,7 +11,7 @@ export default class UserPanel extends Component {
      */
     constructor(options = {}) {
         if (!options.username) {
-            console.warn('UserPanel constructor: username option require');
+            console.error('UserPanel constructor: username option require');
         }
 
         options.attrs = {

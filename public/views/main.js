@@ -21,7 +21,7 @@ export default class MainView extends View {
 
         this.user = (new Router()).getUser();
 
-        this._registerPanel = new RegisterPanel({
+        const registerPanel = new RegisterPanel({
             loginEvents: {
                 click: () => {
                     (new Router()).go('/login');
@@ -33,7 +33,7 @@ export default class MainView extends View {
                 },
             },
         });
-        this._userPanel = new UserPanel({
+        const userPanel = new UserPanel({
             username: this.user,
             logoutEvents: {
                 click: () => {
@@ -46,24 +46,24 @@ export default class MainView extends View {
                 },
             },
         });
-        this._panel = new Component({
+        const panel = new Component({
             attrs: {
                 class: `${mainClass}__panel`,
             },
-            childs: [
-                this._registerPanel,
-                this._userPanel,
-            ],
+            childs: {
+                registerPanel,
+                userPanel,
+            },
         });
 
 
-        this._title = new Component({
+        const title = new Component({
             text: 'hexandria',
             attrs: {
                 class: `${mainClass}__title`,
             },
         });
-        this._motto = new Component({
+        const motto = new Component({
             text: 'You are the ruler',
             attrs: {
                 class: `${mainClass}__motto`,
@@ -71,7 +71,7 @@ export default class MainView extends View {
         });
 
 
-        this._singleplayer = new Button({
+        const singleplayer = new Button({
             text: 'Singleplayer',
             attrs: {
                 class: `${mainClass}__singleplayer`,
@@ -80,7 +80,7 @@ export default class MainView extends View {
                 click: () => { (new Router()).go('/singleplayer'); },
             },
         });
-        this._multiplayer = new Button({
+        const multiplayer = new Button({
             text: 'Multiplayer',
             attrs: {
                 class: `${mainClass}__multiplayer`,
@@ -89,18 +89,18 @@ export default class MainView extends View {
                 click: () => { (new Router()).go('/multiplayer'); },
             },
         });
-        this._buttonsMain = new Component({
+        const buttonsMain = new Component({
             attrs: {
                 class: `${mainClass}__buttons-main`,
             },
-            childs: [
-                this._singleplayer,
-                this._multiplayer,
-            ],
+            childs: {
+                singleplayer,
+                multiplayer,
+            },
         });
 
 
-        this._about = new Button({
+        const about = new Button({
             text: 'About',
             attrs: {
                 class: `${mainClass}__about`,
@@ -109,7 +109,7 @@ export default class MainView extends View {
                 click: () => { (new Router()).go('/about'); },
             },
         });
-        this._scoreboard = new Button({
+        const scoreboard = new Button({
             text: 'Scoreboard',
             attrs: {
                 class: `${mainClass}__scoreboard`,
@@ -118,40 +118,39 @@ export default class MainView extends View {
                 click: () => { (new Router()).go('/scoreboard'); },
             },
         });
-        this._buttonsMinor = new Component({
+        const buttonsMinor = new Component({
             attrs: {
                 class: `${mainClass}__buttons-minor`,
             },
-            childs: [
-                this._about,
-                this._scoreboard,
-            ],
+            childs: {
+                about,
+                scoreboard,
+            },
         });
 
-
-        this._buttons = new Component({
+        const buttons = new Component({
             attrs: {
                 class: `${mainClass}__buttons`,
             },
-            childs: [
-                this._buttonsMain,
-                this._buttonsMinor,
-            ],
+            childs: {
+                buttonsMain,
+                buttonsMinor,
+            },
         });
 
 
-        this._hex = new Component({
+        this.hex = new Component({
             attrs: {
                 class: mainClass,
             },
-            childs: [
-                this._panel,
-                this._title,
-                this._motto,
-                this._buttons,
-            ],
+            childs: {
+                panel,
+                title,
+                motto,
+                buttons,
+            },
         });
-        pageIndex.appendChild(this._hex.el);
+        pageIndex.appendChild(this.hex.el);
 
 
         this.fetcher = new Fetcher(API.HOST);
@@ -190,13 +189,13 @@ export default class MainView extends View {
         const user = (new Router()).getUser();
         if (user && user !== 'guest') {
             this.user = user;
-            this._userPanel.updateUser(this.user);
+            this.hex.panel.userPanel.updateUser(this.user);
 
-            this._userPanel.show();
-            this._registerPanel.hide();
+            this.hex.panel.userPanel.show();
+            this.hex.panel.registerPanel.hide();
         } else {
-            this._userPanel.hide();
-            this._registerPanel.show();
+            this.hex.panel.userPanel.hide();
+            this.hex.panel.registerPanel.show();
         }
     }
 

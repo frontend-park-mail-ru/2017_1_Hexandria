@@ -1,9 +1,10 @@
 @import '../button/button';
 @import '../input/input';
+@import '../../scheme';
 
 .form {
-  padding: 0 100px;
-  margin: 0 auto;
+  @extend .center-block__;
+
   text-align: center;
 
   &__button {
@@ -18,11 +19,5 @@
 
   &__input {
     @extend .input;
-  }
-}
-
-@media screen and (max-width: $max-width) {
-  .form {
-    padding: 0 5px;
   }
 }

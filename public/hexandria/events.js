@@ -6,6 +6,7 @@ export const EVENTS = {
     GAME: {
         START: 'EVENTS.GAME.START',
         PLAY: 'EVENTS.GAME.PLAY',
+        INFO: 'EVENTS.GAME.INFO',
         RESULT: 'EVENTS.GAME.RESULT',
         FINISH: 'EVENTS.GAME.FINISH',
     },

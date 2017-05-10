@@ -27,7 +27,7 @@ export default class Title extends Component {
         this.innerHTML(); // clear inner HTML
 
         if ('back-button' in options) {
-            const backButton = new Button({
+            this._backButton = new Button({
                 text: '⬅',
                 attrs: {
                     class: 'title__back-button',
@@ -36,16 +36,20 @@ export default class Title extends Component {
                     click: () => { (new Router()).go('/'); },
                 },
             });
-            this.el.appendChild(backButton.el);
+            // this.el.appendChild(this._backButton.el);
+
+            const div = new Component();
+            div.el.appendChild(this._backButton.el);
+            this.el.appendChild(div.el);
         }
 
-        const _div = new Component({
+        this._div = new Component({
             text: this.text,
             attrs: {
                 class: 'title__main',
             },
         });
 
-        this.el.appendChild(_div.el);
+        this.el.appendChild(this._div.el);
     }
 }
