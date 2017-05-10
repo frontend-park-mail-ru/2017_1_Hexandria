@@ -1,8 +1,12 @@
+import './hexandria.scss';
+
+import Mediator from '../../modules/mediator';
+import { EVENTS } from '../../hexandria/events';
+
 import View from '../../views/view';
 import Button from '../../components/button/button';
 import Title from '../../components/title/title';
-import Mediator from '../../modules/mediator';
-import { EVENTS } from '../../hexandria/events';
+import Component from '../../components/component';
 
 export default class HexandriaStartView extends View {
     constructor(options = {}) {
@@ -13,13 +17,15 @@ export default class HexandriaStartView extends View {
             },
         });
 
-        this._title = new Title({
+
+        this.title = new Title({
             text: 'StartView',
             'back-button': true,
         });
-        this._el.appendChild(this._title.el);
+        this._el.appendChild(this.title.el);
 
-        this._startButton = new Button({
+
+        const startButton = new Button({
             text: 'start',
             attrs: {
                 class: 'button',
@@ -30,7 +36,16 @@ export default class HexandriaStartView extends View {
                 },
             },
         });
-        this._el.appendChild(this._startButton.el);
+        this.container = new Component({
+            attrs: {
+                class: 'hexandria__container',
+            },
+            childs: {
+                startButton,
+            },
+        });
+        this._el.appendChild(this.container.el);
+
 
         this.gameEl = document.getElementById('game');
         this.gameEl.appendChild(this._el);
@@ -39,6 +54,6 @@ export default class HexandriaStartView extends View {
     }
 
     refresh(payload = {}) {
-        this._title._div.innerHTML(payload.mode);
+        this.title.titleDiv.innerHTML(payload.mode);
     }
 }

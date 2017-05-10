@@ -19,26 +19,17 @@ export default class HexandriaResultView extends View {
         });
 
 
-        this._title = new Title({
+        this.title = new Title({
             text: 'Result',
         });
-        this._el.appendChild(this._title.el);
+        this._el.appendChild(this.title.el);
 
 
-        this._container = new Component({
-            attrs: {
-                class: 'hexandria__container',
-            },
-        });
-        this._el.appendChild(this._container.el);
-
-        this._result = new Component({
+        const result = new Component({
             attrs: {
                 class: 'hexandria__result',
             },
         });
-        this._container.el.appendChild(this._result.el);
-
         const finishButton = new Button({
             text: 'finish',
             attrs: {
@@ -50,7 +41,16 @@ export default class HexandriaResultView extends View {
                 },
             },
         });
-        this._container.el.appendChild(finishButton.el);
+        this.container = new Component({
+            attrs: {
+                class: 'hexandria__container',
+            },
+            childs: {
+                result,
+                finishButton,
+            },
+        });
+        this._el.appendChild(this.container.el);
 
 
         this.gameEl = document.getElementById('game');
@@ -62,6 +62,6 @@ export default class HexandriaResultView extends View {
     refresh(payload = {}) {
         const html = resultTemplate(payload);
 
-        this._result.innerHTML(html);
+        this.container.result.innerHTML(html);
     }
 }

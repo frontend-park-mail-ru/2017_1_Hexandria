@@ -27,7 +27,7 @@ export default class Title extends Component {
         this.innerHTML(); // clear inner HTML
 
         if ('back-button' in options) {
-            this._backButton = new Button({
+            const backButton = new Button({
                 text: '⬅',
                 attrs: {
                     class: 'title__back-button',
@@ -38,18 +38,22 @@ export default class Title extends Component {
             });
             // this.el.appendChild(this._backButton.el);
 
-            const div = new Component();
-            div.el.appendChild(this._backButton.el);
-            this.el.appendChild(div.el);
+            this.backDiv = new Component({
+                childs: {
+                    backButton,
+                },
+            });
+            // div.el.appendChild(this._backButton.el);
+            this.el.appendChild(this.backDiv.el);
         }
 
-        this._div = new Component({
+        this.titleDiv = new Component({
             text: this.text,
             attrs: {
                 class: 'title__main',
             },
         });
 
-        this.el.appendChild(this._div.el);
+        this.el.appendChild(this.titleDiv.el);
     }
 }

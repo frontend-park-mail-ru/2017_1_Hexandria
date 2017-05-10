@@ -17,18 +17,20 @@ export default class HexandriaPlayView extends View {
             },
         });
 
-        this._title = new Title({
+        this.title = new Title({
             text: 'PlayView',
             'back-button': true,
         });
-        this._el.appendChild(this._title.el);
+        this._el.appendChild(this.title.el);
 
-        const canvasContainer = new Component({
+
+        this.canvasDiv = new Component({
             attrs: {
                 class: 'threejs-container',
             },
         });
-        this._el.appendChild(canvasContainer.el);
+        this._el.appendChild(this.canvasDiv.el);
+
 
         this.gameEl = document.getElementById('game');
         this.gameEl.appendChild(this._el);
@@ -49,7 +51,7 @@ export default class HexandriaPlayView extends View {
             player2Towns: payload[1].towns.length,
         });
 
-        this._title._div.innerHTML(html);
+        this.title.titleDiv.innerHTML(html);
     }
 
 }
