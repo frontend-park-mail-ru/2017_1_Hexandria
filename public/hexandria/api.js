@@ -7,7 +7,7 @@ export const API = {};
 // };
 
 API.HOST = 'hexandria.ru:8082';
-// API.HOST = 'localhost.ru:8082';
+// API.HOST = 'localhost:8082';
 
 API.CODE = {
     OK: 200,
