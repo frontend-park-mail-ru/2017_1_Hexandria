@@ -34,6 +34,9 @@ export default class HexandriaLogic {
         (new Mediator()).subscribe(this, EVENTS.LOGIC.DELETE, 'onDelete');
         (new Mediator()).subscribe(this, EVENTS.LOGIC.ATTACK_CAPITAL, 'onAttackCapital');
         (new Mediator()).subscribe(this, EVENTS.LOGIC.ATTACK_TOWN, 'onAttackTown');
+
+
+        this.eventInfo();
     }
 
     destroy() {
@@ -85,6 +88,12 @@ export default class HexandriaLogic {
             this._selected = null;
             (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
         }
+    }
+
+    eventInfo() {
+        const payload = JSON.parse(JSON.stringify(this.game.players));
+
+        (new Mediator()).emit(EVENTS.GAME.INFO, payload);
     }
 
     eventMove(data) {
@@ -200,6 +209,8 @@ export default class HexandriaLogic {
                 // this is our town
             }
         }
+
+        this.eventInfo();
     }
 
     onMove(data) {

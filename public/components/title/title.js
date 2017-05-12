@@ -36,16 +36,24 @@ export default class Title extends Component {
                     click: () => { (new Router()).go('/'); },
                 },
             });
-            this.el.appendChild(backButton.el);
+            // this.el.appendChild(this._backButton.el);
+
+            this.backDiv = new Component({
+                childs: {
+                    backButton,
+                },
+            });
+            // div.el.appendChild(this._backButton.el);
+            this.el.appendChild(this.backDiv.el);
         }
 
-        const _div = new Component({
+        this.titleDiv = new Component({
             text: this.text,
             attrs: {
                 class: 'title__main',
             },
         });
 
-        this.el.appendChild(_div.el);
+        this.el.appendChild(this.titleDiv.el);
     }
 }

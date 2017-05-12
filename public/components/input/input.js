@@ -1,58 +1,38 @@
 import './input.scss';
 
-export default class Input {
+import Component from '../component';
+import ErrorMessage from '../errorMessage/errorMessage';
+import DOMUtils from '../domUtils';
+
+export default class Input extends Component {
     /**
      * Input constructor
-     * @param {Object[]} attrs
+     * @param {Object} options
      */
-    constructor(attrs) {
-        this.attrs = attrs || [];
-        this.el = document.createElement('input');
+    constructor(options) {
+        if (!options.tagName) {
+            options.tagName = 'input';
+        }
+
+        super(options);
     }
 
-    /**
-     * Set button attributes
-     * @param attrs
-     */
-    setAttrs (attrs) {
-        Object.keys(attrs).forEach((name) => {
-            this.el.setAttribute(name, attrs[name]);
-        });
+    showError(err) {
+        if (err) {
+            this.el.classList.add('input-error');
+        } else {
+            this.el.classList.remove('input-error');
+        }
+
+        this._errorMessage.showError(err);
     }
 
-    /**
-     * DOM update and button object return
-     * @returns {Input}
-     */
-    render() {
-        this.el.innerHTML = this.text;
-        this.setAttrs(this.attrs);
-        return this;
-    }
+    install() {
+        if (!this._installed && this.el.parentNode) {
+            this._errorMessage = new ErrorMessage();
+            DOMUtils.insertAfter(this.el, this._errorMessage.el);
 
-    /**
-     * Return button HTML string
-     * @returns {string}
-     */
-    toString() {
-        return this.el.outerHTML;
-    }
-
-    /**
-     * Add event listener
-     * @param {event} type
-     * @param {function} callback
-     */
-    on (type, callback) {
-        this.el.addEventListener(type, callback);
-    }
-
-    /**
-     * Color input
-     * @param {HTMLElement} input
-     * @param color
-     */
-    colorInputBorder(input, color) { // TODO wtf? delete!
-        this.el.style.border = `1px solid ${color}`;
+            this._installed = true;
+        }
     }
 }

@@ -18,7 +18,7 @@ export default class HexandriaGraphics {
 
         this.game = game;
 
-        this.selector = '#game .game-container';
+        this.selector = '#game .threejs-container';
         console.log(this.selector);
 
         this._clock = null;
@@ -165,10 +165,9 @@ export default class HexandriaGraphics {
         this._container = document.querySelector(this.selector);
 
         this._renderer = new THREE.WebGLRenderer();
-        // renderer.setClearColor(0xbfd1e5);
         this._renderer.setClearColor(0xffffff);
         this._renderer.setPixelRatio(this._container.devicePixelRatio);
-        // renderer.setSize(container.clientWidth, container.clientHeight);
+
         this._renderer.setSize(window.innerWidth, window.innerHeight);
 
         this._renderer.shadowMap.enabled = true; // TODO

@@ -14,43 +14,43 @@ export default class LoginView extends View {
 
         const pageLogin = document.getElementById('login');
 
-        const title = new Title({
+        this._title = new Title({
             text: 'Login',
             'back-button': true,
         });
-        pageLogin.appendChild(title.el);
+        pageLogin.appendChild(this._title.el);
 
-        const loginForm = new Form({
-            el: document.createElement('form'),
-            data: {
-                controls: [
-                    {
-                        text: 'Login',
-                        tagName: 'button',
-                        attrs: {
-                            class: 'form__button',
-                        },
-                    },
-                ],
-                inputs: [
-                    {
-                        name: 'login',
-                        type: 'text',
-                        placeholder: 'Enter Login',
-                    },
-                    {
-                        name: 'password',
-                        type: 'password',
-                        placeholder: 'Enter Password',
-                    },
-                ],
+
+        this._loginForm = new Form({
+            attrs: {
+                class: 'form',
+            },
+            inputs: [
+                {
+                    name: 'login',
+                    type: 'text',
+                    placeholder: 'Enter Login',
+                },
+                {
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'Enter Password',
+                },
+            ],
+            button: {
+                text: 'Login',
+                tagName: 'button',
+                attrs: {
+                    class: 'form__button',
+                },
             },
             events: {
                 submit: (event) => {
                     event.preventDefault();
                     console.log('button_login click');
+                    this._loginForm.showError();
 
-                    const parent = loginForm.el;
+                    const parent = this._loginForm.el;
                     const user = {
                         login: parent.login.value,
                         password: parent.password.value,
@@ -67,18 +67,29 @@ export default class LoginView extends View {
                             return res.json();
                         })
                         .then((json) => {
-                            console.log(json);
+                            if (json instanceof Array && json.length > 0) {
+                                console.log(json[0].error);
+                                this._loginForm.showError(json[0].error);
+                            } else {
+                                console.log('login', json);
+                            }
                         })
                         .catch((err) => {
-                            console.log(err);
+                            console.log('catch', err);
                         });
                 },
             },
         });
-        pageLogin.appendChild(loginForm.el);
+        pageLogin.appendChild(this._loginForm.el);
 
 
         this._el = pageLogin;
         this.hide();
+    }
+
+    hide() {
+        super.hide();
+
+        this._loginForm.showError();
     }
 }

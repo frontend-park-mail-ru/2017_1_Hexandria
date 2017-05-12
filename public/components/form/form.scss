@@ -1,10 +1,10 @@
-@import "../button/button";
-@import "../input/input";
-@import "../hex/hex";
+@import '../button/button';
+@import '../input/input';
+@import '../../scheme';
 
 .form {
-  padding: 0 100px;
-  margin: 0 auto;
+  @extend .center-block__;
+
   text-align: center;
 
   &__button {
@@ -19,16 +19,5 @@
 
   &__input {
     @extend .input;
-
-    //width: 100%;
-    //margin: 10px 5px;
-    //padding: 10px 5px;
-    //box-sizing: border-box;
-  }
-}
-
-@media screen and (max-width: $max-width) {
-  .form {
-    padding: 0 5px;
   }
 }

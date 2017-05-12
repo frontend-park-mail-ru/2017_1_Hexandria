@@ -1,9 +1,9 @@
-@import "../button/button";
-@import "../../scheme";
+@import '../button/button';
+@import '../../scheme';
 
 .title {
   display: flex;
-  margin: 10px auto 5px;
+  padding: 10px 0 5px;
   color: $hexandria-white;
 
   &__main {

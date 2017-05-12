@@ -1,9 +1,5 @@
 import './userPanel.scss';
 
-import Fetcher from '../../modules/fetcher';
-import Router from '../../modules/router';
-import { API } from '../../hexandria/api';
-
 import userPanelTemplate from './userPanelTemplate.pug';
 import Button from '../button/button';
 import Component from '../component';
@@ -11,16 +7,21 @@ import Component from '../component';
 export default class UserPanel extends Component {
     /**
      * User panel constructor
+     * @param {Object} options
      */
-    constructor() {
-        super({
-            attrs: {
-                class: 'hex__user-panel',
-            },
-        });
+    constructor(options = {}) {
+        if (!options.username) {
+            console.error('UserPanel constructor: username option require');
+        }
+
+        options.attrs = {
+            class: 'user-panel',
+        };
+        super(options);
+
+        this._username = 'guest';
 
         this.hide();
-        this.fetcher = new Fetcher(API.HOST);
     }
 
     /**
@@ -28,28 +29,20 @@ export default class UserPanel extends Component {
      * @param {String} html
      */
     innerHTML(html = '') {
-        this.el.innerHTML = userPanelTemplate({ username: (new Router()).getUser() });
+        super.innerHTML(userPanelTemplate({ username: this.options.username }));
 
         this.logout = new Button({
             text: 'Logout',
             attrs: {
-                class: 'hex__button-logout',
+                class: 'user-panel__button-logout',
             },
-            events: {
-                click: () => {
-                    console.log('post logout');
-                    this.fetcher.post(API.PATH.LOGOUT)
-                        .then(() => {
-                            (new Router()).setUser(null);
-                            (new Router()).update('/');
-                        });
-                },
-            },
+            events: this.options.logoutEvents,
         });
         this.el.appendChild(this.logout.el);
     }
 
-    updateUser() {
+    updateUser(username) {
+        this.options.username = username;
         this.innerHTML();
     }
 }

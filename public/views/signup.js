@@ -20,47 +20,47 @@ export default class SignupView extends View {
         });
         pageSignup.appendChild(title.el);
 
-        const signupForm = new Form({
-            el: document.createElement('form'),
-            data: {
-                controls: [
-                    {
-                        text: 'Signup',
-                        tagName: 'button',
-                        attrs: {
-                            class: 'form__button',
-                        },
-                    },
-                ],
-                inputs: [
-                    {
-                        name: 'login',
-                        type: 'text',
-                        placeholder: 'Enter login',
-                    },
-                    {
-                        name: 'email',
-                        type: 'text',
-                        placeholder: 'Enter e-mail',
-                    },
-                    {
-                        name: 'password',
-                        type: 'password',
-                        placeholder: 'Enter password',
-                    },
-                    {
-                        name: 'double_password',
-                        type: 'password',
-                        placeholder: 'Enter password second time',
-                    },
-                ],
+
+        this._signupForm = new Form({
+            attrs: {
+                class: 'form',
+            },
+            inputs: [
+                {
+                    name: 'login',
+                    type: 'text',
+                    placeholder: 'Enter login',
+                },
+                {
+                    name: 'email',
+                    type: 'text',
+                    placeholder: 'Enter e-mail',
+                },
+                {
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'Enter password',
+                },
+                {
+                    name: 'double_password',
+                    type: 'password',
+                    placeholder: 'Enter password second time',
+                },
+            ],
+            button: {
+                text: 'Signup',
+                tagName: 'button',
+                attrs: {
+                    class: 'form__button',
+                },
             },
             events: {
                 submit: (event) => {
                     event.preventDefault();
                     console.log('button_signup click');
+                    this._signupForm.showError();
 
-                    const parent = signupForm.el;
+                    const parent = this._signupForm.el;
                     const user = {
                         login: parent.login.value,
                         email: parent.email.value,
@@ -79,6 +79,12 @@ export default class SignupView extends View {
                         })
                         .then((json) => {
                             console.log(json);
+                            if (json instanceof Array && json.length > 0) {
+                                console.log(json[0].error);
+                                this._signupForm.showError(json[0].error);
+                            } else {
+                                console.log('signup', json);
+                            }
                         })
                         .catch((err) => {
                             console.log(err);
@@ -86,10 +92,16 @@ export default class SignupView extends View {
                 },
             },
         });
-        pageSignup.appendChild(signupForm.el);
+        pageSignup.appendChild(this._signupForm.el);
 
 
         this._el = pageSignup;
         this.hide();
+    }
+
+    hide() {
+        super.hide();
+
+        this._signupForm.showError();
     }
 }

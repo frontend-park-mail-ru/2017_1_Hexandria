@@ -4,6 +4,6 @@ export default class SingleplayerView extends GameView {
     constructor(options = {}) {
         super(options);
 
-        this.mode = 'singleplayer';
+        this.mode = 'Singleplayer';
     }
 }

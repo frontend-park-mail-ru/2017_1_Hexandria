@@ -1,9 +1,15 @@
+import './main.scss';
+
 import Router from '../modules/router';
 import Fetcher from '../modules/fetcher';
 import { API } from '../hexandria/api';
 
 import View from './view';
-import Hex from '../components/hex/hex';
+
+import Component from '../components/component';
+import Button from '../components/button/button';
+import UserPanel from '../components/userPanel/userPanel';
+import RegisterPanel from '../components/registerPanel/registerPanel';
 
 export default class MainView extends View {
 
@@ -11,50 +17,137 @@ export default class MainView extends View {
         super(options);
 
         const pageIndex = document.getElementById('index');
+        const mainClass = 'main';
 
-        this.hex = new Hex({
-            el: document.createElement('div'),
-            data: {
-                hex_title: 'hexandria',
-                hex_phrase: 'You are the ruler',
-                controls: {
-                    singleplayer: {
-                        text: 'Singleplayer',
-                        attrs: {
-                            class: 'hex__singleplayer',
-                        },
-                        events: {
-                            click: () => { (new Router()).go('/singleplayer'); },
-                        },
-                    },
-                    multiplayer: {
-                        text: 'Multiplayer',
-                        attrs: {
-                            class: 'hex__multiplayer',
-                        },
-                        events: {
-                            click: () => { (new Router()).go('/multiplayer'); },
-                        },
-                    },
-                    about: {
-                        text: 'About',
-                        attrs: {
-                            class: 'hex__about',
-                        },
-                        events: {
-                            click: () => { (new Router()).go('/about'); },
-                        },
-                    },
-                    scoreboard: {
-                        text: 'Scoreboard',
-                        attrs: {
-                            class: 'hex__scoreboard',
-                        },
-                        events: {
-                            click: () => { (new Router()).go('/scoreboard'); },
-                        },
-                    },
+        this.user = (new Router()).getUser();
+
+        const registerPanel = new RegisterPanel({
+            loginEvents: {
+                click: () => {
+                    (new Router()).go('/login');
                 },
+            },
+            signupEvents: {
+                click: () => {
+                    (new Router()).go('/signup');
+                },
+            },
+        });
+        const userPanel = new UserPanel({
+            username: this.user,
+            logoutEvents: {
+                click: () => {
+                    console.log('post logout');
+                    this.fetcher.post(API.PATH.LOGOUT)
+                        .then(() => {
+                            (new Router()).setUser(null);
+                            (new Router()).update('/');
+                        });
+                },
+            },
+        });
+        const panel = new Component({
+            attrs: {
+                class: `${mainClass}__panel`,
+            },
+            childs: {
+                registerPanel,
+                userPanel,
+            },
+        });
+
+
+        const title = new Component({
+            text: 'hexandria',
+            attrs: {
+                class: `${mainClass}__title`,
+            },
+        });
+        const motto = new Component({
+            text: 'You are the ruler',
+            attrs: {
+                class: `${mainClass}__motto`,
+            },
+        });
+
+
+        const singleplayer = new Button({
+            text: 'Singleplayer',
+            attrs: {
+                class: `${mainClass}__singleplayer`,
+            },
+            events: {
+                click: () => { (new Router()).go('/singleplayer'); },
+            },
+        });
+        const multiplayer = new Button({
+            text: 'Multiplayer',
+            attrs: {
+                class: `${mainClass}__multiplayer`,
+            },
+            events: {
+                click: () => { (new Router()).go('/multiplayer'); },
+            },
+        });
+        const buttonsMain = new Component({
+            attrs: {
+                class: `${mainClass}__buttons-main`,
+            },
+            childs: {
+                singleplayer,
+                multiplayer,
+            },
+        });
+
+
+        const about = new Button({
+            text: 'About',
+            attrs: {
+                class: `${mainClass}__about`,
+            },
+            events: {
+                click: () => { (new Router()).go('/about'); },
+            },
+        });
+        const scoreboard = new Button({
+            text: 'Scoreboard',
+            attrs: {
+                class: `${mainClass}__scoreboard`,
+            },
+            events: {
+                click: () => { (new Router()).go('/scoreboard'); },
+            },
+        });
+        const buttonsMinor = new Component({
+            attrs: {
+                class: `${mainClass}__buttons-minor`,
+            },
+            childs: {
+                about,
+                scoreboard,
+            },
+        });
+
+        const buttons = new Component({
+            attrs: {
+                class: `${mainClass}__buttons`,
+            },
+            childs: {
+                buttonsMain,
+                buttonsMinor,
+            },
+        });
+
+
+        this.hex = new Component({
+            attrs: {
+                class: mainClass,
+            },
+            childs: {
+                panel,
+                title,
+                motto,
+                buttons,
             },
         });
         pageIndex.appendChild(this.hex.el);
@@ -64,16 +157,14 @@ export default class MainView extends View {
         this.fetcher.get(API.PATH.USER)
             .then((res) => {
                 if (res.status === API.CODE.OK) {
-                    console.log('ok');
                     return res.json();
                 }
                 throw API.AUTH.ERROR;
             })
             .then((json) => {
                 console.log(json);
-                // this.login = json.login;
                 (new Router()).setUser(json.login);
-                this.show();
+                this.update();
             })
             .catch((err) => {
                 console.log(err);
@@ -96,15 +187,15 @@ export default class MainView extends View {
         super.update();
 
         const user = (new Router()).getUser();
-        if (user !== 'guest' && user !== this.user) {
+        if (user && user !== 'guest') {
             this.user = user;
-            this.hex.userPanel.updateUser();
+            this.hex.panel.userPanel.updateUser(this.user);
 
-            this.hex.userPanel.show();
-            this.hex.registerPanel.hide();
+            this.hex.panel.userPanel.show();
+            this.hex.panel.registerPanel.hide();
         } else {
-            this.hex.userPanel.hide();
-            this.hex.registerPanel.show();
+            this.hex.panel.userPanel.hide();
+            this.hex.panel.registerPanel.show();
         }
     }
 
