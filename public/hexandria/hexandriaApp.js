@@ -46,7 +46,9 @@ export default class HexandriaApp {
     _hideAll() {
         for (const v in this.views) {
             // console.log(v, this.views[v]);
-            this.views[v].hide();
+            if (this.views[v]) {
+                this.views[v].hide();
+            }
         }
     }
 
