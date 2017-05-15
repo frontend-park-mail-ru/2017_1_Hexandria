@@ -1,10 +1,17 @@
 sudo: required
 dist: trusty
 language: node_js
-node_js: 7
+node_js:
+  - 7
 branches:
   only:
   - master
+  - develop
+
+services:
+  - docker
+
+#------------------------------------------------
 
 before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
@@ -15,12 +22,15 @@ before_install:
   - sudo dpkg -i google-chrome*.deb
   - sh -e /etc/init.d/xvfb start
 
-before_deploy:
-  - npm run _webpack
+instal: true
 
-deploy:
-  provider: heroku
-  app: hexandria
-  skip_cleanup: true
-  api_key:
-    secure: Km/XwCjNRGaP5Cynh0ZaZbTu8oqj+9ppeGHHX0rNbhYxHpCb/INm8CQryIZguY0O5ZwBdid/F/og7LuuVtUJ2hP2V0EFm8TNgSFeWlpD7i38M+NEsRwuY/yZjrSW2WXASRWUUEcFl8t4afFv7YUUXYSkyMZ/k61Wj3PFSSuXbNdYQc+48XEJ+zTDL/2KXV9aWpE3mHOQxQkP5bF+df6gvKkP9tZSrJyvPOQizF5AVQ4rDFoxgJGUfuWW3yNttjm+4taCpm+2jrbjuU/MeBM1HXpmT2hmao6uJy722Wz80B7JEDvk+aUgR2h2Zp93kxJNrz0H0HnY5Q6Xw0ri3WA6RZqML+DSyGOP6O1Rexbrmt35t4Op5COPo0G0qMp9r95/G4aWQ0d8PvG732KtVIBdBlVwP3L3PSoA+0iu7/IKm5GT5oUlzc51mv9z1Vh+/JcrOLjqi/WR9YJsDwYmAAgsWqaxckaeivXWXLISQei7Tz++kaxFdq89SE0zHLMhqi5hiieoXqkRJKzXhRGUaynf/bsFbRu8d49Ck1Aq0G668Hcnu73RK6sOvbHUiWRUM38JlfApSM6Mz8RN4aWkHOHXTyuZ3zhKEx1BmR1fPIcvCyzEWwSvVkGMN+Oa8dv5gndygI8yHF+BjLxgy3Cd0KMiJ6pUwE65YLrziG55boq54No=
+before_script:
+  - npm run eslint
+  - npm run stylelint
+  - npm test
+  - npm run webpack
+
+script:
+  - docker login --username=_ --password=$(echo $API_KEY) registry.heroku.com
+  - docker build -t registry.heroku.com/hexandria/web .
+  - docker push registry.heroku.com/hexandria/web

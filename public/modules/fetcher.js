@@ -1,7 +1,10 @@
 export default class Fetcher {
 
     constructor(host) {
-        this.address = `http://${host}`;
+        // this.address = `http://${host}`;
+        this.address = ['https', 'https:'].includes(location.protocol)
+            ? `https://${host}`
+            : `http://${host}`;
 
         this.options = {
             mode: 'cors',

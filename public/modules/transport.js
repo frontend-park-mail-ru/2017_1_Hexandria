@@ -9,7 +9,10 @@ export default class Transport {
         }
         Transport.__instance = this;
 
-        const address = `ws://${host}/game`;
+        // const address = `ws://${host}/game`;
+        const address = ['https', 'https:'].includes(location.protocol)
+            ? `wss://${host}/game`
+            : `ws://${host}/game`;
 
         this.ws = new WebSocket(address);
         this.ws.onopen = () => {
