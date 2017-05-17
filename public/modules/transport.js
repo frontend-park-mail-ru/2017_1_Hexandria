@@ -9,7 +9,6 @@ export default class Transport {
         }
         Transport.__instance = this;
 
-        // const address = `ws://${host}/game`;
         const address = ['https', 'https:'].includes(location.protocol)
             ? `wss://${host}/game`
             : `ws://${host}/game`;
@@ -60,7 +59,7 @@ export default class Transport {
 
             (new Mediator()).emit(message.event, message.payload);
         } catch (e) {
-            throw new TypeError('HandleMessage parse error', messageText, e);
+            console.error('HandleMessage parse error', messageText);
         }
     }
 

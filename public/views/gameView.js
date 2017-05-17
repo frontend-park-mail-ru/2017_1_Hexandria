@@ -17,7 +17,7 @@ export default class GameView extends View {
         super.show();
 
         (new Mediator()).emit(
-            EVENTS.GAME.START,
+            EVENTS.APP.INIT,
             {
                 mode: this.mode,
             },
@@ -26,6 +26,6 @@ export default class GameView extends View {
 
     hide(options = {}) {
         super.hide();
-        (new Mediator()).emit(EVENTS.GAME.FINISH);
+        (new Mediator()).emit(EVENTS.APP.FINISH);
     }
 }

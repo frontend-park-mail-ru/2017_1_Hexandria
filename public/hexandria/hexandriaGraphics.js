@@ -10,13 +10,13 @@ const OrbitControls = require('three-orbit-controls')(THREE);
 
 export default class HexandriaGraphics {
     constructor(game) {
-        console.log('HexandriaGraphics created');
+        console.log('HexandriaGraphics');
 
         this.__move = (e) => { this.onDocumentMouseMove(e); };
         this.__down = (e) => { this.onDocumentMouseDown(e); };
         this.__resize = (e) => { this.onWindowResize(e); };
 
-        this.game = game;
+        this.game = null;
 
         this.selector = '#game .threejs-container';
         console.log(this.selector);
@@ -41,8 +41,6 @@ export default class HexandriaGraphics {
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_UPDATE, 'squadUpdate');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_DELETE, 'squadDelete');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.TOWN_CAPTURE, 'townCapture');
-
-        this.initGame();
     }
 
     destroy() {
@@ -50,35 +48,36 @@ export default class HexandriaGraphics {
 
         cancelAnimationFrame(this._id);
 
-        this.map.destroy();
+        if (this.game) {
+            this.map.destroy();
 
-        while (this._scene.children.length > 0) {
-            // console.log('deleting...', this._scene.children[0]);
-            this._scene.remove(this._scene.children[0]);
+            while (this._scene.children.length > 0) {
+                this._scene.remove(this._scene.children[0]);
+            }
+
+            this._container.removeEventListener('mousemove', this.__move, false);
+            this._container.removeEventListener('mousedown', this.__down, false);
+            window.removeEventListener('resize', this.__resize, false);
+            this._container.innerHTML = '';
+
+            this.game = null;
+
+            this._clock = null;
+            this._container = null;
+            this._camera = null;
+            this._controls = null;
+            this._renderer = null;
+            this._mouse = null;
+
+            this._scene = null;
+            this._id = null;
+            this._raycaster = null;
+            // this._mouseHandler = null;
+
+            this.map = null;
+            this.townsMap = null;
+            this.squadsMap = null;
         }
-
-        this._container.removeEventListener('mousemove', this.__move, false);
-        this._container.removeEventListener('mousedown', this.__down, false);
-        window.removeEventListener('resize', this.__resize, false);
-        this._container.innerHTML = '';
-
-        this.game = null;
-
-        this._clock = null;
-        this._container = null;
-        this._camera = null;
-        this._controls = null;
-        this._renderer = null;
-        this._mouse = null;
-
-        this._scene = null;
-        this._id = null;
-        this._raycaster = null;
-        // this._mouseHandler = null;
-
-        this.map = null;
-        this.townsMap = null;
-        this.squadsMap = null;
     }
 
     initTowns() {
@@ -148,7 +147,10 @@ export default class HexandriaGraphics {
         this.townsMap[data.townName].changeColor(data.playerColor);
     }
 
-    initGame() {
+    initGame(game) {
+        console.log('initGame:', game);
+        this.game = game;
+
         this._clock = new THREE.Clock();
         this.initGraphics();
 

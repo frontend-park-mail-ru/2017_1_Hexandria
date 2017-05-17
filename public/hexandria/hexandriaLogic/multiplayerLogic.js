@@ -4,8 +4,8 @@ import HexandriaLogic from '../hexandriaLogic';
 import Transport from '../../modules/transport';
 
 export default class HexandriaLogicMultiplayer extends HexandriaLogic {
-    constructor(game) {
-        super(game);
+    constructor() {
+        super();
         console.log('HexandriaLogicMultiplayer');
 
         this.transport = new Transport(API.HOST);

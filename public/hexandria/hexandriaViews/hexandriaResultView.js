@@ -37,7 +37,7 @@ export default class HexandriaResultView extends View {
             },
             events: {
                 click: () => {
-                    (new Mediator()).emit(EVENTS.GAME.FINISH);
+                    (new Mediator()).emit(EVENTS.APP.FINISH);
                 },
             },
         });
