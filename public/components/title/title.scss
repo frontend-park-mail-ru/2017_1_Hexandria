@@ -7,6 +7,7 @@
   color: $hexandria-white;
 
   &__main {
+    margin: 10px 0;
     text-align: center;
     flex-grow: 100;
     font-size: 200%;
@@ -16,6 +17,13 @@
 
   &__back-button {
     @extend .button;
+
+    min-width: 50px;
+    vertical-align: middle;
+  }
+
+  &__shadow-button {
+    @extend .button__;
 
     min-width: 50px;
   }

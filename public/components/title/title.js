@@ -36,14 +36,13 @@ export default class Title extends Component {
                     click: () => { (new Router()).go('/'); },
                 },
             });
-            // this.el.appendChild(this._backButton.el);
+            // this.el.appendChild(backButton.el);
 
             this.backDiv = new Component({
                 childs: {
                     backButton,
                 },
             });
-            // div.el.appendChild(this._backButton.el);
             this.el.appendChild(this.backDiv.el);
         }
 
@@ -55,5 +54,22 @@ export default class Title extends Component {
         });
 
         this.el.appendChild(this.titleDiv.el);
+
+        if ('back-button' in options) {
+            const shadowButton = new Button({
+                text: '',
+                attrs: {
+                    class: 'title__shadow-button',
+                },
+            });
+            // this.el.appendChild(shadowButton.el);
+
+            this.shadowDiv = new Component({
+                childs: {
+                    shadowButton,
+                },
+            });
+            this.el.appendChild(this.shadowDiv.el);
+        }
     }
 }

@@ -48,6 +48,9 @@ export default class Form extends Component {
                         }
                         input.showError();
                     },
+                    focus: () => {
+                        input.showError();
+                    },
                 },
             });
             this.el.appendChild(input.el);
