@@ -88,12 +88,8 @@ export default class HexandriaUtils {
         return data;
     }
 
-    static packToAttackTown(selected, enemyIndex, town) {
+    static packToAttackTown(selected) {
         const data = {};
-        data.playerIndex = selected.playerIndex;
-        data.enemyIndex = enemyIndex;
-        data.townName = town.name;
-
         data.position = HexandriaUtils.copy(selected.squad.position);
         data.newOwner = selected.player.name;
         return data;

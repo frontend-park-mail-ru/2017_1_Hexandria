@@ -4,11 +4,6 @@ import { EVENTS } from '../hexandria/events';
 
 export default class Transport {
     constructor(host) {
-        if (Transport.__instance) {
-            return Transport.__instance;
-        }
-        Transport.__instance = this;
-
         const address = ['https', 'https:'].includes(location.protocol)
             ? `wss://${host}/game`
             : `ws://${host}/game`;
@@ -59,7 +54,7 @@ export default class Transport {
 
             (new Mediator()).emit(message.event, message.payload);
         } catch (e) {
-            console.error('HandleMessage parse error', messageText);
+            console.error('Transport handleMessage parse error', messageText);
         }
     }
 

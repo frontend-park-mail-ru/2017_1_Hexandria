@@ -179,7 +179,6 @@ export default class HexandriaLogic {
 
                 const enemyIndex = c[0];
                 const attackCapitalData = HexandriaUtils.packToAttackCapital(selected, enemyIndex, town);
-                // this.onAttackCapital(attackCapitalData);
                 (new Mediator()).emit(EVENTS.LOGIC.ATTACK_CAPITAL, attackCapitalData);
             } else if (t.length > 0) {
                 console.log('t ->', t);
@@ -187,16 +186,13 @@ export default class HexandriaLogic {
                     console.log('ERROR: t.length');
                 }
 
-                const enemyIndex = t[0];
-                const attackTownData = HexandriaUtils.packToAttackTown(selected, enemyIndex, town);
-                // this.onAttackTown(attackTownData);
+                const attackTownData = HexandriaUtils.packToAttackTown(selected);
                 (new Mediator()).emit(EVENTS.LOGIC.ATTACK_TOWN, attackTownData);
             } else if (town.name !== selected.player.capital &&
                 selected.player.towns.indexOf(town.name) === -1) {
                 console.log('neutral');
 
-                const attackTownData = HexandriaUtils.packToAttackTown(selected, -1, town);
-                // this.onAttackTown(attackTownData);
+                const attackTownData = HexandriaUtils.packToAttackTown(selected);
                 (new Mediator()).emit(EVENTS.LOGIC.ATTACK_TOWN, attackTownData);
             } else {
                 // do nothing
@@ -216,8 +212,8 @@ export default class HexandriaLogic {
         const newCount = data.newCount;
         const newMorale = data.newMorale;
 
-        const fromSquadObject = this.findSquad(position);
-        if (!fromSquadObject) {
+        const squadObject = this.findSquad(position);
+        if (!squadObject) {
             console.error('Can not find squad.');
             return;
         }
@@ -225,22 +221,22 @@ export default class HexandriaLogic {
 
         // if (position.x !== newPosition.x || position.y !== newPosition.y) {
         if (newPosition) {
-            console.log(fromSquadObject, newPosition);
-            fromSquadObject.squad.position.x = newPosition.x;
-            fromSquadObject.squad.position.y = newPosition.y;
+            console.log(squadObject, newPosition);
+            squadObject.squad.position.x = newPosition.x;
+            squadObject.squad.position.y = newPosition.y;
 
             const graphicsData = {
-                playerName: fromSquadObject.player.name,
-                squadIndex: fromSquadObject.squadIndex,
+                playerName: squadObject.player.name,
+                squadIndex: squadObject.squadIndex,
                 position: newPosition,
             };
             (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_MOVE, graphicsData);
         }
 
         if (newCount || newMorale) {
-            const playerIndex = fromSquadObject.playerIndex;
-            const squadIndex = fromSquadObject.squadIndex;
-            const squad = fromSquadObject.squad;
+            const playerIndex = squadObject.playerIndex;
+            const squadIndex = squadObject.squadIndex;
+            const squad = squadObject.squad;
 
             if (newCount) {
                 this.game.players[playerIndex].squads[squadIndex].count = newCount;
@@ -263,17 +259,17 @@ export default class HexandriaLogic {
         console.log('');
         console.log('onDelete', data);
         const position = data.position;
-        const fromSquadObject = this.findSquad(position);
-        if (!fromSquadObject) {
+        const squadObject = this.findSquad(position);
+        if (!squadObject) {
             console.error('Can not find squad.');
             return;
         }
 
-        this.game.players[fromSquadObject.playerIndex].squads.splice(fromSquadObject.squadIndex, 1);
+        this.game.players[squadObject.playerIndex].squads.splice(squadObject.squadIndex, 1);
 
         const graphicsData = {
-            playerName: this.game.players[fromSquadObject.playerIndex].name,
-            squadIndex: fromSquadObject.squadIndex,
+            playerName: this.game.players[squadObject.playerIndex].name,
+            squadIndex: squadObject.squadIndex,
         };
         (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, graphicsData);
     }
@@ -304,21 +300,40 @@ export default class HexandriaLogic {
     onAttackTown(data) {
         console.log('');
         console.log('');
-        console.log('EVENTattackTown', data);
-        const playerIndex = data.playerIndex;
-        const enemyIndex = data.enemyIndex;
-        const townName = data.townName;
+        console.log('onAttackTown', data);
 
-        if (enemyIndex !== -1) {
-            const townIndex = this.game.players[enemyIndex].towns.indexOf(townName);
-            console.log('enemyTown', townIndex);
-            this.game.players[enemyIndex].towns.splice(townIndex, 1);
+        const position = data.position;
+        const newOwner = data.newOwner;
+
+        const town = this.findTown(position);
+        if (!town) {
+            console.error('Can not find town.');
+            return;
         }
-        this.game.players[playerIndex].towns.push(townName);
+
+        console.log(town);
+
+        HexandriaUtils.forPlayers(
+            this.game,
+            ({ playerIndex, player }) => {
+                const index = player.towns.indexOf(town.name);
+                if (index !== -1) {
+                    this.game.players[playerIndex].towns.splice(index, 1);
+                }
+            },
+        );
+
+        const newOwnerObject = this.game.players.find(function(p) {
+            return p.name === newOwner;
+        });
+
+        console.log(newOwnerObject);
+
+        newOwnerObject.towns.push(town.name);
 
         const graphicsData = {
-            playerColor: this.game.players[playerIndex].color,
-            townName,
+            playerColor: newOwnerObject.color,
+            townName: town.name,
         };
         (new Mediator()).emit(EVENTS.GRAPHICS.TOWN_CAPTURE, graphicsData);
     }
