@@ -20,6 +20,8 @@
     @extend .center-block__;
 
     text-align: center;
+    font-size: 150%;
+    color: $hexandria-white;
   }
 
   &__result {

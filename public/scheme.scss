@@ -14,3 +14,15 @@ $max-width: 768px;
     padding: 0 5px;
   }
 }
+
+.center-form__ {
+  width: 550px;
+  //padding: 0 100px;
+  margin: 0 auto;
+  //text-align: center;
+
+  @media screen and (max-width: $max-width) {
+    width: auto;
+    padding: 0 5px;
+  }
+}

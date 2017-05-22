@@ -49,23 +49,28 @@ export default class HexandriaApp {
         }
     }
 
-    init(payload = {}) {
+    init(payload) {
         console.log('init', payload);
         this._hideAll();
 
-        if (!payload.mode) {
-            console.error('HexandriaApp undefined mode');
+        if (payload && payload.mode) {
+            this.views.start.refresh(payload.mode);
+            this.Mode = MODES[payload.mode.toUpperCase()];
+            console.warn(this.Mode);
+        } else if (this.Mode) {
+            // same mode form last time
+        } else {
+            console.error('init error: unknown mode');
             return;
         }
-
-        this.views.start.refresh(payload);
         this.views.start.show();
 
         this.user = (new Router()).getUser();
 
-        const _mode = (payload.mode || '').toUpperCase();
-        this.Mode = MODES[_mode];
-        console.warn(this.Mode);
+        if (this.game) {
+            this.gameFinish();
+        }
+
         if (this.Mode) { // TODO && this.user
             this.game = new HexandriaGame(this.Mode, this.user);
 
@@ -74,7 +79,8 @@ export default class HexandriaApp {
                 (new Mediator()).emit(EVENTS.GAME.PLAY);
             }
         } else {
-            throw new TypeError(`gameStart error: mode=${this.Mode}`);
+            console.error(`gameStart error: mode=${this.Mode}`);
+            this.Mode = null;
         }
     }
 
@@ -92,8 +98,8 @@ export default class HexandriaApp {
         this.views.result.show();
     }
 
-    gameFinish(payload = {}) {
-        console.log('gameFinish', payload);
+    gameFinish() {
+        console.log('gameFinish');
         this._hideAll();
 
         if (this.game) {
@@ -104,7 +110,6 @@ export default class HexandriaApp {
             (new Mediator()).clear();
             // (new Mediator())._print();
             this._subscribe();
-            (new Router()).go('/');
         }
     }
 }
