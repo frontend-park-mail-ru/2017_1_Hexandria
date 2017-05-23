@@ -20,10 +20,10 @@ export default class HexandriaGame {
     }
 
     _subscribe() {
-        (new Mediator()).subscribe(this, EVENTS.GAME.START, 'gameStart');
+        (new Mediator()).subscribe(this, EVENTS.GAME.START, '_onGameStart');
     }
 
-    gameStart(data = {}) {
+    _onGameStart(data = {}) {
         console.log('');
         console.log('');
         console.log('');
@@ -115,6 +115,7 @@ export default class HexandriaGame {
             players: [
                 {
                     name: 'Bob',
+                    turn: true,
                     color: 0xff0000,
                     capital: 'town1',
                     towns: ['town2'],

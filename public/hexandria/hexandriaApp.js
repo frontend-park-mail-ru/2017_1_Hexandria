@@ -34,13 +34,14 @@ export default class HexandriaApp {
     }
 
     _subscribe() {
-        (new Mediator()).subscribe(this, EVENTS.APP.INIT, 'init');
-        (new Mediator()).subscribe(this, EVENTS.GAME.PLAY, 'gamePlay');
-        (new Mediator()).subscribe(this, EVENTS.GAME.RESULT, 'gameResult');
-        (new Mediator()).subscribe(this, EVENTS.APP.FINISH, 'gameFinish');
+        (new Mediator()).subscribe(this, EVENTS.APP.INIT, '_onAppInit');
+        (new Mediator()).subscribe(this, EVENTS.GAME.START, '_onGameStart');
+        (new Mediator()).subscribe(this, EVENTS.GAME.RESULT, '_onGameResult');
+        (new Mediator()).subscribe(this, EVENTS.APP.FINISH, '_onAppFinish');
 
         this.views.play.subscribe();
     }
+
     _hideAll() {
         for (const v in this.views) {
             if (this.views[v]) {
@@ -49,14 +50,13 @@ export default class HexandriaApp {
         }
     }
 
-    init(payload) {
-        console.log('init', payload);
+    _onAppInit(payload) {
+        console.log('_onAppInit', payload);
         this._hideAll();
 
         if (payload && payload.mode) {
             this.views.start.refresh(payload.mode);
             this.Mode = MODES[payload.mode.toUpperCase()];
-            console.warn(this.Mode);
         } else if (this.Mode) {
             // same mode form last time
         } else {
@@ -68,7 +68,7 @@ export default class HexandriaApp {
         this.user = (new Router()).getUser();
 
         if (this.game) {
-            this.gameFinish();
+            this._onAppFinish();
         }
 
         if (this.Mode) { // TODO && this.user
@@ -76,7 +76,6 @@ export default class HexandriaApp {
 
             if (this.Mode === MODES.SINGLEPLAYER) {
                 (new Mediator()).emit(EVENTS.GAME.START, HexandriaGame.testGameStartData2());
-                (new Mediator()).emit(EVENTS.GAME.PLAY);
             }
         } else {
             console.error(`gameStart error: mode=${this.Mode}`);
@@ -84,22 +83,22 @@ export default class HexandriaApp {
         }
     }
 
-    gamePlay(payload = {}) {
-        console.log('gamePlay', payload);
+    _onGameStart(payload = {}) {
+        console.log('_onGameStart', payload);
         this._hideAll();
         this.views.play.show();
     }
 
-    gameResult(payload = {}) {
-        console.log('gameResult', payload);
+    _onGameResult(payload = {}) {
+        console.log('_onGameResult', payload);
         this._hideAll();
 
         this.views.result.refresh(payload);
         this.views.result.show();
     }
 
-    gameFinish() {
-        console.log('gameFinish');
+    _onAppFinish() {
+        console.log('_onAppFinish');
         this._hideAll();
 
         if (this.game) {
@@ -113,4 +112,3 @@ export default class HexandriaApp {
         }
     }
 }
-

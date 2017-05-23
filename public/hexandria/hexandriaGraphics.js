@@ -44,8 +44,6 @@ export default class HexandriaGraphics {
     }
 
     destroy() {
-        console.log('destroy');
-
         cancelAnimationFrame(this._id);
 
         if (this.game) {

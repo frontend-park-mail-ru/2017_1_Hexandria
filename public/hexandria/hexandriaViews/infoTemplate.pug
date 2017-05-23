@@ -1,12 +1,12 @@
 div.hexandria__info
-    div name
-    div towns
-div.hexandria__info.hexandria__info-first
-    div #{player1Name}
-    div #{player1Towns}
-div.hexandria__info.hexandria__info-second
-    div #{player2Name}
-    div #{player2Towns}
+    div Name
+    div Towns
+div.hexandria__info(class=player1.turn ? "hexandria__info-1__turn" : "hexandria__info-1")
+    div #{player1.name}
+    div #{player1.towns.length}
+div.hexandria__info(class=player2.turn ? "hexandria__info-2__turn" : "hexandria__info-2")
+    div #{player2.name}
+    div #{player2.towns.length}
 
 //div.hexandria__info
 //    div name

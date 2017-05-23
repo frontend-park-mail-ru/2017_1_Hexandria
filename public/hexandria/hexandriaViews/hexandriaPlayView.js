@@ -44,11 +44,8 @@ export default class HexandriaPlayView extends View {
 
     refresh(payload = {}) {
         const html = infoTemplate({
-            player1Name: payload[0].name,
-            player1Towns: payload[0].towns.length,
-
-            player2Name: payload[1].name,
-            player2Towns: payload[1].towns.length,
+            player1: payload[0],
+            player2: payload[1],
         });
 
         this.title.titleDiv.innerHTML(html);

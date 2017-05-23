@@ -7,12 +7,24 @@
     padding: 0 5px;
     color: $hexandria-default;
 
-    &-first {
+    &-1 {
       color: red;
+      border: 1px solid $hexandria-background;
+
+      &__turn {
+        color: red;
+        border: 1px solid red;
+      }
     }
 
-    &-second {
+    &-2 {
       color: blue;
+      border: 1px solid $hexandria-background;
+
+      &__turn {
+        color: blue;
+        border: 1px solid blue;
+      }
     }
   }
 
@@ -30,5 +42,9 @@
     text-align: center;
     font-size: 150%;
     color: $hexandria-white;
+  }
+
+  &__turn {
+    border: 1px solid $hexandria-default;
   }
 }

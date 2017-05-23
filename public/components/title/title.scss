@@ -3,11 +3,12 @@
 
 .title {
   display: flex;
+  align-items: center;
   padding: 10px 0 5px;
   color: $hexandria-white;
 
   &__main {
-    margin: 10px 0;
+    margin: 0;
     text-align: center;
     flex-grow: 100;
     font-size: 200%;

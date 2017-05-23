@@ -32,7 +32,7 @@ export default class HexandriaResultView extends View {
             },
         });
         const finishButton = new Button({
-            text: 'To main',
+            text: 'Menu',
             attrs: {
                 class: 'button',
             },
