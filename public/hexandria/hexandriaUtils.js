@@ -61,6 +61,15 @@ export default class HexandriaUtils {
         return data;
     }
 
+    static packToCreate(owner, position, count, morale) {
+        const data = {};
+        data.owner = owner;
+        data.position = HexandriaUtils.copy(position);
+        data.count = count;
+        data.morale = morale;
+        return data;
+    }
+
     static packToUpdate(selected, count, morale, newPositon = null) {
         const data = {};
         data.position = HexandriaUtils.copy(selected.squad.position);

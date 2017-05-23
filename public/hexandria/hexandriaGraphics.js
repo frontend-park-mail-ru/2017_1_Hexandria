@@ -38,6 +38,7 @@ export default class HexandriaGraphics {
         this.squadsMap = null;
 
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_MOVE, 'squadMove');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_CREATE, 'squadCreate');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_UPDATE, 'squadUpdate');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_DELETE, 'squadDelete');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.TOWN_CAPTURE, 'townCapture');
@@ -122,14 +123,26 @@ export default class HexandriaGraphics {
         HexandriaUtils.forPlayersSquads(
             this.game,
             (squadObject) => {
-                const newSquad = new SquadGraphics(this._scene, squadObject.player.color, squadObject.squad);
-                this.squadsMap[squadObject.player.name].push(newSquad);
+                // const newSquad = new SquadGraphics(this._scene, squadObject.player.color, squadObject.squad);
+                // this.squadsMap[squadObject.player.name].push(newSquad);
+
+                const createData = {
+                    name: squadObject.player.name,
+                    color: squadObject.player.color,
+                    squad: squadObject.squad,
+                };
+                (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_CREATE, createData);
             },
         );
     }
 
     squadMove(data) {
         this.squadsMap[data.playerName][data.squadIndex].move(data.position.x, data.position.y);
+    }
+
+    squadCreate(data) {
+        const newSquad = new SquadGraphics(this._scene, data.color, data.squad);
+        this.squadsMap[data.name].push(newSquad);
     }
 
     squadUpdate(data) {
