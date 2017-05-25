@@ -30,6 +30,9 @@ export const EVENTS = {
         SQUAD_DELETE: 'EVENTS.GRAPHICS.SQUAD_DELETE',
         TOWN_CAPTURE: 'EVENTS.GRAPHICS.TOWN_CAPTURE',
     },
+    UI: {
+        TURN: 'EVENTS.UI.TURN',
+    }
 };
 
 export default EVENTS;

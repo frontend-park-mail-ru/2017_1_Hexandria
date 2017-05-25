@@ -25,7 +25,7 @@ export default class HexandriaPlayView extends View {
                 class: 'title__back-button',
             },
             events: {
-                click: () => { (new Mediator()).emit(EVENTS.GAME.TURN); },
+                click: () => { (new Mediator()).emit(EVENTS.UI.TURN); },
             },
         });
         this.title = new Title({

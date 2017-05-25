@@ -61,14 +61,17 @@ export default class Transport {
     send(event, payload = null) {
         let data;
 
-        if (payload) {
-            data = JSON.stringify({ event, payload });
-        } else {
-            data = JSON.stringify({ event, payload: '' });
-            throw new TypeError('Payload is empty');
-        }
-        console.log('Send:', data);
+        if (event) {
+            if (payload) {
+                data = JSON.stringify({ event, payload });
+            } else {
+                data = JSON.stringify({ event });
+            }
+            console.log('Send:', data);
 
-        this.ws.send(data);
+            this.ws.send(data);
+        } else {
+            throw new TypeError('Event is empty');
+        }
     }
 }

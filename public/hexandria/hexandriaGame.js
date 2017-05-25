@@ -67,6 +67,7 @@ export default class HexandriaGame {
                 game.players.push(player);
             }
         }
+        game.players[0].turn = true;
 
         this.logic.initGame(game);
         this.graphics.initGame(game);

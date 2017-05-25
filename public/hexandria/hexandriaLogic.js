@@ -25,6 +25,7 @@ export default class HexandriaLogic {
         this._activePlayer = null;
         this._turnTimeout = null;
 
+        (new Mediator()).subscribe(this, EVENTS.UI.TURN, '_onUiTurn');
         (new Mediator()).subscribe(this, EVENTS.GAME.TURN, '_onGameTurn');
 
         (new Mediator()).subscribe(this, EVENTS.LOGIC.SELECT, 'onSelect');
@@ -294,6 +295,10 @@ export default class HexandriaLogic {
         }
 
         this.eventInfo();
+    }
+
+    _onUiTurn() {
+        this.eventTurn();
     }
 
     _onGameTurn() {
