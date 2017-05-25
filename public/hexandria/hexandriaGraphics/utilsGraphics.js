@@ -3,13 +3,14 @@ import * as THREE from 'three';
 const _hexagonDiameter = 1;
 const _hexagonAlpha = _hexagonDiameter / 4.0;
 const _hexagonBeta = Math.sqrt(3) * _hexagonAlpha;
+const _hexagonDistance = 0.025;
 
 export default class UtilsGraphics {
     static getPosition(x, y) {
-        let posX = (2 * _hexagonBeta + 0.01) * x;
-        const posY = (3 * _hexagonAlpha + 0.01) * y;
+        let posX = (2 * _hexagonBeta + _hexagonDistance) * x;
+        const posY = (3 * _hexagonAlpha + _hexagonDistance) * y;
         if (y % 2 === 0) {
-            posX += _hexagonBeta + 0.01;
+            posX += _hexagonBeta + _hexagonDistance;
         }
 
         return [posX, posY];

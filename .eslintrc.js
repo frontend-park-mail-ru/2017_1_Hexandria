@@ -13,7 +13,6 @@ module.exports = {
         "no-extra-semi": "off", // or 1?
         "strict": ["warn", "global"],
         "no-tabs": "error",
-        "func-names": ["error", "never"],
         "no-console": "off",
 
         "properties": "off",
@@ -30,6 +29,14 @@ module.exports = {
         "no-unused-vars": "off",
         "space-before-function-paren": "off",
         "guard-for-in": "warn",
+
+        "vars-on-top": "off",
+        "no-var": "off",
+        "wrap-iife": "off",
+        "no-shadow": "off",
+        "func-names": "off",
+        "object-shorthand": "off",
+        "no-restricted-properties": "off",
 
         "indent": ["error", 4, {"SwitchCase": 1}],
         "max-len": ["error", {
