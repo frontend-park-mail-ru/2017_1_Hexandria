@@ -4,10 +4,11 @@
 .user-panel {
   z-index: 1;
   margin: auto;
+  text-align: right;
 
   &__username {
     display: inline-block;
-    font-size: 150%;
+    font-size: $font-size;
     color: $hexandria-white;
     vertical-align: middle;
     margin: 0 10px;

@@ -33,7 +33,13 @@ export default class Title extends Component {
                     class: 'title__back-button',
                 },
                 events: {
-                    click: () => { (new Router()).go('/'); },
+                    click: () => {
+                        (new Router()).go('/');
+
+                        if (options.backButtonCallback) {
+                            options.backButtonCallback();
+                        }
+                    },
                 },
             });
             this.el.appendChild(backButton.el);

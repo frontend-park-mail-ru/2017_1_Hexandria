@@ -12,7 +12,6 @@ $font-size-mobile: 125%;
 .center-block__ {
   padding: 0 100px;
   margin: 0 auto;
-  //text-align: center;
 
   @media screen and (max-width: $max-width) {
     padding: 0 5px;
@@ -21,9 +20,7 @@ $font-size-mobile: 125%;
 
 .center-form__ {
   width: 550px;
-  //padding: 0 100px;
   margin: 0 auto;
-  //text-align: center;
 
   @media screen and (max-width: $max-width) {
     width: auto;

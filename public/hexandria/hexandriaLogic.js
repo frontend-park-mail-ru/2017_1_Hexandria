@@ -11,10 +11,14 @@ export default class HexandriaLogic {
         }
 
         this.TIMEOUT = 10; // seconds
+
         this.TOWN_COUNT = 15;
         this.TOWN_MORALE = 10;
+        this.TOWN_COUNT_MAX = 3 * this.TOWN_COUNT;
+
         this.CAPITAL_COUNT = 50;
         this.CAPITAL_MORALE = 30;
+        this.CAPITAL_COUNT_MAX = 3 * this.CAPITAL_COUNT;
 
         this.game = null;
         this._selected = null;
@@ -103,8 +107,6 @@ export default class HexandriaLogic {
     }
 
     eventTurn() {
-        (new Mediator()).emit(EVENTS.GAME.TURN);
-
         console.warn('+++++');
         HexandriaUtils.forFieldTowns(
             this.game,
@@ -120,14 +122,16 @@ export default class HexandriaLogic {
                                     s.position.y === townObj.position.y;
                             });
                             if (playerSquad) {
-                                console.log('update', playerSquad);
+                                if (playerSquad.count < this.CAPITAL_COUNT_MAX) {
+                                    console.log('update', playerSquad);
 
-                                const updateData = HexandriaUtils.packToUpdate(
-                                    { squad: playerSquad },
-                                    playerSquad.count + this.CAPITAL_COUNT,
-                                    playerSquad.morale + this.CAPITAL_MORALE,
-                                );
-                                (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
+                                    const updateData = HexandriaUtils.packToUpdate(
+                                        { squad: playerSquad },
+                                        playerSquad.count + this.CAPITAL_COUNT,
+                                        playerSquad.morale, // + this.CAPITAL_MORALE,
+                                    );
+                                    (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
+                                }
                             } else {
                                 console.log('create');
 
@@ -152,14 +156,16 @@ export default class HexandriaLogic {
                                     s.position.y === townObj.position.y;
                             });
                             if (playerSquad) {
-                                console.log('update', playerSquad);
+                                if (playerSquad.count < this.TOWN_COUNT_MAX) {
+                                    console.log('update', playerSquad);
 
-                                const updateData = HexandriaUtils.packToUpdate(
-                                    { squad: playerSquad },
-                                    playerSquad.count + this.TOWN_COUNT,
-                                    playerSquad.morale + this.TOWN_MORALE,
-                                );
-                                (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
+                                    const updateData = HexandriaUtils.packToUpdate(
+                                        { squad: playerSquad },
+                                        playerSquad.count + this.TOWN_COUNT,
+                                        playerSquad.morale, // + this.TOWN_MORALE,
+                                    );
+                                    (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
+                                }
                             } else {
                                 console.log('create');
 
@@ -177,6 +183,8 @@ export default class HexandriaLogic {
             },
         );
         console.warn('-----');
+
+        (new Mediator()).emit(EVENTS.GAME.TURN);
     }
 
     eventMove(data) {
@@ -290,11 +298,9 @@ export default class HexandriaLogic {
 
     _onGameTurn() {
         if (this._activePlayer) {
-            for (const s in this._activePlayer.squads) {
-                if (this._activePlayer.squads[s]) {
-                    this._activePlayer.squads[s].lock = false;
-                }
-            }
+            this._activePlayer.squads.forEach(function(squad) {
+                squad.lock = false;
+            });
         }
 
         if (this.game.players[0].turn) {

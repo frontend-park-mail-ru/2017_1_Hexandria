@@ -4,6 +4,8 @@
 .main {
   @extend .center-block__;
 
+  text-align: center;
+
   &__panel {
     padding: 10px 0;
   }
@@ -19,10 +21,9 @@
   &__title {
     text-transform: uppercase;
     padding: 50px 0 5px;
-    text-align: center;
     color: $hexandria-white;
     font-weight: 700;
-    font-size: 3 * $font-size;
+    font-size: 2 * $font-size;
 
     @media screen and (max-width: $max-width) {
       padding: 25px 0 5px;
@@ -32,26 +33,27 @@
   }
 
   &__motto {
-    padding: 5px 0;
-    text-align: center;
     color: $hexandria-white;
     font-weight: lighter;
-    //font-size: 200%;
-    font-size: 1 * $font-size;
+    font-size: $font-size;
 
     @media screen and (max-width: $max-width) {
       color: $hexandria-white-mobile;
-      font-size: 1 * $font-size-mobile;
+      font-size: $font-size-mobile;
     }
   }
 
   &__buttons {
     background-color: $hexandria-background;
     padding: 50px 0 5px;
-    text-align: center;
 
     @media screen and (max-width: $max-width) {
       padding: 25px 0 5px;
+    }
+
+    &__main,
+    &__minor {
+      margin: 15px 0;
     }
   }
 
@@ -62,7 +64,7 @@
     border: 1px solid $hexandria-background;
     border-bottom-color: $hexandria-special;
     min-width: 175px;
-    margin: 10px 10px 5px;
+    margin: 5px 15px;
 
     &:hover {
       background-color: unset;
@@ -82,7 +84,7 @@
     border: 1px solid $hexandria-background;
     border-bottom-color: $hexandria-default;
     min-width: 175px;
-    margin: 3px;
+    margin: 5px 15px;
 
     &:hover {
       background-color: unset;

@@ -17,6 +17,9 @@ export default class SignupView extends View {
         const title = new Title({
             text: 'Signup',
             backButton: true,
+            backButtonCallback: () => {
+                this._loginForm.clear();
+            },
         });
         pageSignup.appendChild(title.el);
 
