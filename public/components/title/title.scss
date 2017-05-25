@@ -11,16 +11,28 @@
     margin: 0;
     text-align: center;
     flex-grow: 100;
-    font-size: 200%;
+    font-size: 1.5 * $font-size;
     font-weight: 900;
     vertical-align: middle;
+
+    @media screen and (max-width: $max-width) {
+      font-size: 1.5 * $font-size-mobile;
+      color: $hexandria-white-mobile;
+    }
   }
 
   &__back-button {
     @extend .button;
 
+    font-size: 1.5 * $font-size;
+    padding: 5px;
     min-width: 50px;
     vertical-align: middle;
+
+    @media screen and (max-width: $max-width) {
+      font-size: 1.5 * $font-size-mobile;
+      color: $hexandria-white-mobile;
+    }
   }
 
   &__shadow-button {

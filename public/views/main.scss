@@ -22,21 +22,37 @@
     text-align: center;
     color: $hexandria-white;
     font-weight: 700;
-    font-size: 400%;
+    font-size: 3 * $font-size;
+
+    @media screen and (max-width: $max-width) {
+      padding: 25px 0 5px;
+      color: $hexandria-white-mobile;
+      font-size: 2 * $font-size-mobile;
+    }
   }
 
   &__motto {
     padding: 5px 0;
     text-align: center;
     color: $hexandria-white;
-    font-weight: 400;
-    font-size: 200%;
+    font-weight: lighter;
+    //font-size: 200%;
+    font-size: 1 * $font-size;
+
+    @media screen and (max-width: $max-width) {
+      color: $hexandria-white-mobile;
+      font-size: 1 * $font-size-mobile;
+    }
   }
 
   &__buttons {
     background-color: $hexandria-background;
     padding: 50px 0 5px;
     text-align: center;
+
+    @media screen and (max-width: $max-width) {
+      padding: 25px 0 5px;
+    }
   }
 
   &__singleplayer,
@@ -45,8 +61,8 @@
 
     border: 1px solid $hexandria-background;
     border-bottom-color: $hexandria-special;
-    min-width: 300px;
-    margin: 10px 3px 3px;
+    min-width: 175px;
+    margin: 10px 10px 5px;
 
     &:hover {
       background-color: unset;
@@ -65,7 +81,7 @@
 
     border: 1px solid $hexandria-background;
     border-bottom-color: $hexandria-default;
-    min-width: 200px;
+    min-width: 175px;
     margin: 3px;
 
     &:hover {

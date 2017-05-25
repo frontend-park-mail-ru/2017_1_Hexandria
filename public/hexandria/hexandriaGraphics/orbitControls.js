@@ -639,39 +639,35 @@ export default function(THREE) {
             switch (event.touches.length) {
 
                 case 1: // one-fingered touch: rotate
+                    // if (scope.enableRotate === false) return;
+                    // handleTouchStartRotate(event);
+                    // state = STATE.TOUCH_ROTATE;
+                    // break;
 
-                    if (scope.enableRotate === false) return;
-
-                    handleTouchStartRotate(event);
-
-                    state = STATE.TOUCH_ROTATE;
-
+                    if (scope.enablePan === false) return;
+                    handleTouchStartPan(event);
+                    state = STATE.TOUCH_PAN;
                     break;
 
                 case 2: // two-fingered touch: dolly
-
                     if (scope.enableZoom === false) return;
-
                     handleTouchStartDolly(event);
-
                     state = STATE.TOUCH_DOLLY;
-
                     break;
 
                 case 3: // three-fingered touch: pan
+                    // if (scope.enablePan === false) return;
+                    // handleTouchStartPan(event);
+                    // state = STATE.TOUCH_PAN;
+                    // break;
 
-                    if (scope.enablePan === false) return;
-
-                    handleTouchStartPan(event);
-
-                    state = STATE.TOUCH_PAN;
-
+                    if (scope.enableRotate === false) return;
+                    handleTouchStartRotate(event);
+                    state = STATE.TOUCH_ROTATE;
                     break;
 
                 default:
-
                     state = STATE.NONE;
-
             }
 
             if (state !== STATE.NONE) {
@@ -688,30 +684,31 @@ export default function(THREE) {
             switch (event.touches.length) {
 
                 case 1: // one-fingered touch: rotate
-
-                    if (scope.enableRotate === false) return;
-                    if (state !== STATE.TOUCH_ROTATE) return; // is this needed?...
-
-                    handleTouchMoveRotate(event);
-
-                    break;
-
-                case 2: // two-fingered touch: dolly
-
-                    if (scope.enableZoom === false) return;
-                    if (state !== STATE.TOUCH_DOLLY) return; // is this needed?...
-
-                    handleTouchMoveDolly(event);
-
-                    break;
-
-                case 3: // three-fingered touch: pan
+                    // if (scope.enableRotate === false) return;
+                    // if (state !== STATE.TOUCH_ROTATE) return; // is this needed?...
+                    // handleTouchMoveRotate(event);
+                    // break;
 
                     if (scope.enablePan === false) return;
                     if (state !== STATE.TOUCH_PAN) return; // is this needed?...
-
                     handleTouchMovePan(event);
+                    break;
 
+                case 2: // two-fingered touch: dolly
+                    if (scope.enableZoom === false) return;
+                    if (state !== STATE.TOUCH_DOLLY) return; // is this needed?...
+                    handleTouchMoveDolly(event);
+                    break;
+
+                case 3: // three-fingered touch: pan
+                    // if (scope.enablePan === false) return;
+                    // if (state !== STATE.TOUCH_PAN) return; // is this needed?...
+                    // handleTouchMovePan(event);
+                    // break;
+
+                    if (scope.enableRotate === false) return;
+                    if (state !== STATE.TOUCH_ROTATE) return; // is this needed?...
+                    handleTouchMoveRotate(event);
                     break;
 
                 default:
@@ -721,11 +718,8 @@ export default function(THREE) {
 
         function onTouchEnd(event) {
             if (scope.enabled === false) return;
-
             handleTouchEnd(event);
-
             scope.dispatchEvent(endEvent);
-
             state = STATE.NONE;
         }
 

@@ -20,7 +20,7 @@ export default class HexandriaStartView extends View {
 
         this.title = new Title({
             text: 'StartView',
-            'back-button': true,
+            backButton: true,
         });
         this._el.appendChild(this.title.el);
 

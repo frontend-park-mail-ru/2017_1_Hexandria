@@ -3,7 +3,8 @@
 .hexandria {
   &__info {
     display: inline-block;
-    margin: 0 10px;
+    font-size: 0.75 * $font-size;
+    margin: 0 5px;
     padding: 0 5px;
     color: $hexandria-default;
 
@@ -26,13 +27,17 @@
         border: 1px solid blue;
       }
     }
+
+    @media screen and (max-width: $max-width) {
+      font-size: 0.75 * $font-size-mobile;
+    }
   }
 
   &__container {
     @extend .center-block__;
 
     text-align: center;
-    font-size: 150%;
+    //font-size: 150%;
     color: $hexandria-white;
   }
 
@@ -40,7 +45,7 @@
     //@extend .center-block__;
 
     text-align: center;
-    font-size: 150%;
+    //font-size: 150%;
     color: $hexandria-white;
   }
 

@@ -3,7 +3,7 @@
 .button__ {
   display: inline-block;
   text-align: center;
-  font-size: 150%;
+  font-size: $font-size;
   color: $hexandria-white;
   margin: 5px;
   padding: 10px;
@@ -11,7 +11,8 @@
   vertical-align: middle;
 
   @media screen and (max-width: $max-width) {
-    font-size: 200%;
+    font-size: $font-size-mobile;
+    color: $hexandria-white-mobile;
     padding: 15px;
   }
 }
@@ -22,10 +23,14 @@
   text-decoration: none;
   background-color: $hexandria-background;
   border: 1px solid $hexandria-default;
-  min-width: 150px;
+  min-width: 125px;
 
   &:hover {
     background-color: $hexandria-default;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: $max-width) {
+    min-width: 75px;
   }
 }

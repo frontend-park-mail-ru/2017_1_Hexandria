@@ -9,7 +9,7 @@ export default class ScoreboardView extends View {
 
         const title = new Title({
             text: 'Scoreboard',
-            'back-button': true,
+            backButton: true,
         });
         pageScoreboard.appendChild(title.el);
 

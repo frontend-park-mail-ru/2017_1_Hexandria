@@ -26,7 +26,7 @@ export default class Title extends Component {
 
         this.innerHTML(); // clear inner HTML
 
-        if ('back-button' in options) {
+        if (options.backButton) {
             const backButton = new Button({
                 text: '⬅',
                 attrs: {
@@ -48,14 +48,16 @@ export default class Title extends Component {
 
         this.el.appendChild(this.titleDiv.el);
 
-        if ('back-button' in options) {
-            const shadowButton = new Button({
+        if (options.shadowButton === undefined) {
+            options.shadowButton = new Button({
                 text: '',
                 attrs: {
                     class: 'title__shadow-button',
                 },
             });
-            this.el.appendChild(shadowButton.el);
+        }
+        if (options.shadowButton) {
+            this.el.appendChild(options.shadowButton.el);
         }
     }
 }

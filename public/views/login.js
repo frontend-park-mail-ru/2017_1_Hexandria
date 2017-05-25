@@ -16,7 +16,7 @@ export default class LoginView extends View {
 
         this._title = new Title({
             text: 'Login',
-            'back-button': true,
+            backButton: true,
         });
         pageLogin.appendChild(this._title.el);
 
