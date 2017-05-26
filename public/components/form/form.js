@@ -75,9 +75,9 @@ export default class Form extends Component {
     }
 
     clear() {
-        console.log(this._inputs);
         this._inputs.forEach(function(input) {
             input.clear();
+            input.showError();
         });
     }
 }
