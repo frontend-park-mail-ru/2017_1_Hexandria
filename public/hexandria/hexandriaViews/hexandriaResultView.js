@@ -1,5 +1,6 @@
 import './hexandria.scss';
 
+import Router from '../../modules/router';
 import Mediator from '../../modules/mediator';
 import { EVENTS } from '../../hexandria/events';
 
@@ -31,13 +32,25 @@ export default class HexandriaResultView extends View {
             },
         });
         const finishButton = new Button({
-            text: 'finish',
+            text: 'Menu',
             attrs: {
                 class: 'button',
             },
             events: {
                 click: () => {
-                    (new Mediator()).emit(EVENTS.GAME.FINISH);
+                    (new Mediator()).emit(EVENTS.APP.FINISH);
+                    (new Router()).go('/');
+                },
+            },
+        });
+        const againButton = new Button({
+            text: 'Again',
+            attrs: {
+                class: 'button',
+            },
+            events: {
+                click: () => {
+                    (new Mediator()).emit(EVENTS.APP.INIT);
                 },
             },
         });
@@ -48,6 +61,7 @@ export default class HexandriaResultView extends View {
             childs: {
                 result,
                 finishButton,
+                againButton,
             },
         });
         this._el.appendChild(this.container.el);

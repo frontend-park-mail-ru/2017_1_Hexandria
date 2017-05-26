@@ -91,7 +91,7 @@ export default class MainView extends View {
         });
         const buttonsMain = new Component({
             attrs: {
-                class: `${mainClass}__buttons-main`,
+                class: `${mainClass}__buttons__main`,
             },
             childs: {
                 singleplayer,
@@ -120,7 +120,7 @@ export default class MainView extends View {
         });
         const buttonsMinor = new Component({
             attrs: {
-                class: `${mainClass}__buttons-minor`,
+                class: `${mainClass}__buttons__minor`,
             },
             childs: {
                 about,

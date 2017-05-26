@@ -1,8 +1,8 @@
 import HexandriaLogic from '../hexandriaLogic';
 
 export default class HexandriaLogicSingleplayer extends HexandriaLogic {
-    constructor(game) {
-        super(game);
+    constructor() {
+        super();
         console.log('HexandriaLogicSingleplayer');
     }
 }

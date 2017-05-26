@@ -35,4 +35,8 @@ export default class Input extends Component {
             this._installed = true;
         }
     }
+
+    clear() {
+        this.el.value = '';
+    }
 }

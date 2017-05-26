@@ -1,11 +1,5 @@
 export const API = {};
 
-// API.testUser = {
-//     login: 'test-user',
-//     password: 'test-password',
-//     email: 'test_email@test.ru',
-// };
-
 API.HOST = 'hexandria.ru:8082';
 // API.HOST = 'localhost:8082';
 

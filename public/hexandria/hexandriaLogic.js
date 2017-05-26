@@ -1,40 +1,55 @@
 import Mediator from '../modules/mediator';
 import { EVENTS } from './events';
-import HexLogic from './hexandriaLogic/hexLogic';
 import HexandriaUtils from './hexandriaUtils';
 
 export default class HexandriaLogic {
-    constructor(game) {
-        console.log('HexandriaLogic created', game);
+    constructor() {
+        console.log('HexandriaLogic');
 
         if (this.constructor.name === HexandriaLogic.name) {
             throw new TypeError('Can not create instance of HexandriaLogic');
         }
 
+        this.TIMEOUT = 10; // seconds
 
-        this.game = game;
+        this.TOWN_COUNT = 15;
+        this.TOWN_MORALE = 10;
+        this.TOWN_COUNT_MAX = 3 * this.TOWN_COUNT;
+
+        this.CAPITAL_COUNT = 50;
+        this.CAPITAL_MORALE = 30;
+        this.CAPITAL_COUNT_MAX = 3 * this.CAPITAL_COUNT;
+
+        this.game = null;
         this._selected = null;
+        this._activePlayer = null;
+        this._turnTimeout = null;
 
-        // const sizeX = this.game.field.size.x;
-        // const sizeY = this.game.field.size.y;
-        // this.field = [...Array(sizeX).keys()].map(i => Array(sizeY));
-        // for (let i = 0; i < sizeX; i++) {
-        //     for (let j = 0; j < sizeY; j++) {
-        //         // this.field[i][j] = i + j;
-        //         this.field[i][j] = new HexLogic();
-        //     }
-        // }
-
-        (new Mediator()).subscribe(this, EVENTS.KEYBOARD.ENTER_PRESSED, 'enterPressed');
-        (new Mediator()).subscribe(this, EVENTS.TURN.START_TURN, 'gameLoop');
+        (new Mediator()).subscribe(this, EVENTS.UI.TURN, '_onUiTurn');
+        (new Mediator()).subscribe(this, EVENTS.GAME.TURN, '_onGameTurn');
 
         (new Mediator()).subscribe(this, EVENTS.LOGIC.SELECT, 'onSelect');
-        (new Mediator()).subscribe(this, EVENTS.LOGIC.MOVE, 'onMove');
+        (new Mediator()).subscribe(this, EVENTS.LOGIC.CREATE, 'onCreate');
         (new Mediator()).subscribe(this, EVENTS.LOGIC.UPDATE, 'onUpdate');
         (new Mediator()).subscribe(this, EVENTS.LOGIC.DELETE, 'onDelete');
-        (new Mediator()).subscribe(this, EVENTS.LOGIC.ATTACK_CAPITAL, 'onAttackCapital');
         (new Mediator()).subscribe(this, EVENTS.LOGIC.ATTACK_TOWN, 'onAttackTown');
+    }
 
+    startTimeout() {
+        if (this.constructor.name === 'HexandriaLogicSingleplayer') {
+            if (this._turnTimeout) {
+                clearInterval(this._turnTimeout);
+            }
+
+            this._turnTimeout = setInterval(this.eventTurn.bind(this), this.TIMEOUT * 1000);
+        }
+    }
+
+    initGame(game) {
+        this.game = game;
+
+        this._onGameTurn();
+        this._onGameTurn();
 
         this.eventInfo();
     }
@@ -42,24 +57,10 @@ export default class HexandriaLogic {
     destroy() {
         this.game = null;
         this._selected = null;
-    }
 
-    enterPressed() {
-        if (this.userIndex === this.userIndexHuman) {
-            console.log('Enter pressed');
+        if (this._turnTimeout) {
+            clearInterval(this._turnTimeout);
         }
-    }
-
-    gameLoop(options) {
-        console.log('start turn', options.userIndex);
-    }
-
-    startGameLoop() {
-        /* this.userIndex = 0;
-         this.interval = setInterval(() => {
-         this.userIndex = (this.userIndex + 1) % 3;
-         (new Mediator()).emit(EVENTS.TURN.START_TURN, { userIndex: this.userIndex });
-         }, 3000);*/
     }
 
     onSelect(position) {
@@ -74,19 +75,32 @@ export default class HexandriaLogic {
                 if (this.checkNearSelected(position)) {
                     const data = HexandriaUtils.packToMove(this._selected, position);
                     this.eventMove(data);
+                    this._selected.squad.lock = true;
                 }
                 this._selected = null;
                 (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
             } else {
-                const squad = this.findSquad(position);
-                if (squad) {
-                    this._selected = squad;
+                const squadObject = this.findSquad(position);
+                // console.warn(squad);
+                if (squadObject &&
+                    squadObject.player.turn &&
+                    !squadObject.squad.lock &&
+                    HexandriaUtils.checkUser(squadObject.player.name)) {
+                    this._selected = squadObject;
                     (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_UNIT, this._selected.squad.position);
                 }
             }
         } else {
             this._selected = null;
             (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
+        }
+
+
+        const sq = this._activePlayer.squads.find(function(s) {
+            return s.lock !== true;
+        });
+        if (!sq) {
+            this.eventTurn();
         }
     }
 
@@ -96,16 +110,96 @@ export default class HexandriaLogic {
         (new Mediator()).emit(EVENTS.GAME.INFO, payload);
     }
 
+    eventTurn() {
+        console.warn('+++++');
+        HexandriaUtils.forFieldTowns(
+            this.game,
+            (townObj) => {
+                HexandriaUtils.forPlayers(
+                    this.game,
+                    ({ playerIndex, player }) => {
+                        if (player.capital === townObj.name) {
+                            console.log('capital', player.name, townObj.name);
+
+                            const playerSquad = player.squads.find(function(s) {
+                                return s.position.x === townObj.position.x &&
+                                    s.position.y === townObj.position.y;
+                            });
+                            if (playerSquad) {
+                                if (playerSquad.count < this.CAPITAL_COUNT_MAX) {
+                                    console.log('update', playerSquad);
+
+                                    const updateData = HexandriaUtils.packToUpdate(
+                                        { squad: playerSquad },
+                                        playerSquad.count + this.CAPITAL_COUNT,
+                                        playerSquad.morale, // + this.CAPITAL_MORALE,
+                                    );
+                                    (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
+                                }
+                            } else {
+                                console.log('create');
+
+                                const createData = HexandriaUtils.packToCreate(
+                                    player.name,
+                                    townObj.position,
+                                    this.CAPITAL_COUNT,
+                                    this.CAPITAL_MORALE,
+                                );
+                                (new Mediator()).emit(EVENTS.LOGIC.CREATE, createData);
+                            }
+                        }
+
+                        const playerTownObj = player.towns.find(function(t) {
+                            return t === townObj.name;
+                        });
+                        if (playerTownObj) {
+                            console.log('town', player.name, townObj.name);
+
+                            const playerSquad = player.squads.find(function(s) {
+                                return s.position.x === townObj.position.x &&
+                                    s.position.y === townObj.position.y;
+                            });
+                            if (playerSquad) {
+                                if (playerSquad.count < this.TOWN_COUNT_MAX) {
+                                    console.log('update', playerSquad);
+
+                                    const updateData = HexandriaUtils.packToUpdate(
+                                        { squad: playerSquad },
+                                        playerSquad.count + this.TOWN_COUNT,
+                                        playerSquad.morale, // + this.TOWN_MORALE,
+                                    );
+                                    (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
+                                }
+                            } else {
+                                console.log('create');
+
+                                const createData = HexandriaUtils.packToCreate(
+                                    player.name,
+                                    townObj.position,
+                                    this.TOWN_COUNT,
+                                    this.TOWN_MORALE,
+                                );
+                                (new Mediator()).emit(EVENTS.LOGIC.CREATE, createData);
+                            }
+                        }
+                    },
+                );
+            },
+        );
+        console.warn('-----');
+
+        (new Mediator()).emit(EVENTS.GAME.TURN);
+    }
+
     eventMove(data) {
         console.log('');
         console.log('');
         console.log('eventMove', data);
 
         // squad fight/combine handler
+        const from = this.findSquad(data.from);
         const to = this.findSquad(data.to);
         if (to) {
-            const from = this.findSquad(data.from);
-
             let sign;
             if (from.player.name === to.player.name) {
                 sign = function (a) {
@@ -121,31 +215,24 @@ export default class HexandriaLogic {
                 const count = to.squad.count + sign(from.squad.count);
                 const morale = to.squad.morale;
 
-                const updateData = HexandriaUtils.packToUpdate(to, count, morale);
-                // this.onUpdate(updateData);
-                (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
-
                 const deleteData = HexandriaUtils.packToDelete(from);
-                // this.onDelete(deleteData);
                 (new Mediator()).emit(EVENTS.LOGIC.DELETE, deleteData);
+
+                const updateData = HexandriaUtils.packToUpdate(to, count, morale);
+                (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
             } else {
                 const count = from.squad.count + sign(to.squad.count);
                 const morale = from.squad.morale;
 
-                // this.onMove(data);
-                (new Mediator()).emit(EVENTS.LOGIC.MOVE, data);
-
-                const updateData = HexandriaUtils.packToUpdate(from, count, morale);
-                // this.onUpdate(updateData);
-                (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
-
                 const deleteData = HexandriaUtils.packToDelete(to);
-                // this.onDelete(deleteData);
                 (new Mediator()).emit(EVENTS.LOGIC.DELETE, deleteData);
+
+                const updateData = HexandriaUtils.packToUpdate(from, count, morale, data.to);
+                (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
             }
         } else {
-            // this.onMove(data);
-            (new Mediator()).emit(EVENTS.LOGIC.MOVE, data);
+            const updateData = HexandriaUtils.packToUpdate(from, from.squad.count, from.squad.morale, data.to);
+            (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
         }
 
         // town handler
@@ -183,26 +270,26 @@ export default class HexandriaLogic {
                     console.log('ERROR: c.length');
                 }
 
+                const attackTownData = HexandriaUtils.packToAttackTown(selected);
+                (new Mediator()).emit(EVENTS.LOGIC.ATTACK_TOWN, attackTownData);
+
                 const enemyIndex = c[0];
-                const attackCapitalData = HexandriaUtils.packToAttackCapital(selected, enemyIndex, town);
-                // this.onAttackCapital(attackCapitalData);
-                (new Mediator()).emit(EVENTS.LOGIC.ATTACK_CAPITAL, attackCapitalData);
+                const resultData = HexandriaUtils.packResult(selected.player.name,
+                    this.game.players[enemyIndex].name);
+                (new Mediator()).emit(EVENTS.GAME.RESULT, resultData);
             } else if (t.length > 0) {
                 console.log('t ->', t);
                 if (t.length > 1) {
                     console.log('ERROR: t.length');
                 }
 
-                const enemyIndex = t[0];
-                const attackTownData = HexandriaUtils.packToAttackTown(selected, enemyIndex, town);
-                // this.onAttackTown(attackTownData);
+                const attackTownData = HexandriaUtils.packToAttackTown(selected);
                 (new Mediator()).emit(EVENTS.LOGIC.ATTACK_TOWN, attackTownData);
             } else if (town.name !== selected.player.capital &&
                 selected.player.towns.indexOf(town.name) === -1) {
                 console.log('neutral');
 
-                const attackTownData = HexandriaUtils.packToAttackTown(selected, -1, town);
-                // this.onAttackTown(attackTownData);
+                const attackTownData = HexandriaUtils.packToAttackTown(selected);
                 (new Mediator()).emit(EVENTS.LOGIC.ATTACK_TOWN, attackTownData);
             } else {
                 // do nothing
@@ -213,109 +300,168 @@ export default class HexandriaLogic {
         this.eventInfo();
     }
 
-    onMove(data) {
+    _onUiTurn() {
+        this.eventTurn();
+    }
+
+    _onGameTurn() {
+        if (this._activePlayer) {
+            this._activePlayer.squads.forEach(function(squad) {
+                squad.lock = false;
+            });
+        }
+
+        if (this.game.players[0].turn) {
+            this.game.players[0].turn = false;
+
+            this._activePlayer = this.game.players[1];
+            this._activePlayer.turn = true;
+        } else {
+            this.game.players[1].turn = false;
+
+            this._activePlayer = this.game.players[0];
+            this._activePlayer.turn = true;
+        }
+
+        this.startTimeout();
+
+        this.eventInfo();
+    }
+
+    onCreate(data) {
         console.log('');
         console.log('');
-        console.log('onMove', data);
-        const from = data.from;
-        const to = data.to;
+        console.log('onCreate', data);
 
+        const player = this.game.players.find(function(p) {
+            return p.name === data.owner;
+        });
+        if (player) {
+            const newSquad = {
+                count: data.count,
+                morale: data.morale,
+                position: data.position,
+            };
 
-        // console.log(
-        //     'onMove field:',
-        //     this.field,
-        //     this.field[from.x][from.y],
-        // );
+            player.squads.push(newSquad);
 
-        const fromSquadObject = this.findSquad(data.from);
-        console.log(fromSquadObject, to);
-        fromSquadObject.squad.position.x = to.x;
-        fromSquadObject.squad.position.y = to.y;
-
-        const graphicsData = {
-            playerName: fromSquadObject.player.name,
-            squadIndex: fromSquadObject.squadIndex,
-            position: data.to,
-        };
-        (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_MOVE, graphicsData);
+            const createData = {
+                name: player.name,
+                color: player.color,
+                squad: newSquad,
+            };
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_CREATE, createData);
+        }
     }
 
     onUpdate(data) {
         console.log('');
         console.log('');
         console.log('onUpdate', data);
-        const playerIndex = data.playerIndex;
-        const squadIndex = data.squadIndex;
-        const squad = data.squad;
+        const position = data.position;
+        const newPosition = data.newPosition;
+        const newCount = data.newCount;
+        const newMorale = data.newMorale;
 
-        this.game.players[playerIndex].squads[squadIndex].count = squad.count;
-        this.game.players[playerIndex].squads[squadIndex].morale = squad.morale;
+        const squadObject = this.findSquad(position);
+        if (!squadObject) {
+            console.error('Can not find squad.');
+            return;
+        }
 
 
-        const graphicsData = {
-            playerName: this.game.players[playerIndex].name,
-            squadIndex,
-            squad,
-        };
-        (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_UPDATE, graphicsData);
+        // if (position.x !== newPosition.x || position.y !== newPosition.y) {
+        if (newPosition) {
+            console.log(squadObject, newPosition);
+            squadObject.squad.position.x = newPosition.x;
+            squadObject.squad.position.y = newPosition.y;
+
+            const graphicsData = {
+                playerName: squadObject.player.name,
+                squadIndex: squadObject.squadIndex,
+                position: newPosition,
+            };
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_MOVE, graphicsData);
+        }
+
+        if (newCount || newMorale) {
+            const playerIndex = squadObject.playerIndex;
+            const squadIndex = squadObject.squadIndex;
+            const squad = squadObject.squad;
+
+            if (newCount) {
+                this.game.players[playerIndex].squads[squadIndex].count = newCount;
+            }
+            if (newMorale) {
+                this.game.players[playerIndex].squads[squadIndex].morale = newMorale;
+            }
+
+            const graphicsData = {
+                playerName: this.game.players[playerIndex].name,
+                squadIndex,
+                squad,
+            };
+            (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_UPDATE, graphicsData);
+        }
     }
 
     onDelete(data) {
         console.log('');
         console.log('');
         console.log('onDelete', data);
-        const playerIndex = data.playerIndex;
-        const squadIndex = data.squadIndex;
-        this.game.players[playerIndex].squads.splice(squadIndex, 1);
+        const position = data.position;
+        const squadObject = this.findSquad(position);
+        if (!squadObject) {
+            console.error('Can not find squad.');
+            return;
+        }
+
+        this.game.players[squadObject.playerIndex].squads.splice(squadObject.squadIndex, 1);
 
         const graphicsData = {
-            playerName: this.game.players[playerIndex].name,
-            squadIndex,
+            playerName: this.game.players[squadObject.playerIndex].name,
+            squadIndex: squadObject.squadIndex,
         };
         (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, graphicsData);
-    }
-
-    onAttackCapital(data) {
-        console.log('');
-        console.log('');
-        console.log('onAttackCapital', data);
-        const playerIndex = data.playerIndex;
-        const enemyIndex = data.enemyIndex;
-        const townName = data.townName;
-
-        this.game.players[playerIndex].towns.push(townName);
-
-        const graphicsData = {
-            playerColor: this.game.players[playerIndex].color,
-            townName,
-        };
-        (new Mediator()).emit(EVENTS.GRAPHICS.TOWN_CAPTURE, graphicsData);
-
-        const resultData = HexandriaUtils.packResult(this.game.players[playerIndex].name,
-            this.game.players[enemyIndex].name);
-        // console.log('game over', this.game.players[enemyIndex].name);
-        console.log('game over', resultData);
-        (new Mediator()).emit(EVENTS.GAME.RESULT, resultData);
     }
 
     onAttackTown(data) {
         console.log('');
         console.log('');
-        console.log('EVENTattackTown', data);
-        const playerIndex = data.playerIndex;
-        const enemyIndex = data.enemyIndex;
-        const townName = data.townName;
+        console.log('onAttackTown', data);
 
-        if (enemyIndex !== -1) {
-            const townIndex = this.game.players[enemyIndex].towns.indexOf(townName);
-            console.log('enemyTown', townIndex);
-            this.game.players[enemyIndex].towns.splice(townIndex, 1);
+        const position = data.position;
+        const newOwner = data.newOwner;
+
+        const town = this.findTown(position);
+        if (!town) {
+            console.error('Can not find town.');
+            return;
         }
-        this.game.players[playerIndex].towns.push(townName);
+
+        console.log(town);
+
+        HexandriaUtils.forPlayers(
+            this.game,
+            ({ playerIndex, player }) => {
+                const index = player.towns.indexOf(town.name);
+                if (index !== -1) {
+                    this.game.players[playerIndex].towns.splice(index, 1);
+                }
+            },
+        );
+
+        const newOwnerObject = this.game.players.find(function(p) {
+            return p.name === newOwner;
+        });
+
+        console.log(newOwnerObject);
+
+        newOwnerObject.towns.push(town.name);
 
         const graphicsData = {
-            playerColor: this.game.players[playerIndex].color,
-            townName,
+            playerColor: newOwnerObject.color,
+            townName: town.name,
         };
         (new Mediator()).emit(EVENTS.GRAPHICS.TOWN_CAPTURE, graphicsData);
     }

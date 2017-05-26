@@ -20,28 +20,21 @@ export default class HexandriaStartView extends View {
 
         this.title = new Title({
             text: 'StartView',
-            'back-button': true,
+            backButton: true,
         });
         this._el.appendChild(this.title.el);
 
 
-        const startButton = new Button({
-            text: 'start',
-            attrs: {
-                class: 'button',
-            },
-            events: {
-                click: (event) => {
-                    (new Mediator()).emit(EVENTS.GAME.PLAY);
-                },
-            },
+        const waitInfo = new Component({
+            tagName: 'p',
+            text: 'Waiting for opponet...',
         });
         this.container = new Component({
             attrs: {
                 class: 'hexandria__container',
             },
             childs: {
-                startButton,
+                waitInfo,
             },
         });
         this._el.appendChild(this.container.el);
@@ -53,7 +46,7 @@ export default class HexandriaStartView extends View {
         this.hide();
     }
 
-    refresh(payload = {}) {
-        this.title.titleDiv.innerHTML(payload.mode);
+    refresh(mode) {
+        this.title.titleDiv.innerHTML(mode);
     }
 }

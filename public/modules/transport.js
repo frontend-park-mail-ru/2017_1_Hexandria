@@ -4,12 +4,6 @@ import { EVENTS } from '../hexandria/events';
 
 export default class Transport {
     constructor(host) {
-        if (Transport.__instance) {
-            return Transport.__instance;
-        }
-        Transport.__instance = this;
-
-        // const address = `ws://${host}/game`;
         const address = ['https', 'https:'].includes(location.protocol)
             ? `wss://${host}/game`
             : `ws://${host}/game`;
@@ -54,27 +48,33 @@ export default class Transport {
     handleMessage(event) {
         const messageText = event.data;
 
+        let messageJson = null;
         try {
-            const message = JSON.parse(messageText);
-            console.log('HandleMessage:', message);
-
-            (new Mediator()).emit(message.event, message.payload);
+            messageJson = JSON.parse(messageText);
         } catch (e) {
-            throw new TypeError('HandleMessage parse error', messageText, e);
+            console.error('Transport handleMessage parse error', messageText);
+        }
+        if (messageJson) {
+            console.log('HandleMessage:', messageJson);
+
+            (new Mediator()).emit(messageJson.event, messageJson.payload);
         }
     }
 
     send(event, payload = null) {
         let data;
 
-        if (payload) {
-            data = JSON.stringify({ event, payload });
-        } else {
-            data = JSON.stringify({ event, payload: '' });
-            throw new TypeError('Payload is empty');
-        }
-        console.log('Send:', data);
+        if (event) {
+            if (payload) {
+                data = JSON.stringify({ event, payload });
+            } else {
+                data = JSON.stringify({ event });
+            }
+            console.log('Send:', data);
 
-        this.ws.send(data);
+            this.ws.send(data);
+        } else {
+            throw new TypeError('Event is empty');
+        }
     }
 }

@@ -26,25 +26,23 @@ export default class Title extends Component {
 
         this.innerHTML(); // clear inner HTML
 
-        if ('back-button' in options) {
+        if (options.backButton) {
             const backButton = new Button({
                 text: '⬅',
                 attrs: {
                     class: 'title__back-button',
                 },
                 events: {
-                    click: () => { (new Router()).go('/'); },
-                },
-            });
-            // this.el.appendChild(this._backButton.el);
+                    click: () => {
+                        (new Router()).go('/');
 
-            this.backDiv = new Component({
-                childs: {
-                    backButton,
+                        if (options.backButtonCallback) {
+                            options.backButtonCallback();
+                        }
+                    },
                 },
             });
-            // div.el.appendChild(this._backButton.el);
-            this.el.appendChild(this.backDiv.el);
+            this.el.appendChild(backButton.el);
         }
 
         this.titleDiv = new Component({
@@ -55,5 +53,17 @@ export default class Title extends Component {
         });
 
         this.el.appendChild(this.titleDiv.el);
+
+        if (options.shadowButton === undefined) {
+            options.shadowButton = new Button({
+                text: '',
+                attrs: {
+                    class: 'title__shadow-button',
+                },
+            });
+        }
+        if (options.shadowButton) {
+            this.el.appendChild(options.shadowButton.el);
+        }
     }
 }

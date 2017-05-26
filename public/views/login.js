@@ -16,7 +16,10 @@ export default class LoginView extends View {
 
         this._title = new Title({
             text: 'Login',
-            'back-button': true,
+            backButton: true,
+            backButtonCallback: () => {
+                this._loginForm.clear();
+            },
         });
         pageLogin.appendChild(this._title.el);
 

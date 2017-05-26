@@ -1,3 +1,5 @@
+import Router from '../modules/router';
+
 export default class HexandriaUtils {
     static forPlayers(game, handler) {
         const players = game.players;
@@ -50,66 +52,50 @@ export default class HexandriaUtils {
         return result.filter(element => element.x >= 0 && element.x < sizeX && element.y >= 0 && element.y < sizeY);
     }
 
+    static copy(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    }
+
     static packToMove(selected, position) {
         const data = {};
-        data.from = JSON.parse(JSON.stringify(selected.squad.position));
-        data.to = JSON.parse(JSON.stringify(position));
+        data.from = HexandriaUtils.copy(selected.squad.position);
+        data.to = HexandriaUtils.copy(position);
         return data;
     }
 
-    static unpackToMove(data) {
-        // TODO
-    }
-
-    static packToUpdate(selected, count, morale) {
+    static packToCreate(owner, position, count, morale) {
         const data = {};
-        data.playerIndex = selected.playerIndex;
-        data.squadIndex = selected.squadIndex;
-        data.squad = {
-            count,
-            morale,
-        };
+        data.owner = owner;
+        data.position = HexandriaUtils.copy(position);
+        data.count = count;
+        data.morale = morale;
         return data;
     }
 
-    static unpackToUpdate(data) {
-        // TODO
+    static packToUpdate(selected, count, morale, newPositon = null) {
+        const data = {};
+        data.position = HexandriaUtils.copy(selected.squad.position);
+        if (newPositon) {
+            data.newPosition = HexandriaUtils.copy(newPositon);
+        } else {
+            data.newPosition = HexandriaUtils.copy(data.position);
+        }
+        data.newCount = count;
+        data.newMorale = morale;
+        return data;
     }
 
     static packToDelete(selected) {
         const data = {};
-        data.playerIndex = selected.playerIndex;
-        data.squadIndex = selected.squadIndex;
-        data.squad = selected.squad;
+        data.position = HexandriaUtils.copy(selected.squad.position);
         return data;
     }
 
-    static unpackToDelete(data) {
-        // TODO
-    }
-
-    static packToAttackCapital(selected, enemyIndex, town) {
+    static packToAttackTown(selected) {
         const data = {};
-        data.playerIndex = selected.playerIndex;
-        data.enemyIndex = enemyIndex;
-        data.townName = town.name;
+        data.position = HexandriaUtils.copy(selected.squad.position);
+        data.newOwner = selected.player.name;
         return data;
-    }
-
-    static unpackToAttackCapital(data) {
-        // TODO
-    }
-
-    static packToAttackTown(selected, enemyIndex, town) {
-        const data = {};
-        data.playerIndex = selected.playerIndex;
-        data.enemyIndex = enemyIndex;
-        data.townName = town.name;
-        return data;
-    }
-
-    static unpackToAttackTown(data) {
-        // TODO
     }
 
     static packResult(winner, loser) {
@@ -119,7 +105,13 @@ export default class HexandriaUtils {
         };
     }
 
-    static unpackResult(data) {
-        // TODO
+    static checkUser(playerName) {
+        const user = (new Router()).getUser();
+        if (user === 'guest') {
+            return true;
+        } else if (user === playerName) {
+            return true;
+        }
+        return false;
     }
 }

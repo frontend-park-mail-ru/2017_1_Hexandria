@@ -29,6 +29,8 @@ export default class Form extends Component {
 
         const validator = new Validator();
 
+        this._inputs = [];
+
         const inputs = this.options.inputs || [];
         inputs.forEach((attrs) => {
             if (!attrs.class) {
@@ -48,10 +50,15 @@ export default class Form extends Component {
                         }
                         input.showError();
                     },
+                    focus: () => {
+                        input.showError();
+                    },
                 },
             });
             this.el.appendChild(input.el);
             input.install();
+
+            this._inputs.push(input);
         });
 
 
@@ -65,5 +72,12 @@ export default class Form extends Component {
 
     showError(err) {
         this._errorMessage.showError(err);
+    }
+
+    clear() {
+        console.log(this._inputs);
+        this._inputs.forEach(function(input) {
+            input.clear();
+        });
     }
 }

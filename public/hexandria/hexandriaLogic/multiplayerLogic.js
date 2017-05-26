@@ -4,11 +4,18 @@ import HexandriaLogic from '../hexandriaLogic';
 import Transport from '../../modules/transport';
 
 export default class HexandriaLogicMultiplayer extends HexandriaLogic {
-    constructor(game) {
-        super(game);
+    constructor() {
+        super();
         console.log('HexandriaLogicMultiplayer');
 
         this.transport = new Transport(API.HOST);
+    }
+
+    eventTurn() {
+        console.log('');
+        console.log('');
+        console.log('eventTurn (HexandriaLogicMultiplayer)');
+        this.transport.send(EVENTS.GAME.TURN);
     }
 
     eventMove(data) {

@@ -9,7 +9,7 @@ export default class AboutView extends View {
 
         const title = new Title({
             text: 'About',
-            'back-button': true,
+            backButton: true,
         });
         pageAbout.appendChild(title.el);
 
