@@ -1,6 +1,6 @@
 export const API = {};
 
-API.HOST = 'hexandria.ru:8082';
+API.HOST = 'hexandria.ru';
 // API.HOST = 'localhost:8082';
 
 API.CODE = {

@@ -1,8 +1,10 @@
 import Mediator from '../modules/mediator';
 import { EVENTS } from './events';
 import HexandriaLogic from './hexandriaLogic';
+import HexandriaLogicSingleplayer from './hexandriaLogic/singleplayerLogic';
 import HexandriaGraphics from './hexandriaGraphics';
 import HexandriaUtils from './hexandriaUtils';
+
 
 export default class HexandriaGame {
     constructor(Mode, user) {
@@ -29,7 +31,8 @@ export default class HexandriaGame {
         console.log('');
         console.log('gameStart', data);
 
-        if (this.__Mode.name === 'HexandriaLogicSingleplayer') {
+        if (this.__Mode === HexandriaLogicSingleplayer) {
+        // if (this.__Mode.prototype instanceof HexandriaLogicSingleplayer) {
             this.logic.initGame(HexandriaGame.testGameStartData());
             this.graphics.initGame(HexandriaGame.testGameStartData());
             return;

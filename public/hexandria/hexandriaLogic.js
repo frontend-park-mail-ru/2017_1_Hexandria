@@ -6,7 +6,7 @@ export default class HexandriaLogic {
     constructor() {
         console.log('HexandriaLogic');
 
-        if (this.constructor.name === HexandriaLogic.name) {
+        if (this.constructor === HexandriaLogic) {
             throw new TypeError('Can not create instance of HexandriaLogic');
         }
 
@@ -36,13 +36,7 @@ export default class HexandriaLogic {
     }
 
     startTimeout() {
-        if (this.constructor.name === 'HexandriaLogicSingleplayer') {
-            if (this._turnTimeout) {
-                clearInterval(this._turnTimeout);
-            }
-
-            this._turnTimeout = setInterval(this.eventTurn.bind(this), this.TIMEOUT * 1000);
-        }
+        console.error('overload!');
     }
 
     initGame(game) {

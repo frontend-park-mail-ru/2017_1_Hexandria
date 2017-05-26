@@ -1,7 +1,14 @@
 const CACHE_VERSION = 'app_sw_v0.0.1';
 
 const cacheUrls = [
+    '/singleplayer',
+    '/multiplayer',
+    '/about',
+    '/scoreboard',
+    '/login',
+    '/signup',
     '/',
+
     '/index.html',
     '/css/app.css',
     '/js/app.js',
