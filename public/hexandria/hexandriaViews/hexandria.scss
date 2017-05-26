@@ -1,0 +1,53 @@
+@import '../../scheme';
+
+.hexandria {
+  &__info {
+    display: inline-block;
+    font-size: 0.5 * $font-size;
+    margin: 0 5px;
+    padding: 0 5px;
+    color: $hexandria-default;
+
+    &-1 {
+      color: red;
+      border: 1px solid $hexandria-background;
+
+      &__turn {
+        color: red;
+        border: 1px solid red;
+      }
+    }
+
+    &-2 {
+      color: blue;
+      border: 1px solid $hexandria-background;
+
+      &__turn {
+        color: blue;
+        border: 1px solid blue;
+      }
+    }
+
+    @media screen and (max-width: $max-width) {
+      font-size: 0.5 * $font-size-mobile;
+    }
+  }
+
+  &__container {
+    @extend .center-block__;
+
+    text-align: center;
+    color: $hexandria-white;
+  }
+
+  &__result {
+    //@extend .center-block__;
+
+    text-align: center;
+    color: $hexandria-white;
+  }
+
+  &__turn {
+    border: 1px solid $hexandria-default;
+  }
+}

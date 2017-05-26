@@ -13,22 +13,14 @@ export default class GameView extends View {
         this.hide();
     }
 
-    init(options = {}) {
-    }
-
     show(options = {}) {
         super.show();
 
-        (new Mediator()).emit(
-            EVENTS.GAME.START,
-            {
-                mode: this.mode,
-            },
-        );
+        (new Mediator()).emit(EVENTS.APP.INIT, { mode: this.mode });
     }
 
     hide(options = {}) {
         super.hide();
-        (new Mediator()).emit(EVENTS.GAME.FINISH);
+        (new Mediator()).emit(EVENTS.APP.FINISH);
     }
 }

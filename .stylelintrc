@@ -37,6 +37,7 @@
       {
         "unspecified": "bottom"
       }
-    ]
+    ],
+    "string-quotes": "single"
   }
 }

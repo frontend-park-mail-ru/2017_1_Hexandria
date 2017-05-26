@@ -26,26 +26,44 @@ export default class Title extends Component {
 
         this.innerHTML(); // clear inner HTML
 
-        if ('back-button' in options) {
+        if (options.backButton) {
             const backButton = new Button({
                 text: '⬅',
                 attrs: {
                     class: 'title__back-button',
                 },
                 events: {
-                    click: (event) => { (new Router()).go('/'); },
+                    click: () => {
+                        (new Router()).go('/');
+
+                        if (options.backButtonCallback) {
+                            options.backButtonCallback();
+                        }
+                    },
                 },
             });
             this.el.appendChild(backButton.el);
         }
 
-        const _div = new Component({
+        this.titleDiv = new Component({
             text: this.text,
             attrs: {
                 class: 'title__main',
             },
         });
 
-        this.el.appendChild(_div.el);
+        this.el.appendChild(this.titleDiv.el);
+
+        if (options.shadowButton === undefined) {
+            options.shadowButton = new Button({
+                text: '',
+                attrs: {
+                    class: 'title__shadow-button',
+                },
+            });
+        }
+        if (options.shadowButton) {
+            this.el.appendChild(options.shadowButton.el);
+        }
     }
 }

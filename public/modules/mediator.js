@@ -25,7 +25,6 @@ export default class Mediator {
     }
 
     done() {
-        console.log('DONE');
         if (this.emitStack) {
             this.emitStack.forEach((storedElement) => {
                 this.emitAfter(storedElement.event, storedElement.options);

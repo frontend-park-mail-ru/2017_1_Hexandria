@@ -38,7 +38,6 @@ export default class Route {
      * @param {Object} [state={}]
      */
     navigate(pathname, state = {}) {
-        state = state || {};
         const keys = this.regex(pathname);
         if (!this._view) {
             const view = new this.View(this.options);

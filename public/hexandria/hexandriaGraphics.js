@@ -4,21 +4,25 @@ import { EVENTS } from './events';
 import MapGraphics from './hexandriaGraphics/mapGraphics';
 import TownGraphics from './hexandriaGraphics/townGraphics';
 import SquadGraphics from './hexandriaGraphics/squadGraphics';
+import UtilsGraphics from './hexandriaGraphics/utilsGraphics';
 import HexandriaUtils from './hexandriaUtils';
 
-const OrbitControls = require('three-orbit-controls')(THREE);
+// const OrbitControls = require('three-orbit-controls')(THREE);
+import OrbitControlsModule from './hexandriaGraphics/orbitControls';
+
+const OrbitControls = OrbitControlsModule(THREE);
 
 export default class HexandriaGraphics {
-    constructor(game, element) {
-        console.log('HexandriaGraphics created');
+    constructor(game) {
+        console.log('HexandriaGraphics');
 
         this.__move = (e) => { this.onDocumentMouseMove(e); };
         this.__down = (e) => { this.onDocumentMouseDown(e); };
         this.__resize = (e) => { this.onWindowResize(e); };
 
-        this.game = game;
+        this.game = null;
 
-        this.selector = '#game .game-container';
+        this.selector = '#game .threejs-container';
         console.log(this.selector);
 
         this._clock = null;
@@ -38,47 +42,45 @@ export default class HexandriaGraphics {
         this.squadsMap = null;
 
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_MOVE, 'squadMove');
+        (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_CREATE, 'squadCreate');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_UPDATE, 'squadUpdate');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.SQUAD_DELETE, 'squadDelete');
         (new Mediator()).subscribe(this, EVENTS.GRAPHICS.TOWN_CAPTURE, 'townCapture');
-
-        this.initGame();
     }
 
     destroy() {
-        console.log('destroy');
-
         cancelAnimationFrame(this._id);
 
-        this.map.destroy();
+        if (this.game) {
+            this.map.destroy();
 
-        while (this._scene.children.length > 0) {
-            // console.log('deleting...', this._scene.children[0]);
-            this._scene.remove(this._scene.children[0]);
+            while (this._scene.children.length > 0) {
+                this._scene.remove(this._scene.children[0]);
+            }
+
+            this._container.removeEventListener('mousemove', this.__move, false);
+            this._container.removeEventListener('mousedown', this.__down, false);
+            window.removeEventListener('resize', this.__resize, false);
+            this._container.innerHTML = '';
+
+            this.game = null;
+
+            this._clock = null;
+            this._container = null;
+            this._camera = null;
+            this._controls = null;
+            this._renderer = null;
+            this._mouse = null;
+
+            this._scene = null;
+            this._id = null;
+            this._raycaster = null;
+            // this._mouseHandler = null;
+
+            this.map = null;
+            this.townsMap = null;
+            this.squadsMap = null;
         }
-
-        this._container.removeEventListener('mousemove', this.__move, false);
-        this._container.removeEventListener('mousedown', this.__down, false);
-        window.removeEventListener('resize', this.__resize, false);
-        this._container.innerHTML = '';
-
-        this.game = null;
-
-        this._clock = null;
-        this._container = null;
-        this._camera = null;
-        this._controls = null;
-        this._renderer = null;
-        this._mouse = null;
-
-        this._scene = null;
-        this._id = null;
-        this._raycaster = null;
-        // this._mouseHandler = null;
-
-        this.map = null;
-        this.townsMap = null;
-        this.squadsMap = null;
     }
 
     initTowns() {
@@ -87,8 +89,7 @@ export default class HexandriaGraphics {
         HexandriaUtils.forFieldTowns(
             this.game,
             (town) => {
-                const newTown = new TownGraphics(this._scene, 0x777777, town);
-                this.townsMap[town.name] = newTown;
+                this.townsMap[town.name] = new TownGraphics(this._scene, 0x777777, town);
             },
         );
 
@@ -126,14 +127,26 @@ export default class HexandriaGraphics {
         HexandriaUtils.forPlayersSquads(
             this.game,
             (squadObject) => {
-                const newSquad = new SquadGraphics(this._scene, squadObject.player.color, squadObject.squad);
-                this.squadsMap[squadObject.player.name].push(newSquad);
+                // const newSquad = new SquadGraphics(this._scene, squadObject.player.color, squadObject.squad);
+                // this.squadsMap[squadObject.player.name].push(newSquad);
+
+                const createData = {
+                    name: squadObject.player.name,
+                    color: squadObject.player.color,
+                    squad: squadObject.squad,
+                };
+                (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_CREATE, createData);
             },
         );
     }
 
     squadMove(data) {
         this.squadsMap[data.playerName][data.squadIndex].move(data.position.x, data.position.y);
+    }
+
+    squadCreate(data) {
+        const newSquad = new SquadGraphics(this._scene, data.color, data.squad);
+        this.squadsMap[data.name].push(newSquad);
     }
 
     squadUpdate(data) {
@@ -149,7 +162,10 @@ export default class HexandriaGraphics {
         this.townsMap[data.townName].changeColor(data.playerColor);
     }
 
-    initGame() {
+    initGame(game) {
+        console.log('initGame:', game);
+        this.game = game;
+
         this._clock = new THREE.Clock();
         this.initGraphics();
 
@@ -166,10 +182,9 @@ export default class HexandriaGraphics {
         this._container = document.querySelector(this.selector);
 
         this._renderer = new THREE.WebGLRenderer();
-        // renderer.setClearColor(0xbfd1e5);
         this._renderer.setClearColor(0xffffff);
         this._renderer.setPixelRatio(this._container.devicePixelRatio);
-        // renderer.setSize(container.clientWidth, container.clientHeight);
+
         this._renderer.setSize(window.innerWidth, window.innerHeight);
 
         this._renderer.shadowMap.enabled = true; // TODO
@@ -177,12 +192,31 @@ export default class HexandriaGraphics {
         this._scene = new THREE.Scene();
 
         this._camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
+        // this._camera.position.x = 11;
+        // this._camera.position.y = 5;
+        // this._camera.position.z = 7;
         this._camera.position.x = 11;
         this._camera.position.y = 5;
-        this._camera.position.z = 7;
+        this._camera.position.z = 11;
         this._camera.up.set(0, 0, 1);
 
-        this._controls = new OrbitControls(this._camera, this._container);
+
+        const [borderXmin, borderYmin] = UtilsGraphics.getPosition(0, 0);
+        const [borderXmax, borderYmax] = UtilsGraphics.getPosition(this.game.field.size.x - 1, this.game.field.size.y - 1);
+        const options = {
+            minDistance: 3,
+            maxDistance: 10,
+            minPolarAngle: 0,
+            maxPolarAngle: Math.PI / 3.0,
+
+            border: true,
+            borderXmin,
+            borderXmax,
+            borderYmin,
+            borderYmax,
+            borderZ: 0.0,
+        };
+        this._controls = new OrbitControls(this._camera, this._container, options);
         this._controls.target.x = 5;
         this._controls.target.y = 5;
         this._controls.target.z = 0;

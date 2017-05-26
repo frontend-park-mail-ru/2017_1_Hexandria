@@ -29,7 +29,8 @@ module.exports = {
     },
 
     output: {
-        filename: path.join('js', '[chunkhash].js'),
+        // filename: path.join('js', '[name]_[chunkhash].js'), // #develop
+        filename: path.join('js', '[name].js'), // #production
         path: path.resolve(__dirname, 'dist')
     },
     watch: false,
@@ -58,21 +59,29 @@ module.exports = {
             filename: 'index.html',
             template: path.resolve(__dirname, 'public/index.html')
         }),
-        new ExtractTextPlugin(path.join('css', '[name].bundle.[hash].css')),
+        // new ExtractTextPlugin(path.join('css', '[name]_[hash].css')), // #develop
+        new ExtractTextPlugin(path.join('css', '[name].css')), // #production
 
         new CopyWebpackPlugin(
             [
-                {
-                    from: path.join(__dirname, 'public', 'img'),
-                    to: path.join(__dirname, 'dist', 'img')
-                },
+                // {
+                //     from: path.join(__dirname, 'public', 'img'),
+                //     to: path.join(__dirname, 'dist', 'img')
+                // },
                 {
                     from: path.join(__dirname, 'public', 'textures'),
                     to: path.join(__dirname, 'dist', 'textures')
                 },
                 {
+                    from: path.join(__dirname, 'public', 'fonts'),
+                    to: path.join(__dirname, 'dist', 'fonts')
+                },
+                {
                     from: path.join(__dirname, 'public', 'sw.js')
                     // to: path.join(__dirname, 'dist', 'sw.js'),
+                },
+                {
+                    from: path.join(__dirname, 'public', 'favicon.ico')
                 }
             ]
         ),

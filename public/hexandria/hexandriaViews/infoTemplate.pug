@@ -1,0 +1,17 @@
+div.hexandria__info
+    div Name
+    div Towns
+div.hexandria__info(class=player1.turn ? "hexandria__info-1__turn" : "hexandria__info-1")
+    div #{player1.name}
+    div #{player1.towns.length}
+div.hexandria__info(class=player2.turn ? "hexandria__info-2__turn" : "hexandria__info-2")
+    div #{player2.name}
+    div #{player2.towns.length}
+
+//div.hexandria__info
+//    div name
+//        span.hexandria__info-first #{player1Name}
+//        span.hexandria__info-second #{player2Name}
+//    div towns
+//        span.hexandria__info-first #{player1Towns}
+//        span.hexandria__info-second #{player2Towns}

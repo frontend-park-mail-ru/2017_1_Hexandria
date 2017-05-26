@@ -71,7 +71,7 @@ export default class View {
      * Append view in element
      * @param {HTMLElement} el
      */
-    appendTo(el) {
+    appendTo(el) { // TODO delete? unused
         el.appendChild(this._el);
     }
 

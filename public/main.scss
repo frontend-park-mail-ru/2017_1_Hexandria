@@ -1,5 +1,5 @@
-@import "./scheme";
-@import url('https://fonts.googleapis.com/css?family=Lato');
+@import './scheme';
+@import './font';
 
 html,
 body {
@@ -7,4 +7,18 @@ body {
   background-color: $hexandria-background;
   margin: 0;
   padding: 0;
+  min-width: 10px;
+}
+
+.threejs-container {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  background-color: red;
+}
+
+.threejs-container canvas {
+  display: block; // there is a 4px gap below canvas
 }

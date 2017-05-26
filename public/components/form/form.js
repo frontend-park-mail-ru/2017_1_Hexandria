@@ -3,82 +3,81 @@ import './form.scss';
 import Button from '../button/button';
 import Validator from './validator';
 import Input from '../input/input';
+import Component from '../component';
+import ErrorMessage from '../errorMessage/errorMessage';
+import DOMUtils from '../domUtils';
 
-export default class Form {
+export default class Form extends Component {
     /**
      * Form constructor
      * @param {Object} options
      */
     constructor(options) {
-        this.data = options.data || {};
-        this.events = options.events || {};
-        this.el = options.el;
-        this._render();
+        if (!options.tagName) {
+            options.tagName = 'form';
+        }
+
+        super(options);
+
+
+        this._errorMessage = new ErrorMessage();
+        DOMUtils.insertBefore(this._button.el, this._errorMessage.el);
     }
 
-    /**
-     * DOM update
-     */
-    _render() {
-        this.updateHtml();
-        this.installInputs();
-        this.installControls();
-        this.setEvents();
-    }
+    innerHTML(html = '') {
+        super.innerHTML(); // clear
 
-    /**
-     * Update HTML
-     */
-    updateHtml() {
-        this.el.classList.add('form');
-    }
-
-    /**
-     * Form inputs install
-     */
-    installInputs() {
-        const { inputs = [] } = this.data;
         const validator = new Validator();
 
-        inputs.forEach((data) => {
-            const input = new Input(data).render();
-            input.el.classList.add('form__input');
-            input.on('blur', () => {
-                try {
-                    validator.validate(input.el);
-                } catch (err) {
-                    console.log(err.message);
-                    input.colorInputBorder(input, '#f02d3a');
-                    return;
-                }
-                input.colorInputBorder(input, '#9197ae'); // f8f0fb
-            });
-            input.on('click', () => {
-                input.colorInputBorder(this, '#f8f0fb'); // 9197ae
+        this._inputs = [];
+
+        const inputs = this.options.inputs || [];
+        inputs.forEach((attrs) => {
+            if (!attrs.class) {
+                attrs.class = 'form__input';
+            }
+
+            const input = new Input({
+                attrs,
+                events: {
+                    blur: () => {
+                        try {
+                            validator.validate(input.el);
+                        } catch (err) {
+                            console.log(err.message);
+                            input.showError(err.message);
+                            return;
+                        }
+                        input.showError();
+                    },
+                    focus: () => {
+                        input.showError();
+                    },
+                },
             });
             this.el.appendChild(input.el);
+            input.install();
+
+            this._inputs.push(input);
         });
+
+
+        const buttonOptions = this.options.button;
+        if (!buttonOptions) {
+            console.error('Button options empty');
+        }
+        this._button = new Button(buttonOptions);
+        this.el.appendChild(this._button.el);
     }
 
-    /**
-     * Set button events
-     */
-    setEvents() {
-        Object.keys(this.events).forEach((name) => {
-            this.el.addEventListener(name, this.events[name]);
-        });
+    showError(err) {
+        this._errorMessage.showError(err);
     }
 
-    /**
-     * Form buttons install
-     */
-    installControls () {
-        // const { controls = [] } = this.data;
-        const controls = this.data.controls || {};
-
-        controls.forEach((data) => {
-            const control = new Button(data);
-            this.el.appendChild(control.el);
+    clear() {
+        this._inputs.forEach(function(input) {
+            input.clear();
+            input.showError();
         });
     }
 }

@@ -21,7 +21,6 @@ export default class SquadGraphics {
     }
 
     move(x, y) {
-        console.log('SquadGraphics', x, y);
         const pos = new THREE.Vector3(...UtilsGraphics.getPosition(x, y), positionZ);
         this.squad.position.copy(pos);
 

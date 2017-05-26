@@ -1,23 +1,80 @@
+import Mediator from '../modules/mediator';
+import { EVENTS } from './events';
 import HexandriaLogic from './hexandriaLogic';
 import HexandriaGraphics from './hexandriaGraphics';
-import Mediator from '../modules/mediator';
+import HexandriaUtils from './hexandriaUtils';
 
 export default class HexandriaGame {
     constructor(Mode, user) {
-        console.log('HexandriaGame created', user);
+        console.log('HexandriaGame: user ', user);
 
         if (!(Mode.prototype instanceof HexandriaLogic)) {
             throw new TypeError('Mode is not a HexandriaLogic');
         }
 
-        this.init();
+        this.__Mode = Mode;
+        this.logic = new Mode();
+        this.graphics = new HexandriaGraphics();
 
-        this.logic = new Mode(JSON.parse(this.gameString));
-        this.graphics = new HexandriaGraphics(JSON.parse(this.gameString));
+        this._subscribe();
     }
 
-    init() {
-        this.game = {
+    _subscribe() {
+        (new Mediator()).subscribe(this, EVENTS.GAME.START, '_onGameStart');
+    }
+
+    _onGameStart(data = {}) {
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('gameStart', data);
+
+        if (this.__Mode.name === 'HexandriaLogicSingleplayer') {
+            this.logic.initGame(HexandriaGame.testGameStartData());
+            this.graphics.initGame(HexandriaGame.testGameStartData());
+            return;
+        }
+
+        const game = {
+            field: {
+                size: {
+                    x: data.sizeX,
+                    y: data.sizeY,
+                },
+                towns: HexandriaUtils.copy(data.towns),
+            },
+            players: [],
+        };
+        game.field.towns.push(...HexandriaUtils.copy(data.capitals));
+
+        for (const i in data.capitals) {
+            if (data.capitals[i]) {
+                const capital = data.capitals[i];
+
+                const player = {
+                    name: capital.owner.name,
+                    color: i === '0' ? 0xff0000 : 0x0000ff,
+                    capital: capital.name,
+                    towns: [],
+                    squads: [
+                        {
+                            count: capital.squad.count,
+                            morale: capital.squad.morale,
+                            position: HexandriaUtils.copy(capital.position),
+                        },
+                    ],
+                };
+                game.players.push(player);
+            }
+        }
+        game.players[0].turn = true;
+
+        this.logic.initGame(game);
+        this.graphics.initGame(game);
+    }
+
+    static testGameStartData() {
+        return {
             field: {
                 size: {
                     x: 10,
@@ -59,6 +116,7 @@ export default class HexandriaGame {
             players: [
                 {
                     name: 'Bob',
+                    turn: true,
                     color: 0xff0000,
                     capital: 'town1',
                     towns: ['town2'],
@@ -115,15 +173,76 @@ export default class HexandriaGame {
                 },
             ],
         };
+    }
 
-        this.gameString = JSON.stringify(this.game);
+    static testGameStartData2() {
+        return {
+            sizeX: 10,
+            sizeY: 15,
+            towns: [
+                {
+                    position: {
+                        x: 2,
+                        y: 3,
+                    },
+                    name: 'Town1',
+                },
+                {
+                    position: {
+                        x: 7,
+                        y: 8,
+                    },
+                    name: 'Town2',
+                },
+            ],
+            capitals: [
+                {
+                    position: {
+                        x: 0,
+                        y: 0,
+                    },
+                    squad: {
+                        count: 50,
+                        morale: 30,
+                        owner: {
+                            name: 'TestAvatar1',
+                        },
+                    },
+                    name: 'capital1',
+                    owner: {
+                        name: 'TestAvatar1',
+                    },
+                },
+                {
+                    position: {
+                        x: 9,
+                        y: 14,
+                    },
+                    squad: {
+                        count: 50,
+                        morale: 30,
+                        owner: {
+                            name: 'TestAvatar2',
+                        },
+                    },
+                    name: 'capital2',
+                    owner: {
+                        name: 'TestAvatar2',
+                    },
+                },
+            ],
+        };
     }
 
     destroy() {
-        this.logic.destroy();
-        this.graphics.destroy();
+        if (this.logic) {
+            this.logic.destroy();
+            delete this.logic;
+        }
 
-        delete this.logic;
-        delete this.graphics;
+        if (this.graphics) {
+            this.graphics.destroy();
+            delete this.graphics;
+        }
     }
 }

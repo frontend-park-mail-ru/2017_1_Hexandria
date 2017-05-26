@@ -1,5 +1,4 @@
 import View from '../../views/view';
-import Game from '../../components/game/game';
 
 export default class HexandriaFinishView extends View {
     constructor(options = {}) {

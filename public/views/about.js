@@ -1,5 +1,3 @@
-import Router from '../modules/router';
-
 import View from './view';
 import Title from '../components/title/title';
 
@@ -11,14 +9,11 @@ export default class AboutView extends View {
 
         const title = new Title({
             text: 'About',
-            'back-button': true,
+            backButton: true,
         });
         pageAbout.appendChild(title.el);
 
         this._el = pageAbout;
         this.hide();
-    }
-
-    init(options = {}) {
     }
 }

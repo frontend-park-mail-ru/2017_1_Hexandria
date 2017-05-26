@@ -1,20 +1,18 @@
 import './registerPanel.scss';
 
 import Button from '../button/button';
-import Router from '../../modules/router';
-
 import Component from '../component';
 
 export default class RegisterPanel extends Component {
     /**
      * Register panel constructor
+     * @param {Object} options
      */
-    constructor() {
-        super({
-            attrs: {
-                class: 'hex__register-panel',
-            },
-        });
+    constructor(options) {
+        options.attrs = {
+            class: 'register-panel',
+        };
+        super(options);
 
         this.hide();
     }
@@ -27,24 +25,16 @@ export default class RegisterPanel extends Component {
         this.login = new Button({
             text: 'Login',
             attrs: {
-                class: 'hex__button-login',
+                class: 'register-panel__button-login',
             },
-            events: {
-                click: (event) => {
-                    (new Router()).go('/login');
-                },
-            },
+            events: this.options.loginEvents,
         });
         this.signup = new Button({
             text: 'Signup',
             attrs: {
-                class: 'hex__button-signup',
+                class: 'register-panel__button-signup',
             },
-            events: {
-                click: (event) => {
-                    (new Router()).go('/signup');
-                },
-            },
+            events: this.options.signupEvents,
         });
 
         this.el.appendChild(this.login.el);

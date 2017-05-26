@@ -1,10 +1,10 @@
-@import "../../scheme";
+@import '../../scheme';
 
 .input {
   border: 1px solid $hexandria-default;
   background-color: $hexandria-background;
+  font-size: $font-size;
   color: $hexandria-white;
-  font-size: 150%;
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -15,4 +15,13 @@
   &:focus {
     border-color: $hexandria-white;
   }
+
+  @media screen and (max-width: $max-width) {
+    font-size: $font-size-mobile;
+    color: $hexandria-white-mobile;
+  }
+}
+
+.input-error {
+  border-color: $hexandria-special;
 }

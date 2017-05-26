@@ -1,0 +1,21 @@
+@import '../../scheme';
+
+.errorMessage {
+  margin: 0 0 20px;
+  padding: 5px;
+  font-size: $font-size;
+  //
+  color: $hexandria-special;
+  border-left: 1px solid $hexandria-special;
+  border-right: 1px solid $hexandria-special;
+  transition: all 0.5s linear;
+
+  &:empty {
+    margin: 0;
+    padding: 0;
+    //
+    color: $hexandria-background;
+    border-left: 1px solid $hexandria-background;
+    border-right: 1px solid $hexandria-background;
+  }
+}
