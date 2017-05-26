@@ -48,13 +48,16 @@ export default class Transport {
     handleMessage(event) {
         const messageText = event.data;
 
+        let messageJson = null;
         try {
-            const message = JSON.parse(messageText);
-            console.log('HandleMessage:', message);
-
-            (new Mediator()).emit(message.event, message.payload);
+            messageJson = JSON.parse(messageText);
         } catch (e) {
             console.error('Transport handleMessage parse error', messageText);
+        }
+        if (messageJson) {
+            console.log('HandleMessage:', messageJson);
+
+            (new Mediator()).emit(messageJson.event, messageJson.payload);
         }
     }
 

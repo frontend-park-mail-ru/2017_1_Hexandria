@@ -82,7 +82,10 @@ export default class HexandriaLogic {
             } else {
                 const squadObject = this.findSquad(position);
                 // console.warn(squad);
-                if (squadObject && squadObject.player.turn && !squadObject.squad.lock) {
+                if (squadObject &&
+                    squadObject.player.turn &&
+                    !squadObject.squad.lock &&
+                    HexandriaUtils.checkUser(squadObject.player.name)) {
                     this._selected = squadObject;
                     (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_UNIT, this._selected.squad.position);
                 }

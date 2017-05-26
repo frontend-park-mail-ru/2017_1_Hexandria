@@ -32,7 +32,7 @@ export const EVENTS = {
     },
     UI: {
         TURN: 'EVENTS.UI.TURN',
-    }
+    },
 };
 
 export default EVENTS;
