@@ -29,8 +29,8 @@ module.exports = {
     },
 
     output: {
-        filename: path.join('js', '[name]_[chunkhash].js'), // #develop
-        // filename: path.join('js', '[name].js'), // #production
+        // filename: path.join('js', '[name]_[chunkhash].js'), // #develop
+        filename: path.join('js', '[name].js'), // #production
         path: path.resolve(__dirname, 'dist')
     },
     watch: false,
@@ -41,26 +41,26 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     sourceMap: true,
-        //     beautify: false,
-        //     comments: false,
-        //     compress: {
-        //         sequences: true,
-        //         booleans: true,
-        //         loops: true,
-        //         unused: true,
-        //         warnings: false,
-        //         drop_console: true,
-        //         unsafe: true
-        //     }
-        // }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: false,
+            beautify: false,
+            comments: false,
+            compress: {
+                sequences: true,
+                booleans: true,
+                loops: true,
+                unused: true,
+                warnings: false,
+                drop_console: true,
+                unsafe: true
+            }
+        }),
         new HtmlPlugin({
             filename: 'index.html',
             template: path.resolve(__dirname, 'public/index.html')
         }),
-        new ExtractTextPlugin(path.join('css', '[name]_[hash].css')), // #develop
-        // new ExtractTextPlugin(path.join('css', '[name].css')), // #production
+        // new ExtractTextPlugin(path.join('css', '[name]_[hash].css')), // #develop
+        new ExtractTextPlugin(path.join('css', '[name].css')), // #production
 
         new CopyWebpackPlugin(
             [

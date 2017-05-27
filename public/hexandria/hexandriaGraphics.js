@@ -7,7 +7,6 @@ import SquadGraphics from './hexandriaGraphics/squadGraphics';
 import UtilsGraphics from './hexandriaGraphics/utilsGraphics';
 import HexandriaUtils from './hexandriaUtils';
 
-// const OrbitControls = require('three-orbit-controls')(THREE);
 import OrbitControlsModule from './hexandriaGraphics/orbitControls';
 
 const OrbitControls = OrbitControlsModule(THREE);

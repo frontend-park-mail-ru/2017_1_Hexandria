@@ -11,6 +11,10 @@ export default class HexandriaLogicMultiplayer extends HexandriaLogic {
         this.transport = new Transport(API.HOST);
     }
 
+    startTimeout() {
+        // do nothing
+    }
+
     eventTurn() {
         console.log('');
         console.log('');
