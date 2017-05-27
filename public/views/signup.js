@@ -91,6 +91,7 @@ export default class SignupView extends View {
                         })
                         .catch((err) => {
                             console.log(err);
+                            this._signupForm.showError(err);
                         });
                 },
             },

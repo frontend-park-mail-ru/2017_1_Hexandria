@@ -11,7 +11,20 @@ export default class Mediator {
     }
 
     subscribe(subscriber, event, handler) {
-        // console.log('SUBSCRIBE:', subscriber, event, handler);
+        if (!subscriber) {
+            console.error('subscribe: empty subscriber', subscriber, event, handler);
+            return;
+        }
+
+        if (!event) {
+            console.error('subscribe: empty event', subscriber, event, handler);
+            return;
+        }
+
+        if (!handler) {
+            console.error('subscribe: empty handler', subscriber, event, handler);
+            return;
+        }
 
         if (!this.events[event]) {
             this.events[event] = [];
@@ -45,14 +58,19 @@ export default class Mediator {
     }
 
     emitAfter(event, options = null) {
-        console.log('EMIT after:', event, options);
+        console.log('emit: ', event, options);
+
+        if (!event) {
+            console.error('emit: empty event');
+            return;
+        }
 
         if (this.events[event]) {
             this.events[event].forEach((element) => {
                 element.subscriber[element.handler](options);
             });
         } else {
-            throw new Error('EMIT no subscribers');
+            console.log('emit: no subscribers');
         }
     }
 

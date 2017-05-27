@@ -12,7 +12,7 @@ export default class Transport {
         this.ws.onopen = () => {
             console.log(`WebSocket open on address ${address}`);
 
-            console.dir(this.ws);
+            // console.dir(this.ws);
 
             this.send(EVENTS.SERVICE.CONNECT, this.getUser());
 
@@ -25,7 +25,11 @@ export default class Transport {
             this.ws.onclose = () => {
                 console.log(`WebSocket close on address ${address}`);
                 clearInterval(this.interval);
+
+
             };
+
+            (new Mediator()).emit(EVENTS.UI.ONLINE);
         };
 
         this.ws.onmessage = (event) => {
@@ -38,7 +42,11 @@ export default class Transport {
 
         this.ws.onclose = () => {
             console.log('WebSocket close:', event);
+
+            (new Mediator()).emit(EVENTS.UI.OFFLINE);
         };
+
+        console.warn(this.ws);
     }
 
     getUser() {

@@ -4,7 +4,6 @@ import Mediator from '../../modules/mediator';
 import { EVENTS } from '../../hexandria/events';
 
 import View from '../../views/view';
-import Button from '../../components/button/button';
 import Title from '../../components/title/title';
 import Component from '../../components/component';
 
@@ -27,7 +26,7 @@ export default class HexandriaStartView extends View {
 
         const waitInfo = new Component({
             tagName: 'p',
-            text: 'Waiting for opponet...',
+            text: 'Waiting for opponent...',
         });
         this.container = new Component({
             attrs: {
@@ -46,7 +45,22 @@ export default class HexandriaStartView extends View {
         this.hide();
     }
 
-    refresh(mode) {
-        this.title.titleDiv.innerHTML(mode);
+    subscribe() {
+        (new Mediator()).subscribe(this, EVENTS.APP.INIT, '_onAppInit');
+
+        (new Mediator()).subscribe(this, EVENTS.UI.ONLINE, '_onUiOnline');
+        (new Mediator()).subscribe(this, EVENTS.UI.OFFLINE, '_onUiOffline');
+    }
+
+    _onAppInit(payload) {
+        this.title.titleDiv.innerHTML(payload.mode);
+    }
+
+    _onUiOnline() {
+        this.container.waitInfo.innerHTML('Waiting for opponent...');
+    }
+
+    _onUiOffline() {
+        this.container.waitInfo.innerHTML('You are offline');
     }
 }

@@ -39,6 +39,7 @@ export default class HexandriaApp {
         (new Mediator()).subscribe(this, EVENTS.GAME.RESULT, '_onGameResult');
         (new Mediator()).subscribe(this, EVENTS.APP.FINISH, '_onAppFinish');
 
+        this.views.start.subscribe();
         this.views.play.subscribe();
     }
 
@@ -55,7 +56,6 @@ export default class HexandriaApp {
         this._hideAll();
 
         if (payload && payload.mode) {
-            this.views.start.refresh(payload.mode);
             this.Mode = MODES[payload.mode.toUpperCase()];
         } else if (this.Mode) {
             // same mode form last time

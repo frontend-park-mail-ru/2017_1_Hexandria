@@ -19,19 +19,19 @@ export default class HexandriaPlayView extends View {
         });
 
 
-        const turnButton = new Button({
+        this.turnButton = new Button({
             text: 'Turn',
             attrs: {
                 class: 'title__back-button',
             },
             events: {
-                click: () => { (new Mediator()).emit(EVENTS.UI.TURN); },
+                click: () => { (new Mediator()).emit(EVENTS.UI.TURN_CLICK); },
             },
         });
         this.title = new Title({
             text: 'PlayView',
             backButton: true,
-            shadowButton: turnButton,
+            shadowButton: this.turnButton,
         });
         this._el.appendChild(this.title.el);
 
@@ -51,10 +51,21 @@ export default class HexandriaPlayView extends View {
     }
 
     subscribe() {
-        (new Mediator()).subscribe(this, EVENTS.GAME.INFO, 'refresh');
+        (new Mediator()).subscribe(this, EVENTS.UI.TURN_SHOW, '_onUiTurnShow');
+        (new Mediator()).subscribe(this, EVENTS.UI.TURN_HIDE, '_onUiTurnHide');
+
+        (new Mediator()).subscribe(this, EVENTS.GAME.INFO, '_onGameInfo');
     }
 
-    refresh(payload = {}) {
+    _onUiTurnShow() {
+        this.turnButton.el.style.visibility = 'visible';
+    }
+
+    _onUiTurnHide() {
+        this.turnButton.el.style.visibility = 'hidden';
+    }
+
+    _onGameInfo(payload = {}) {
         const html = infoTemplate({
             player1: payload[0],
             player2: payload[1],
@@ -62,5 +73,4 @@ export default class HexandriaPlayView extends View {
 
         this.title.titleDiv.innerHTML(html);
     }
-
 }

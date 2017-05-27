@@ -79,6 +79,7 @@ export default class LoginView extends View {
                         })
                         .catch((err) => {
                             console.log('catch', err);
+                            this._loginForm.showError(err);
                         });
                 },
             },

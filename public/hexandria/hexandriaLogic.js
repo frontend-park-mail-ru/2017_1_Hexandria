@@ -25,7 +25,7 @@ export default class HexandriaLogic {
         this._activePlayer = null;
         this._turnTimeout = null;
 
-        (new Mediator()).subscribe(this, EVENTS.UI.TURN, '_onUiTurn');
+        (new Mediator()).subscribe(this, EVENTS.UI.TURN_CLICK, '_onUiTurnClick');
         (new Mediator()).subscribe(this, EVENTS.GAME.TURN, '_onGameTurn');
 
         (new Mediator()).subscribe(this, EVENTS.LOGIC.SELECT, 'onSelect');
@@ -36,7 +36,7 @@ export default class HexandriaLogic {
     }
 
     startTimeout() {
-        console.error('overload!');
+        console.error('override it!');
     }
 
     initGame(game) {
@@ -294,7 +294,7 @@ export default class HexandriaLogic {
         this.eventInfo();
     }
 
-    _onUiTurn() {
+    _onUiTurnClick() {
         this.eventTurn();
     }
 
@@ -303,6 +303,12 @@ export default class HexandriaLogic {
             this._activePlayer.squads.forEach(function(squad) {
                 squad.lock = false;
             });
+
+            if (HexandriaUtils.checkUser(this._activePlayer.name)) {
+                (new Mediator()).emit(EVENTS.UI.TURN_SHOW);
+            } else {
+                (new Mediator()).emit(EVENTS.UI.TURN_HIDE);
+            }
         }
 
         if (this.game.players[0].turn) {
