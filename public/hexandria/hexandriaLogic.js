@@ -303,12 +303,6 @@ export default class HexandriaLogic {
             this._activePlayer.squads.forEach(function(squad) {
                 squad.lock = false;
             });
-
-            if (HexandriaUtils.checkUser(this._activePlayer.name)) {
-                (new Mediator()).emit(EVENTS.UI.TURN_SHOW);
-            } else {
-                (new Mediator()).emit(EVENTS.UI.TURN_HIDE);
-            }
         }
 
         if (this.game.players[0].turn) {
@@ -321,6 +315,12 @@ export default class HexandriaLogic {
 
             this._activePlayer = this.game.players[0];
             this._activePlayer.turn = true;
+        }
+
+        if (HexandriaUtils.checkUser(this._activePlayer.name)) {
+            (new Mediator()).emit(EVENTS.UI.TURN_SHOW);
+        } else {
+            (new Mediator()).emit(EVENTS.UI.TURN_HIDE);
         }
 
         this.startTimeout();
