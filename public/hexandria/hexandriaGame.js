@@ -18,6 +18,8 @@ export default class HexandriaGame {
         this.logic = new Mode();
         this.graphics = new HexandriaGraphics();
 
+        this._started = false;
+
         this._subscribe();
     }
 
@@ -26,10 +28,10 @@ export default class HexandriaGame {
     }
 
     _onGameStart(data = {}) {
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('gameStart', data);
+        if (this._started) {
+            console.error('HexandriaGame._onGameStart: game already started.');
+            return;
+        }
 
         if (this.__Mode === HexandriaLogicSingleplayer) {
         // if (this.__Mode.prototype instanceof HexandriaLogicSingleplayer) {
@@ -74,6 +76,8 @@ export default class HexandriaGame {
 
         this.logic.initGame(game);
         this.graphics.initGame(game);
+
+        this._started = true;
     }
 
     static testGameStartData() {
@@ -247,5 +251,7 @@ export default class HexandriaGame {
             this.graphics.destroy();
             delete this.graphics;
         }
+
+        this._started = false;
     }
 }

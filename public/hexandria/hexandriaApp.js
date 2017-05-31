@@ -103,7 +103,7 @@ export default class HexandriaApp {
 
         if (this.game) {
             this.game.destroy();
-            this.game = null;
+            delete this.game;
 
             // (new Mediator())._print();
             (new Mediator()).clear();

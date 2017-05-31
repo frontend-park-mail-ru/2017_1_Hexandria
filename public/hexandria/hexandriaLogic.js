@@ -49,8 +49,8 @@ export default class HexandriaLogic {
     }
 
     destroy() {
-        this.game = null;
-        this._selected = null;
+        delete this.game;
+        delete this._selected;
 
         if (this._turnTimeout) {
             clearInterval(this._turnTimeout);
@@ -58,11 +58,7 @@ export default class HexandriaLogic {
     }
 
     onSelect(position) {
-        console.log('');
-        console.log('');
-        console.log('');
         console.log('onselect', position, this._selected);
-        // throw new TypeError('Not implemented');
 
         if (position) {
             if (this._selected) {
@@ -75,7 +71,7 @@ export default class HexandriaLogic {
                 (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
             } else {
                 const squadObject = this.findSquad(position);
-                // console.warn(squad);
+
                 if (squadObject &&
                     squadObject.player.turn &&
                     !squadObject.squad.lock &&
@@ -105,7 +101,6 @@ export default class HexandriaLogic {
     }
 
     eventTurn() {
-        console.warn('+++++');
         HexandriaUtils.forFieldTowns(
             this.game,
             (townObj) => {
@@ -113,7 +108,7 @@ export default class HexandriaLogic {
                     this.game,
                     ({ playerIndex, player }) => {
                         if (player.capital === townObj.name) {
-                            console.log('capital', player.name, townObj.name);
+                            // console.log('capital', player.name, townObj.name);
 
                             const playerSquad = player.squads.find(function(s) {
                                 return s.position.x === townObj.position.x &&
@@ -121,7 +116,7 @@ export default class HexandriaLogic {
                             });
                             if (playerSquad) {
                                 if (playerSquad.count < this.CAPITAL_COUNT_MAX) {
-                                    console.log('update', playerSquad);
+                                    // console.log('update', playerSquad);
 
                                     const updateData = HexandriaUtils.packToUpdate(
                                         { squad: playerSquad },
@@ -131,7 +126,7 @@ export default class HexandriaLogic {
                                     (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
                                 }
                             } else {
-                                console.log('create');
+                                // console.log('create');
 
                                 const createData = HexandriaUtils.packToCreate(
                                     player.name,
@@ -147,7 +142,7 @@ export default class HexandriaLogic {
                             return t === townObj.name;
                         });
                         if (playerTownObj) {
-                            console.log('town', player.name, townObj.name);
+                            // console.log('town', player.name, townObj.name);
 
                             const playerSquad = player.squads.find(function(s) {
                                 return s.position.x === townObj.position.x &&
@@ -155,7 +150,7 @@ export default class HexandriaLogic {
                             });
                             if (playerSquad) {
                                 if (playerSquad.count < this.TOWN_COUNT_MAX) {
-                                    console.log('update', playerSquad);
+                                    // console.log('update', playerSquad);
 
                                     const updateData = HexandriaUtils.packToUpdate(
                                         { squad: playerSquad },
@@ -165,7 +160,7 @@ export default class HexandriaLogic {
                                     (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
                                 }
                             } else {
-                                console.log('create');
+                                // console.log('create');
 
                                 const createData = HexandriaUtils.packToCreate(
                                     player.name,
@@ -180,14 +175,11 @@ export default class HexandriaLogic {
                 );
             },
         );
-        console.warn('-----');
 
         (new Mediator()).emit(EVENTS.GAME.TURN);
     }
 
     eventMove(data) {
-        console.log('');
-        console.log('');
         console.log('eventMove', data);
 
         // squad fight/combine handler
@@ -329,8 +321,6 @@ export default class HexandriaLogic {
     }
 
     onCreate(data) {
-        console.log('');
-        console.log('');
         console.log('onCreate', data);
 
         const player = this.game.players.find(function(p) {
@@ -355,8 +345,6 @@ export default class HexandriaLogic {
     }
 
     onUpdate(data) {
-        console.log('');
-        console.log('');
         console.log('onUpdate', data);
         const position = data.position;
         const newPosition = data.newPosition;
@@ -406,8 +394,6 @@ export default class HexandriaLogic {
     }
 
     onDelete(data) {
-        console.log('');
-        console.log('');
         console.log('onDelete', data);
         const position = data.position;
         const squadObject = this.findSquad(position);
@@ -426,8 +412,6 @@ export default class HexandriaLogic {
     }
 
     onAttackTown(data) {
-        console.log('');
-        console.log('');
         console.log('onAttackTown', data);
 
         const position = data.position;

@@ -16,16 +16,18 @@ export default class HexandriaLogicMultiplayer extends HexandriaLogic {
         // do nothing
     }
 
+    destroy() {
+        super.destroy();
+        this.transport.close();
+        delete this.transport;
+    }
+
     eventTurn() {
-        console.log('');
-        console.log('');
         console.log('eventTurn (HexandriaLogicMultiplayer)');
         this.transport.send(EVENTS.GAME.TURN);
     }
 
     eventMove(data) {
-        console.log('');
-        console.log('');
         console.log('eventMove (HexandriaLogicMultiplayer)', data);
         this.transport.send(EVENTS.LOGIC.MOVE, data);
     }

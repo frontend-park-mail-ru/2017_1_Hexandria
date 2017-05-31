@@ -74,7 +74,7 @@ export default class SignupView extends View {
                         .then((res) => {
                             console.log(res.status);
                             if (res.status === API.CODE.OK) {
-                                // (new Router()).setUser(user.login);
+                                (new Router()).setUser(user.login);
                                 (new Router()).go('/');
                                 return { description: 'signup success!' };
                             }

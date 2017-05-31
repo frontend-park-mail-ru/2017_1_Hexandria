@@ -16,6 +16,24 @@ export default class UtilsGraphics {
         return [posX, posY];
     }
 
+    static getPositionForTown(x, y) {
+        const coords = UtilsGraphics.getPosition(x, y);
+
+        coords[0] += _hexagonBeta / 2.0;
+        coords[1] += _hexagonAlpha / 2.0;
+
+        return coords;
+    }
+
+    static getPositionForSquad(x, y) {
+        const coords = UtilsGraphics.getPosition(x, y);
+
+        coords[0] -= _hexagonBeta / 2.0;
+        coords[1] -= _hexagonAlpha / 2.0;
+
+        return coords;
+    }
+
     static getHexShape() {
         const _hexagonShape = new THREE.Shape();
         _hexagonShape.moveTo(0.0, 2.0 * _hexagonAlpha);
@@ -49,7 +67,6 @@ export default class UtilsGraphics {
 
         const backgroundColor = Object.prototype.hasOwnProperty.call(parameters, 'backgroundColor') ?
             parameters.backgroundColor : { r: 255, g: 255, b: 255, a: 1.0 };
-
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
         context.font = `${fontsize}px ${fontface}`;
@@ -74,7 +91,7 @@ export default class UtilsGraphics {
             map: texture,
         });
         const sprite = new THREE.Sprite(spriteMaterial);
-        sprite.scale.set(2.0, 1.0, 1.0);
+        sprite.scale.set(1.25, 0.75, 0.75);
         return sprite;
     }
 
@@ -103,5 +120,38 @@ export default class UtilsGraphics {
                 borderColor: { r: 0, g: 0, b: 0, a: 1.0 },
             },
         );
+    }
+
+    static loadObj(path, options) {
+        const loader = new THREE.OBJLoader();
+        const container = new THREE.Object3D();
+        container.__loaded = false;
+        loader.load(path,
+            (object) => {
+                container.add(object);
+                container.__loaded = true;
+                UtilsGraphics.changeColor(container, options.color);
+            },
+            (xhr) => {
+                // console.log(xhr);
+            },
+            (xhr) => {
+                console.log(xhr);
+                console.warn('ERROR');
+            }
+        );
+        return container;
+    }
+
+    static changeColor(obj, color) {
+        obj.children.forEach(function(c1) {
+            if (c1.type === 'Mesh') {
+                c1.material.color.setHex(color);
+            } else {
+                c1.children.forEach(function(c2) {
+                    c2.material.color.setHex(color);
+                });
+            }
+        });
     }
 }

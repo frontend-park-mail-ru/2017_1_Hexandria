@@ -45,8 +45,6 @@ export default class Transport {
 
             (new Mediator()).emit(EVENTS.UI.OFFLINE);
         };
-
-        console.warn(this.ws);
     }
 
     getUser() {
@@ -84,5 +82,9 @@ export default class Transport {
         } else {
             throw new TypeError('Event is empty');
         }
+    }
+
+    close() {
+        this.ws.close();
     }
 }

@@ -15,7 +15,9 @@ const cacheUrls = [
     '/js/vendor.js',
     '/fonts/lato-v13-latin.woff2',
     '/fonts/lato-v13-latin-ext.woff2',
-    '/textures/grass.jpg',
+    '/models/tower.obj',
+    '/models/capital.obj',
+    '/models/knight.obj'
 ];
 
 this.addEventListener('install', function (event) {
