@@ -1,4 +1,5 @@
 import Mediator from '../modules/mediator';
+import { API } from './api';
 import { EVENTS } from './events';
 import HexandriaLogic from './hexandriaLogic';
 import HexandriaLogicSingleplayer from './hexandriaLogic/singleplayerLogic';
@@ -34,7 +35,6 @@ export default class HexandriaGame {
         }
 
         if (this.__Mode === HexandriaLogicSingleplayer) {
-        // if (this.__Mode.prototype instanceof HexandriaLogicSingleplayer) {
             this.logic.initGame(HexandriaGame.testGameStartData());
             this.graphics.initGame(HexandriaGame.testGameStartData());
             return;
@@ -58,7 +58,7 @@ export default class HexandriaGame {
 
                 const player = {
                     name: capital.owner.name,
-                    color: i === '0' ? 0xff0000 : 0x0000ff,
+                    color: i === '0' ? API.COLOR.GAME_1 : API.COLOR.GAME_2,
                     capital: capital.name,
                     towns: [],
                     squads: [
@@ -85,7 +85,7 @@ export default class HexandriaGame {
             field: {
                 size: {
                     x: 10,
-                    y: 15,
+                    y: 10,
                 },
                 towns: [
                     {
@@ -98,22 +98,36 @@ export default class HexandriaGame {
                     {
                         name: 'town2',
                         position: {
-                            x: 2,
-                            y: 3,
+                            x: 1,
+                            y: 4,
                         },
                     },
                     {
                         name: 'town3',
                         position: {
-                            x: 7,
-                            y: 8,
+                            x: 4,
+                            y: 1,
                         },
                     },
                     {
                         name: 'town4',
                         position: {
+                            x: 8,
+                            y: 5,
+                        },
+                    },
+                    {
+                        name: 'town5',
+                        position: {
+                            x: 5,
+                            y: 8,
+                        },
+                    },
+                    {
+                        name: 'town6',
+                        position: {
                             x: 9,
-                            y: 14,
+                            y: 9,
                         },
                     },
                 ],
@@ -124,56 +138,32 @@ export default class HexandriaGame {
                 {
                     name: 'Bob',
                     turn: true,
-                    color: 0xff0000,
+                    color: API.COLOR.GAME_1,
                     capital: 'town1',
-                    towns: ['town2'],
+                    towns: [],
                     squads: [
                         {
-                            count: 10,
-                            morale: 5,
+                            count: API.GAME.CAPITAL_COUNT,
+                            morale: 10,
                             position: {
-                                x: 1,
-                                y: 1,
-                            },
-                        },
-                        {
-                            count: 20,
-                            morale: 11,
-                            position: {
-                                x: 2,
-                                y: 1,
+                                x: 0,
+                                y: 0,
                             },
                         },
                     ],
                 },
                 {
                     name: 'John',
-                    color: 0x0000ff,
-                    capital: 'town4',
+                    color: API.COLOR.GAME_2,
+                    capital: 'town6',
                     towns: [],
                     squads: [
                         {
-                            count: 41,
-                            morale: 7,
-                            position: {
-                                x: 5,
-                                y: 5,
-                            },
-                        },
-                        {
-                            count: 17,
-                            morale: 20,
-                            position: {
-                                x: 3,
-                                y: 4,
-                            },
-                        },
-                        {
-                            count: 50,
+                            count: API.GAME.CAPITAL_COUNT,
                             morale: 10,
                             position: {
-                                x: 4,
-                                y: 4,
+                                x: 9,
+                                y: 9,
                             },
                         },
                     ],

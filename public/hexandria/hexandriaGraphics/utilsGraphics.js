@@ -57,10 +57,10 @@ export default class UtilsGraphics {
             parameters.fontface : 'Arial';
 
         const fontsize = Object.prototype.hasOwnProperty.call(parameters, 'fontsize') ?
-            parameters.fontsize : 18;
+            parameters.fontsize : 72;
 
         const borderThickness = Object.prototype.hasOwnProperty.call(parameters, 'borderThickness') ?
-            parameters.borderThickness : 2;
+            parameters.borderThickness : 0;
 
         const borderColor = Object.prototype.hasOwnProperty.call(parameters, 'borderColor') ?
             parameters.borderColor : { r: 0, g: 0, b: 0, a: 1.0 };
@@ -69,30 +69,36 @@ export default class UtilsGraphics {
             parameters.backgroundColor : { r: 255, g: 255, b: 255, a: 1.0 };
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
-        context.font = `${fontsize}px ${fontface}`;
 
         const metrics = context.measureText(message);
         const textWidth = metrics.width;
 
-        context.fillStyle = `rgba(${backgroundColor.r},${backgroundColor.g},${
-             backgroundColor.b},${backgroundColor.a})`;
-        context.strokeStyle = `rgba(${borderColor.r},${borderColor.g},${
-             borderColor.b},${borderColor.a})`;
-        context.lineWidth = borderThickness;
-        UtilsGraphics.roundRect(context, borderThickness / 2, borderThickness / 2,
-            textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6);
 
-        context.fillStyle = 'rgba(0, 0, 0, 1.0)';
-        context.fillText(message, borderThickness, fontsize + borderThickness);
+        const size = 128*2;
+        const w = size;
+        const h = size;
+        canvas.width = w;
+        canvas.height = h;
+        // context.fillStyle = "#fff";
+        // context.fillRect(0, 0, w, h);
+
+        context.font = `Bold ${fontsize}px ${fontface}`;
+        context.fillStyle = `rgba(${backgroundColor.r},${backgroundColor.g},${
+            backgroundColor.b},${backgroundColor.a})`;
+        context.strokeStyle = `rgba(${borderColor.r},${borderColor.g},${
+            borderColor.b},${borderColor.a})`;
+
+        context.lineWidth = borderThickness;
+        context.fillStyle = "rgba(60, 60, 60, 1.0)";
+
+        context.fillText(message, w / 4, 2 * fontsize);
 
         const texture = new THREE.Texture(canvas);
         texture.needsUpdate = true;
-        const spriteMaterial = new THREE.SpriteMaterial({
-            map: texture,
-        });
-        const sprite = new THREE.Sprite(spriteMaterial);
-        sprite.scale.set(1.25, 0.75, 0.75);
-        return sprite;
+
+        const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
+
+        return new THREE.Sprite(spriteMaterial);
     }
 
     static roundRect(ctx, x, y, w, h, r) {
@@ -112,14 +118,7 @@ export default class UtilsGraphics {
     }
 
     static getSprite(text) {
-        return UtilsGraphics.makeTextSprite(
-            text,
-            {
-                fontsize: 40,
-                fontface: 'Helvetica',
-                borderColor: { r: 0, g: 0, b: 0, a: 1.0 },
-            },
-        );
+        return UtilsGraphics.makeTextSprite(text);
     }
 
     static loadObj(path, options) {

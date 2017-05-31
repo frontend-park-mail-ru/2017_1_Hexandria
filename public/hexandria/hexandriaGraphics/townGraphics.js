@@ -32,7 +32,7 @@ export default class TownGraphics {
     changeColor(color) {
         this.options.color = color;
         if (this.town.__loaded) {
-            UtilsGraphics.changeColor(this.town, this.options);
+            UtilsGraphics.changeColor(this.town, this.options.color);
         }
     }
 }

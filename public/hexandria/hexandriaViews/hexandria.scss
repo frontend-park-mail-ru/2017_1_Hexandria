@@ -1,5 +1,11 @@
 @import '../../scheme';
 
+@keyframes border-blink-animation {
+  to {
+    border-color: $hexandria-background;
+  }
+}
+
 .hexandria {
   &__info {
     display: inline-block;
@@ -9,22 +15,30 @@
     color: $hexandria-default;
 
     &-1 {
-      color: red;
+      color: $hexandria-game-1;
       border: 1px solid $hexandria-background;
 
       &__turn {
-        color: red;
-        border: 1px solid red;
+        color: $hexandria-game-1;
+        border: 1px solid $hexandria-game-1;
+        animation-name: border-blink-animation;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
       }
     }
 
     &-2 {
-      color: blue;
+      color: $hexandria-game-2;
       border: 1px solid $hexandria-background;
 
       &__turn {
-        color: blue;
-        border: 1px solid blue;
+        color: $hexandria-game-2;
+        border: 1px solid $hexandria-game-2;
+        animation-name: border-blink-animation;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
       }
     }
 

@@ -61,19 +61,12 @@
   &__multiplayer {
     @extend .button;
 
-    border: 1px solid $hexandria-background;
-    border-bottom-color: $hexandria-special;
+    border: 1px solid $hexandria-special;
     min-width: 175px;
     margin: 5px 15px;
 
     &:hover {
-      background-color: unset;
-      border-color: $hexandria-special;
-      cursor: pointer;
-      transition:
-        border-left-color 0.4s,
-        border-right-color 0.4s,
-        border-top-color 0.8s;
+      background-color: $hexandria-special;
     }
   }
 
@@ -81,19 +74,8 @@
   &__scoreboard {
     @extend .button;
 
-    border: 1px solid $hexandria-background;
-    border-bottom-color: $hexandria-default;
     min-width: 175px;
     margin: 5px 15px;
 
-    &:hover {
-      background-color: unset;
-      border-color: $hexandria-default;
-      cursor: pointer;
-      transition:
-        border-left-color 0.4s,
-        border-right-color 0.4s,
-        border-top-color 0.8s;
-    }
   }
 }

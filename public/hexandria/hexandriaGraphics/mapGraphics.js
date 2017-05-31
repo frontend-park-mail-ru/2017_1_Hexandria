@@ -4,9 +4,7 @@ import Mediator from '../../modules/mediator';
 import { EVENTS } from '../events';
 import HexandriaUtils from '../hexandriaUtils';
 
-const _fieldGrass = 0x40a040;
-const _fieldWater = 0x8080ff;
-const _fieldRock = 0x808080;
+const _fieldGrass = 0x61C95A;
 
 export default class MapGraphics {
     constructor(scene, game) {

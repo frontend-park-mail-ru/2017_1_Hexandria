@@ -1,3 +1,4 @@
+import { API } from '../api';
 import HexandriaLogic from '../hexandriaLogic';
 
 export default class HexandriaLogicSingleplayer extends HexandriaLogic {
@@ -11,6 +12,6 @@ export default class HexandriaLogicSingleplayer extends HexandriaLogic {
             clearInterval(this._turnTimeout);
         }
 
-        this._turnTimeout = setInterval(this.eventTurn.bind(this), this.TIMEOUT * 1000);
+        this._turnTimeout = setInterval(this.eventTurn.bind(this), API.GAME.TIMEOUT * 1000);
     }
 }

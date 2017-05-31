@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Mediator from '../modules/mediator';
+import { API } from './api';
 import { EVENTS } from './events';
 import MapGraphics from './hexandriaGraphics/mapGraphics';
 import TownGraphics from './hexandriaGraphics/townGraphics';
@@ -92,7 +93,7 @@ export default class HexandriaGraphics {
                     return p.capital === town.name;
                 });
 
-                this.townsMap[town.name] = new TownGraphics(this._scene, 0x777777, town, isCapital);
+                this.townsMap[town.name] = new TownGraphics(this._scene, API.COLOR.DEFAULT, town, isCapital);
             },
         );
 
@@ -196,7 +197,7 @@ export default class HexandriaGraphics {
         this._container = document.querySelector(this.selector);
 
         this._renderer = new THREE.WebGLRenderer();
-        this._renderer.setClearColor(0xffffff);
+        this._renderer.setClearColor(API.COLOR.WHITE);
         this._renderer.setPixelRatio(this._container.devicePixelRatio);
 
         this._renderer.setSize(window.innerWidth, window.innerHeight);
@@ -237,7 +238,7 @@ export default class HexandriaGraphics {
         this._scene.add(ambientLight);
 
         const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(-10, 10, 10);
+        light.position.set(10, -10, 10);
         light.castShadow = true;
         const d = 10;
         light.shadow.camera.left = -d;

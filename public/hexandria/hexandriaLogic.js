@@ -1,4 +1,5 @@
 import Mediator from '../modules/mediator';
+import { API } from './api';
 import { EVENTS } from './events';
 import HexandriaUtils from './hexandriaUtils';
 
@@ -9,16 +10,6 @@ export default class HexandriaLogic {
         if (this.constructor === HexandriaLogic) {
             throw new TypeError('Can not create instance of HexandriaLogic');
         }
-
-        this.TIMEOUT = 10; // seconds
-
-        this.TOWN_COUNT = 15;
-        this.TOWN_MORALE = 10;
-        this.TOWN_COUNT_MAX = 3 * this.TOWN_COUNT;
-
-        this.CAPITAL_COUNT = 50;
-        this.CAPITAL_MORALE = 30;
-        this.CAPITAL_COUNT_MAX = 3 * this.CAPITAL_COUNT;
 
         this.game = null;
         this._selected = null;
@@ -115,13 +106,13 @@ export default class HexandriaLogic {
                                     s.position.y === townObj.position.y;
                             });
                             if (playerSquad) {
-                                if (playerSquad.count < this.CAPITAL_COUNT_MAX) {
+                                if (playerSquad.count < API.GAME.CAPITAL_COUNT_MAX) {
                                     // console.log('update', playerSquad);
 
                                     const updateData = HexandriaUtils.packToUpdate(
                                         { squad: playerSquad },
-                                        playerSquad.count + this.CAPITAL_COUNT,
-                                        playerSquad.morale, // + this.CAPITAL_MORALE,
+                                        playerSquad.count + API.GAME.CAPITAL_COUNT,
+                                        playerSquad.morale,
                                     );
                                     (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
                                 }
@@ -131,8 +122,8 @@ export default class HexandriaLogic {
                                 const createData = HexandriaUtils.packToCreate(
                                     player.name,
                                     townObj.position,
-                                    this.CAPITAL_COUNT,
-                                    this.CAPITAL_MORALE,
+                                    API.GAME.CAPITAL_COUNT,
+                                    API.GAME.CAPITAL_MORALE,
                                 );
                                 (new Mediator()).emit(EVENTS.LOGIC.CREATE, createData);
                             }
@@ -149,13 +140,13 @@ export default class HexandriaLogic {
                                     s.position.y === townObj.position.y;
                             });
                             if (playerSquad) {
-                                if (playerSquad.count < this.TOWN_COUNT_MAX) {
+                                if (playerSquad.count < API.GAME.TOWN_COUNT_MAX) {
                                     // console.log('update', playerSquad);
 
                                     const updateData = HexandriaUtils.packToUpdate(
                                         { squad: playerSquad },
-                                        playerSquad.count + this.TOWN_COUNT,
-                                        playerSquad.morale, // + this.TOWN_MORALE,
+                                        playerSquad.count + API.GAME.TOWN_COUNT,
+                                        playerSquad.morale,
                                     );
                                     (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
                                 }
@@ -165,8 +156,8 @@ export default class HexandriaLogic {
                                 const createData = HexandriaUtils.packToCreate(
                                     player.name,
                                     townObj.position,
-                                    this.TOWN_COUNT,
-                                    this.TOWN_MORALE,
+                                    API.GAME.TOWN_COUNT,
+                                    API.GAME.TOWN_MORALE,
                                 );
                                 (new Mediator()).emit(EVENTS.LOGIC.CREATE, createData);
                             }

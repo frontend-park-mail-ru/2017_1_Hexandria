@@ -27,4 +27,26 @@ API.PATH = {
     DELETE: '/api/user/delete',
 };
 
+API.GAME = {
+    TIMEOUT: 10,
+
+    TOWN_COUNT: 15,
+    TOWN_MORALE: 10,
+
+    CAPITAL_COUNT: 50,
+    CAPITAL_MORALE: 30,
+};
+API.GAME.TOWN_COUNT_MAX = 3 * API.GAME.TOWN_COUNT;
+API.GAME.CAPITAL_COUNT_MAX = 3 * API.GAME.CAPITAL_COUNT;
+
+API.COLOR = {
+    BACKGROUND: 0x3c3c3c,
+    DEFAULT: 0x7c7c7e,
+    SPECIAL: 0xb35737,
+    WHITE: 0xc9cdca,
+
+    GAME_1: 0xdb5461,
+    GAME_2: 0x306bac,
+};
+
 export default API;
