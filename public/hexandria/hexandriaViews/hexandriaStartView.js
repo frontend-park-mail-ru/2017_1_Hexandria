@@ -52,15 +52,16 @@ export default class HexandriaStartView extends View {
         (new Mediator()).subscribe(this, EVENTS.UI.OFFLINE, '_onUiOffline');
     }
 
-    _onAppInit(payload) {
+    _onAppInit(payload = {}) {
         this.title.titleDiv.innerHTML(payload.mode);
     }
 
-    _onUiOnline() {
-        this.container.waitInfo.innerHTML('Waiting for opponent...');
+    _onUiOnline(data = {}) {
+        this.container.waitInfo.innerHTML(data.message || 'Waiting for opponent...');
     }
 
-    _onUiOffline() {
-        this.container.waitInfo.innerHTML('You are offline');
+    _onUiOffline(data = {}) {
+        console.log(data);
+        this.container.waitInfo.innerHTML(data.message || 'You are offline');
     }
 }

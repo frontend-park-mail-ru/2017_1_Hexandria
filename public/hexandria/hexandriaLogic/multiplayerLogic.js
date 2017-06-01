@@ -1,3 +1,4 @@
+import Router from '../../modules/router';
 import { API } from '../api';
 import { EVENTS } from '../events';
 import HexandriaLogic from '../hexandriaLogic';
@@ -20,6 +21,10 @@ export default class HexandriaLogicMultiplayer extends HexandriaLogic {
         super.destroy();
         this.transport.close();
         delete this.transport;
+    }
+
+    _checkUser(playerName) {
+        return (new Router()).getUser() === playerName;
     }
 
     eventTurn() {

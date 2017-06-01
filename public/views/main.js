@@ -40,9 +40,10 @@ export default class MainView extends View {
                     console.log('post logout');
                     this.fetcher.post(API.PATH.LOGOUT)
                         .then(() => {
-                            (new Router()).setUser(null);
-                            (new Router()).update('/');
+                            console.log('logout success');
                         });
+                    (new Router()).setUser(null);
+                    (new Router()).update('/');
                 },
             },
         });

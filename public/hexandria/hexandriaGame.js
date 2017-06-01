@@ -1,4 +1,5 @@
 import Mediator from '../modules/mediator';
+import Router from '../modules/router';
 import { API } from './api';
 import { EVENTS } from './events';
 import HexandriaLogic from './hexandriaLogic';
@@ -136,7 +137,7 @@ export default class HexandriaGame {
 
             players: [
                 {
-                    name: 'Bob',
+                    name: (new Router()).getUser() + '1',
                     turn: true,
                     color: API.COLOR.GAME_1,
                     capital: 'town1',
@@ -153,7 +154,7 @@ export default class HexandriaGame {
                     ],
                 },
                 {
-                    name: 'John',
+                    name: (new Router()).getUser() + '2',
                     color: API.COLOR.GAME_2,
                     capital: 'town6',
                     towns: [],

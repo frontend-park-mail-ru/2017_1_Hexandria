@@ -48,6 +48,10 @@ export default class HexandriaLogic {
         }
     }
 
+    _checkUser() {
+        return true;
+    }
+
     onSelect(position) {
         console.log('onselect', position, this._selected);
 
@@ -66,7 +70,7 @@ export default class HexandriaLogic {
                 if (squadObject &&
                     squadObject.player.turn &&
                     !squadObject.squad.lock &&
-                    HexandriaUtils.checkUser(squadObject.player.name)) {
+                    this._checkUser(squadObject.player.name)) {
                     this._selected = squadObject;
                     (new Mediator()).emit(EVENTS.GRAPHICS.SELECT_UNIT, this._selected.squad.position);
                 }
@@ -300,7 +304,7 @@ export default class HexandriaLogic {
             this._activePlayer.turn = true;
         }
 
-        if (HexandriaUtils.checkUser(this._activePlayer.name)) {
+        if (this._checkUser(this._activePlayer.name)) {
             (new Mediator()).emit(EVENTS.UI.TURN_SHOW);
         } else {
             (new Mediator()).emit(EVENTS.UI.TURN_HIDE);

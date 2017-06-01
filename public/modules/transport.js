@@ -4,9 +4,16 @@ import { EVENTS } from '../hexandria/events';
 
 export default class Transport {
     constructor(host) {
+        if (this.getUser() === 'guest') {
+            (new Mediator()).emit(EVENTS.UI.ONLINE, {message: 'Please login'});
+            return;
+        }
+
         const address = ['https', 'https:'].includes(location.protocol)
             ? `wss://${host}/game`
             : `ws://${host}/game`;
+
+        this.interval = null;
 
         this.ws = new WebSocket(address);
         this.ws.onopen = () => {
@@ -26,10 +33,8 @@ export default class Transport {
                 console.log(`WebSocket close on address ${address}`);
                 clearInterval(this.interval);
 
-
+                (new Mediator()).emit(EVENTS.UI.OFFLINE);
             };
-
-            (new Mediator()).emit(EVENTS.UI.ONLINE);
         };
 
         this.ws.onmessage = (event) => {
@@ -40,7 +45,7 @@ export default class Transport {
             console.log('WebSocket error:', event);
         };
 
-        this.ws.onclose = () => {
+        this.ws.onclose = (event) => {
             console.log('WebSocket close:', event);
 
             (new Mediator()).emit(EVENTS.UI.OFFLINE);
@@ -67,11 +72,11 @@ export default class Transport {
         }
     }
 
-    send(event, payload = null) {
+    send(event, payload = {}) {
         let data;
 
         if (event) {
-            if (payload) {
+            if (Object.keys(payload).length !== 0) {
                 data = JSON.stringify({ event, payload });
             } else {
                 data = JSON.stringify({ event });
@@ -85,6 +90,11 @@ export default class Transport {
     }
 
     close() {
-        this.ws.close();
+        if (this.ws) {
+            clearInterval(this.interval);
+
+            this.ws.close();
+            delete this.ws;
+        }
     }
 }

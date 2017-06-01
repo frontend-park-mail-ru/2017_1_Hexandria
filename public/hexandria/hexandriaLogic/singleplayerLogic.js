@@ -14,4 +14,12 @@ export default class HexandriaLogicSingleplayer extends HexandriaLogic {
 
         this._turnTimeout = setInterval(this.eventTurn.bind(this), API.GAME.TIMEOUT * 1000);
     }
+
+    destroy() {
+        super.destroy();
+
+        if (this._turnTimeout) {
+            clearInterval(this._turnTimeout);
+        }
+    }
 }
