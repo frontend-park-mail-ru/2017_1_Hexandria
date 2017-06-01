@@ -15,6 +15,7 @@ export default class ScoreboardView extends View {
         const title = new Title({
             text: 'Scoreboard',
             backButton: true,
+            shadowButton: true,
         });
         pageScoreboard.appendChild(title.el);
 

@@ -26,7 +26,7 @@ export default class HexandriaApp {
             finish: new HexandriaFinishView(),
         };
 
-        this.Mode = null;
+        this._Mode = null;
         this.user = null;
         this.game = null;
 
@@ -56,30 +56,30 @@ export default class HexandriaApp {
         this._hideAll();
 
         if (payload && payload.mode) {
-            this.Mode = MODES[payload.mode.toUpperCase()];
-        } else if (this.Mode) {
+            this._Mode = MODES[payload.mode.toUpperCase()];
+        } else if (this._Mode) {
             // same mode form last time
         } else {
             console.error('init error: unknown mode');
             return;
         }
-        this.views.start.show();
-
-        this.user = (new Router()).getUser();
 
         if (this.game) {
             this._onAppFinish();
         }
+        this.views.start.show();
 
-        if (this.Mode) { // TODO && this.user
-            this.game = new HexandriaGame(this.Mode, this.user);
+        this.user = (new Router()).getUser();
 
-            if (this.Mode === MODES.SINGLEPLAYER) {
+        if (this._Mode) { // TODO && this.user
+            this.game = new HexandriaGame(this._Mode, this.user);
+
+            if (this._Mode === MODES.SINGLEPLAYER) {
                 (new Mediator()).emit(EVENTS.GAME.START, HexandriaGame.testGameStartData2());
             }
         } else {
-            console.error(`gameStart error: mode=${this.Mode}`);
-            this.Mode = null;
+            console.error(`gameStart error: mode=${this._Mode}`);
+            this._Mode = null;
         }
     }
 

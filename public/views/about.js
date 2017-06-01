@@ -10,6 +10,7 @@ export default class AboutView extends View {
         const title = new Title({
             text: 'About',
             backButton: true,
+            shadowButton: true,
         });
         pageAbout.appendChild(title.el);
 

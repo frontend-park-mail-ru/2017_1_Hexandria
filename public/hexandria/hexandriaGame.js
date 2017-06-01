@@ -16,7 +16,7 @@ export default class HexandriaGame {
             throw new TypeError('Mode is not a HexandriaLogic');
         }
 
-        this.__Mode = Mode;
+        this._Mode = Mode;
         this.logic = new Mode();
         this.graphics = new HexandriaGraphics();
 
@@ -35,7 +35,7 @@ export default class HexandriaGame {
             return;
         }
 
-        if (this.__Mode === HexandriaLogicSingleplayer) {
+        if (this._Mode === HexandriaLogicSingleplayer) {
             this.logic.initGame(HexandriaGame.testGameStartData());
             this.graphics.initGame(HexandriaGame.testGameStartData());
             return;

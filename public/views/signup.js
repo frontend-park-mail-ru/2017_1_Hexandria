@@ -20,6 +20,7 @@ export default class SignupView extends View {
             backButtonCallback: () => {
                 this._signupForm.clear();
             },
+            shadowButton: true,
         });
         pageSignup.appendChild(title.el);
 
