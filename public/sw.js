@@ -17,7 +17,7 @@ const cacheUrls = [
     '/fonts/lato-v13-latin-ext.woff2',
     '/models/tower.obj',
     '/models/capital.obj',
-    '/models/knight.obj'
+    '/models/knight.obj',
 ];
 
 this.addEventListener('install', function (event) {

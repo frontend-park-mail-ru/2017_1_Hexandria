@@ -74,7 +74,7 @@ export default class UtilsGraphics {
         const textWidth = metrics.width;
 
 
-        const size = 128*2;
+        const size = 128 * 2;
         const w = size;
         const h = size;
         canvas.width = w;
@@ -89,7 +89,7 @@ export default class UtilsGraphics {
             borderColor.b},${borderColor.a})`;
 
         context.lineWidth = borderThickness;
-        context.fillStyle = "rgba(60, 60, 60, 1.0)";
+        context.fillStyle = 'rgba(60, 60, 60, 1.0)';
 
         context.fillText(message, w / 4, 2 * fontsize);
 
@@ -137,7 +137,7 @@ export default class UtilsGraphics {
             (xhr) => {
                 console.log(xhr);
                 console.warn('ERROR');
-            }
+            },
         );
         return container;
     }

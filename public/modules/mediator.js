@@ -32,7 +32,6 @@ export default class Mediator {
             this.events[event] = [];
         }
         this.events[event].push({ subscriber, handler });
-        return this;
     }
 
     unsubscribe(subscriber, event) {

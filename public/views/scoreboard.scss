@@ -1,0 +1,22 @@
+@import '../scheme';
+
+.scoreboard {
+  @extend .center-form__;
+
+  //width: 450px;
+
+  &__user {
+    display: flex;
+    align-items: center;
+    padding: 10px 5px;
+    text-align: left;
+  }
+
+  &__name {
+    flex-grow: 100;
+  }
+
+  &__score {
+    width: 75px;
+  }
+}

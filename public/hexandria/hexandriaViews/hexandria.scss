@@ -55,8 +55,6 @@
   }
 
   &__result {
-    //@extend .center-block__;
-
     text-align: center;
     color: $hexandria-white;
   }
@@ -64,4 +62,11 @@
   &__turn {
     border: 1px solid $hexandria-default;
   }
+}
+
+#hexandria__timeout {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 50px;
+  font-size: 0.75 * $font-size;
 }

@@ -103,7 +103,7 @@ export default class HexandriaUtils {
             },
             loser: {
                 name: loserName,
-            }
+            },
         };
     }
 }

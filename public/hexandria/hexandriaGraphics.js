@@ -89,7 +89,7 @@ export default class HexandriaGraphics {
         HexandriaUtils.forFieldTowns(
             this.game,
             (town) => {
-                const isCapital = this.game.players.find((p) => {
+                const isCapital = this.game.players.find(function(p) {
                     return p.capital === town.name;
                 });
 

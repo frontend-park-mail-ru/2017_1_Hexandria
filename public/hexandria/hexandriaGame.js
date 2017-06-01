@@ -137,7 +137,7 @@ export default class HexandriaGame {
 
             players: [
                 {
-                    name: (new Router()).getUser() + '1',
+                    name: `${(new Router()).getUser()}1`,
                     turn: true,
                     color: API.COLOR.GAME_1,
                     capital: 'town1',
@@ -154,7 +154,7 @@ export default class HexandriaGame {
                     ],
                 },
                 {
-                    name: (new Router()).getUser() + '2',
+                    name: `${(new Router()).getUser()}2`,
                     color: API.COLOR.GAME_2,
                     capital: 'town6',
                     towns: [],

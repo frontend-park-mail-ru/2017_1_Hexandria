@@ -5,13 +5,15 @@ import { EVENTS } from '../hexandria/events';
 export default class Transport {
     constructor(host) {
         if (this.getUser() === 'guest') {
-            (new Mediator()).emit(EVENTS.UI.ONLINE, {message: 'Please login'});
+            (new Mediator()).emit(EVENTS.UI.ONLINE, { message: 'Please login' });
             return;
         }
 
-        const address = ['https', 'https:'].includes(location.protocol)
-            ? `wss://${host}/game`
-            : `ws://${host}/game`;
+        // const address = ['https', 'https:'].includes(location.protocol)
+        //     ? `wss://${host}/game`
+        //     : `ws://${host}/game`;
+
+        const address = `ws://${host}:8082/game`;
 
         this.interval = null;
 

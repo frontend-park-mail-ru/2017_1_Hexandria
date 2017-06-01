@@ -28,7 +28,7 @@ API.PATH = {
 };
 
 API.GAME = {
-    TIMEOUT: 10,
+    TIMEOUT: 30,
 
     TOWN_COUNT: 15,
     TOWN_MORALE: 10,

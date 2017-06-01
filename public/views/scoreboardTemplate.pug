@@ -1,0 +1,18 @@
+div.scoreboard
+    each user, i in users
+        div.scoreboard__user(class=i % 2 == 0 ? '' : 'even')
+            div.scoreboard__name #{user.name}
+            div.scoreboard__score #{user.score}
+
+//div.center-block__
+//    table
+//        thead
+//            tr: th Score_
+//        tbody
+//            each user, i in users
+//                tr(class=i % 2 == 0 ? 'odd' : 'even')
+//                    td
+//                        p #{user.name}
+//                    td
+//                        p #{user.score}
+//

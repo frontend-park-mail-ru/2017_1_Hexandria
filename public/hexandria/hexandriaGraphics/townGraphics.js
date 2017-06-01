@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-require('three-obj-loader')(THREE);
 import UtilsGraphics from './utilsGraphics';
+
+require('three-obj-loader')(THREE);
 
 export default class TownGraphics {
     constructor(scene, color, town, isCapital) {
@@ -10,7 +11,7 @@ export default class TownGraphics {
         };
 
 
-        if (isCapital){
+        if (isCapital) {
             this.town = UtilsGraphics.loadObj('/models/capital.obj', this.options);
             this.town.scale.set(0.5, 0.5, 0.5);
             this.town.rotateX(Math.PI / 2.0);

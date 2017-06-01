@@ -1,6 +1,7 @@
 import './hexandria.scss';
 
 import Mediator from '../../modules/mediator';
+import { API } from '../api';
 import { EVENTS } from '../events';
 
 import View from '../../views/view';
@@ -72,5 +73,27 @@ export default class HexandriaPlayView extends View {
         });
 
         this.title.titleDiv.innerHTML(html);
+
+
+        // console.log(this.title.titleDiv);
+        const timeoutEl = document.getElementById('hexandria__timeout');
+        // console.log(timeoutEl);
+
+        let counter = API.GAME.TIMEOUT;
+        timeoutEl.innerHTML = counter;
+
+        if (this.__intervalId) {
+            clearInterval(this.__intervalId);
+        }
+        this.__intervalId = setInterval(() => {
+            --counter;
+            timeoutEl.innerHTML = counter;
+
+            // console.log(counter);
+            if (counter === 0) {
+                clearInterval(this.__intervalId);
+                this.__intervalId = null;
+            }
+        }, 1000);
     }
 }
