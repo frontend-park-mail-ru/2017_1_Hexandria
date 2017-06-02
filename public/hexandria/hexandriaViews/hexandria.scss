@@ -19,9 +19,8 @@
 .hexandria {
   &__info {
     display: inline-block;
-    font-size: 0.5 * $font-size;
     margin: 0 5px;
-    padding: 0 5px;
+    padding: 10px;
     color: $hexandria-default;
 
     &-1 {
@@ -53,7 +52,7 @@
     }
 
     @media screen and (max-width: $max-width) {
-      font-size: 0.5 * $font-size-mobile;
+      padding: 5px;
     }
   }
 
@@ -103,11 +102,4 @@
     height: 75px;
     background: url('/img/password.svg') center/75px 75px;
   }
-}
-
-#hexandria__timeout {
-  display: inline-block;
-  vertical-align: middle;
-  min-width: 50px;
-  font-size: 0.75 * $font-size;
 }
