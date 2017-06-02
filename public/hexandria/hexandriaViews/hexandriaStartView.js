@@ -4,9 +4,10 @@ import Mediator from '../../modules/mediator';
 import { EVENTS } from '../../hexandria/events';
 
 import View from '../../views/view';
-import Button from '../../components/button/button';
 import Title from '../../components/title/title';
 import Component from '../../components/component';
+
+import startTemplate from './startTemplate.pug';
 
 export default class HexandriaStartView extends View {
     constructor(options = {}) {
@@ -21,20 +22,14 @@ export default class HexandriaStartView extends View {
         this.title = new Title({
             text: 'StartView',
             backButton: true,
+            shadowButton: true,
         });
         this._el.appendChild(this.title.el);
 
 
-        const waitInfo = new Component({
-            tagName: 'p',
-            text: 'Waiting for opponet...',
-        });
         this.container = new Component({
             attrs: {
                 class: 'hexandria__container',
-            },
-            childs: {
-                waitInfo,
             },
         });
         this._el.appendChild(this.container.el);
@@ -46,7 +41,26 @@ export default class HexandriaStartView extends View {
         this.hide();
     }
 
-    refresh(mode) {
-        this.title.titleDiv.innerHTML(mode);
+    subscribe() {
+        (new Mediator()).subscribe(this, EVENTS.APP.INIT, '_onAppInit');
+
+        (new Mediator()).subscribe(this, EVENTS.UI.ONLINE, '_onUiOnline');
+        (new Mediator()).subscribe(this, EVENTS.UI.OFFLINE, '_onUiOffline');
+    }
+
+    _onAppInit(payload = {}) {
+        this.title.titleDiv.innerHTML(payload.mode || this.lastMode);
+
+        if (payload.mode) {
+            this.lastMode = payload.mode;
+        }
+    }
+
+    _onUiOnline(data = {}) {
+        this.container.innerHTML(startTemplate({ message: data.message || 'Waiting for opponent...' }));
+    }
+
+    _onUiOffline(data = {}) {
+        this.container.innerHTML(startTemplate({ message: data.message || 'You are offline' }));
     }
 }

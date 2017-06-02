@@ -4,17 +4,25 @@ import { EVENTS } from '../hexandria/events';
 
 export default class Transport {
     constructor(host) {
+        if (this.getUser() === 'guest') {
+            (new Mediator()).emit(EVENTS.UI.ONLINE, { message: 'Please login' });
+            return;
+        }
+
         const address = ['https', 'https:'].includes(location.protocol)
             ? `wss://${host}/game`
             : `ws://${host}/game`;
+
+        this.interval = null;
 
         this.ws = new WebSocket(address);
         this.ws.onopen = () => {
             console.log(`WebSocket open on address ${address}`);
 
-            console.dir(this.ws);
+            // console.dir(this.ws);
 
             this.send(EVENTS.SERVICE.CONNECT, this.getUser());
+            (new Mediator()).emit(EVENTS.UI.ONLINE);
 
             this.ws.onmessage = this.handleMessage.bind(this);
 
@@ -25,6 +33,8 @@ export default class Transport {
             this.ws.onclose = () => {
                 console.log(`WebSocket close on address ${address}`);
                 clearInterval(this.interval);
+
+                (new Mediator()).emit(EVENTS.UI.OFFLINE);
             };
         };
 
@@ -36,8 +46,10 @@ export default class Transport {
             console.log('WebSocket error:', event);
         };
 
-        this.ws.onclose = () => {
+        this.ws.onclose = (event) => {
             console.log('WebSocket close:', event);
+
+            (new Mediator()).emit(EVENTS.UI.OFFLINE);
         };
     }
 
@@ -61,11 +73,11 @@ export default class Transport {
         }
     }
 
-    send(event, payload = null) {
+    send(event, payload = {}) {
         let data;
 
         if (event) {
-            if (payload) {
+            if (Object.keys(payload).length !== 0) {
                 data = JSON.stringify({ event, payload });
             } else {
                 data = JSON.stringify({ event });
@@ -75,6 +87,15 @@ export default class Transport {
             this.ws.send(data);
         } else {
             throw new TypeError('Event is empty');
+        }
+    }
+
+    close() {
+        if (this.ws) {
+            clearInterval(this.interval);
+
+            this.ws.close();
+            delete this.ws;
         }
     }
 }

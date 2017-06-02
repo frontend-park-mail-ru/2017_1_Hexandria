@@ -64,13 +64,17 @@ module.exports = {
 
         new CopyWebpackPlugin(
             [
+                {
+                    from: path.join(__dirname, 'public', 'img'),
+                    to: path.join(__dirname, 'dist', 'img')
+                },
                 // {
-                //     from: path.join(__dirname, 'public', 'img'),
-                //     to: path.join(__dirname, 'dist', 'img')
+                //     from: path.join(__dirname, 'public', 'textures'),
+                //     to: path.join(__dirname, 'dist', 'textures')
                 // },
                 {
-                    from: path.join(__dirname, 'public', 'textures'),
-                    to: path.join(__dirname, 'dist', 'textures')
+                    from: path.join(__dirname, 'public', 'models'),
+                    to: path.join(__dirname, 'dist', 'models')
                 },
                 {
                     from: path.join(__dirname, 'public', 'fonts'),

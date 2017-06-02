@@ -20,6 +20,7 @@ export default class SignupView extends View {
             backButtonCallback: () => {
                 this._signupForm.clear();
             },
+            shadowButton: true,
         });
         pageSignup.appendChild(title.el);
 
@@ -74,7 +75,7 @@ export default class SignupView extends View {
                         .then((res) => {
                             console.log(res.status);
                             if (res.status === API.CODE.OK) {
-                                // (new Router()).setUser(user.login);
+                                (new Router()).setUser(user.login);
                                 (new Router()).go('/');
                                 return { description: 'signup success!' };
                             }
@@ -91,6 +92,7 @@ export default class SignupView extends View {
                         })
                         .catch((err) => {
                             console.log(err);
+                            this._signupForm.showError(err);
                         });
                 },
             },

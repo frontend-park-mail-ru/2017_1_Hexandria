@@ -1,0 +1,5 @@
+div.scoreboard
+    each user, i in users
+        div.scoreboard__user(class=i % 2 == 0 ? '' : 'even')
+            div.scoreboard__name #{user.name}
+            div.scoreboard__score #{user.score}

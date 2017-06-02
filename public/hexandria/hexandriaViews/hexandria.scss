@@ -1,53 +1,105 @@
 @import '../../scheme';
 
+@keyframes border-blink-animation {
+  to {
+    border-color: $hexandria-background;
+  }
+}
+
+@keyframes load-animation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .hexandria {
   &__info {
     display: inline-block;
-    font-size: 0.5 * $font-size;
     margin: 0 5px;
-    padding: 0 5px;
+    padding: 10px;
     color: $hexandria-default;
 
     &-1 {
-      color: red;
+      color: $hexandria-game-1;
       border: 1px solid $hexandria-background;
 
       &__turn {
-        color: red;
-        border: 1px solid red;
+        color: $hexandria-game-1;
+        border: 1px solid $hexandria-game-1;
+        animation-name: border-blink-animation;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
       }
     }
 
     &-2 {
-      color: blue;
+      color: $hexandria-game-2;
       border: 1px solid $hexandria-background;
 
       &__turn {
-        color: blue;
-        border: 1px solid blue;
+        color: $hexandria-game-2;
+        border: 1px solid $hexandria-game-2;
+        animation-name: border-blink-animation;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
       }
     }
 
     @media screen and (max-width: $max-width) {
-      font-size: 0.5 * $font-size-mobile;
+      padding: 5px;
     }
   }
 
   &__container {
     @extend .center-block__;
 
+    margin: 30px 0;
     text-align: center;
+    font-size: $font-size;
     color: $hexandria-white;
+
+    @media screen and (max-width: $max-width) {
+      font-size: $font-size-mobile;
+    }
   }
 
   &__result {
-    //@extend .center-block__;
-
     text-align: center;
     color: $hexandria-white;
   }
 
   &__turn {
     border: 1px solid $hexandria-default;
+  }
+
+  &__img-load {
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    background: url('/img/hexagon.svg') center/75px 75px;
+    animation-name: load-animation;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  &__img-offline {
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    background: url('/img/sad.svg') center/75px 75px;
+  }
+
+  &__img-login {
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    background: url('/img/password.svg') center/75px 75px;
   }
 }

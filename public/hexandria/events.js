@@ -31,7 +31,11 @@ export const EVENTS = {
         TOWN_CAPTURE: 'EVENTS.GRAPHICS.TOWN_CAPTURE',
     },
     UI: {
-        TURN: 'EVENTS.UI.TURN',
+        TURN_CLICK: 'EVENTS.UI.TURN_CLICK',
+        TURN_SHOW: 'EVENTS.UI.TURN_SHOW',
+        TURN_HIDE: 'EVENTS.UI.TURN_HIDE',
+        ONLINE: 'EVENTS.UI.ONLINE',
+        OFFLINE: 'EVENTS.UI.OFFLINE',
     },
 };
 

@@ -1,8 +1,11 @@
-$hexandria-background: #211a1d;
-$hexandria-default: #9197ae;
-$hexandria-special: #f02d3a;
-$hexandria-white: #fff; //#f8f0fb
-$hexandria-white-mobile: #fff;
+$hexandria-background: #3c3c3c;
+$hexandria-default: #7c7c7e;
+$hexandria-special: #b35737;
+$hexandria-white: #c9cdca;
+$hexandria-white-mobile: #c9cdca;
+
+$hexandria-game-1: #db5461;
+$hexandria-game-2: #306bac;
 
 $max-width: 768px;
 
@@ -26,4 +29,8 @@ $font-size-mobile: 125%;
     width: auto;
     padding: 0 5px;
   }
+}
+
+.even {
+  background-color: $hexandria-special;
 }
