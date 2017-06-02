@@ -15,6 +15,14 @@ export default class HexandriaLogic {
         this._selected = null;
         this._activePlayer = null;
         this._turnTimeout = null;
+    }
+
+    startTimeout() {
+        console.error('override it!');
+    }
+
+    initGame(game) {
+        this.game = game;
 
         (new Mediator()).subscribe(this, EVENTS.UI.TURN_CLICK, '_onUiTurnClick');
         (new Mediator()).subscribe(this, EVENTS.GAME.TURN, '_onGameTurn');
@@ -24,14 +32,6 @@ export default class HexandriaLogic {
         (new Mediator()).subscribe(this, EVENTS.LOGIC.UPDATE, 'onUpdate');
         (new Mediator()).subscribe(this, EVENTS.LOGIC.DELETE, 'onDelete');
         (new Mediator()).subscribe(this, EVENTS.LOGIC.ATTACK_TOWN, 'onAttackTown');
-    }
-
-    startTimeout() {
-        console.error('override it!');
-    }
-
-    initGame(game) {
-        this.game = game;
 
         this._onGameTurn();
         this._onGameTurn();

@@ -9,11 +9,9 @@ export default class Transport {
             return;
         }
 
-        // const address = ['https', 'https:'].includes(location.protocol)
-        //     ? `wss://${host}/game`
-        //     : `ws://${host}/game`;
-
-        const address = `ws://${host}:8082/game`;
+        const address = ['https', 'https:'].includes(location.protocol)
+            ? `wss://${host}/game`
+            : `ws://${host}/game`;
 
         this.interval = null;
 
@@ -24,6 +22,7 @@ export default class Transport {
             // console.dir(this.ws);
 
             this.send(EVENTS.SERVICE.CONNECT, this.getUser());
+            (new Mediator()).emit(EVENTS.UI.ONLINE);
 
             this.ws.onmessage = this.handleMessage.bind(this);
 

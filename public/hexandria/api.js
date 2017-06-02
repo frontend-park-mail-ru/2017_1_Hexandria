@@ -25,6 +25,7 @@ API.PATH = {
     LOGOUT: '/api/user/logout',
     SIGNUP: '/api/user/signup',
     DELETE: '/api/user/delete',
+    SCOREBOARD: '/api/scoreboard',
 };
 
 API.GAME = {

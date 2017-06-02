@@ -18,6 +18,9 @@ const cacheUrls = [
     '/models/tower.obj',
     '/models/capital.obj',
     '/models/knight.obj',
+    '/img/hexagon.svg',
+    '/img/sad.svg',
+    '/img/password.svg',
 ];
 
 this.addEventListener('install', function (event) {

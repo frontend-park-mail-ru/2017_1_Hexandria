@@ -10,6 +10,6 @@ __[Sychugina Anna](https://github.com/sychuginaanna) (mentor)__
 
 [Prokopchuk Nikita](https://github.com/Intaco)
 
-[Rogachev Semen](https://github.com/Metalluga)
+[Rogachev Semyon](https://github.com/Metalluga)
 
 [Salyp Bogdan](https://github.com/trntga)

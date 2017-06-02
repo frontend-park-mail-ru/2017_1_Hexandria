@@ -1,0 +1,36 @@
+@import '../scheme';
+
+.about {
+  @extend .center-form__;
+
+  &__item {
+    display: flex;
+    margin: 15px;
+  }
+
+  &__image {
+    margin: 0 10px 0 0;
+    width: 75px;
+    height: 75px;
+    background: url('/img/hexagon.svg') center/75px 75px;
+  }
+
+  &__text {
+    text-align: left;
+    flex: 1;
+    min-width: 100px;
+
+    a {
+      display: block;
+      margin: 5px 0;
+      color: $hexandria-white;
+    }
+  }
+
+  &__special {
+    display: inline;
+    margin: 0 5px 0 0;
+    color: $hexandria-special;
+    font-weight: bold;
+  }
+}

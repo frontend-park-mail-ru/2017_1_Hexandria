@@ -7,6 +7,8 @@ import View from '../../views/view';
 import Title from '../../components/title/title';
 import Component from '../../components/component';
 
+import startTemplate from './startTemplate.pug';
+
 export default class HexandriaStartView extends View {
     constructor(options = {}) {
         super();
@@ -20,20 +22,14 @@ export default class HexandriaStartView extends View {
         this.title = new Title({
             text: 'StartView',
             backButton: true,
+            shadowButton: true,
         });
         this._el.appendChild(this.title.el);
 
 
-        const waitInfo = new Component({
-            tagName: 'p',
-            text: 'Waiting for opponent...',
-        });
         this.container = new Component({
             attrs: {
                 class: 'hexandria__container',
-            },
-            childs: {
-                waitInfo,
             },
         });
         this._el.appendChild(this.container.el);
@@ -53,15 +49,18 @@ export default class HexandriaStartView extends View {
     }
 
     _onAppInit(payload = {}) {
-        this.title.titleDiv.innerHTML(payload.mode);
+        this.title.titleDiv.innerHTML(payload.mode || this.lastMode);
+
+        if (payload.mode) {
+            this.lastMode = payload.mode;
+        }
     }
 
     _onUiOnline(data = {}) {
-        this.container.waitInfo.innerHTML(data.message || 'Waiting for opponent...');
+        this.container.innerHTML(startTemplate({ message: data.message || 'Waiting for opponent...' }));
     }
 
     _onUiOffline(data = {}) {
-        console.log(data);
-        this.container.waitInfo.innerHTML(data.message || 'You are offline');
+        this.container.innerHTML(startTemplate({ message: data.message || 'You are offline' }));
     }
 }
