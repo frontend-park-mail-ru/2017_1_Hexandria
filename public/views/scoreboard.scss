@@ -8,6 +8,14 @@
     align-items: center;
     padding: 10px 5px;
     text-align: left;
+
+    &__top {
+      display: flex;
+      align-items: center;
+      padding: 10px 5px;
+      text-align: left;
+      border-bottom: 1px solid $hexandria-special;
+    }
   }
 
   &__name {

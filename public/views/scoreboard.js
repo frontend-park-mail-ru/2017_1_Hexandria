@@ -1,5 +1,8 @@
 import './scoreboard.scss';
 
+import Fetcher from '../modules/fetcher';
+import { API } from '../hexandria/api';
+
 import View from './view';
 import Title from '../components/title/title';
 import Component from '../components/component';
@@ -42,55 +45,27 @@ export default class ScoreboardView extends View {
     show() {
         super.show();
 
-        if (!this._scoreTable) {
-            this._scoreTable = [
-                {
-                    name: 'name1',
-                    score: 10,
-                },
-                {
-                    name: 'name2',
-                    score: 7,
-                },
-                {
-                    name: 'name3',
-                    score: 6,
-                },
-                {
-                    name: 'name4',
-                    score: 5,
-                },
-                {
-                    name: 'name5',
-                    score: 1,
-                },
-                {
-                    name: 'name6',
-                    score: 1,
-                },
-                {
-                    name: 'name7',
-                    score: 1,
-                },
-                {
-                    name: 'name8',
-                    score: 1,
-                },
-                {
-                    name: 'name9',
-                    score: 1,
-                },
-                {
-                    name: 'name10',
-                    score: 1,
-                },
-            ];
-        }
-        console.log('score', this._scoreTable);
+        this.fetcher = new Fetcher(API.HOST);
+        this.fetcher.get(API.PATH.SCOREBOARD)
+            .then((res) => {
+                if (res.status === API.CODE.OK) {
+                    return res.json();
+                }
+                throw API.AUTH.ERROR;
+            })
+            .then((json) => {
+                console.warn('score', json);
+                const html = scoreboardTemplate({
+                    users: json,
+                });
 
-        const html = scoreboardTemplate({
-            users: this._scoreTable,
-        });
+                this.container.score.innerHTML(html);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        const html = scoreboardTemplate();
 
         this.container.score.innerHTML(html);
     }

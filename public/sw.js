@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'app_sw_v0.0.1';
+const CACHE_VERSION = 'app_sw_v0.0.2';
 
 const cacheUrls = [
     '/singleplayer',
