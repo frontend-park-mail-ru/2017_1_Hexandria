@@ -1,5 +1,12 @@
-div.scoreboard
-    each user, i in users
-        div.scoreboard__user(class=i % 2 == 0 ? '' : 'even')
-            div.scoreboard__name #{user.name}
-            div.scoreboard__score #{user.score}
+if users
+    div.scoreboard
+        div.scoreboard__user__top
+            div.scoreboard__name User
+            div.scoreboard__score Score
+        each user, i in users
+            div.scoreboard__user(class=i % 2 == 0 ? '' : 'even')
+                div.scoreboard__name #{user[0]}
+                div.scoreboard__score #{user[1]}
+else
+    div.hexandria__img-load
+    div.hexandria__result Scoreboard loading...
