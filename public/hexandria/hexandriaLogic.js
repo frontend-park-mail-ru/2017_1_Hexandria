@@ -1,5 +1,4 @@
 import Mediator from '../modules/mediator';
-import { API } from './api';
 import { EVENTS } from './events';
 import HexandriaUtils from './hexandriaUtils';
 
@@ -17,12 +16,19 @@ export default class HexandriaLogic {
         this._turnTimeout = null;
     }
 
-    startTimeout() {
-        console.error('override it!');
-    }
-
     initGame(game) {
+        game.players[0].turn = true;
+        game.players[1].turn = false;
         this.game = game;
+
+        this._locker = true;
+
+        HexandriaUtils.forPlayersSquads(
+            this.game,
+            (object) => {
+                object.squad.lock = false;
+            },
+        );
 
         (new Mediator()).subscribe(this, EVENTS.UI.TURN_CLICK, '_onUiTurnClick');
         (new Mediator()).subscribe(this, EVENTS.GAME.TURN, '_onGameTurn');
@@ -48,19 +54,46 @@ export default class HexandriaLogic {
         }
     }
 
+    unlockSquads() {
+        HexandriaUtils.forPlayersSquads(
+            this.game,
+            (object) => {
+                object.squad.lock = false;
+            },
+        );
+    }
+
+    _startTimeout() {
+        console.error('override it!');
+    }
+
     _checkUser() {
-        return true;
+        console.error('override it!');
+    }
+
+    _checkTurnEnd() {
+        if (this._checkUser(this._activePlayer.name)) {
+            // console.warn('_checkTurnEnd', this._activePlayer, this._activePlayer.squads);
+            const sq = this._activePlayer.squads.find(function(s) {
+                return s.lock !== true;
+            });
+            // console.log(sq);
+            if (!sq) {
+                // console.error('_checkTurnEnd TURN!');
+                this.unlockSquads();
+                this.eventTurn();
+            }
+        }
     }
 
     onSelect(position) {
-        console.log('onselect', position, this._selected);
+        // console.log('onselect', position, this._selected);
 
         if (position) {
             if (this._selected) {
                 if (this.checkNearSelected(position)) {
                     const data = HexandriaUtils.packToMove(this._selected, position);
                     this.eventMove(data);
-                    this._selected.squad.lock = true;
                 }
                 this._selected = null;
                 (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
@@ -79,14 +112,6 @@ export default class HexandriaLogic {
             this._selected = null;
             (new Mediator()).emit(EVENTS.GRAPHICS.UNSELECT_ALL);
         }
-
-
-        const sq = this._activePlayer.squads.find(function(s) {
-            return s.lock !== true;
-        });
-        if (!sq) {
-            this.eventTurn();
-        }
     }
 
     eventInfo() {
@@ -96,189 +121,11 @@ export default class HexandriaLogic {
     }
 
     eventTurn() {
-        HexandriaUtils.forFieldTowns(
-            this.game,
-            (townObj) => {
-                HexandriaUtils.forPlayers(
-                    this.game,
-                    ({ playerIndex, player }) => {
-                        if (player.capital === townObj.name) {
-                            // console.log('capital', player.name, townObj.name);
-
-                            const playerSquad = player.squads.find(function(s) {
-                                return s.position.x === townObj.position.x &&
-                                    s.position.y === townObj.position.y;
-                            });
-                            if (playerSquad) {
-                                if (playerSquad.count < API.GAME.CAPITAL_COUNT_MAX) {
-                                    // console.log('update', playerSquad);
-
-                                    const updateData = HexandriaUtils.packToUpdate(
-                                        { squad: playerSquad },
-                                        playerSquad.count + API.GAME.CAPITAL_COUNT,
-                                        playerSquad.morale,
-                                    );
-                                    (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
-                                }
-                            } else {
-                                // console.log('create');
-
-                                const createData = HexandriaUtils.packToCreate(
-                                    player.name,
-                                    townObj.position,
-                                    API.GAME.CAPITAL_COUNT,
-                                    API.GAME.CAPITAL_MORALE,
-                                );
-                                (new Mediator()).emit(EVENTS.LOGIC.CREATE, createData);
-                            }
-                        }
-
-                        const playerTownObj = player.towns.find(function(t) {
-                            return t === townObj.name;
-                        });
-                        if (playerTownObj) {
-                            // console.log('town', player.name, townObj.name);
-
-                            const playerSquad = player.squads.find(function(s) {
-                                return s.position.x === townObj.position.x &&
-                                    s.position.y === townObj.position.y;
-                            });
-                            if (playerSquad) {
-                                if (playerSquad.count < API.GAME.TOWN_COUNT_MAX) {
-                                    // console.log('update', playerSquad);
-
-                                    const updateData = HexandriaUtils.packToUpdate(
-                                        { squad: playerSquad },
-                                        playerSquad.count + API.GAME.TOWN_COUNT,
-                                        playerSquad.morale,
-                                    );
-                                    (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
-                                }
-                            } else {
-                                // console.log('create');
-
-                                const createData = HexandriaUtils.packToCreate(
-                                    player.name,
-                                    townObj.position,
-                                    API.GAME.TOWN_COUNT,
-                                    API.GAME.TOWN_MORALE,
-                                );
-                                (new Mediator()).emit(EVENTS.LOGIC.CREATE, createData);
-                            }
-                        }
-                    },
-                );
-            },
-        );
-
-        (new Mediator()).emit(EVENTS.GAME.TURN);
+        console.error('override it!');
     }
 
     eventMove(data) {
-        console.log('eventMove', data);
-
-        // squad fight/combine handler
-        const from = this.findSquad(data.from);
-        const to = this.findSquad(data.to);
-        if (to) {
-            let sign;
-            if (from.player.name === to.player.name) {
-                sign = function (a) {
-                    return a;
-                };
-            } else {
-                sign = function (a) {
-                    return -a;
-                };
-            }
-
-            if (to.squad.count > from.squad.count) {
-                const count = to.squad.count + sign(from.squad.count);
-                const morale = to.squad.morale;
-
-                const deleteData = HexandriaUtils.packToDelete(from);
-                (new Mediator()).emit(EVENTS.LOGIC.DELETE, deleteData);
-
-                const updateData = HexandriaUtils.packToUpdate(to, count, morale);
-                (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
-            } else {
-                const count = from.squad.count + sign(to.squad.count);
-                const morale = from.squad.morale;
-
-                const deleteData = HexandriaUtils.packToDelete(to);
-                (new Mediator()).emit(EVENTS.LOGIC.DELETE, deleteData);
-
-                const updateData = HexandriaUtils.packToUpdate(from, count, morale, data.to);
-                (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
-            }
-        } else {
-            const updateData = HexandriaUtils.packToUpdate(from, from.squad.count, from.squad.morale, data.to);
-            (new Mediator()).emit(EVENTS.LOGIC.UPDATE, updateData);
-        }
-
-        // town handler
-        const town = this.findTown(data.to);
-        const selected = this.findSquad(data.to);
-        if (town && selected) {
-            // const selected = this.findSquad(data.to);
-
-            console.log('townHandler', selected, town);
-
-            const c = [];
-            const t = [];
-
-            HexandriaUtils.forPlayers(
-                this.game,
-                (playerObject) => {
-                    if (selected.playerIndex !== playerObject.playerIndex) {
-                        if (town.name === playerObject.player.capital) {
-                            c.push(playerObject.playerIndex);
-                        }
-
-                        const index = playerObject.player.towns.indexOf(town.name);
-                        if (index !== -1) {
-                            t.push(playerObject.playerIndex);
-                        }
-                    }
-                },
-            );
-
-            if (c.length > 0 && t.length > 0) {
-                console.log('ERROR: capital and town at the same time');
-            } else if (c.length > 0) {
-                console.log('c ->', c);
-                if (c.length > 1) {
-                    console.log('ERROR: c.length');
-                }
-
-                const attackTownData = HexandriaUtils.packToAttackTown(selected);
-                (new Mediator()).emit(EVENTS.LOGIC.ATTACK_TOWN, attackTownData);
-
-                const enemyIndex = c[0];
-                const resultData = HexandriaUtils.packResult(selected.player.name,
-                    this.game.players[enemyIndex].name);
-                (new Mediator()).emit(EVENTS.GAME.RESULT, resultData);
-            } else if (t.length > 0) {
-                console.log('t ->', t);
-                if (t.length > 1) {
-                    console.log('ERROR: t.length');
-                }
-
-                const attackTownData = HexandriaUtils.packToAttackTown(selected);
-                (new Mediator()).emit(EVENTS.LOGIC.ATTACK_TOWN, attackTownData);
-            } else if (town.name !== selected.player.capital &&
-                selected.player.towns.indexOf(town.name) === -1) {
-                console.log('neutral');
-
-                const attackTownData = HexandriaUtils.packToAttackTown(selected);
-                (new Mediator()).emit(EVENTS.LOGIC.ATTACK_TOWN, attackTownData);
-            } else {
-                // do nothing
-                // this is our town
-            }
-        }
-
-        this.eventInfo();
+        console.error('override it!');
     }
 
     _onUiTurnClick() {
@@ -286,11 +133,7 @@ export default class HexandriaLogic {
     }
 
     _onGameTurn() {
-        if (this._activePlayer) {
-            this._activePlayer.squads.forEach(function(squad) {
-                squad.lock = false;
-            });
-        }
+        this.unlockSquads();
 
         if (this.game.players[0].turn) {
             this.game.players[0].turn = false;
@@ -310,9 +153,11 @@ export default class HexandriaLogic {
             (new Mediator()).emit(EVENTS.UI.TURN_HIDE);
         }
 
-        this.startTimeout();
+        this._startTimeout();
 
         this.eventInfo();
+
+        this._locker = true;
     }
 
     onCreate(data) {
@@ -326,6 +171,7 @@ export default class HexandriaLogic {
                 count: data.count,
                 morale: data.morale,
                 position: data.position,
+                lock: false,
             };
 
             player.squads.push(newSquad);
@@ -352,8 +198,6 @@ export default class HexandriaLogic {
             return;
         }
 
-
-        // if (position.x !== newPosition.x || position.y !== newPosition.y) {
         if (newPosition) {
             console.log(squadObject, newPosition);
             squadObject.squad.position.x = newPosition.x;
@@ -386,6 +230,11 @@ export default class HexandriaLogic {
             };
             (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_UPDATE, graphicsData);
         }
+
+        if (this._locker) {
+            squadObject.squad.lock = true;
+        }
+        this._checkTurnEnd();
     }
 
     onDelete(data) {
@@ -404,6 +253,8 @@ export default class HexandriaLogic {
             squadIndex: squadObject.squadIndex,
         };
         (new Mediator()).emit(EVENTS.GRAPHICS.SQUAD_DELETE, graphicsData);
+
+        this._checkTurnEnd();
     }
 
     onAttackTown(data) {

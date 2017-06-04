@@ -73,7 +73,6 @@ export default class HexandriaGame {
                 game.players.push(player);
             }
         }
-        game.players[0].turn = true;
 
         this.logic.initGame(game);
         this.graphics.initGame(game);
@@ -138,7 +137,6 @@ export default class HexandriaGame {
             players: [
                 {
                     name: `${(new Router()).getUser()}1`,
-                    turn: true,
                     color: API.COLOR.GAME_1,
                     capital: 'town1',
                     towns: [],
