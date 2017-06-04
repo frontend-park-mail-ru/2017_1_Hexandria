@@ -133,11 +133,11 @@ export default class MapGraphics {
     }
 
     handleSelect(intersects) {
-        console.log('handleSelect', intersects);
+        // console.log('handleSelect', intersects);
         if (intersects.length > 0) {
             const hex = intersects[0].object;
 
-            console.log(hex, hex.x, hex.y);
+            // console.log(hex, hex.x, hex.y);
             (new Mediator()).emit(
                 EVENTS.LOGIC.SELECT,
                 {

@@ -12,14 +12,14 @@ export default class HexandriaLogicMultiplayer extends HexandriaLogic {
         this.transport = new Transport(API.HOST);
     }
 
-    startTimeout() {
-        // do nothing
-    }
-
     destroy() {
         super.destroy();
         this.transport.close();
         delete this.transport;
+    }
+
+    _startTimeout() {
+        // do nothing
     }
 
     _checkUser(playerName) {
@@ -27,6 +27,8 @@ export default class HexandriaLogicMultiplayer extends HexandriaLogic {
     }
 
     eventTurn() {
+        this._locker = false;
+
         console.log('eventTurn (HexandriaLogicMultiplayer)');
         this.transport.send(EVENTS.GAME.TURN);
     }
