@@ -1,5 +1,3 @@
-import Router from '../modules/router';
-
 export default class HexandriaUtils {
     static forPlayers(game, handler) {
         const players = game.players;
@@ -98,20 +96,14 @@ export default class HexandriaUtils {
         return data;
     }
 
-    static packResult(winner, loser) {
+    static packResult(winnerName, loserName) {
         return {
-            winner,
-            loser,
+            winner: {
+                name: winnerName,
+            },
+            loser: {
+                name: loserName,
+            },
         };
-    }
-
-    static checkUser(playerName) {
-        const user = (new Router()).getUser();
-        if (user === 'guest') {
-            return true;
-        } else if (user === playerName) {
-            return true;
-        }
-        return false;
     }
 }

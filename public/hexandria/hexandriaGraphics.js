@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Mediator from '../modules/mediator';
+import { API } from './api';
 import { EVENTS } from './events';
 import MapGraphics from './hexandriaGraphics/mapGraphics';
 import TownGraphics from './hexandriaGraphics/townGraphics';
@@ -7,7 +8,6 @@ import SquadGraphics from './hexandriaGraphics/squadGraphics';
 import UtilsGraphics from './hexandriaGraphics/utilsGraphics';
 import HexandriaUtils from './hexandriaUtils';
 
-// const OrbitControls = require('three-orbit-controls')(THREE);
 import OrbitControlsModule from './hexandriaGraphics/orbitControls';
 
 const OrbitControls = OrbitControlsModule(THREE);
@@ -89,7 +89,11 @@ export default class HexandriaGraphics {
         HexandriaUtils.forFieldTowns(
             this.game,
             (town) => {
-                this.townsMap[town.name] = new TownGraphics(this._scene, 0x777777, town);
+                const isCapital = this.game.players.find(function(p) {
+                    return p.capital === town.name;
+                });
+
+                this.townsMap[town.name] = new TownGraphics(this._scene, API.COLOR.DEFAULT, town, isCapital);
             },
         );
 
@@ -140,12 +144,23 @@ export default class HexandriaGraphics {
         );
     }
 
+    hasTownCheck(position) {
+        return this.game.field.towns.find(function(t) {
+            return t.position.x === position.x &&
+                t.position.y === position.y;
+        });
+    }
+
     squadMove(data) {
-        this.squadsMap[data.playerName][data.squadIndex].move(data.position.x, data.position.y);
+        const hasTown = this.hasTownCheck(data.position);
+
+        this.squadsMap[data.playerName][data.squadIndex].move(data.position, hasTown);
     }
 
     squadCreate(data) {
-        const newSquad = new SquadGraphics(this._scene, data.color, data.squad);
+        const hasTown = this.hasTownCheck(data.squad.position);
+
+        const newSquad = new SquadGraphics(this._scene, data.color, data.squad, hasTown);
         this.squadsMap[data.name].push(newSquad);
     }
 
@@ -182,7 +197,7 @@ export default class HexandriaGraphics {
         this._container = document.querySelector(this.selector);
 
         this._renderer = new THREE.WebGLRenderer();
-        this._renderer.setClearColor(0xffffff);
+        this._renderer.setClearColor(API.COLOR.WHITE);
         this._renderer.setPixelRatio(this._container.devicePixelRatio);
 
         this._renderer.setSize(window.innerWidth, window.innerHeight);
@@ -191,23 +206,21 @@ export default class HexandriaGraphics {
 
         this._scene = new THREE.Scene();
 
-        this._camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
-        // this._camera.position.x = 11;
-        // this._camera.position.y = 5;
-        // this._camera.position.z = 7;
-        this._camera.position.x = 11;
-        this._camera.position.y = 5;
-        this._camera.position.z = 11;
-        this._camera.up.set(0, 0, 1);
-
 
         const [borderXmin, borderYmin] = UtilsGraphics.getPosition(0, 0);
         const [borderXmax, borderYmax] = UtilsGraphics.getPosition(this.game.field.size.x - 1, this.game.field.size.y - 1);
+
+        this._camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.2, 2000);
+        this._camera.position.x = 11;
+        this._camera.position.y = (borderYmin + borderYmax) / 2.0;
+        this._camera.position.z = 5;
+        this._camera.up.set(0, 0, 1);
+
         const options = {
-            minDistance: 3,
-            maxDistance: 10,
+            minDistance: 5,
+            maxDistance: 20,
             minPolarAngle: 0,
-            maxPolarAngle: Math.PI / 3.0,
+            maxPolarAngle: Math.PI / 2.5,
 
             border: true,
             borderXmin,
@@ -218,14 +231,14 @@ export default class HexandriaGraphics {
         };
         this._controls = new OrbitControls(this._camera, this._container, options);
         this._controls.target.x = 5;
-        this._controls.target.y = 5;
+        this._controls.target.y = this._camera.position.y;
         this._controls.target.z = 0;
 
         const ambientLight = new THREE.AmbientLight(0x404040);
         this._scene.add(ambientLight);
 
         const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(-10, 10, 10);
+        light.position.set(10, -10, 10);
         light.castShadow = true;
         const d = 10;
         light.shadow.camera.left = -d;

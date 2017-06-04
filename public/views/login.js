@@ -20,6 +20,7 @@ export default class LoginView extends View {
             backButtonCallback: () => {
                 this._loginForm.clear();
             },
+            shadowButton: true,
         });
         pageLogin.appendChild(this._title.el);
 
@@ -79,6 +80,7 @@ export default class LoginView extends View {
                         })
                         .catch((err) => {
                             console.log('catch', err);
+                            this._loginForm.showError(err);
                         });
                 },
             },

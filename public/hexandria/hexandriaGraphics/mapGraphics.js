@@ -4,9 +4,7 @@ import Mediator from '../../modules/mediator';
 import { EVENTS } from '../events';
 import HexandriaUtils from '../hexandriaUtils';
 
-const _fieldGrass = 0x80f080;
-const _fieldWater = 0x8080ff;
-const _fieldRock = 0x808080;
+const _fieldGrass = 0x61C95A;
 
 export default class MapGraphics {
     constructor(scene, game) {
@@ -135,11 +133,11 @@ export default class MapGraphics {
     }
 
     handleSelect(intersects) {
-        console.log('handleSelect', intersects);
+        // console.log('handleSelect', intersects);
         if (intersects.length > 0) {
             const hex = intersects[0].object;
 
-            console.log(hex, hex.x, hex.y);
+            // console.log(hex, hex.x, hex.y);
             (new Mediator()).emit(
                 EVENTS.LOGIC.SELECT,
                 {

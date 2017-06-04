@@ -1,6 +1,6 @@
 export default class Validator {
     constructor() {
-        this.minLength = 4;
+        this.minLength = 3;
         this.maxLength = 10;
         this.emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         // this.passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
@@ -12,13 +12,13 @@ export default class Validator {
         }
     }
     checkMinLength(input) {
-        if (input.value.length < this.minLength) {
-            throw new SyntaxError('Enter more than 4 symbols');
+        if (input.value.length <= this.minLength) {
+            throw new SyntaxError(`Enter more than ${this.minLength} symbols`);
         }
     }
     checkMaxLength(input) {
-        if (input.value.length > this.maxLength) {
-            throw new SyntaxError('Enter less than 10 symbols');
+        if (input.value.length >= this.maxLength) {
+            throw new SyntaxError(`Enter less than ${this.maxLength} symbols`);
         }
     }
     checkEmail(input) {

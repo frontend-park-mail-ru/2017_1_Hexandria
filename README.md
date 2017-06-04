@@ -1,22 +1,15 @@
-# 2017_1_Hexandria
-Hexandria: strategy game. Technopark front-end project.
+# Hexandria
+Strategy game. Technopark front-end project.
 
-<b>Install:</b>
-````
-git clone https://github.com/frontend-park-mail-ru/2017_1_Hexandria.git
-cd 2017_1_Hexandria/
-npm install
-````
+## [Hexandria.ru](https://hexandria.ru/)
 
-<b>Run Dev:</b>
-````
-npm run develop
-http://localhost:3000/
-````
+### Team
+__[Sychugina Anna](https://github.com/sychuginaanna) (mentor)__
 
-<b>Production:</b>
+[Orel Alexandr](https://github.com/aorel)
 
-https://hexandria.herokuapp.com/
+[Prokopchuk Nikita](https://github.com/Intaco)
 
+[Rogachev Semyon](https://github.com/Metalluga)
 
-# Webpack
+[Salyp Bogdan](https://github.com/trntga)

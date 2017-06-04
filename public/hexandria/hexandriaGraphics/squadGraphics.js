@@ -1,34 +1,41 @@
 import * as THREE from 'three';
 import UtilsGraphics from './utilsGraphics';
 
-const positionZ = 0.5;
-const spriteZ = 1.0;
+const positionZ = 0.2;
+const spriteZ = 1.4;
 
 export default class SquadGraphics {
-    constructor(scene, color, squad) {
-        // console.log("HexSquad", color, position);
+    constructor(scene, color, squad, hasTown) {
         this.scene = scene;
 
-        const geometry = new THREE.SphereGeometry(0.25, 16, 16);
-        const material = new THREE.MeshBasicMaterial({ color });
-        this.squad = new THREE.Mesh(geometry, material);
-        this.squad.name = 'squad';
-        scene.add(this.squad);
+        this.options = {
+            color,
+        };
+        this.squad = UtilsGraphics.loadObj('/models/knight.obj', this.options);
+        this.squad.scale.set(0.4, 0.4, 0.4);
+        this.squad.rotateX(Math.PI / 2.0);
+        this.squad.rotateY(Math.PI / 2.0);
 
         this.setSprite(squad.count, squad.morale);
 
-        this.move(squad.position.x, squad.position.y);
+        this.move(squad.position, hasTown);
+        scene.add(this.squad);
     }
 
-    move(x, y) {
-        const pos = new THREE.Vector3(...UtilsGraphics.getPosition(x, y), positionZ);
+    move(coordinates, hasTown) {
+        let pos;
+        if (hasTown) {
+            pos = new THREE.Vector3(...UtilsGraphics.getPositionForSquad(coordinates.x, coordinates.y), positionZ);
+        } else {
+            pos = new THREE.Vector3(...UtilsGraphics.getPosition(coordinates.x, coordinates.y), positionZ);
+        }
         this.squad.position.copy(pos);
 
         this.sprite.position.set(pos.x, pos.y, spriteZ);
     }
 
     setSprite(count, morale) {
-        const newSprite = UtilsGraphics.getSprite(` ${count}/${morale} `);
+        const newSprite = UtilsGraphics.getSprite(` ${count} `);
         newSprite.position.copy(this.squad.position);
         newSprite.position.z = spriteZ;
 

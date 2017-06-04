@@ -1,14 +1,26 @@
-const CACHE_VERSION = 'app_sw_v0.0.1';
+const CACHE_VERSION = 'app_sw_v0.0.2';
 
 const cacheUrls = [
+    '/singleplayer',
+    '/multiplayer',
+    '/about',
+    '/scoreboard',
+    '/login',
+    '/signup',
     '/',
+
     '/index.html',
     '/css/app.css',
     '/js/app.js',
     '/js/vendor.js',
     '/fonts/lato-v13-latin.woff2',
     '/fonts/lato-v13-latin-ext.woff2',
-    '/textures/grass.jpg',
+    '/models/tower.obj',
+    '/models/capital.obj',
+    '/models/knight.obj',
+    '/img/hexagon.svg',
+    '/img/sad.svg',
+    '/img/password.svg',
 ];
 
 this.addEventListener('install', function (event) {

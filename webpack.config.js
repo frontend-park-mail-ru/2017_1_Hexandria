@@ -41,20 +41,20 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     sourceMap: true,
-        //     beautify: false,
-        //     comments: false,
-        //     compress: {
-        //         sequences: true,
-        //         booleans: true,
-        //         loops: true,
-        //         unused: true,
-        //         warnings: false,
-        //         drop_console: true,
-        //         unsafe: true
-        //     }
-        // }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: false,
+            beautify: false,
+            comments: false,
+            compress: {
+                sequences: true,
+                booleans: true,
+                loops: true,
+                unused: true,
+                warnings: false,
+                drop_console: true,
+                unsafe: true
+            }
+        }),
         new HtmlPlugin({
             filename: 'index.html',
             template: path.resolve(__dirname, 'public/index.html')
@@ -64,13 +64,17 @@ module.exports = {
 
         new CopyWebpackPlugin(
             [
+                {
+                    from: path.join(__dirname, 'public', 'img'),
+                    to: path.join(__dirname, 'dist', 'img')
+                },
                 // {
-                //     from: path.join(__dirname, 'public', 'img'),
-                //     to: path.join(__dirname, 'dist', 'img')
+                //     from: path.join(__dirname, 'public', 'textures'),
+                //     to: path.join(__dirname, 'dist', 'textures')
                 // },
                 {
-                    from: path.join(__dirname, 'public', 'textures'),
-                    to: path.join(__dirname, 'dist', 'textures')
+                    from: path.join(__dirname, 'public', 'models'),
+                    to: path.join(__dirname, 'dist', 'models')
                 },
                 {
                     from: path.join(__dirname, 'public', 'fonts'),
